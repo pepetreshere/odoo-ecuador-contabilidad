@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+    
+            <record id="sale.sale_shop_1" model="sale.shop">
+            	<field name="number">001</field>
+            </record>
+            
+            <record id="default_printer_print" model="sri.printer.point">
+	            <field name="name">001</field>
+	            <field name="number">001</field>
+	            <field name="shop_id" ref="sale.sale_shop_1"/>
+            </record>
+    </data>
+</openerp>

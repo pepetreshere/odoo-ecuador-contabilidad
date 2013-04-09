@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+	    <record id="base.group_authorization_sri_admin" model="res.groups">
+	        <field name="name">Authorization SRI Manager</field>
+	    </record>
+    </data>
+</openerp>

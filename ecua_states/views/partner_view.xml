@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="res_partner_address_form_view">
+			<field name="name">res.partner.address.form</field>
+			<field name="model">res.partner.address</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_address_form1" />
+			<field name="arch" type="xml">
+				<field name="street2" position="after">
+					<field name="location" colspan="4" on_change="onchange_location(location)"/>
+				</field>
+				<field name="city" position="after">
+					<field name="parroquia_id" domain="[('city_id','=',location)]" />
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="res_partner_form_view">
+                <field name="name">res.partner.form</field>
+                <field name="model">res.partner</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="base.view_partner_form"/>
+                <field name="arch" type="xml">
+					<xpath expr="/form/notebook/page/field/form/group/field[@name='zip']" position="before">
+						<field name="location" colspan="4" on_change="onchange_location(location)"></field>
+					</xpath>
+				</field>
+        </record>
+		
+	</data>
+</openerp>

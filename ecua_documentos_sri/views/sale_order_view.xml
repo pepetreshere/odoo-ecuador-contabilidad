@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="sale_order_multi_form_view">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/group//field[@name='shop_id']" position="replace">
+					<field name="shop_id" on_change="onchange_shop_id(shop_id)" />
+				</xpath>
+				<xpath expr="/form/group//field[@name='shipped']" position="after">
+					<field name="printer_id" required="1" />
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="sale_order_iva_form_view">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<field name="amount_untaxed" position="replace">
+					<field name="amount_untaxed" invisible="1" />
+					<group colspan="2" col="4">
+						<field name="base_iva_0" invisible="0" />
+						<field name="base_iva_12" invisible="0" />
+					</group>
+				</field>
+				<field name="amount_tax" position="replace">
+					<field name="amount_tax" invisible="1" />
+					<field name="iva" invisible="0" />
+				</field>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="sale_order_iva_tree_view">
+			<field name="name">sale.order.tree</field>
+			<field name="model">sale.order</field>
+			<field name="type">tree</field>
+			<field name="inherit_id" ref="sale.view_order_tree" />
+			<field name="arch" type="xml">
+				<field name="amount_untaxed" position="replace">
+					<field name="amount_untaxed" invisible="1" />
+					<field name="base_iva_0" invisible="0" sum="Base IVA 0" />
+					<field name="base_iva_12" invisible="0" sum="Base IVA 12" />
+					<field name="iva" invisible="0" sum="Total IVA" />
+				</field>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="sales_form_view">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<field name="picking_ids" position="replace">
+					<group colspan="4" col="8">
+						<group colspan="4">
+							<separator colspan="4" string="Albaranes de Despacho" />
+							<field colspan="4" name="picking_ids" nolabel="1"/>
+						</group>
+						<group colspan="4">
+							<separator colspan="4" string="Guías de Remisión" />
+							<field colspan="4" name="delivery_note_ids" nolabel="1" />
+						</group>
+					</group>
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

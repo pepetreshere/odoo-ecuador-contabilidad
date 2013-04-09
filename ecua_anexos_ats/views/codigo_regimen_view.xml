@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+            
+            <record model="ir.ui.view" id="sri_code_regimen_tree_view">
+                <field name="name">sri.code.regimen.tree</field>
+                <field name="model">sri.code.regimen</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Code Regimen" editable="top">
+                        <field name="code"/>
+                        <field name="name"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sri_code_regimen_form_view">
+                <field name="name">sri.code.regimen.form</field>
+                <field name="model">sri.code.regimen</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Code Regimen">
+                        <field name="code" select="1"/>
+                        <field name="name" select="1"/>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.actions.act_window" id="action_sri_code_regimen_tree_view">
+                <field name="name">Code Regimen</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">sri.code.regimen</field>
+		   <!-- <field name="domain">[('field_name','condition',criteria)]</field>-->
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="sri_code_regimen_tree_view"/>
+            </record>
+
+			<menuitem id="sri_code_regimen_menu" name="Code Regimen" parent="ats_configuration_menu" action="action_sri_code_regimen_tree_view"/>
+    
+    </data>
+</openerp>

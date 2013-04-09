@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+	    <!-- Deberia ser el grupo Account Payment, ya que ese es el grupo que realiza pagos
+	         o se deberia usar otro grupo del sistema.
+	         
+	         Sri manager es un privilegio muy alto. 
+	    
+	    <record id="base.group_authorization_sri_admin" model="res.groups">
+	        <field name="name">Authorization SRI Manager</field>
+	    </record>
+	    -->
+    </data>
+</openerp>

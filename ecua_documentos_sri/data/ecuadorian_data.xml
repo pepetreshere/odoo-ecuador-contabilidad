@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="1">
+	
+		<record id="consumidor_final" model="res.partner">
+			<field name="name">Consumidor Final</field>
+			<field name="ref">9999999999999</field>
+		</record>
+		
+<!-- 		<record id="address" model="res.partner.address"> -->
+<!-- 			<field name="partner_id" ref="consumidor_final"/> -->
+<!-- 			<field name="street">Ecuador</field> -->
+<!-- 		</record> -->
+		
+		<record model="ir.sequence.type" id="account_invoice_out_type_sequence">
+			<field name="name">Facturas en Ventas</field>
+			<field name="code">account.invoice.out_invoice</field>
+		</record>
+
+		<record model="ir.sequence.type" id="account_invoice_out_refund_type_sequence">
+			<field name="name">Notas de Crédito Clientes</field>
+			<field name="code">account.invoice.out_refund</field>
+		</record>
+
+
+		<!-- Create for expirate the authorization -->
+		<record forcecreate="True" id="ir_cron_expirate_auth"
+			model="ir.cron">
+			<field name="name">Expiration date Authorization</field>
+			<field eval="True" name="active" />
+			<field name="user_id" ref="base.user_root" />
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field eval="False" name="doall" />
+			<field eval="'sri.authorization'" name="model" />
+			<field eval="'verify_expiration_date'" name="function" />
+			<field eval="'(False,)'" name="args" />
+		</record>
+		
+	</data>
+</openerp>

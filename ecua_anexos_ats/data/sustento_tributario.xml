@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+		<record id="sts_00" model="sri.tax.support">
+		<field name="code">00</field>
+		<field name="name">No aplica</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'),ref('02'),ref('04'),ref('05'),ref('42')])]"/>
+		</record>
+
+		<record id="sts_01" model="sri.tax.support">
+		<field name="code">01</field>
+		<field name="name">Crédito Tributario para declaración de IVA (servicios y bienes distintos de inventarios y activos fijos)</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'),ref('03'),ref('04'),ref('05'),ref('11'),ref('12'),ref('21'),ref('41'),ref('43'),ref('47'),ref('48')])]"/>
+		</record>
+
+		<record id="sts_02" model="sri.tax.support">
+		<field name="code">02</field>
+		<field name="name">Costo o Gasto para declaración de IR (servicios y bienes distintos de inventarios y activos fijos)</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'),ref('02'),ref('03'),ref('04'),ref('05'),ref('11'),ref('12'),ref('15'),ref('19'),ref('20'),ref('21'),ref('41'),ref('43'),ref('47'),ref('48')])]"/>
+		</record>
+
+		<record id="sts_03" model="sri.tax.support">
+		<field name="code">03</field>
+		<field name="name">Activo Fijo - Crédito Tributario para declaración de IVA</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'), ref('03'), ref('04'), ref('05'), ref('41'), ref('47'), ref('48')])]"/>
+		</record>
+
+		<record id="sts_04" model="sri.tax.support">
+		<field name="code">04</field>
+		<field name="name">Activo Fijo - Costo o Gasto para declaración de IR</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'), ref('02'), ref('03'), ref('04'), ref('05'), ref('15'), ref('41'), ref('47'), ref('48')])]"/>
+		</record>
+
+		<record id="sts_05" model="sri.tax.support">
+		<field name="code">05</field>
+		<field name="name">Liquidación Gastos de Viaje, hospedaje y alimentación Gastos IR (a nombre de empleados y no de la empresa)</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'), ref('02'), ref('03'), ref('04'), ref('05'), ref('11'), ref('15'), ref('41')])]"/>
+		</record>
+
+		<record id="sts_06" model="sri.tax.support">
+		<field name="code">06</field>
+		<field name="name">Inventario - Crédito Tributario para declaración de IVA</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'), ref('03'), ref('04'), ref('05'), ref('41'), ref('43'), ref('47'), ref('48')])]"/>
+		</record>
+
+		<record id="sts_07" model="sri.tax.support">
+		<field name="code">07</field>
+		<field name="name">Inventario - Costo o Gasto para declaración de IR</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'), ref('02'), ref('03'), ref('04'), ref('05'), ref('15'), ref('41'), ref('43'), ref('47'), ref('48')])]"/>
+		</record>
+
+		<record id="sts_08" model="sri.tax.support">
+		<field name="code">08</field>
+		<field name="name">Valor pagado para solicitar Reembolso de Gasto (intermediario)</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'), ref('02'), ref('03'), ref('04'), ref('05'), ref('21')])]"/>
+		</record>
+
+		<record id="sts_09" model="sri.tax.support">
+		<field name="code">09</field>
+		<field name="name">Reembolso por Siniestros</field>
+		<field name="voucher_type_ids" eval="[(6,0,[ref('01'),ref('02'),ref('45'), ref('04'), ref('05')])]"/>
+		</record>
+    
+    </data>
+</openerp>

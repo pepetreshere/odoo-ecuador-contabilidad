@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<!-- Facturas de Ventas -->
+
+		<record model="ir.ui.view" id="account_invoice_customer_form_view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<field name="move_id" position="after">
+					<field name="transaction_usage_id" domain="[('name','in',('EXPORTACION','VENTA'))]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_invoice_customer_form_view2">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<field name="partner_id" position="replace">
+					<field string="Customer" name="partner_id"
+						on_change="onchange_partner_id(type,partner_id,voucher_type_id,date_invoice,payment_term, partner_bank_id,company_id)"
+						groups="base.group_user" context="{'search_default_customer': 1}" />
+				</field>
+			</field>
+		</record>
+
+		<!-- Facturas de Compras -->
+
+		<record model="ir.ui.view" id="account_invoice_supplier_form_view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<field name="move_id" position="after">
+					<field name="transaction_usage_id" domain="[('name','=','COMPRA')]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+					<field name="tax_support_id" domain="[('voucher_type_ids', 'in', [voucher_type_id])]"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_invoice_supplier_form_view2">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<field name="partner_id" position="replace">
+					<field string="Supplier" name="partner_id"
+						on_change="onchange_partner_id(type,partner_id,voucher_type_id,date_invoice,payment_term, partner_bank_id,company_id)"
+						context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}" />
+				</field>
+			</field>
+		</record>
+
+		<!-- Notas de Crédito Ventas -->
+
+		<record model="ir.ui.view" id="account_credit_note_customer_form_invoice_view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id"
+				ref="ecua_notas_credito_manual.customer_credit_note_invoice_view_form" />
+			<field name="arch" type="xml">
+				<field name="move_id" position="after">
+					<field name="transaction_usage_id" domain="[('name','in',('EXPORTACION','VENTA'))]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_credit_note_customer_form_invoice_view2">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id"
+				ref="ecua_notas_credito_manual.customer_credit_note_invoice_view_form" />
+			<field name="arch" type="xml">
+				<field name="partner_id" position="replace">
+					<field string="Customer" name="partner_id"
+						on_change="onchange_partner_id(type,partner_id,voucher_type_id,date_invoice,payment_term, partner_bank_id,company_id)"
+						context="{'search_default_customer': 1}" />
+				</field>
+			</field>
+		</record>
+
+		<!-- Notas de Crédito Compras -->
+
+		<record model="ir.ui.view" id="account_credit_note_supplier_form_view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id"
+				ref="ecua_notas_credito_manual.invoice_supplier_credit_note_form" />
+			<field name="arch" type="xml">
+				<field name="move_id" position="after">
+					<field name="transaction_usage_id" domain="[('name','=','COMPRA')]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+					<field name="tax_support_id" domain="[('voucher_type_ids', 'in', [voucher_type_id])]"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_credit_note_supplier_form_view2">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id"
+				ref="ecua_notas_credito_manual.invoice_supplier_credit_note_form" />
+			<field name="arch" type="xml">
+				<field name="partner_id" position="replace">
+					<field string="Supplier" name="partner_id"
+						on_change="onchange_partner_id(type,partner_id,voucher_type_id,date_invoice,payment_term, partner_bank_id,company_id)"
+						context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}" />
+				</field>
+			</field>
+		</record>
+
+		<!-- Liquidación de Compras -->
+
+		<record model="ir.ui.view" id="account_invoice_liquidation_form_view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id"
+				ref="ecua_liquidacion_compras.invoice_supplier_liquidation_form" />
+			<field name="arch" type="xml">
+				<field name="move_id" position="after">
+					<field name="transaction_usage_id" domain="[('name','=','COMPRA')]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+					<field name="tax_support_id" domain="[('voucher_type_ids', 'in', [voucher_type_id])]"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_invoice_liquidation_form_view2">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id"
+				ref="ecua_liquidacion_compras.invoice_supplier_liquidation_form" />
+			<field name="arch" type="xml">
+				<field name="partner_id" position="replace">
+					<field string="Supplier" name="partner_id"
+						on_change="onchange_partner_id(type,partner_id, voucher_type_id, date_invoice,payment_term, partner_bank_id,company_id)"
+						context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}"
+						domain="[('type_ref','in',('cedula', 'consumidor','pasaporte'))]" />
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

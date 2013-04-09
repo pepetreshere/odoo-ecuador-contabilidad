@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<reoc>
+	<numeroRuc>0915068258001</numeroRuc>
+	<anio>2011</anio>
+	<mes>12</mes>
+
+	<compras>
+		<detalleCompras>
+			<tpIdProv>01</tpIdProv>
+			<idProv>0916899917001</idProv>
+			<tipoComp>1</tipoComp>
+			<aut>6554632121</aut>
+			<estab>001</estab>
+			<ptoEmi>001</ptoEmi>
+			<sec>2</sec>
+			<fechaEmiCom>21/12/2011</fechaEmiCom>
+			<air>
+				<detalleAir>
+					<codRetAir>312</codRetAir>
+					<porcentaje>1.00</porcentaje>
+					<base0>0.00</base0>
+					<baseGrav>18.00</baseGrav>
+					<baseNoGrav>0.00</baseNoGrav>
+					<valRetAir>1.50</valRetAir>
+				</detalleAir>
+			</air>
+
+			<autRet>1234567895</autRet>
+			<estabRet>001</estabRet>
+			<ptoEmiRet>001</ptoEmiRet>
+			<secRet>2</secRet>
+			<fechaEmiRet>21/12/2011</fechaEmiRet>
+
+		</detalleCompras>
+
+		<detalleCompras>
+			<tpIdProv>01</tpIdProv>
+			<idProv>0916899917001</idProv>
+			<tipoComp>1</tipoComp>
+			<aut>2143245343</aut>
+			<estab>001</estab>
+			<ptoEmi>001</ptoEmi>
+			<sec>12</sec>
+			<fechaEmiCom>21/12/2011</fechaEmiCom>
+			<air>
+				<detalleAir>
+					<codRetAir>307</codRetAir>
+					<porcentaje>2.00</porcentaje>
+					<base0>0.00</base0>
+					<baseGrav>18.00</baseGrav>
+					<baseNoGrav>0.00</baseNoGrav>
+					<valRetAir>3.00</valRetAir>
+				</detalleAir>
+			</air>
+
+			<autRet>1234567895</autRet>
+			<estabRet>001</estabRet>
+			<ptoEmiRet>001</ptoEmiRet>
+			<secRet>1</secRet>
+			<fechaEmiRet>21/12/2011</fechaEmiRet>
+
+		</detalleCompras>
+
+		<detalleCompras>
+			<tpIdProv>01</tpIdProv>
+			<idProv>0916899917001</idProv>
+			<tipoComp>1</tipoComp>
+			<aut>6822211111</aut>
+			<estab>001</estab>
+			<ptoEmi>001</ptoEmi>
+			<sec>65</sec>
+			<fechaEmiCom>01/12/2011</fechaEmiCom>
+			<air>
+				<detalleAir>
+					<codRetAir>332</codRetAir>
+					<porcentaje>0.0</porcentaje>
+					<base0>0.00</base0>
+					<baseGrav>50.00</baseGrav>
+					<baseNoGrav>0.00</baseNoGrav>
+					<valRetAir>0.00</valRetAir>
+				</detalleAir>
+			</air>
+
+
+		</detalleCompras>
+	</compras>
+</reoc>

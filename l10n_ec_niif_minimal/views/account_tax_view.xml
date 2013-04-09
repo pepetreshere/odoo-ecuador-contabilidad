@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="account_tax_form_view">
+			<field name="name">account.tax.form</field>
+			<field name="model">account.tax</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.view_tax_form" />
+			<field name="arch" type="xml">
+				 <notebook position="inside">
+					<page string="Ecuadorian Settings">
+						<field name="type_ec"></field>
+						<newline/>
+						<group colspan="4" col="2">
+							<field name="assets"></field>
+							<field name="imports"></field>
+							<field name="exports"></field>
+						</group>
+					</page>
+				</notebook>
+
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_tax_template_form_view">
+			<field name="name">account.tax.template.form</field>
+			<field name="model">account.tax.template</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.view_account_tax_template_form" />
+			<field name="arch" type="xml">
+				 <notebook position="inside">
+					<page string="Ecuadorian Settings">
+						<field name="type_ec"></field>
+						<newline/>
+						<group colspan="4" col="2">
+							<field name="assets"></field>
+							<field name="imports"></field>
+							<field name="exports"></field>
+						</group>
+					</page>
+				</notebook>
+
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_tax_tree_view">
+			<field name="name">account.tax.tree</field>
+			<field name="model">account.tax</field>
+			<field name="type">tree</field>
+			<field name="inherit_id" ref="account.view_tax_tree" />
+			<field name="arch" type="xml">
+<!--				<field name="name" position="after">-->
+<!--					<field name="base_code_id"></field>-->
+<!--					<field name="tax_code_id"></field>-->
+<!--				</field>-->
+				<field name="price_include" position="replace"></field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

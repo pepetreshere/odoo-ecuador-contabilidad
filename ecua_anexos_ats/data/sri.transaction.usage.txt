@@ -1,0 +1,97 @@
+﻿<record id=”01” model=”sri.transaction.usage”>
+	<field name=”code”>01</field>
+	<field name=”name”>COMPRA</field>
+	<field name=”type_identification”>RUC</field>
+</record>
+
+<record id=”02” model=”sri.transaction.usage”>
+	<field name=”code”>02</field>
+	<field name=”name”>COMPRA</field>
+	<field name=”type_identification”>CEDULA</field>
+</record>
+
+<record id=”03” model=”sri.transaction.usage”>
+	<field name=”code”>03</field>
+	<field name=”name”>COMPRA</field>
+	<field name=”type_identification”>PASAPORTE</field>
+</record>
+
+<record id=”04” model=”sri.transaction.usage”>
+	<field name=”code”>04</field>
+	<field name=”name”>VENTA</field>
+	<field name=”type_identification”>RUC</field>
+</record>
+
+<record id=”05” model=”sri.transaction.usage”>
+	<field name=”code”>05</field>
+	<field name=”name”>VENTA</field>
+	<field name=”type_identification”>CEDULA</field>
+</record>
+
+<record id=”06” model=”sri.transaction.usage”>
+	<field name=”code”>06</field>
+	<field name=”name”>VENTA</field>
+	<field name=”type_identification”>PASAPORTE</field>
+</record>
+
+<record id=”07” model=”sri.transaction.usage”>
+	<field name=”code”>07</field>
+	<field name=”name”>VENTA</field>
+	<field name=”type_identification”>CONSUMIDOR FINAL</field>
+</record>
+
+<record id=”09” model=”sri.transaction.usage”>
+	<field name=”code”>09</field>
+	<field name=”name”>EXPORTACION</field>
+	<field name=”type_identification”>-</field>
+</record>
+
+<record id=”10” model=”sri.transaction.usage”>
+	<field name=”code”>10</field>
+	<field name=”name”>TARJETA DE CREDITO</field>
+	<field name=”type_identification”>RUC</field>
+</record>
+
+<record id=”11” model=”sri.transaction.usage”>
+	<field name=”code”>11</field>
+	<field name=”name”>TARJETA DE CREDITO</field>
+	<field name=”type_identification”>PASAPORTE</field>
+</record>
+
+<record id=”12” model=”sri.transaction.usage”>
+	<field name=”code”>12</field>
+	<field name=”name”>RENDIMIENTOS FINANCIEROS</field>
+	<field name=”type_identification”>RUC</field>
+</record>
+
+<record id=”13” model=”sri.transaction.usage”>
+	<field name=”code”>13</field>
+	<field name=”name”>RENDIMIENTOS FINANCIEROS</field>
+	<field name=”type_identification”>CEDULA</field>
+</record>
+
+<record id=”14” model=”sri.transaction.usage”>
+	<field name=”code”>14</field>
+	<field name=”name”>RENDIMIENTOS FINANCIEROS</field>
+	<field name=”type_identification”>PASAPORTE</field>
+</record>
+
+<record id=”15” model=”sri.transaction.usage”>
+	<field name=”code”>15</field>
+	<field name=”name”>FONDOS Y FIDEICOMISOS</field>
+	<field name=”type_identification”>RUC</field>
+</record>
+
+<record id=”16” model=”sri.transaction.usage”>
+	<field name=”code”>16</field>
+	<field name=”name”>FONDOS Y FIDEICOMISOS</field>
+	<field name=”type_identification”>CEDULA</field>
+</record>
+
+<record id=”17” model=”sri.transaction.usage”>
+	<field name=”code”>17</field>
+	<field name=”name”>FONDOS Y FIDEICOMISOS</field>
+	<field name=”type_identification”>PASAPORTE</field>
+</record>
+
+

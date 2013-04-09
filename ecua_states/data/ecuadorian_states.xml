@@ -1,0 +1,1420 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+   <data>
+
+   <!--Region-->
+       <record model='res.region' id='COS'>
+           <field name='name'>COSTA</field>
+           <field name='code'>COS</field> 
+       </record>
+
+       <record model='res.region' id='SIE'>
+           <field name='name'>SIERRA</field>
+           <field name='code'>SIE</field> 
+       </record>
+
+       <record model='res.region' id='ORI'>
+           <field name='name'>ORIENTE</field>
+           <field name='code'>ORI</field> 
+       </record>
+
+       <record model='res.region' id='GAL'>
+           <field name='name'>GALAPAGOS</field>
+           <field name='code'>GAL</field> 
+       </record>
+
+       <record model='res.region' id='AUS'>
+           <field name='name'>AUSTRO</field>
+           <field name='code'>AUS</field> 
+       </record>
+
+
+
+<!--States-->
+       <record model='res.country.state' id='1001'>
+           <field name='name'>AZUAY</field>
+           <field name='code'>01</field> 
+           <field search="[('code','=','AUS')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1002'>
+           <field name='name'>BOLIVAR</field>
+           <field name='code'>02</field> 
+           <field search="[('code','=','SIE')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1003'>
+           <field name='name'>CAÑAR</field>
+           <field name='code'>03</field> 
+           <field search="[('code','=','AUS')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1004'>
+           <field name='name'>CARCHI</field>
+           <field name='code'>04</field> 
+           <field search="[('code','=','SIE')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1005'>
+           <field name='name'>COTOPAXI</field>
+           <field name='code'>05</field> 
+           <field search="[('code','=','SIE')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1006'>
+           <field name='name'>CHIMBORAZO</field>
+           <field name='code'>06</field> 
+           <field search="[('code','=','SIE')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1007'>
+           <field name='name'>EL ORO</field>
+           <field name='code'>07</field> 
+           <field search="[('code','=','COS')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1008'>
+           <field name='name'>ESMERALDAS</field>
+           <field name='code'>08</field> 
+           <field search="[('code','=','COS')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1009'>
+           <field name='name'>GUAYAS</field>
+           <field name='code'>09</field> 
+           <field search="[('code','=','COS')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1010'>
+           <field name='name'>IMBABURA</field>
+           <field name='code'>10</field> 
+           <field search="[('code','=','SIE')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1011'>
+           <field name='name'>LOJA</field>
+           <field name='code'>11</field> 
+           <field search="[('code','=','AUS')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1012'>
+           <field name='name'>LOS RIOS</field>
+           <field name='code'>12</field> 
+           <field search="[('code','=','COS')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1013'>
+           <field name='name'>MANABI</field>
+           <field name='code'>13</field> 
+           <field search="[('code','=','COS')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1014'>
+           <field name='name'>MORONA SANTIAGO</field>
+           <field name='code'>14</field> 
+           <field search="[('code','=','ORI')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1015'>
+           <field name='name'>NAPO</field>
+           <field name='code'>15</field> 
+           <field search="[('code','=','ORI')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1016'>
+           <field name='name'>PASTAZA</field>
+           <field name='code'>16</field> 
+           <field search="[('code','=','ORI')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1017'>
+           <field name='name'>PICHINCHA</field>
+           <field name='code'>17</field> 
+           <field search="[('code','=','SIE')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1018'>
+           <field name='name'>TUNGURAHUA</field>
+           <field name='code'>18</field> 
+           <field search="[('code','=','SIE')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1019'>
+           <field name='name'>ZAMORA CHINCHIPE</field>
+           <field name='code'>19</field> 
+           <field search="[('code','=','ORI')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1020'>
+           <field name='name'>GALAPAGOS</field>
+           <field name='code'>20</field> 
+           <field search="[('code','=','GAL')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1021'>
+           <field name='name'>SUCUMBIOS</field>
+           <field name='code'>21</field> 
+           <field search="[('code','=','ORI')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1022'>
+           <field name='name'>ORELLANA</field>
+           <field name='code'>22</field> 
+           <field search="[('code','=','ORI')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1023'>
+           <field name='name'>SANTO DOMINGO DE LOS TSACHILAS</field>
+           <field name='code'>23</field> 
+           <field search="[('code','=','SIE')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+       <record model='res.country.state' id='1024'>
+           <field name='name'>SANTA ELENA</field>
+           <field name='code'>24</field> 
+           <field search="[('code','=','COS')]" model='res.region' name='region_id'/>
+           <field search="[('code','=','EC')]" model='res.country' name='country_id'/>
+       </record>
+
+	   <!--Cities-->
+	
+	   <record id="res_EC10002" model="city.city">
+	             <field name="name">ANTONIO ANTE (ATUNTAQUI)</field>
+	             <field name="zipcode">EC10002</field>
+	             <field search="[('code','=','10')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	
+	   <record id="res_EC10003" model="city.city">
+	             <field name="name">COTACACHI</field>
+	             <field name="zipcode">EC10003</field>
+	             <field search="[('code','=','10')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC10001" model="city.city">
+	             <field name="name">IBARRA</field>
+	             <field name="zipcode">EC10001</field>
+	             <field search="[('code','=','10')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC10004" model="city.city">
+	             <field name="name">OTAVALO</field>
+	             <field name="zipcode">EC10004</field>
+	             <field search="[('code','=','10')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC10005" model="city.city">
+	             <field name="name">PIMAMPIRO</field>
+	             <field name="zipcode">EC10005</field>
+	             <field search="[('code','=','10')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC10006" model="city.city">
+	             <field name="name">SAN MIGUEL DE URCUQUI</field>
+	             <field name="zipcode">EC10006</field>
+	             <field search="[('code','=','10')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11002" model="city.city">
+	             <field name="name">CALVAS (CARIAMANGA)</field>
+	             <field name="zipcode">EC11002</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11003" model="city.city">
+	             <field name="name">CATAMAYO</field>
+	             <field name="zipcode">EC11003</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11004" model="city.city">
+	             <field name="name">CELICA</field>
+	             <field name="zipcode">EC11004</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11005" model="city.city">
+	             <field name="name">CHAGUARPAMBA</field>
+	             <field name="zipcode">EC11005</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11006" model="city.city">
+	             <field name="name">ESPINDOLA</field>
+	             <field name="zipcode">EC11006</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11007" model="city.city">
+	             <field name="name">GONZANAMA</field>
+	             <field name="zipcode">EC11007</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11001" model="city.city">
+	             <field name="name">LOJA</field>
+	             <field name="zipcode">EC11001</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11008" model="city.city">
+	             <field name="name">MACARA</field>
+	             <field name="zipcode">EC11008</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11016" model="city.city">
+	             <field name="name">OLMEDO</field>
+	             <field name="zipcode">EC11016</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11009" model="city.city">
+	             <field name="name">PALTAS (CATACOCHA)</field>
+	             <field name="zipcode">EC11009</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11014" model="city.city">
+	             <field name="name">PINDAL</field>
+	             <field name="zipcode">EC11014</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11010" model="city.city">
+	             <field name="name">PUYANGO</field>
+	             <field name="zipcode">EC11010</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11015" model="city.city">
+	             <field name="name">QUILANGA</field>
+	             <field name="zipcode">EC11015</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11011" model="city.city">
+	             <field name="name">SARAGURO</field>
+	             <field name="zipcode">EC11011</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11012" model="city.city">
+	             <field name="name">SOZORANGA</field>
+	             <field name="zipcode">EC11012</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC11013" model="city.city">
+	             <field name="name">ZAPOTILLO</field>
+	             <field name="zipcode">EC11013</field>
+	             <field search="[('code','=','11')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12002" model="city.city">
+	             <field name="name">BABA</field>
+	             <field name="zipcode">EC12002</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12001" model="city.city">
+	             <field name="name">BABAHOYO</field>
+	             <field name="zipcode">EC12001</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12010" model="city.city">
+	             <field name="name">BUENA FE</field>
+	             <field name="zipcode">EC12010</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12012" model="city.city">
+	             <field name="name">MOCACHE</field>
+	             <field name="zipcode">EC12012</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12003" model="city.city">
+	             <field name="name">MONTALVO</field>
+	             <field name="zipcode">EC12003</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12009" model="city.city">
+	             <field name="name">PALENQUE</field>
+	             <field name="zipcode">EC12009</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12004" model="city.city">
+	             <field name="name">PUEBLOVIEJO</field>
+	             <field name="zipcode">EC12004</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12005" model="city.city">
+	             <field name="name">QUEVEDO</field>
+	             <field name="zipcode">EC12005</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12013" model="city.city">
+	             <field name="name">QUINSALOMA</field>
+	             <field name="zipcode">EC12013</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12006" model="city.city">
+	             <field name="name">URDANETA (CATARAMA)</field>
+	             <field name="zipcode">EC12006</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12011" model="city.city">
+	             <field name="name">VALENCIA</field>
+	             <field name="zipcode">EC12011</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12007" model="city.city">
+	             <field name="name">VENTANAS</field>
+	             <field name="zipcode">EC12007</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC12008" model="city.city">
+	             <field name="name">VINCES</field>
+	             <field name="zipcode">EC12008</field>
+	             <field search="[('code','=','12')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13016" model="city.city">
+	             <field name="name">24 DE MAYO</field>
+	             <field name="zipcode">EC13016</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13002" model="city.city">
+	             <field name="name">BOLIVAR (CALCETA)</field>
+	             <field name="zipcode">EC13002</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13003" model="city.city">
+	             <field name="name">CHONE</field>
+	             <field name="zipcode">EC13003</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13004" model="city.city">
+	             <field name="name">EL CARMEN</field>
+	             <field name="zipcode">EC13004</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13005" model="city.city">
+	             <field name="name">FLAVIO ALFARO</field>
+	             <field name="zipcode">EC13005</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13020" model="city.city">
+	             <field name="name">JAMA</field>
+	             <field name="zipcode">EC13020</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13021" model="city.city">
+	             <field name="name">JARAMIJO</field>
+	             <field name="zipcode">EC13021</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13006" model="city.city">
+	             <field name="name">JIPIJAPA</field>
+	             <field name="zipcode">EC13006</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13007" model="city.city">
+	             <field name="name">JUNIN</field>
+	             <field name="zipcode">EC13007</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13008" model="city.city">
+	             <field name="name">MANTA</field>
+	             <field name="zipcode">EC13008</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13009" model="city.city">
+	             <field name="name">MONTECRISTI  </field>
+	             <field name="zipcode">EC13009</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13018" model="city.city">
+	             <field name="name">OLMEDO</field>
+	             <field name="zipcode">EC13018</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13010" model="city.city">
+	             <field name="name">PAJAN</field>
+	             <field name="zipcode">EC13010</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13017" model="city.city">
+	             <field name="name">PEDERNALES</field>
+	             <field name="zipcode">EC13017</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13011" model="city.city">
+	             <field name="name">PICHINCHA</field>
+	             <field name="zipcode">EC13011</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13001" model="city.city">
+	             <field name="name">PORTOVIEJO</field>
+	             <field name="zipcode">EC13001</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13019" model="city.city">
+	             <field name="name">PUERTO LOPEZ</field>
+	             <field name="zipcode">EC13019</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13012" model="city.city">
+	             <field name="name">ROCAFUERTE</field>
+	             <field name="zipcode">EC13012</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13022" model="city.city">
+	             <field name="name">SAN VICENTE</field>
+	             <field name="zipcode">EC13022</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13013" model="city.city">
+	             <field name="name">SANTA ANA</field>
+	             <field name="zipcode">EC13013</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13014" model="city.city">
+	             <field name="name">SUCRE (BAHIA DE CARAQUEZ)</field>
+	             <field name="zipcode">EC13014</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC13015" model="city.city">
+	             <field name="name">TOSAGUA</field>
+	             <field name="zipcode">EC13015</field>
+	             <field search="[('code','=','13')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14002" model="city.city">
+	             <field name="name">GUALAQUIZA</field>
+	             <field name="zipcode">EC14002</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14007" model="city.city">
+	             <field name="name">HUAMBOYA</field>
+	             <field name="zipcode">EC14007</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14003" model="city.city">
+	             <field name="name">LIMON INDANZA</field>
+	             <field name="zipcode">EC14003</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14010" model="city.city">
+	             <field name="name">LOGROÑO</field>
+	             <field name="zipcode">EC14010</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14001" model="city.city">
+	             <field name="name">MORONA</field>
+	             <field name="zipcode">EC14001</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14011" model="city.city">
+	             <field name="name">PABLO SEXTO</field>
+	             <field name="zipcode">EC14011</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14004" model="city.city">
+	             <field name="name">PALORA</field>
+	             <field name="zipcode">EC14004</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14008" model="city.city">
+	             <field name="name">SAN JUAN BOSCO</field>
+	             <field name="zipcode">EC14008</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14005" model="city.city">
+	             <field name="name">SANTIAGO</field>
+	             <field name="zipcode">EC14005</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14006" model="city.city">
+	             <field name="name">SUCUA</field>
+	             <field name="zipcode">EC14006</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14009" model="city.city">
+	             <field name="name">TAISHA</field>
+	             <field name="zipcode">EC14009</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC14012" model="city.city">
+	             <field name="name">TIWINTZA</field>
+	             <field name="zipcode">EC14012</field>
+	             <field search="[('code','=','14')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC15003" model="city.city">
+	             <field name="name">ARCHIDONA</field>
+	             <field name="zipcode">EC15003</field>
+	             <field search="[('code','=','15')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC15009" model="city.city">
+	             <field name="name">CARLOS JULIO AROSEMENA TOLA</field>
+	             <field name="zipcode">EC15009</field>
+	             <field search="[('code','=','15')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC15004" model="city.city">
+	             <field name="name">EL CHACO</field>
+	             <field name="zipcode">EC15004</field>
+	             <field search="[('code','=','15')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC15007" model="city.city">
+	             <field name="name">QUIJOS</field>
+	             <field name="zipcode">EC15007</field>
+	             <field search="[('code','=','15')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC15001" model="city.city">
+	             <field name="name">TENA</field>
+	             <field name="zipcode">EC15001</field>
+	             <field search="[('code','=','15')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC16004" model="city.city">
+	             <field name="name">ARAJUNO</field>
+	             <field name="zipcode">EC16004</field>
+	             <field search="[('code','=','16')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC16002" model="city.city">
+	             <field name="name">MERA</field>
+	             <field name="zipcode">EC16002</field>
+	             <field search="[('code','=','16')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC16001" model="city.city">
+	             <field name="name">PASTAZA (PUYO)</field>
+	             <field name="zipcode">EC16001</field>
+	             <field search="[('code','=','16')]" model='res.country.state' name='state_id'/>
+	   </record> http://www.carchi.gov.ec
+	
+	   <record id="res_EC16003" model="city.city">
+	             <field name="name">SANTA CLARA</field>
+	             <field name="zipcode">EC16003</field>
+	             <field search="[('code','=','16')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC17002" model="city.city">
+	             <field name="name">CAYAMBE</field>
+	             <field name="zipcode">EC17002</field>
+	             <field search="[('code','=','17')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC17003" model="city.city">
+	             <field name="name">MEJIA</field>
+	             <field name="zipcode">EC17003</field>
+	             <field search="[('code','=','17')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC17004" model="city.city">
+	             <field name="name">PEDRO MONCAYO</field>
+	             <field name="zipcode">EC17004</field>
+	             <field search="[('code','=','17')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC17008" model="city.city">
+	             <field name="name">PEDRO VICENTE MALDONADO</field>
+	             <field name="zipcode">EC17008</field>
+	             <field search="[('code','=','17')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC17009" model="city.city">
+	             <field name="name">PUERTO QUITO</field>
+	             <field name="zipcode">EC17009</field>
+	             <field search="[('code','=','17')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC17001" model="city.city">
+	             <field name="name">QUITO</field>
+	             <field name="zipcode">EC17001</field>
+	             <field search="[('code','=','17')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC17005" model="city.city">
+	             <field name="name">RUMIÑAHUI</field>
+	             <field name="zipcode">EC17005</field>
+	             <field search="[('code','=','17')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC17007" model="city.city">
+	             <field name="name">SAN MIGUEL DE LOS BANCOS</field>
+	             <field name="zipcode">EC17007</field>
+	             <field search="[('code','=','17')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC18002" model="city.city">
+	             <field name="name">BAÑOS DE AGUA SANTA</field>
+	             <field name="zipcode">EC18002</field>
+	             <field search="[('code','=','18')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC18003" model="city.city">
+	             <field name="name">CEVALLOS</field>
+	             <field name="zipcode">EC18003</field>
+	             <field search="[('code','=','18')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC18004" model="city.city">
+	             <field name="name">MOCHA</field>
+	             <field name="zipcode">EC18004</field>
+	             <field search="[('code','=','18')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC18005" model="city.city">
+	             <field name="name">PATATE</field>
+	             <field name="zipcode">EC18005</field>
+	             <field search="[('code','=','18')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC18006" model="city.city">
+	             <field name="name">QUERO</field>
+	             <field name="zipcode">EC18006</field>
+	             <field search="[('code','=','18')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC18007" model="city.city">
+	             <field name="name">SAN PEDRO DE PELILEO</field>
+	             <field name="zipcode">EC18007</field>
+	             <field search="[('code','=','18')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC18008" model="city.city">
+	             <field name="name">SANTIAGO DE PILLARO</field>
+	             <field name="zipcode">EC18008</field>
+	             <field search="[('code','=','18')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC18009" model="city.city">
+	             <field name="name">TISALEO</field>
+	             <field name="zipcode">EC18009</field>
+	             <field search="[('code','=','18')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC19007" model="city.city">
+	             <field name="name">CENTINELA DEL CONDOR</field>
+	             <field name="zipcode">EC19007</field>
+	             <field search="[('code','=','19')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC19002" model="city.city">
+	             <field name="name">CHINCHIPE</field>
+	             <field name="zipcode">EC19002</field>
+	             <field search="[('code','=','19')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC19006" model="city.city">
+	             <field name="name">EL PANGUI</field>
+	             <field name="zipcode">EC19006</field>
+	             <field search="[('code','=','19')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC19003" model="city.city">
+	             <field name="name">NANGARITZA</field>
+	             <field name="zipcode">EC19003</field>
+	             <field search="[('code','=','19')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC19008" model="city.city">
+	             <field name="name">PALANDA</field>
+	             <field name="zipcode">EC19008</field>
+	             <field search="[('code','=','19')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC19009" model="city.city">
+	             <field name="name">PAQUISHA</field>
+	             <field name="zipcode">EC19009</field>
+	             <field search="[('code','=','19')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC19004" model="city.city">
+	             <field name="name">YACUAMBI</field>
+	             <field name="zipcode">EC19004</field>
+	             <field search="[('code','=','19')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC19005" model="city.city">
+	             <field name="name">YANTZAZA</field>
+	             <field name="zipcode">EC19005</field>
+	             <field search="[('code','=','19')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC19001" model="city.city">
+	             <field name="name">ZAMORA</field>
+	             <field name="zipcode">EC19001</field>
+	             <field search="[('code','=','19')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC20002" model="city.city">
+	             <field name="name">ISABELA</field>
+	             <field name="zipcode">EC20002</field>
+	             <field search="[('code','=','20')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC20001" model="city.city">
+	             <field name="name">SAN CRISTOBAL</field>
+	             <field name="zipcode">EC20001</field>
+	             <field search="[('code','=','20')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC20003" model="city.city">
+	             <field name="name">SANTA CRUZ (PUERTO AYORA)</field>
+	             <field name="zipcode">EC20003</field>
+	             <field search="[('code','=','20')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC21006" model="city.city">
+	             <field name="name">CASCALES</field>
+	             <field name="zipcode">EC21006</field>
+	             <field search="[('code','=','21')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC21007" model="city.city">
+	             <field name="name">CUYABENO</field>
+	             <field name="zipcode">EC21007</field>
+	             <field search="[('code','=','21')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC21002" model="city.city">
+	             <field name="name">GONZALO PIZARRO</field>
+	             <field name="zipcode">EC21002</field>
+	             <field search="[('code','=','21')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC21001" model="city.city">
+	             <field name="name">LAGO AGRIO</field>
+	             <field name="zipcode">EC21001</field>
+	             <field search="[('code','=','21')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC21003" model="city.city">
+	             <field name="name">PUTUMAYO</field>
+	             <field name="zipcode">EC21003</field>
+	             <field search="[('code','=','21')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC21004" model="city.city">
+	             <field name="name">SHUSHUFINDI</field>
+	             <field name="zipcode">EC21004</field>
+	             <field search="[('code','=','21')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC21005" model="city.city">
+	             <field name="name">SUCUMBIOS</field>
+	             <field name="zipcode">EC21005</field>
+	             <field search="[('code','=','21')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC22002" model="city.city">
+	             <field name="name">AGUARICO</field>
+	             <field name="zipcode">EC22002</field>
+	             <field search="[('code','=','22')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC22003" model="city.city">
+	             <field name="name">LA JOYA DE LOS SACHAS</field>
+	             <field name="zipcode">EC22003</field>
+	             <field search="[('code','=','22')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC22004" model="city.city">
+	             <field name="name">LORETO</field>
+	             <field name="zipcode">EC22004</field>
+	             <field search="[('code','=','22')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC22001" model="city.city">
+	             <field name="name">ORELLANA (COCA)</field>
+	             <field name="zipcode">EC22001</field>
+	             <field search="[('code','=','22')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01015" model="city.city">
+	             <field name="name">CAMILO PONCE ENRIQUEZ</field>
+	             <field name="zipcode">EC01015</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01011" model="city.city">
+	             <field name="name">CHORDELEG</field>
+	             <field name="zipcode">EC01011</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01001" model="city.city">
+	             <field name="name">CUENCA</field>
+	             <field name="zipcode">EC01001</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01012" model="city.city">
+	             <field name="name">EL PAN</field>
+	             <field name="zipcode">EC01012</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01002" model="city.city">
+	             <field name="name">GIRON</field>
+	             <field name="zipcode">EC01002</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01014" model="city.city">
+	             <field name="name">GUACHAPALA</field>
+	             <field name="zipcode">EC01014</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01003" model="city.city">
+	             <field name="name">GUALACEO</field>
+	             <field name="zipcode">EC01003</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01004" model="city.city">
+	             <field name="name">NABON</field>
+	             <field name="zipcode">EC01004</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01010" model="city.city">
+	             <field name="name">OÑA</field>
+	             <field name="zipcode">EC01010</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01005" model="city.city">
+	             <field name="name">PAUTE</field>
+	             <field name="zipcode">EC01005</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01006" model="city.city">
+	             <field name="name">PUCARA</field>
+	             <field name="zipcode">EC01006</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01007" model="city.city">
+	             <field name="name">SAN FERNANDO</field>
+	             <field name="zipcode">EC01007</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01008" model="city.city">
+	             <field name="name">SANTA ISABEL</field>
+	             <field name="zipcode">EC01008</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01013" model="city.city">
+	             <field name="name">SEVILLA DE ORO</field>
+	             <field name="zipcode">EC01013</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC01009" model="city.city">
+	             <field name="name">SIGSIG</field>
+	             <field name="zipcode">EC01009</field>
+	             <field search="[('code','=','01')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC02006" model="city.city">
+	             <field name="name">CALUMA</field>
+	             <field name="zipcode">EC02006</field>
+	             <field search="[('code','=','02')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC02002" model="city.city">
+	             <field name="name">CHILLANES</field>
+	             <field name="zipcode">EC02002</field>
+	             <field search="[('code','=','02')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC02003" model="city.city">
+	             <field name="name">CHIMBO</field>
+	             <field name="zipcode">EC02003</field>
+	             <field search="[('code','=','02')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC02004" model="city.city">
+	             <field name="name">ECHEANDIA</field>
+	             <field name="zipcode">EC02004</field>
+	             <field search="[('code','=','02')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC02001" model="city.city">
+	             <field name="name">GUARANDA</field>
+	             <field name="zipcode">EC02001</field>
+	             <field search="[('code','=','02')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC02007" model="city.city">
+	             <field name="name">LAS NAVES</field>
+	             <field name="zipcode">EC02007</field>
+	             <field search="[('code','=','02')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC02005" model="city.city">
+	             <field name="name">SAN MIGUEL</field>
+	             <field name="zipcode">EC02005</field>
+	             <field search="[('code','=','02')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC03001" model="city.city">
+	             <field name="name">AZOGUES</field>
+	             <field name="zipcode">EC03001</field>
+	             <field search="[('code','=','03')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC03002" model="city.city">
+	             <field name="name">BIBLIAN</field>
+	             <field name="zipcode">EC03002</field>
+	             <field search="[('code','=','03')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC03003" model="city.city">
+	             <field name="name">CAÑAR</field>
+	             <field name="zipcode">EC03003</field>
+	             <field search="[('code','=','03')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC03006" model="city.city">
+	             <field name="name">DELEG</field>
+	             <field name="zipcode">EC03006</field>
+	             <field search="[('code','=','03')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC03005" model="city.city">
+	             <field name="name">EL TAMBO</field>
+	             <field name="zipcode">EC03005</field>
+	             <field search="[('code','=','03')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC03004" model="city.city">
+	             <field name="name">LA TRONCAL</field>
+	             <field name="zipcode">EC03004</field>
+	             <field search="[('code','=','03')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC03007" model="city.city">
+	             <field name="name">SUSCAL</field>
+	             <field name="zipcode">EC03007</field>
+	             <field search="[('code','=','03')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC04002" model="city.city">
+	             <field name="name">BOLIVAR</field>
+	             <field name="zipcode">EC04002</field>
+	             <field search="[('code','=','04')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC04003" model="city.city">
+	             <field name="name">ESPEJO</field>
+	             <field name="zipcode">EC04003</field>
+	             <field search="[('code','=','04')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC04004" model="city.city">
+	             <field name="name">MIRA</field>
+	             <field name="zipcode">EC04004</field>
+	             <field search="[('code','=','04')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC04005" model="city.city">
+	             <field name="name">MONTUFAR (SAN GABRIEL)</field>
+	             <field name="zipcode">EC04005</field>
+	             <field search="[('code','=','04')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC04006" model="city.city">
+	             <field name="name">SAN PEDRO DE HUACA</field>
+	             <field name="zipcode">EC04006</field>
+	             <field search="[('code','=','04')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC04001" model="city.city">
+	             <field name="name">TULCAN</field>
+	             <field name="zipcode">EC04001</field>
+	             <field search="[('code','=','04')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC05002" model="city.city">
+	             <field name="name">LA MANA</field>
+	             <field name="zipcode">EC05002</field>
+	             <field search="[('code','=','05')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC05001" model="city.city">
+	             <field name="name">LATACUNGA</field>
+	             <field name="zipcode">EC05001</field>
+	             <field search="[('code','=','05')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC05003" model="city.city">
+	             <field name="name">PANGUA</field>
+	             <field name="zipcode">EC05003</field>
+	             <field search="[('code','=','05')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC05004" model="city.city">
+	             <field name="name">PUJILI</field>
+	             <field name="zipcode">EC05004</field>
+	             <field search="[('code','=','05')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC05005" model="city.city">
+	             <field name="name">SALCEDO</field>
+	             <field name="zipcode">EC05005</field>
+	             <field search="[('code','=','05')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC05006" model="city.city">
+	             <field name="name">SAQUISILI</field>
+	             <field name="zipcode">EC05006</field>
+	             <field search="[('code','=','05')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC05007" model="city.city">
+	             <field name="name">SIGCHOS</field>
+	             <field name="zipcode">EC05007</field>
+	             <field search="[('code','=','05')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06002" model="city.city">
+	             <field name="name">ALAUSI</field>
+	             <field name="zipcode">EC06002</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06004" model="city.city">
+	             <field name="name">CHAMBO</field>
+	             <field name="zipcode">EC06004</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06005" model="city.city">
+	             <field name="name">CHUNCHI</field>
+	             <field name="zipcode">EC06005</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06003" model="city.city">
+	             <field name="name">COLTA</field>
+	             <field name="zipcode">EC06003</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06010" model="city.city">
+	             <field name="name">CUMANDA</field>
+	             <field name="zipcode">EC06010</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06006" model="city.city">
+	             <field name="name">GUAMOTE</field>
+	             <field name="zipcode">EC06006</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06007" model="city.city">
+	             <field name="name">GUANO</field>
+	             <field name="zipcode">EC06007</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06008" model="city.city">
+	             <field name="name">PALLATANGA</field>
+	             <field name="zipcode">EC06008</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06009" model="city.city">
+	             <field name="name">PENIPE</field>
+	             <field name="zipcode">EC06009</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC06001" model="city.city">
+	             <field name="name">RIOBAMBA</field>
+	             <field name="zipcode">EC06001</field>
+	             <field search="[('code','=','06')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07002" model="city.city">
+	             <field name="name">ARENILLAS</field>
+	             <field name="zipcode">EC07002</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07003" model="city.city">
+	             <field name="name">ATAHUALPA</field>
+	             <field name="zipcode">EC07003</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07004" model="city.city">
+	             <field name="name">BALSAS</field>
+	             <field name="zipcode">EC07004</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07005" model="city.city">
+	             <field name="name">CHILLA</field>
+	             <field name="zipcode">EC07005</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07006" model="city.city">
+	             <field name="name">EL GUABO</field>
+	             <field name="zipcode">EC07006</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07007" model="city.city">
+	             <field name="name">HUAQUILLAS</field>
+	             <field name="zipcode">EC07007</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07014" model="city.city">
+	             <field name="name">LAS LAJAS</field>
+	             <field name="zipcode">EC07014</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07008" model="city.city">
+	             <field name="name">MARCABELI</field>
+	             <field name="zipcode">EC07008</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07009" model="city.city">
+	             <field name="name">PASAJE</field>
+	             <field name="zipcode">EC07009</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07010" model="city.city">
+	             <field name="name">PIÑAS</field>
+	             <field name="zipcode">EC07010</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07011" model="city.city">
+	             <field name="name">PORTOVELO</field>
+	             <field name="zipcode">EC07011</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07012" model="city.city">
+	             <field name="name">SANTA ROSA</field>
+	             <field name="zipcode">EC07012</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07013" model="city.city">
+	             <field name="name">ZARUMA</field>
+	             <field name="zipcode">EC07013</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC08006" model="city.city">
+	             <field name="name">ATACAMES</field>
+	             <field name="zipcode">EC08006</field>
+	             <field search="[('code','=','08')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC08002" model="city.city">
+	             <field name="name">ELOY ALFARO</field>
+	             <field name="zipcode">EC08002</field>
+	             <field search="[('code','=','08')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC08001" model="city.city">
+	             <field name="name">ESMERALDAS</field>
+	             <field name="zipcode">EC08001</field>
+	             <field search="[('code','=','08')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC08008" model="city.city">
+	             <field name="name">LA CONCORDIA</field>
+	             <field name="zipcode">EC08008</field>
+	             <field search="[('code','=','08')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC08003" model="city.city">
+	             <field name="name">MUISNE</field>
+	             <field name="zipcode">EC08003</field>
+	             <field search="[('code','=','08')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC08004" model="city.city">
+	             <field name="name">QUININDE</field>
+	             <field name="zipcode">EC08004</field>
+	             <field search="[('code','=','08')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC08007" model="city.city">
+	             <field name="name">RIOVERDE</field>
+	             <field name="zipcode">EC08007</field>
+	             <field search="[('code','=','08')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC08005" model="city.city">
+	             <field name="name">SAN LORENZO</field>
+	             <field name="zipcode">EC08005</field>
+	             <field search="[('code','=','08')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09002" model="city.city">
+	             <field name="name">ALFREDO BAQUERIZO MORENO (JUJAN)</field>
+	             <field name="zipcode">EC09002</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09003" model="city.city">
+	             <field name="name">BALAO</field>
+	             <field name="zipcode">EC09003</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09004" model="city.city">
+	             <field name="name">BALZAR</field>
+	             <field name="zipcode">EC09004</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09005" model="city.city">
+	             <field name="name">COLIMES</field>
+	             <field name="zipcode">EC09005</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09023" model="city.city">
+	             <field name="name">CORONEL MARCELINO MARIDUEÑA</field>
+	             <field name="zipcode">EC09023</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09006" model="city.city">
+	             <field name="name">DAULE</field>
+	             <field name="zipcode">EC09006</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09007" model="city.city">
+	             <field name="name">DURAN</field>
+	             <field name="zipcode">EC09007</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09008" model="city.city">
+	             <field name="name">EL EMPALME</field>
+	             <field name="zipcode">EC09008</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09009" model="city.city">
+	             <field name="name">EL TRIUNFO</field>
+	             <field name="zipcode">EC09009</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09027" model="city.city">
+	             <field name="name">GENERAL ANTONIO ELIZALDE (BUCAY)</field>
+	             <field name="zipcode">EC09027</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09001" model="city.city">
+	             <field name="name">GUAYAQUIL</field>
+	             <field name="zipcode">EC09001</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09028" model="city.city">
+	             <field name="name">ISIDRO AYORA</field>
+	             <field name="zipcode">EC09028</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09024" model="city.city">
+	             <field name="name">LOMAS DE SARGENTILLO</field>
+	             <field name="zipcode">EC09024</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09010" model="city.city">
+	             <field name="name">MILAGRO</field>
+	             <field name="zipcode">EC09010</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09011" model="city.city">
+	             <field name="name">NARANJAL</field>
+	             <field name="zipcode">EC09011</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09012" model="city.city">
+	             <field name="name">NARANJITO</field>
+	             <field name="zipcode">EC09012</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09025" model="city.city">
+	             <field name="name">NOBOL</field>
+	             <field name="zipcode">EC09025</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09013" model="city.city">
+	             <field name="name">PALESTINA</field>
+	             <field name="zipcode">EC09013</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09014" model="city.city">
+	             <field name="name">PEDRO CARBO</field>
+	             <field name="zipcode">EC09014</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09021" model="city.city">
+	             <field name="name">PLAYAS</field>
+	             <field name="zipcode">EC09021</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09019" model="city.city">
+	             <field name="name">SALITRE (URBINA JADO)</field>
+	             <field name="zipcode">EC09019</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09016" model="city.city">
+	             <field name="name">SAMBORONDON</field>
+	             <field name="zipcode">EC09016</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09020" model="city.city">
+	             <field name="name">SAN JACINTO DE YAGUACHI</field>
+	             <field name="zipcode">EC09020</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09018" model="city.city">
+	             <field name="name">SANTA LUCIA</field>
+	             <field name="zipcode">EC09018</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC09022" model="city.city">
+	             <field name="name">SIMON BOLIVAR</field>
+	             <field name="zipcode">EC09022</field>
+	             <field search="[('code','=','09')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC18001" model="city.city">
+	             <field name="name">AMBATO</field>
+	             <field name="zipcode">EC18001</field>
+	             <field search="[('code','=','18')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC23001" model="city.city">
+	             <field name="name">SANTO DOMINGO</field>
+	             <field name="zipcode">EC23001</field>
+	             <field search="[('code','=','23')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC24002" model="city.city">
+	             <field name="name">LA LIBERTAD</field>
+	             <field name="zipcode">EC24002</field>
+	             <field search="[('code','=','24')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC24003" model="city.city">
+	             <field name="name">SALINAS</field>
+	             <field name="zipcode">EC24003</field>
+	             <field search="[('code','=','24')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC24001" model="city.city">
+	             <field name="name">SANTA ELENA</field>
+	             <field name="zipcode">EC24001</field>
+	             <field search="[('code','=','24')]" model='res.country.state' name='state_id'/>
+	   </record> 
+	   <record id="res_EC07001" model="city.city">
+	             <field name="name">MACHALA</field>
+	             <field name="zipcode">EC07001</field>
+	             <field search="[('code','=','07')]" model='res.country.state' name='state_id'/>
+	   </record>
+	   <!-- 
+	   PARROQUIAS
+	   -->
+	   <record id="parroquia001" model="res.parroquia">
+	             <field name="name">Ayacucho</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia002" model="res.parroquia">
+	             <field name="name">Bolívar</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia003" model="res.parroquia">
+	             <field name="name">Pedro Carbo</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia004" model="res.parroquia">
+	             <field name="name">Chongón</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia005" model="res.parroquia">
+	             <field name="name">Febres Cordero</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia006" model="res.parroquia">
+	             <field name="name">García Moreno</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia007" model="res.parroquia">
+	             <field name="name">Letamendi</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia008" model="res.parroquia">
+	             <field name="name">Nueve de Octubre</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia009" model="res.parroquia">
+	             <field name="name">Pascuales</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	      <record id="parroquia010" model="res.parroquia">
+	             <field name="name">Olmedo</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia011" model="res.parroquia">
+	             <field name="name">Roca</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia012" model="res.parroquia">
+	             <field name="name">Rocafuerte</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia013" model="res.parroquia">
+	             <field name="name">Sucre</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record>
+	      <record id="parroquia014" model="res.parroquia">
+	             <field name="name">Tarqui</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia015" model="res.parroquia">
+	             <field name="name">Urdaneta</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia016" model="res.parroquia">
+	             <field name="name">Ximena</field>
+	             <field name="type">urbana</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia017" model="res.parroquia">
+	             <field name="name">Gómez Rendón</field>
+	             <field name="type">rural</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia018" model="res.parroquia">
+	             <field name="name">El Morro</field>
+	             <field name="type">rural</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia019" model="res.parroquia">
+	             <field name="name">Posorja</field>
+	             <field name="type">rural</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia020" model="res.parroquia">
+	             <field name="name">Puná</field>
+	             <field name="type">rural</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+	   <record id="parroquia021" model="res.parroquia">
+	             <field name="name">Tenguel</field>
+	             <field name="type">rural</field>
+	             <field name="city_id" ref="res_EC09001"/>
+	   </record> 
+   </data>
+</openerp>

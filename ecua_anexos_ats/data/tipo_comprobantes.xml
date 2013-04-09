@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+		<record id="01" model="sri.voucher.type">
+		<field name="code">01</field>
+		<field name="name">Factura</field>
+		</record>
+		<record id="02" model="sri.voucher.type">
+		<field name="code">02</field>
+		<field name="name">Nota o boleta de venta</field>
+		</record>
+		<record id="03" model="sri.voucher.type">
+		<field name="code">03</field>
+		<field name="name">Liquidación de compra de Bienes o Prestación de servicios</field>
+		</record>
+		<record id="04" model="sri.voucher.type">
+		<field name="code">04</field>
+		<field name="name">Nota de crédito</field>
+		</record>
+		<record id="05" model="sri.voucher.type">
+		<field name="code">05</field>
+		<field name="name">Nota de débito</field>
+		</record>
+		<record id="07" model="sri.voucher.type">
+		<field name="code">07</field>
+		<field name="name">Comprobante de Retención</field>
+		<field name="sustention_ids" eval="[(6,0,[])]"/>
+		<field name="usage_ids" eval="[(6,0,[])]"/>
+		</record>
+		<record id="08" model="sri.voucher.type">
+		<field name="code">08</field>
+		<field name="name">Boletos o entradas a espectáculos públicos</field>
+		</record>
+		<record id="09" model="sri.voucher.type">
+		<field name="code">09</field>
+		<field name="name">Tiquetes o vales emitidos por máquinas registradoras</field>
+		</record>
+		<record id="11" model="sri.voucher.type">
+		<field name="code">11</field>
+		<field name="name">Pasajes expedidos por empresas de aviación</field>
+		</record>
+		<record id="12" model="sri.voucher.type">
+		<field name="code">12</field>
+		<field name="name">Documentos emitidos por instituciones financieras</field>
+		</record>
+		<record id="15" model="sri.voucher.type">
+		<field name="code">15</field>
+		<field name="name">Comprobante de venta emitido en el Exterior</field>
+		</record>
+		<record id="16" model="sri.voucher.type">
+		<field name="code">16</field>
+		<field name="name">Formulario Único de Exportación (FUE) o Declaración Aduanera Única (DAU) o Declaración Andina de Valor (DAV)</field>
+		</record>
+		<record id="18" model="sri.voucher.type">
+		<field name="code">18</field>
+		<field name="name">Documentos autorizados utilizados en ventas excepto N/C N/D</field>
+		</record>
+		<record id="19" model="sri.voucher.type">
+		<field name="code">19</field>
+		<field name="name">Comprobantes de Pago de Cuotas o Aportes</field>
+		</record>
+		<record id="20" model="sri.voucher.type">
+		<field name="code">20</field>
+		<field name="name">Documentos por Servicios Administrativos emitidos por Inst. del Estado</field>
+		</record>
+		<record id="21" model="sri.voucher.type">
+		<field name="code">21</field>
+		<field name="name">Carta de Porte Aéreo</field>
+		</record>
+		<record id="22" model="sri.voucher.type">
+		<field name="code">22</field>
+		<field name="name">RECAP</field>
+		</record>
+		<record id="23" model="sri.voucher.type">
+		<field name="code">23</field>
+		<field name="name">Nota de Crédito TC</field>
+		</record>
+		<record id="24" model="sri.voucher.type">
+		<field name="code">24</field>
+		<field name="name">Nota de Débito TC</field>
+		</record>
+		<record id="41" model="sri.voucher.type">
+		<field name="code">41</field>
+		<field name="name">Comprobante de venta emitido por reembolso</field>
+		</record>
+		<record id="42" model="sri.voucher.type">
+		<field name="code">42</field>
+		<field name="name">Documento agente de retención Presuntiva</field>
+		</record>
+		<record id="43" model="sri.voucher.type">
+		<field name="code">43</field>
+		<field name="name">Liquidacion para Explotacion y Exploracion de Hidrocarburos</field>
+		</record>
+		<record id="44" model="sri.voucher.type">
+		<field name="code">44</field>
+		<field name="name">Comprobante de Contribuciones y Aportes</field>
+		</record>
+		<record id="45" model="sri.voucher.type">
+		<field name="code">45</field>
+		<field name="name">Liquidación por reclamos de aseguradoras</field>
+		</record>
+		<record id="47" model="sri.voucher.type">
+		<field name="code">47</field>
+		<field name="name">Nota de Crédito por Reembolso Emitida por Intermediario</field>
+		</record>
+		<record id="48" model="sri.voucher.type">
+		<field name="code">48</field>
+		<field name="name">Nota de Débito por Reembolso Emitida por Intermediario</field>
+		</record>
+		<record id="49" model="sri.voucher.type">
+		<field name="code">49</field>
+		<field name="name">Proveedor Directo de Exportador Bajo Régimen Especial</field>
+		</record>
+		<record id="50" model="sri.voucher.type">
+		<field name="code">50</field>
+		<field name="name">A Inst. Estado y Empr. Públicas que percibe ingreso exento de Imp. Renta</field>
+		</record>
+		<record id="51" model="sri.voucher.type">
+		<field name="code">51</field>
+		<field name="name">N/C A Inst. Estado y Empr. Públicas que percibe ingreso exento de Imp. Renta</field>
+		</record>
+		<record id="52" model="sri.voucher.type">
+		<field name="code">52</field>
+		<field name="name">N/D A Inst. Estado y Empr. Públicas que percibe ingreso exento de Imp. Renta</field>
+		</record>
+    </data>
+</openerp>

@@ -1,0 +1,146 @@
+﻿<record id=”12” model=”sri.code.regimen”>
+<field name=”code”>12</field>
+<field name=”name”>Exportación bajo reposición en franquicia arancelaria</field>
+</record>
+
+<record id=”31” model=”sri.code.regimen”>
+<field name=”code”>31</field>
+<field name=”name”>Reimp. De mercancias exportadas temporalmente para perfeccionamiento pasivo</field>
+</record>
+
+<record id=”40” model=”sri.code.regimen”>
+<field name=”code”>40</field>
+<field name=”name”>Exportación a consumo</field>
+</record>
+
+<record id=”47” model=”sri.code.regimen”>
+<field name=”code”>47</field>
+<field name=”name”>Liquidación Manual - Garantías</field>
+</record>
+
+<record id=”48” model=”sri.code.regimen”>
+<field name=”code”>48</field>
+<field name=”name”>Liquidación Manual - Exportación</field>
+</record>
+
+<record id=”49” model=”sri.code.regimen”>
+<field name=”code”>49</field>
+<field name=”name”>Liquidación Manual - Paquetes Postales</field>
+</record>
+
+<record id=”50” model=”sri.code.regimen”>
+<field name=”code”>50</field>
+<field name=”name”>Expo. Temporal con reimportación en el mismo estado</field>
+</record>
+
+<record id=”51” model=”sri.code.regimen”>
+<field name=”code”>51</field>
+<field name=”name”>Expo. Temporal para perfeccionamiento pasivo</field>
+</record>
+
+<record id=”53” model=”sri.code.regimen”>
+<field name=”code”>53</field>
+<field name=”name”>Expo. Con devolución condicionada de tributos (drawb.)</field>
+</record>
+
+<record id=”54” model=”sri.code.regimen”>
+<field name=”code”>54</field>
+<field name=”name”>Liquidación Manual - Multas</field>
+</record>
+
+<record id=”55” model=”sri.code.regimen”>
+<field name=”code”>55</field>
+<field name=”name”>Liquidación Manual - Rectificacion De Tributos</field>
+</record>
+
+<record id=”56” model=”sri.code.regimen”>
+<field name=”code”>56</field>
+<field name=”name”>Liquidación Manual - Remates</field>
+</record>
+
+<record id=”57” model=”sri.code.regimen”>
+<field name=”code”>57</field>
+<field name=”name”>Liquidación Manual - Couriers</field>
+</record>
+
+<record id=”58” model=”sri.code.regimen”>
+<field name=”code”>58</field>
+<field name=”name”>Liquidación Manual - Pasajeros</field>
+</record>
+
+<record id=”59” model=”sri.code.regimen”>
+<field name=”code”>59</field>
+<field name=”name”>Liquidación Manual - Importaciones</field>
+</record>
+
+<record id=”57” model=”sri.code.regimen”>
+<field name=”code”>57</field>
+<field name=”name”>Liquidaciones efectuadas en sala de arribo</field>
+</record>
+
+<record id=”60” model=”sri.code.regimen”>
+<field name=”code”>60</field>
+<field name=”name”>Reexp. De mercancías en el mismo estado</field>
+</record>
+
+<record id=”61” model=”sri.code.regimen”>
+<field name=”code”>61</field>
+<field name=”name”>Reexportacion de mercancías que fueron importadas para perfeccionamiento activo</field>
+</record>
+
+<record id=”75” model=”sri.code.regimen”>
+<field name=”code”>75</field>
+<field name=”name”>Reexportación de productos maquilados</field>
+</record>
+
+<record id=”76” model=”sri.code.regimen”>
+<field name=”code”>76</field>
+<field name=”name”>Reexportación de productos transformados en deposito industrial</field>
+</record>
+
+<record id=”77” model=”sri.code.regimen”>
+<field name=”code”>77</field>
+<field name=”name”>Reexportación de mercancias que fueron importadas a deposito comercial</field>
+</record>
+
+<record id=”78” model=”sri.code.regimen”>
+<field name=”code”>78</field>
+<field name=”name”>Reexportación de mercancías ingresadas a almacenes libres</field>
+</record>
+
+<record id=”79” model=”sri.code.regimen”>
+<field name=”code”>79</field>
+<field name=”name”>Exportación a consumo desde zona franca</field>
+</record>
+
+<record id=”80” model=”sri.code.regimen”>
+<field name=”code”>80</field>
+<field name=”name”>Tránsito aduanero</field>
+</record>
+
+<record id=”90” model=”sri.code.regimen”>
+<field name=”code”>90</field>
+<field name=”name”>Zona franca</field>
+</record>
+
+<record id=”91” model=”sri.code.regimen”>
+<field name=”code”>91</field>
+<field name=”name”>Tráfico postal internacional y courier</field>
+</record>
+
+<record id=”92” model=”sri.code.regimen”>
+<field name=”code”>92</field>
+<field name=”name”>Tráfico fronterizo</field>
+</record>
+
+<record id=”93” model=”sri.code.regimen”>
+<field name=”code”>93</field>
+<field name=”name”>Zona de libre comercio</field>
+</record>
+
+<record id=”94” model=”sri.code.regimen”>
+<field name=”code”>94</field>
+<field name=”name”>Courier exportación</field>
+</record>
+
+

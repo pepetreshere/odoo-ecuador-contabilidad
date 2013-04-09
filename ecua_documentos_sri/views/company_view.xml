@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="res_company_sri_form_view">
+			<field name="name">res.company.form</field>
+			<field name="model">res.company</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_company_form" />
+			<field name="arch" type="xml">
+	            <xpath expr="//notebook" position="inside">
+	                    <page string="SRI Authorization">
+	                            <field name="authotization_ids" readonly="1" nolabel="1" context="{'form_view_ref' : 'ecua_docu$
+	                            </field>
+	                    </page>
+	            </xpath>
+	            <xpath expr="//page[@string='Configuration']" position="inside">
+	                    <group colspan="4" col="6">
+	                    <separator string="Generated of documents of SRI" colspan="4"/>
+	                    <newline/>
+	                    <field name="generate_automatic" string="Generate Automatic"/>
+	                    </group>
+	            </xpath>
+			</field>
+		</record>
+
+	</data>
+</openerp>

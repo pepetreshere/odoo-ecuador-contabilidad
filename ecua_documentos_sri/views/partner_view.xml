@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="view_partner_property_form" model="ir.ui.view">
+			<field name="name">res.partner.property.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<page string="General" position="after">
+					<page string="Authorizations" attrs="{'invisible': [('supplier', '=', False)]}">
+						<field name="authorization_ids" nolabel="1" colspan="4"></field>
+					</page>
+					<page string="Transportistas">
+						<field name="delivery_ids" nolabel="1"
+							context="{'tree_view_ref':'ecua_documentos_sri.delivery_carrier_tree_view','form_view_ref':'ecua_documentos_sri.delivery_carrier_form_view'}" />
+					</page>
+				</page>
+			</field>
+		</record>
+	</data>
+</openerp>

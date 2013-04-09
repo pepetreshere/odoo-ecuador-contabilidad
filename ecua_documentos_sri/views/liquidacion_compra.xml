@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record id="liquidation_tree" model="ir.ui.view">
+			<field name="name">account.invoice.tree</field>
+			<field name="model">account.invoice</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree
+					colors="blue:state in ('draft');black:state in ('proforma','proforma2','open');gray:state in ('cancel')"
+					string="Liquidation of Purchases">
+					<field name="date_invoice" string="Date" />
+					<field name="number_liquidation" string="Number" />
+					<field name="partner_id" groups="base.group_user" />
+					<field name="name" />
+					<field name="journal_id" invisible="1" />
+					<field name="period_id" invisible="1"
+						groups="account.group_account_user" />
+					<field name="company_id" groups="base.group_multi_company"
+						widget="selection" />
+					<field name="user_id" />
+					<field name="date_due" />
+					<field name="origin" />
+					<field name="currency_id" />
+					<field name="residual" sum="Residual Amount" />
+					<field name="amount_untaxed" sum="Untaxed Amount" />
+					<field name="amount_total" sum="Total Amount" />
+					<field name="state" />
+					<button name="invoice_open" states="draft,proforma2" string="Approve"
+						icon="terp-camera_test" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="invoice_supplier_liquidation_form" model="ir.ui.view">
+			<field name="name">account.invoice.supplier.liquidation.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Liquidation of Purchases">
+					<group col="8" colspan="4">
+						<field name="automatic_number"></field>
+						<field name="number_liquidation" attrs="{'required':[('automatic','!=',True)]}"
+							on_change="onchange_number_liquidation(number_liquidation, automatic, company_id, shop_id, printer_id)"></field>
+						<field name="automatic" invisible="1" />
+						<field name="flag" invisible="1" />
+						<field name="journal_id" on_change="onchange_journal_id(journal_id)"
+							widget="selection" invisible="1" />
+						<field name="shop_id"
+							on_change="onchange_data(automatic, company_id, shop_id, type, printer_id, date_invoice,{'liquidation,':liquidation,})"
+							required="1"></field>
+						<field name="printer_id" invisible="0" required="1"
+							on_change="onchange_data(automatic, company_id, shop_id, type, printer_id, date_invoice,{'liquidation,':liquidation})"></field>
+						<field name="type" invisible="1" />
+						<field name="liquidation" invisible="1" />
+						<field name="currency_id" width="50" invisible="1" />
+						<!-- button name="%(account.action_account_change_currency)d" type="action" 
+							icon="terp-stock_effects-object-colorize" string="Change" attrs="{'invisible':[('state','!=','draft')]}" 
+							groups="account.group_account_user" / -->
+						<newline />
+						<field string="Supplier" name="partner_id"
+							on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
+							context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}"
+							domain="[('type_ref','in',('cedula', 'consumidor'))]" />
+						<field domain="[('partner_id','=',partner_id)]" name="address_invoice_id" />
+						<field name="fiscal_position" groups="base.group_extended"
+							widget="selection" />
+						<newline />
+						<field name="date_invoice" string="Date of Liquidation" />
+						<field name="authorization" />
+						<field name="authorization_liquidation"
+							context="{'form_view_ref' : 'ecua_documentos_sri.sri_authorization_invoice_form_view'}"
+							attrs="{'required':[('state','in',('open','paid'))]}" invisible="1"></field>
+						<field name="period_id" domain="[('state', '=', 'draft')]"
+							groups="account.group_account_user" widget="selection" />
+					</group>
+					<notebook colspan="4">
+						<page string="Liquidation of Purchase">
+							<field
+								domain="[('company_id', '=', company_id), ('type', '=', 'payable')]"
+								name="account_id" groups="account.group_account_user" />
+							<field name="reference_type" nolabel="1" size="0" />
+							<field name="reference" nolabel="1" />
+							<field name="date_due" />
+							<field name="check_total" required="2" />
+							<field colspan="4"
+								default_get="{'check_total': check_total, 'invoice_line': invoice_line, 'address_invoice_id': address_invoice_id, 'partner_id': partner_id, 'price_type': 'price_type' in dir() and price_type or False}"
+								name="invoice_line" nolabel="1">
+								<tree string="Lines of Liquidation of Purchase">
+									<field name="product_id"
+										on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.address_invoice_id, parent.currency_id, {'company_id': parent.company_id})" />
+									<field
+										domain="[('company_id', '=', parent.company_id), ('journal_id', '=', parent.journal_id), ('type', '&lt;&gt;', 'view')]"
+										name="account_id" on_change="onchange_account_id(parent.fiscal_position,account_id)" />
+									<field name="invoice_line_tax_id" view_mode="2"
+										context="{'type':parent.type}" domain="[('parent_id','=',False)]" />
+									<field
+										domain="[('type','&lt;&gt;','view'), ('company_id', '=', parent.company_id), ('parent_id', '!=', False)]"
+										name="account_analytic_id" groups="analytic.group_analytic_accounting" />
+									<field name="quantity" />
+									<field name="price_unit" />
+									<!-- Removed if subtotal is set -->
+									<field name="price_subtotal" />
+									<field name="name" />
+									<field invisible="True" name="uos_id" />
+								</tree>
+							</field>
+							<group col="1" colspan="2">
+								<field name="tax_line" nolabel="1">
+									<tree editable="bottom" string="Taxes">
+										<field name="name" />
+										<field name="account_id" groups="account.group_account_invoice" />
+										<field name="base"
+											on_change="base_change(base,parent.currency_id,parent.company_id,parent.date_invoice)"
+											readonly="1" />
+										<field name="amount"
+											on_change="amount_change(amount,parent.currency_id,parent.company_id,parent.date_invoice)" />
+
+										<field invisible="True" name="base_amount" />
+										<field invisible="True" name="tax_amount" />
+										<field name="factor_base" invisible="True" />
+										<field name="factor_tax" invisible="True" />
+									</tree>
+								</field>
+							</group>
+							<group col="4" colspan="2">
+								<button colspan="2" name="button_reset_taxes" states="draft"
+									string="Compute Taxes" type="object" icon="terp-stock_format-scientific" />
+								<field name="amount_untaxed" />
+								<label string="" colspan="2" />
+								<field name="total_iva" />
+								<label string="" colspan="2" />
+								<field name="total_descuento" />
+								<label string="" colspan="2" />
+								<field name="total_retencion" />
+								<field name="reconciled" />
+								<field name="amount_total" />
+								<field name="state" />
+								<field name="residual" />
+								<group col="6" colspan="4">
+									<button name="invoice_cancel" states="draft,proforma2,sale,open"
+										string="Cancel" icon="gtk-cancel" groups="account.group_account_manager" />
+									<button name="action_cancel_draft" states="cancel"
+										string="Set to Draft" type="object"
+										icon="terp-stock_effects-object-colorize" groups="account.group_account_manager" />
+									<button name="%(account.action_account_state_open)d"
+										type='action' string='Re-Open' states='paid' icon="gtk-convert"
+										groups="account.group_account_manager" />
+									<group states="draft">
+										<button
+											name="%(ecua_retenciones_manual.action_retention_wizard_purchase)d"
+											string="Input Retention Number" type="action" icon="terp-gtk-jump-to-ltr"
+											attrs="{'invisible':[('retention_ids','=',[])]}" />
+									</group>
+									<button name="invoice_open" states="draft,proforma2"
+										string="Approve" icon="terp-camera_test" />
+									<button name="invoice_pay_customer" type="object"
+										string="Pay Invoice" states="open" icon="gtk-go-forward" />
+									<button name="%(liquidacion_report)d" string="Print Liquidation"
+										type="action" icon="gtk-print" states="open,paid" />
+								</group>
+							</group>
+						</page>
+						<page string="Other Info">
+							<field domain="[('partner_id', '=', partner_id)]" name="partner_bank_id"
+								on_change="onchange_partner_bank(partner_bank_id)" />
+							<field name="company_id"
+								on_change="onchange_company_id(company_id,partner_id,type,invoice_line,currency_id)"
+								widget="selection" groups="base.group_multi_company" />
+							<newline />
+							<field name="payment_term" widget="selection" />
+							<field name="name" />
+							<newline />
+							<field name="origin" groups="base.group_extended" />
+							<field domain="[('partner_id','=',partner_id)]" name="address_contact_id"
+								groups="base.group_extended" />
+							<field name="user_id" />
+							<field name="move_id" groups="account.group_account_user" />
+							<separator colspan="4" string="Additional Information" />
+							<field colspan="4" name="comment" nolabel="1" />
+						</page>
+						<page string="Payments" groups="base.group_extended">
+							<field name="payment_ids" colspan="4" nolabel="1">
+								<tree string="Payments">
+									<field name="date" string="Payment Date" />
+									<field name="ref" />
+									<field name="name" groups="base.group_extended" />
+									<field name="journal_id" />
+									<field name="debit" />
+									<field name="credit" />
+									<field name="amount_currency" groups="base.group_extended" />
+									<field name="currency_id" groups="base.group_extended" />
+								</tree>
+							</field>
+						</page>
+						<page string="Retenciones">
+							<field name="retention_ids" nolabel="1" readonly="1"
+								widget="one2many" colspan="4"
+								context="{'form_view_ref' : 'ecua_retenciones_manual.view_account_retention_purchase_form'}">
+								<tree string="Withholdings">
+									<field name="number" />
+									<field name="period_id" />
+									<field name="creation_date" />
+									<field name="total_iva" sum="Total Retenciones IVA" />
+									<field name="total_renta" sum="Total Retenciones Renta" />
+									<field name="state" />
+								</tree>
+							</field>
+							<field name="retention_line_ids" nolabel="1" readonly="1"
+								colspan="4" widget="one2many">
+								<tree string="Withholding Lines">
+									<field name="fiscalyear_id" />
+									<field name="period_id" />
+									<field name="description" />
+									<field name="tax_id" />
+									<field name="tax_base" />
+									<field name="retention_percentage" />
+									<field name="retained_value" sum="Total Retained" />
+								</tree>
+								<form string="Withholding Line">
+									<field name="fiscalyear_id" />
+									<field name="period_id" />
+									<field name="description" />
+									<field name="tax_id" />
+									<field name="tax_base" />
+									<field name="retention_percentage" />
+									<field name="retained_value" />
+								</form>
+							</field>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_liquidation_menu">
+			<field name="name">Liquidación de Compras</field>
+			<field name="res_model">account.invoice</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','in_invoice'),('liquidation','=',True)]</field>
+			<field name="context">{'type':'in_invoice', 'liquidation':True, 'journal_type': 'purchase'}</field>
+			<field name="view_id" eval="False" />
+		</record>
+
+		<record id="action_liquidation_menu_tree" model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="liquidation_tree" />
+			<field name="act_window_id" ref="action_liquidation_menu" />
+		</record>
+
+		<record id="action_liquidation_menu_form" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="invoice_supplier_liquidation_form" />
+			<field name="act_window_id" ref="action_liquidation_menu" />
+		</record>
+
+		<menuitem name="Liquidación de Compras" id="menu_liquidacion_compras"
+			action="action_liquidation_menu" parent="account.menu_finance_payables" />
+
+		<record id="account.action_invoice_tree2" model="ir.actions.act_window">
+			<field name="name">Supplier Invoices</field>
+			<field name="res_model">account.invoice</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,calendar,graph</field>
+			<field eval="False" name="view_id" />
+			<field name="domain">[('type','=','in_invoice'),('liquidation','!=',True)]</field>
+			<field name="context">{'type':'in_invoice', 'journal_type': 'purchase'}</field>
+			<field name="search_view_id" ref="account.view_account_invoice_filter" />
+			<field name="help">With Supplier Invoices you can enter and manage
+				invoices issued by your suppliers. OpenERP can also generate draft
+				invoices automatically from purchase orders or receipts. This way,
+				you can control the invoice from your supplier according to what you
+				purchased or received.</field>
+		</record>
+	</data>
+</openerp>

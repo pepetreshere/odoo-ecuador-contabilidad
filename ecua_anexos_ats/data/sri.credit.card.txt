@@ -1,0 +1,26 @@
+﻿<record id=”01” model=”sri.credit.card”>
+<field name=”code”>01</field>
+<field name=”name”>AMERICAN EXPRESS</field>
+</record>
+
+<record id=”02” model=”sri.credit.card”>
+<field name=”code”>02</field>
+<field name=”name”>DINERS CLUB</field>
+</record>
+
+<record id=”04” model=”sri.credit.card”>
+<field name=”code”>04</field>
+<field name=”name”>MASTERCARD</field>
+</record>
+
+<record id=”05” model=”sri.credit.card”>
+<field name=”code”>05</field>
+<field name=”name”>VISA</field>
+</record>
+
+<record id=”07” model=”sri.credit.card”>
+<field name=”code”>07</field>
+<field name=”name”>OTRA TARJETA</field>
+</record>
+
+

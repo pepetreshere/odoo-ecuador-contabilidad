@@ -1,0 +1,51 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_verifica_ruc_cedula
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.1\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-03-01 23:00+0000\n"
+"PO-Revision-Date: 2011-03-01 23:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ecua_verifica_ruc_cedula
+#: sql_constraint:res.partner:0
+msgid "The value of CEDULA/RUC must be unique, this value already exists"
+msgstr "The value of CEDULA/RUC must be unique, this value already exists"
+
+#. module: ecua_verifica_ruc_cedula
+#: constraint:res.partner:0
+msgid "CEDULA/RUC of Partner is incorrect, please verify"
+msgstr "CEDULA/RUC of Partner is incorrect, please verify"
+
+#. module: ecua_verifica_ruc_cedula
+#: view:res.partner:0
+msgid "CEDULA/RUC"
+msgstr "CEDULA/RUC"
+
+#. module: ecua_verifica_ruc_cedula
+#: model:ir.module.module,shortdesc:ecua_verifica_ruc_cedula.module_meta_information
+msgid "CEDULA RUC Verificator"
+msgstr "CEDULA RUC Verificator"
+
+#. module: ecua_verifica_ruc_cedula
+#: model:ir.model,name:ecua_verifica_ruc_cedula.model_res_partner
+msgid "Partner"
+msgstr "Partner"
+
+#. module: ecua_verifica_ruc_cedula
+#: model:ir.module.module,description:ecua_verifica_ruc_cedula.module_meta_information
+msgid "\n"
+"    Provide a verification of Cedula and Ruc for Ecuador Legislation\n"
+"    "
+msgstr "\n"
+"    Provide a verification of Cedula and Ruc for Ecuador Legislation\n"
+"    "
+

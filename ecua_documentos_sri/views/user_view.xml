@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="res_user_multi_form_view">
+			<field name="name">res.users.form</field>
+			<field name="model">res.users</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_users_form" />
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Agencies">
+						<field name="printer_default_id" colspan="4"/>
+						<field name="shop_ids" nolabel="1" colspan="4">
+							<tree string="Agencies">
+								<field name="name"></field>
+								<field name="warehouse_id"></field>
+							</tree>
+						</field>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+	</data>
+</openerp>

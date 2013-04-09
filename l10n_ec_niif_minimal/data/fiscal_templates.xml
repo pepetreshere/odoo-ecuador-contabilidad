@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+
+    <!-- Definición de posiciones fiscales Régimen Ecuatoriano y Retención de IR 25%, 10%, 8%, 2% y 1%-->
+
+	<!-- Fiscal Position Templates -->
+	<record id="fp_naturalesnoobl" model="account.fiscal.position">
+			<field name="template_name">PGCE 2010</field>
+			<field name="name">PERSONAS NATURALES NO OBLIGADAS A LLEVAR CONTABILIDAD</field>
+			<field name="chart_template_id" ref="l10nEC_chart_template"/>
+	</record>
+
+	<record id="fp_naturalesobl" model="account.fiscal.position">
+			<field name="template_name">PGCE 2010</field>
+			<field name="name">PERSONAS NATURALES OBLIGADAS A LLEVAR CONTABILIDAD</field>
+			<field name="chart_template_id" ref="l10nEC_chart_template"/>
+	</record>
+
+	<record id="fp_persjur" model="account.fiscal.position">
+			<field name="template_name">PGCE 2010</field>
+			<field name="name">PERSONAS JURIDICAS</field>
+			<field name="chart_template_id" ref="l10nEC_chart_template"/>
+	</record>
+
+	<record id="fp_contrespec" model="account.fiscal.position">
+			<field name="template_name">PGCE 2010</field>
+			<field name="name">CONTRIBUYENTES ESPECIALES</field>
+			<field name="chart_template_id" ref="l10nEC_chart_template"/>
+	</record>
+
+	<record id="fp_extranjero" model="account.fiscal.position">
+			<field name="template_name">PGCE 2010</field>
+			<field name="name">EMPRESAS EXTRANJERAS</field>
+			<field name="chart_template_id" ref="l10nEC_chart_template"/>
+	</record>
+
+    <record id="fp_estateles" model="account.fiscal.position">
+			<field name="template_name">PGCE 2010</field>
+			<field name="name">EMPRESAS ESTATALES</field>
+			<field name="chart_template_id" ref="l10nEC_chart_template"/>
+	</record>
+<!--Add tax to fiscal position-->
+
+
+	</data>
+</openerp>

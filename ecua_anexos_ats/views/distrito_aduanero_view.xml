@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+            
+            <record model="ir.ui.view" id="sri_customs_district_tree_view">
+                <field name="name">sri.customs.district.tree</field>
+                <field name="model">sri.customs.district</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Customs District">
+                        <field name="name"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sri_customs_district_form_view">
+                <field name="name">sri.customs.district.form</field>
+                <field name="model">sri.customs.district</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Custom District">
+                        <field name="name" select="1"/>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.actions.act_window" id="action_sri_customs_district_tree_view">
+                <field name="name">Customs Districts</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">sri.customs.district</field>
+		   <!-- <field name="domain">[('field_name','condition',criteria)]</field>-->
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="sri_customs_district_tree_view"/>
+            </record>
+
+			<menuitem id="sri_customs_district_menu" name="Customs Districts" parent="ats_configuration_menu" action="action_sri_customs_district_tree_view"/>
+
+    </data>
+</openerp>

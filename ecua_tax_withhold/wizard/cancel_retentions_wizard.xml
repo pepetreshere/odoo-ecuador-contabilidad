@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    	<record id="view_account_cancel_retentions_wizard" model="ir.ui.view">
+			<field name="name">account.cancel.retention.wizard.form</field>
+			<field name="model">account.cancel.retention.wizard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Cancel Retentions">
+					<separator string="Cancel Retentions" colspan="4" />
+					<group colspan="4">
+						<label align="0.0" width="550" colspan="4"
+							string="You have to input numbers of retention(s) that you'll create in canceled state and Date to cancel" />
+					</group>
+					<field name="date"/>
+					<field name="company_id" widget="selection"/>
+					<field name="line_ids" colspan="4" nolabel="1">
+						<tree string="Lines" editable="top">
+							<field name="number"/>
+						</tree>
+						<form string="Lines">
+							<field name="number"/>
+						</form>
+					</field>
+					<separator colspan="4" />
+					<group colspan="4" col="6">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button string='Continue' icon="gtk-execute" name="action_cancel_retentions"
+							type="object" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_account_cancel_retentions_wizard" model="ir.actions.act_window">
+			<field name="name">Cancel Retentions</field>
+			<field name="res_model">account.cancel.retention.wizard</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_account_cancel_retentions_wizard" />
+			<field name="target">new</field>
+		</record>
+   
+		<menuitem name="Cancel Retentions" id="cancel_retention_menu"
+			parent="ecua_documentos_sri.sri_menu" action="action_account_cancel_retentions_wizard" />
+
+    </data>
+</openerp>

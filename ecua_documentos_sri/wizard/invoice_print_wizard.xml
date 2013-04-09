@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+		<record id="view_account_invoice_print_wizard" model="ir.ui.view">
+			<field name="name">account.invoice.print.wizard.form.options</field>
+			<field name="model">account.invoice.print.wizard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Print Info">
+					<group col="4" colspan="4" fill="1">
+						<label align="0.0" width="550" colspan="4"
+							string="You're printing invoice:" />
+						<field name="number" colspan="4"/>
+						<label align="0.0" width="500" colspan="4"
+							string="Plase Check that is Correct Invoice, because you cannot print more twice the same invoice" />
+					</group>
+					<separator colspan="4" />
+					<group colspan="4" col="6">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button string='Print' icon="gtk-execute" name="print_action"
+							type="object" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_account_invoice_print_options" model="ir.actions.act_window">
+			<field name="name">Print_Invoice</field>
+			<field name="res_model">account.invoice.print.wizard</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_invoice_print_wizard" />
+			<field name="target">new</field>
+		</record>
+
+    
+    </data>
+</openerp>

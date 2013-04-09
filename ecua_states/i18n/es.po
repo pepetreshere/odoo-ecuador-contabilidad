@@ -1,0 +1,102 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* straconx_states
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.2\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-06-13 03:21+0000\n"
+"PO-Revision-Date: 2011-06-13 03:21+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: straconx_states
+#: view:city.city:0
+#: field:city.city,name:0
+#: model:ir.actions.act_window,name:straconx_states.action_city
+#: model:ir.model,name:straconx_states.model_city_city
+msgid "City"
+msgstr "Ciudad"
+
+#. module: straconx_states
+#: model:ir.module.module,description:straconx_states.module_meta_information
+msgid "This Module load Ecuadorian States and Cities on object res.country.state and city.city"
+msgstr "Este módulo carga las regiones, provincias y ciudades del Ecuador en las tablas res.country.state, res.region.state y city.city"
+
+#. module: straconx_states
+#: model:ir.model,name:straconx_states.model_res_partner_address
+msgid "Partner Addresses"
+msgstr "Direcciones de empresa"
+
+#. module: straconx_states
+#: sql_constraint:res.region.state:0
+msgid "The name of the zone must be unique !"
+msgstr "El nombre de la zona debe ser único !"
+
+#. module: straconx_states
+#: field:city.city,zipcode:0
+msgid "ZIP"
+msgstr "Código"
+
+#. module: straconx_states
+#: model:ir.model,name:straconx_states.model_res_region_state
+msgid "region state"
+msgstr "Zona"
+
+#. module: straconx_states
+#: field:city.city,region_id:0
+#: field:res.country.state,region_id:0
+#: field:res.partner.address,region_id:0
+msgid "Region"
+msgstr "Región"
+
+#. module: straconx_states
+#: sql_constraint:res.region:0
+msgid "The code of the region must be unique !"
+msgstr "El código de la región debe ser único !"
+
+#. module: straconx_states
+#: field:city.city,state_id:0
+msgid "State"
+msgstr "Provincia"
+
+#. module: straconx_states
+#: sql_constraint:res.region.state:0
+msgid "The code of the zone must be unique !"
+msgstr "The código de la zona debe ser único !"
+
+#. module: straconx_states
+#: field:res.partner.address,location:0
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: straconx_states
+#: model:ir.module.module,shortdesc:straconx_states.module_meta_information
+msgid "States of Ecuador"
+msgstr "Provincias of Ecuador"
+
+#. module: straconx_states
+#: model:ir.ui.menu,name:straconx_states.menu_country_city_partner
+#: field:res.country.state,city_ids:0
+msgid "Cities"
+msgstr "Ciudades"
+
+#. module: straconx_states
+#: model:ir.model,name:straconx_states.model_res_country_state
+msgid "Country state"
+msgstr "Provincia"
+
+#. module: straconx_states
+#: model:ir.model,name:straconx_states.model_res_region
+msgid "region"
+msgstr "Regiones"
+
+#. module: straconx_states
+#: sql_constraint:res.region:0
+msgid "The name of the region must be unique !"
+msgstr "El nombre de la Región debe ser único !"

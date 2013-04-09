@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+  <data noupdate="1">
+
+	<record model="account.tax.code.template" id="vat_code_tax">
+		<field name="name">INFORMACIÓN PARA FORMULARIOS</field>
+			<field name="type">normal</field>
+	</record>
+  </data>
+</openerp>

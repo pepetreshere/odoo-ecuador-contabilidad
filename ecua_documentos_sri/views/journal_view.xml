@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="account_journal_form_view">
+			<field name="name">account.journal.form</field>
+			<field name="model">account.journal</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.view_account_journal_form" />
+			<field name="arch" type="xml">
+				<field name="entry_posted" position="after">
+					<field name="liquidation" attrs="{'invisible':[('type','!=','purchase')]}"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

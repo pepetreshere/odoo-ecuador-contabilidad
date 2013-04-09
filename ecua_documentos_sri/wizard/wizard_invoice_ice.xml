@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+		<record id="view_account_invoice_ice_options" model="ir.ui.view">
+			<field name="name">account.invoice.ice.wizard.form.options</field>
+			<field name="model">account.invoice.ice.wizard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Invoice">
+					<separator colspan="4" string="Invoice Options"/>
+					<group col="4" colspan="4" fill="1">
+						<label align="0.0" colspan="4"
+							string="You have some product's with ICE in your Invoice, this action split your invoice in two invoices to separate ICE products in only one invoice" />
+					</group>
+					<separator colspan="4" />
+					<group col="4" colspan="4" fill="1">
+						<label align="0.0" colspan="4"
+							string="All ICE products move to the new invoice, and open both invoice, please remember to print every invoice!" />
+					</group>
+					<separator colspan="4" />
+					<group colspan="4" col="6">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button string='Continue' icon="gtk-execute" name="split_action"
+							type="object" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_account_ice_invoice_options" model="ir.actions.act_window">
+			<field name="name">ICE Invoice Customer</field>
+			<field name="res_model">account.invoice.ice.wizard</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_invoice_ice_options" />
+			<field name="target">new</field>
+		</record>    
+
+    </data>
+</openerp>

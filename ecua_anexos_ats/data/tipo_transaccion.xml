@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+		<record id="stu_01" model="sri.transaction.usage">
+			<field name="code">01</field>
+			<field name="name">COMPRA</field>
+			<field name="type_identification">ruc</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('01'),ref('02'),ref('03'),ref('04'),ref('05'),ref('07'),ref('08'),ref('09'),ref('15'),ref('21'),ref('41'),ref('42'),ref('43'),ref('44'),	ref('45'),	ref('47'),	ref('48')])]"/>
+		</record>
+
+		<record id="stu_02" model="sri.transaction.usage">
+			<field name="code">02</field>
+			<field name="name">COMPRA</field>
+			<field name="type_identification">cedula</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('03'),ref('04'),ref('05'),ref('19'),ref('41')])]"/>
+		</record>
+
+		<record id="stu_03" model="sri.transaction.usage">
+			<field name="code">03</field>
+			<field name="name">COMPRA</field>
+			<field name="type_identification">pasaporte</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('03'),ref('04'),ref('05'),ref('19'),ref('41'),ref('45')])]"/>
+		</record>
+
+		<record id="stu_04" model="sri.transaction.usage">
+			<field name="code">04</field>
+			<field name="name">VENTA</field>
+			<field name="type_identification">ruc</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04'),ref('05'),ref('07'),ref('08'),ref('09'),ref('15'),ref('21'),ref('41'),ref('42'),ref('43'),ref('44'),ref('45'),ref('47'),ref('48'),ref('49'),ref('50'),ref('51'),ref('52')])]"/>
+		</record>
+
+		<record id="stu_05" model="sri.transaction.usage">
+			<field name="code">05</field>
+			<field name="name">VENTA</field>
+			<field name="type_identification">cedula</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04'),ref('05'),ref('18'),ref('41'),ref('44'),ref('47'),ref('48')])]"/>
+		</record>
+
+		<record id="stu_06" model="sri.transaction.usage">
+			<field name="code">06</field>
+			<field name="name">VENTA</field>
+			<field name="type_identification">pasaporte</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04'),ref('05'),ref('18'),ref('41'),ref('44'),ref('47'),ref('48')])]"/>
+		</record>
+
+		<record id="stu_07" model="sri.transaction.usage">
+			<field name="code">07</field>
+			<field name="name">VENTA</field>
+			<field name="type_identification">consu_final</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04'),ref('05'),ref('18')])]"/>
+		</record>
+
+		<record id="stu_09" model="sri.transaction.usage">
+			<field name="code">09</field>
+			<field name="name">EXPORTACION</field>
+			<field name="type_identification">export</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('01'),ref('04'),ref('05'),ref('16'),ref('41'),ref('47'),ref('48')])]"/>
+		</record>
+		<!--
+		<record id="10" model="sri.transaction.usage">
+			<field name="code">10</field>
+			<field name="name">TARJETA DE CREDITO</field>
+			<field name="type_identification">ruc</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04')])]"/>
+		</record>
+
+		<record id="11" model="sri.transaction.usage">
+			<field name="code">11</field>
+			<field name="name">TARJETA DE CREDITO</field>
+			<field name="type_identification">pasaporte</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04')])]"/>
+		</record>
+
+		<record id="12" model="sri.transaction.usage">
+			<field name="code">12</field>
+			<field name="name">RENDIMIENTOS FINANCIEROS</field>
+			<field name="type_identification">ruc</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04')])]"/>
+		</record>
+
+		<record id="13" model="sri.transaction.usage">
+			<field name="code">13</field>
+			<field name="name">RENDIMIENTOS FINANCIEROS</field>
+			<field name="type_identification">cedula</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04')])]"/>
+		</record>
+
+		<record id="14" model="sri.transaction.usage">
+			<field name="code">14</field>
+			<field name="name">RENDIMIENTOS FINANCIEROS</field>
+			<field name="type_identification">pasaporte</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04')])]"/>
+		</record>
+
+		<record id="15" model="sri.transaction.usage">
+			<field name="code">15</field>
+			<field name="name">FONDOS Y FIDEICOMISOS</field>
+			<field name="type_identification">ruc</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04')])]"/>
+		</record>
+
+		<record id="16" model="sri.transaction.usage">
+			<field name="code">16</field>
+			<field name="name">FONDOS Y FIDEICOMISOS</field>
+			<field name="type_identification">cedula</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04')])]"/>
+		</record>
+
+		<record id="17" model="sri.transaction.usage">
+			<field name="code">17</field>
+			<field name="name">FONDOS Y FIDEICOMISOS</field>
+			<field name="type_identification">pasaporte</field>
+			<field name="voucher_type_ids" eval="[(6,0,[ref('04')])]"/>
+		</record>
+		-->
+    </data>
+</openerp>

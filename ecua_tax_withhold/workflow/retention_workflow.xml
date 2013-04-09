@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record model="workflow" id="retention_workflow">
+			<field name="name">workflow.retention</field>
+			<field name="osv">account.retention</field>
+			<field name="on_create">True</field>
+		</record>
+
+		<record id="act_draft" model="workflow.activity">
+			<field name="wkf_id" ref="retention_workflow" />
+			<field name="flow_start">True</field>
+			<field name="name">draft</field>
+			<!-- <field name="action">action_draft()</field> -->
+		</record>
+
+		<record id="act_approve" model="workflow.activity">
+			<field name="wkf_id" ref="retention_workflow" />
+			<field name="name">approve</field>
+			<field name="kind">function</field>
+			<field name="action">action_aprove()</field>
+			<field name="split_mode">OR</field>
+		</record>
+		
+		<record id="act_cancel" model="workflow.activity">
+			<field name="wkf_id" ref="retention_workflow" />
+			<field name="name">canceled</field>
+			<field name="kind">function</field>
+			<field name="action">action_cancel()</field>
+		</record>
+		
+		<!-- Transitions -->
+		
+		<record id="draft_to_aprove" model="workflow.transition">
+			<field name="act_from" ref="act_draft" />
+			<field name="act_to" ref="act_approve" />
+			<field name="signal">approve_signal</field>
+			<!-- <field name="role_id" ref="role_id"/> -->
+			<field name="condition">True</field>
+		</record>
+
+		
+		<record id="approve_to_cancel" model="workflow.transition">
+			<field name="act_from" ref="act_approve" />
+			<field name="act_to" ref="act_cancel" />
+			<field name="signal">canceled_signal</field>
+			<!-- <field name="role_id" ref="role_id"/> -->
+			<field name="condition">True</field>
+		</record>
+		
+		<record id="draft_to_cancel" model="workflow.transition">
+			<field name="act_from" ref="act_draft" />
+			<field name="act_to" ref="act_cancel" />
+			<field name="signal">canceled_signal</field>
+			<field name="condition">True</field>
+		</record>
+	</data>
+</openerp>

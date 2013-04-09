@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="re_parner_ruc_simple_form_view">
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_simple_form" />
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field name="ref" placeholder="Ruc/Cédula/Pasaporte" />
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="re_parner_ruc_form_view">
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<field name="ref" position="replace">
+					<field string="type" name="type_ref" invisible="1" />
+				</field>
+				<field name="supplier" position="after">
+					<field name="foreing" string="Extranjero" />
+				</field>
+				<xpath expr="/form/sheet/div/h1/field[@name='name']" position="after">
+					<field name="ref" placeholder="Ruc/Cédula/Pasaporte" />
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="res_partner_ruc_tree_view">
+			<field name="name">res.partner.tree</field>
+			<field name="model">res.partner</field>
+			<field name="type">tree</field>
+			<field name="inherit_id" ref="base.view_partner_tree" />
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field string="CEDULA/RUC" name="ref" />
+				</field>
+			</field>
+		</record>
+
+		<record id="view_verificar_ruc_cedula_search" model="ir.ui.view">
+			<field name="name">res.partner.verificador_ruc_cedula.search</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_res_partner_filter" />
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<field name="category_id" position="before">
+					<field string="CEDULA/RUC" name="ref" />
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

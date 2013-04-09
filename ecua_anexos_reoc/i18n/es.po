@@ -1,0 +1,131 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_anexos_reoc
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.3\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-12-22 12:11+0000\n"
+"PO-Revision-Date: 2011-12-22 07:12-0500\n"
+"Last-Translator: Christopher Ormaza <cormaza@ecuadorenlinea.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: ecua_anexos_reoc
+#: view:sri.reoc:0
+msgid "_Export"
+msgstr "Exportar"
+
+#. module: ecua_anexos_reoc
+#: view:sri.reoc:0
+msgid "_Close"
+msgstr "Cerrar"
+
+#. module: ecua_anexos_reoc
+#: view:sri.reoc:0
+msgid " "
+msgstr " "
+
+#. module: ecua_anexos_reoc
+#: selection:sri.reoc,state:0
+msgid "Get"
+msgstr "Obtener"
+
+#. module: ecua_anexos_reoc
+#: code:addons/ecua_anexos_reoc/reoc.py:132
+#, python-format
+msgid "Not to choose a fiscal year, please check"
+msgstr "No ha Seleccionado un Año Fiscal, Por favor Verifique"
+
+#. module: ecua_anexos_reoc
+#: field:sri.reoc,state:0
+msgid "state"
+msgstr "Estado"
+
+#. module: ecua_anexos_reoc
+#: model:ir.module.module,shortdesc:ecua_anexos_reoc.module_meta_information
+msgid "Ecuadorian Anexos"
+msgstr "Ecuadorian Anexos"
+
+#. module: ecua_anexos_reoc
+#: code:addons/ecua_anexos_reoc/reoc.py:132
+#, python-format
+msgid "Invalid action !"
+msgstr "Invalid action !"
+
+#. module: ecua_anexos_reoc
+#: view:sri.reoc:0
+msgid "Este asistente genera automáticamente la información del anexo denominado:"
+msgstr "Este asistente genera automáticamente la información del anexo denominado:"
+
+#. module: ecua_anexos_reoc
+#: model:ir.model,name:ecua_anexos_reoc.model_sri_reoc
+msgid "sri.reoc"
+msgstr "sri.reoc"
+
+#. module: ecua_anexos_reoc
+#: view:sri.reoc:0
+msgid "Esta información podrá enviarse a través de Internet hasta el último día del mes subsiguiente al que corresponde la misma (28, 29, 30 ó 31). "
+msgstr "Esta información podrá enviarse a través de Internet hasta el último día del mes subsiguiente al que corresponde la misma (28, 29, 30 ó 31). "
+
+#. module: ecua_anexos_reoc
+#: field:sri.reoc,fiscalyear_id:0
+msgid "Fiscal Year"
+msgstr "Año Fiscal"
+
+#. module: ecua_anexos_reoc
+#: view:sri.reoc:0
+msgid "Este documento lo deberá generar las Sociedades y Personas Naturales obligadas a llevar contabilidad, en su calidad de agentes de retención, que no tengan la obligación de presentar el Anexo Transaccional."
+msgstr "Este documento lo deberá generar las Sociedades y Personas Naturales obligadas a llevar contabilidad, en su calidad de agentes de retención, que no tengan la obligación de presentar el Anexo Transaccional."
+
+#. module: ecua_anexos_reoc
+#: view:sri.reoc:0
+msgid "ANEXO DE COMPRAS Y RETENCIONES EN LA FUENTE DE IMPUESTO A LA RENTA POR OTROS CONCEPTOS - REOC"
+msgstr "ANEXO DE COMPRAS Y RETENCIONES EN LA FUENTE DE IMPUESTO A LA RENTA POR OTROS CONCEPTOS - REOC"
+
+#. module: ecua_anexos_reoc
+#: model:ir.module.module,description:ecua_anexos_reoc.module_meta_information
+msgid "   "
+msgstr "   "
+
+#. module: ecua_anexos_reoc
+#: field:sri.reoc,name:0
+msgid "name"
+msgstr "Nombre"
+
+#. module: ecua_anexos_reoc
+#: view:sri.reoc:0
+msgid "http://www.sri.gob.ec/"
+msgstr "http://www.sri.gob.ec/"
+
+#. module: ecua_anexos_reoc
+#: field:sri.reoc,period_id:0
+msgid "Period"
+msgstr "Periodo"
+
+#. module: ecua_anexos_reoc
+#: model:ir.actions.act_window,name:ecua_anexos_reoc.action_wizard_reoc_export
+#: model:ir.ui.menu,name:ecua_anexos_reoc.menu_wizard_reoc_export
+#: view:sri.reoc:0
+msgid "REOC Export"
+msgstr "Exportar REOC"
+
+#. module: ecua_anexos_reoc
+#: field:sri.reoc,data:0
+msgid "File"
+msgstr "Archivo"
+
+#. module: ecua_anexos_reoc
+#: view:sri.reoc:0
+msgid "Para la recepción del Anexo de Compras y Retenciones en la Fuente de Impuesto a la Renta (REOC) estará a disposición el siguiente sitio:"
+msgstr "Para la recepción del Anexo de Compras y Retenciones en la Fuente de Impuesto a la Renta (REOC) estará a disposición el siguiente sitio:"
+
+#. module: ecua_anexos_reoc
+#: selection:sri.reoc,state:0
+msgid "Choose"
+msgstr "Escoger"
+

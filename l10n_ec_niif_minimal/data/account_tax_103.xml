@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+		
+
+		<record id="103" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">DECLARACIÓN DE RETENCIONES EN LA FUENTE DEL IMPUESTO A LA RENTA</field>
+			<field name="code">103</field>
+			<field name="sign">0.0</field>
+			<field name="parent_id" ref="vat_code_tax"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="103_base" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">POR PAGOS EFECTUADOS EN EL PAÍS</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="103"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<!-- VALORES BASE -->
+		
+		<record id="349" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">BASE IMPONIBLE</field>
+			<field name="code">349</field>
+			<field name="sign">0.0</field>
+			<field name="parent_id" ref="103_base"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="302" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">EN RELACIÓN DE DEPENDENCIA QUE SUPERA O NO LA BASE DESGRAVADA</field>
+			<field name="code">302</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="303" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS HONORARIOS PROFESIONALES</field>
+			<field name="code">303</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="304" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS PREDOMINA EL INTELECTO</field>
+			<field name="code">304</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="307" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS PREDOMINA MANO DE OBRA</field>
+			<field name="code">307</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="308" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS ENTRE SOCIEDADES</field>
+			<field name="code">308</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="309" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS PUBLICIDAD Y COMUNICACIÓN</field>
+			<field name="code">309</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="310" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS TRANSPORTE PRIVADO DE PASAJEROS O SERVICIO PÚBLICO O PRIVADO DE CARGA</field>
+			<field name="code">310</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="312" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">TRANSFERENCIA DE BIENES MUEBLES DE NATURALEZA CORPORAL</field>
+			<field name="code">312</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+
+
+		<record id="319" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ARRENDAMIENTO MERCANTIL</field>
+			<field name="code">319</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="320" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ARRENDAMIENTO BIENES INMUEBLES</field>
+			<field name="code">320</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="322" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SEGUROS Y REASEGUROS (PRIMAS Y CESIONES)</field>
+			<field name="code">322</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="323" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">RENDIMIENTOS FINANCIEROS</field>
+			<field name="code">323</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="325" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">LOTERÍAS, RIFAS, APUESTAS Y SIMILARES</field>
+			<field name="code">325</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="327" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTA DE COMBUSTIBLES A COMERCIALIZADORAS</field>
+			<field name="code">327</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="328" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTA DE COMBUSTIBLES A DISTRIBUIDORES</field>
+			<field name="code">328</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="332" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">PAGOS DE BIENES O SERVICIOS NO SUJETOS A RETENCIÓN</field>
+			<field name="code">332</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="340" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 1%</field>
+			<field name="code">340</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="341" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 2%</field>
+			<field name="code">341</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="342" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 8%</field>
+			<field name="code">342</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="343" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 25%</field>
+			<field name="code">343</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="344" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES A OTROS PORCENTAJES</field>
+			<field name="code">344</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="349"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<!-- VALOR RETENIDO -->
+
+		<record id="399" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VALOR RETENIDO</field>
+			<field name="code">399</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="103_base"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="352" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">EN RELACIÓN DE DEPENDENCIA QUE SUPERA O NO LA BASE DESGRAVADA</field>
+			<field name="code">352</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="353" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS HONORARIOS PROFESIONALES</field>
+			<field name="code">353</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="354" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS PREDOMINA EL INTELECTO</field>
+			<field name="code">354</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="357" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS PREDOMINA MANO DE OBRA</field>
+			<field name="code">357</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="358" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS ENTRE SOCIEDADES</field>
+			<field name="code">358</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="359" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS PUBLICIDAD Y COMUNICACIÓN</field>
+			<field name="code">359</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="360" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SERVICIOS TRANSPORTE PRIVADO DE PASAJEROS O SERVICIO PÚBLICO O PRIVADO DE CARGA</field>
+			<field name="code">360</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="362" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">TRANSFERENCIA DE BIENES MUEBLES DE NATURALEZA CORPORAL</field>
+			<field name="code">362</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+
+		<record id="369" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ARRENDAMIENTO MERCANTIL</field>
+			<field name="code">369</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="370" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ARRENDAMIENTO BIENES INMUEBLES</field>
+			<field name="code">370</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="372" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SEGUROS Y REASEGUROS (PRIMAS Y CESIONES)</field>
+			<field name="code">372</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="373" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">RENDIMIENTOS FINANCIEROS</field>
+			<field name="code">373</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="375" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">LOTERÍAS, RIFAS, APUESTAS Y SIMILARES</field>
+			<field name="code">375</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="377" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTA DE COMBUSTIBLES A COMERCIALIZADORAS</field>
+			<field name="code">377</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="378" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTA DE COMBUSTIBLES A DISTRIBUIDORES</field>
+			<field name="code">378</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="390" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 1%</field>
+			<field name="code">390</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="391" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 2%</field>
+			<field name="code">391</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="392" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 8%</field>
+			<field name="code">392</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="393" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 25%</field>
+			<field name="code">393</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="394" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES A OTROS PORCENTAJES</field>
+			<field name="code">394</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="399"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="103_base2" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">POR PAGOS AL EXTERIOR</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="103"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="429" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">BASE IMPONIBLE</field>
+			<field name="code">429</field>
+			<field name="sign">0.0</field>
+			<field name="parent_id" ref="103_base2"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="401" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">CON CONVENIO DE DOBLE TRIBUTACIÓN</field>
+			<field name="code">401</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="429"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="403" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN INTERESES POR FINANCIAMIENTO DE PROVEEDORES EXTERNOS</field>
+			<field name="code">403</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="429"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="405" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN INTERESES DE CRÉDITOS EXTERNOS</field>
+			<field name="code">405</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="429"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="421" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN OTROS CONCEPTOS</field>
+			<field name="code">421</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="429"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="427" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">CON CONVENIO DE DOBLE TRIBUTACIÓN PAGOS AL EXTERIOR  NO SUJETOS A RETENCIÓN</field>
+			<field name="code">427</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="429"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="498" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VALOR RETENIDO</field>
+			<field name="code">498</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="103_base2"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="451" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">CON CONVENIO DE DOBLE TRIBUTACIÓN</field>
+			<field name="code">401</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="498"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="453" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN INTERESES POR FINANCIAMIENTO DE PROVEEDORES EXTERNOS</field>
+			<field name="code">403</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="498"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="455" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN INTERESES DE CRÉDITOS EXTERNOS</field>
+			<field name="code">405</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="498"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="471" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN OTROS CONCEPTOS</field>
+			<field name="code">421</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="498"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<!-- IMPUESTOS -->
+
+
+		<record id="imp303" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">HONORARIOS PROFESIONALES Y DIETAS(10%)</field>
+			<field eval="-0.100000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010204"/>
+			<field name="account_paid_id" ref="20114010204"/>
+			<field name="description">303</field>
+			<field name="base_code_id" ref="303"/>
+			<field name="tax_code_id" ref="353"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp304" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">SERVICIOS PREDOMINA EL INTELECTO(8%)</field>
+			<field eval="-0.080000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010204"/>
+			<field name="account_paid_id" ref="20114010204"/>
+			<field name="description">304</field>
+			<field name="base_code_id" ref="304"/>
+			<field name="tax_code_id" ref="354"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp307" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">SERVICIOS PREDOMINA LA MANO DE OBRA(2%)</field>
+			<field eval="-0.020000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010202"/>
+			<field name="account_paid_id" ref="20114010202"/>
+			<field name="description">307</field>
+			<field name="base_code_id" ref="307"/>
+			<field name="tax_code_id" ref="357"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp308" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">SERVICIOS ENTRE SOCIEDADES(2%)</field>
+			<field eval="-0.020000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010202"/>
+			<field name="account_paid_id" ref="20114010202"/>
+			<field name="description">308</field>
+			<field name="base_code_id" ref="308"/>
+			<field name="tax_code_id" ref="358"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp309" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">SERVICIOS PUBLICIDAD Y COMUNICACION(1%)</field>
+			<field eval="-0.010000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010201"/>
+			<field name="account_paid_id" ref="20114010201"/>
+			<field name="description">309</field>
+			<field name="base_code_id" ref="309"/>
+			<field name="tax_code_id" ref="359"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp310" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">TRANSPORTE PRIVADO DE PASAJEROS O SERVICIO PUBLICO O PRIVADO DE CARGA(1%)</field>
+			<field eval="-0.010000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010201"/>
+			<field name="account_paid_id" ref="20114010201"/>
+			<field name="description">310</field>
+			<field name="base_code_id" ref="310"/>
+			<field name="tax_code_id" ref="360"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp312" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">TRANSFERENCIA DE BIENES MUEBLES DE NATURALEZA CORPORAL(1%)</field>
+			<field eval="-0.010000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010201"/>
+			<field name="account_paid_id" ref="20114010201"/>
+			<field name="description">312</field>
+			<field name="base_code_id" ref="312"/>
+			<field name="tax_code_id" ref="362"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp319" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">ARRENDAMIENTO MERCANTIL(1%)</field>
+			<field eval="-0.010000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010201"/>
+			<field name="account_paid_id" ref="20114010201"/>
+			<field name="description">319</field>
+			<field name="base_code_id" ref="319"/>
+			<field name="tax_code_id" ref="369"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp320" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">ARRENDAMIENTO BIENES INMUEBLES(8%)</field>
+			<field eval="-0.080000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010204"/>
+			<field name="account_paid_id" ref="20114010204"/>
+			<field name="description">320</field>
+			<field name="base_code_id" ref="320"/>
+			<field name="tax_code_id" ref="370"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp322" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">SEGUROS Y REASEGUROS (PRIMAS Y CESIONES) (1%)</field>
+			<field eval="-0.010000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010201"/>
+			<field name="account_paid_id" ref="20114010201"/>
+			<field name="description">322</field>
+			<field name="base_code_id" ref="322"/>
+			<field name="tax_code_id" ref="372"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp323" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">POR RENDIMIENTOS FINANCIEROS(2%)</field>
+			<field eval="-0.020000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010202"/>
+			<field name="account_paid_id" ref="20114010202"/>
+			<field name="description">323</field>
+			<field name="base_code_id" ref="323"/>
+			<field name="tax_code_id" ref="373"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp325" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">POR LOTERIAS. RIFAS. APUESTAS Y SIMILARES (15%)</field>
+			<field eval="-0.150000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010206"/>
+			<field name="account_paid_id" ref="20114010206"/>
+			<field name="description">325</field>
+			<field name="base_code_id" ref="325"/>
+			<field name="tax_code_id" ref="375"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp327" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">POR VENTA DE COMBUSTIBLES A COMERCIALIZADORAS(0.2%)</field>
+			<field eval="-0.002000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010208"/>
+			<field name="account_paid_id" ref="20114010208"/>
+			<field name="description">327</field>
+			<field name="base_code_id" ref="327"/>
+			<field name="tax_code_id" ref="377"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp328" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">POR VENTA DE COMBUSTIBLES A DISTRIBUIDORES (0.3%)</field>
+			<field eval="-0.003000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010208"/>
+			<field name="account_paid_id" ref="20114010208"/>
+			<field name="description">328</field>
+			<field name="base_code_id" ref="328"/>
+			<field name="tax_code_id" ref="378"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp332" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">OTRAS COMPRAS DE BIENES Y SERVICIOS NO SUJETAS A RETENCION(0%)</field>
+			<field eval="0.000000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010208"/>
+			<field name="account_paid_id" ref="20114010208"/>
+			<field name="description">332</field>
+			<field name="base_code_id" ref="332"/>
+			<field name="tax_code_id" ref="332"/>
+			<field name="ref_base_code_id" ref="332"/>
+			<field name="ref_tax_code_id" ref="332"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+		
+
+		<record id="imp340" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 1%</field>
+			<field eval="-0.010000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010201"/>
+			<field name="account_paid_id" ref="20114010201"/>
+			<field name="description">340</field>
+			<field name="base_code_id" ref="340"/>
+			<field name="tax_code_id" ref="390"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp341" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 2%</field>
+			<field eval="-0.020000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010202"/>
+			<field name="account_paid_id" ref="20114010202"/>
+			<field name="description">341</field>
+			<field name="base_code_id" ref="341"/>
+			<field name="tax_code_id" ref="391"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp342" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 8%</field>
+			<field eval="-0.080000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010204"/>
+			<field name="account_paid_id" ref="20114010204"/>
+			<field name="description">342</field>
+			<field name="base_code_id" ref="342"/>
+			<field name="tax_code_id" ref="392"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+		
+
+		<record id="imp343" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">OTRAS RETENCIONES APLICABLES EL 25%</field>
+			<field eval="-0.250000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010207"/>
+			<field name="account_paid_id" ref="20114010207"/>
+			<field name="description">343</field>
+			<field name="base_code_id" ref="343"/>
+			<field name="tax_code_id" ref="393"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+		</record>
+
+		<!-- El porcentaje dependera del convenio -->
+		
+		<record id="imp401" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">CON CONVENIO DE DOBLE TRIBUTACION - PORCENTAJE DEPENDE DEL CONVENIO(0%)</field>
+			<field eval="0.000000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010208"/>
+			<field name="account_paid_id" ref="20114010208"/>
+			<field name="description">401</field>
+			<field name="base_code_id" ref="401"/>
+			<field name="tax_code_id" ref="451"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+			<field name="imports">True</field>
+		</record>
+		
+
+		<record id="imp403" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACION INTERESES Y COSTOS FINANCIEROS POR FINANCIAMIENTO DE PROVEEDORES EXTERNOS (SI EL VALOR SE ENCUENTRA DENTRO DE LA TASA ACTIVA MAXIMA REFERENCIAL DEL BCE SE RETIENE EL 5%. SI EXCEDE EL VALOR SE RETIENE EL 24%)</field>
+			<field eval="-0.050000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010203"/>
+			<field name="account_paid_id" ref="20114010203"/>
+			<field name="description">403</field>
+			<field name="base_code_id" ref="403"/>
+			<field name="tax_code_id" ref="453"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+			<field name="imports">True</field>
+		</record>
+
+		<record id="imp405" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACION INTERESES DE CREDITOS EXTERNOS REGISTRADOS EN EL BCE (SI EL VALOR SE ENCUENTRA DENTRO DE LA TASA ACTIVA MAXIMA REFERENCIAL DEL BCE SE RETIENE EL 5%. SI EXCEDE EL VALOR SE RETIENE EL 24%)</field>
+			<field eval="-0.050000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010203"/>
+			<field name="account_paid_id" ref="20114010203"/>
+			<field name="description">405</field>
+			<field name="base_code_id" ref="405"/>
+			<field name="tax_code_id" ref="455"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+			<field name="imports">True</field>
+		</record>
+
+		<record id="imp421" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACION POR OTROS CONCEPTOS(24%)</field>
+			<field eval="-0.240000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010207"/>
+			<field name="account_paid_id" ref="20114010207"/>
+			<field name="description">421</field>
+			<field name="base_code_id" ref="421"/>
+			<field name="tax_code_id" ref="471"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="type_ec">renta</field>
+			<field name="imports">True</field>
+		</record>
+
+  </data>
+</openerp>

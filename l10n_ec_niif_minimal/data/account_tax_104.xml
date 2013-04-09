@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+		<record id="104" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">DECLARACIÓN DEL IMPUESTO AL VALOR AGREGADO</field>
+			<field name="code">104</field>
+			<field name="sign">0.0</field>
+			<field name="parent_id" ref="vat_code_tax"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="104_VENTAS" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">RESUMEN DE VENTAS Y OTRAS OPERACIONES DEL PERÍODO QUE DECLARA</field>
+			<field name="code"></field>
+			<field name="sign">0.0</field>
+			<field name="parent_id" ref="104"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="104_COMPRAS" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">RESUMEN DE ADQUISICIONES Y PAGOS DEL PERÍODO QUE DECLARA</field>
+			<field name="code"></field>
+			<field name="sign">0.0</field>
+			<field name="parent_id" ref="104"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="799" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">TOTAL IMPUESTO A PAGAR POR RETENCIÓN</field>
+			<field name="code">799</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="104"/>
+			<field name="sign">1</field>
+			<field name="type">withholding</field>
+		</record>
+
+		<!-- TOTAL DE VENTAS Y OTRAS OPERACIONES -->
+		
+		<record id="419" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VALOR NETO (VALOR BRUTO - N/C)</field>
+			<field name="code">419</field>
+			<field name="sign">0.0</field>
+			<field name="parent_id" ref="104_VENTAS"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="411" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTAS LOCALES (EXCLUYE ACTIVOS FIJOS) GRAVADAS TARIFA 12%</field>
+			<field name="code">411</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="419"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="412" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTAS DE ACTIVOS FIJOS GRAVADAS TARIFA 12%</field>
+			<field name="code">412</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="419"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="413" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTAS LOCALES (EXCLUYE ACTIVOS FIJOS) GRAVADAS TARIFA 0% QUE NO DAN DERECHO A CREDITO TRIBUTARIO</field>
+			<field name="code">413</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="419"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="414" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTAS DE ACTIVOS FIJOS GRAVADAS TARIFA 0% QUE NO DAN DERECHO A CREDITO TRIBUTARIO</field>
+			<field name="code">414</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="419"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="415" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTAS LOCALES (EXCLUYE ACTIVOS FIJOS) GRAVADAS TARIFA 0% QUE DAN DERECHO A CREDITO TRIBUTARIO</field>
+			<field name="code">415</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="419"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="416" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTAS DE ACTIVOS FIJOS GRAVADAS TARIFA 0% QUE DAN DERECHO A CREDITO TRIBUTARIO</field>
+			<field name="code">416</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="419"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="417" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">EXPORTACIONES DE BIENES</field>
+			<field name="code">417</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="419"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="418" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">EXPORTACIONES DE SERVICIOS</field>
+			<field name="code">418</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="419"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<!-- IMPUESTO GENERADO -->
+		
+		<record id="429" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">IMPUESTO GENERADO</field>
+			<field name="code">529</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="104_VENTAS"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="IVA-421" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTAS LOCALES (EXCLUYE ACTIVOS FIJOS) GRAVADAS TARIFA 12%</field>
+			<field name="code">421</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="429"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<record id="422" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VENTAS DE ACTIVOS FIJOS GRAVADAS TARIFA 12%</field>
+			<field name="code">422</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="429"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<!-- TOTAL ADQUISICIONES Y PAGOS  -->
+		
+		<!-- BASE IMPONIBLE -->
+		
+		<record id="519" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">VALOR NETO (VALOR BRUTO - N/C)</field>
+			<field name="code">519</field>
+			<field name="sign">0.0</field>
+			<field name="parent_id" ref="104_COMPRAS"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="511" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ADQUISICIONES Y PAGOS (EXCLUYE ACTIVOS FIJOS) GRAVADOS TARIFA 12% (CON DERECHO A CRÉDITO TRIBUTARIO)</field>
+			<field name="code">511</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="519"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="512" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ADQUISICIONES LOCALES DE ACTIVOS FIJOS GRAVADOS TARIFA 12% (CON DERECHO A CRÉDITO TRIBUTARIO)</field>
+			<field name="code">512</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="519"/>
+			<field name="type">normal</field>
+		</record>		
+
+		<record id="513" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS ADQUISICIONES Y PAGOS GRAVADOS TARIFA 12% (SIN DERECHO A CRÉDITO TRIBUTARIO)</field>
+			<field name="code">513</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="519"/>
+			<field name="type">normal</field>
+		</record>		
+
+		<record id="514" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">IMPORTACIONES DE BIENES (EXCLUYE ACTIVOS FIJOS) GRAVADOS TARIFA 12%</field>
+			<field name="code">514</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="519"/>
+			<field name="type">normal</field>
+		</record>		
+
+		<record id="515" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">IMPORTACIONES DE ACTIVOS FIJOS GRAVADOS TARIFA 12%</field>
+			<field name="code">515</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="519"/>
+			<field name="type">normal</field>
+		</record>		
+
+		<record id="516" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">IMPORTACIONES DE BIENES (INCLUYE ACTIVOS FIJOS) GRAVADOS TARIFA 0%</field>
+			<field name="code">516</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="519"/>
+			<field name="type">normal</field>
+		</record>		
+
+		<record id="517" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ADQUISICIONES Y PAGOS (INCLUYE ACTIVOS FIJOS) GRAVADOS TARIFA 0%</field>
+			<field name="code">517</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="519"/>
+			<field name="type">normal</field>
+		</record>		
+
+		<record id="518" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ADQUISICIONES REALIZADAS A CONTRIBUYENTES RISE</field>
+			<field name="code">518</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="519"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<!-- IMPUESTO GENERADO -->
+		
+		<record id="529" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">IMPUESTO GENERADO</field>
+			<field name="code">529</field>
+			<field name="sign">-1.0</field>
+			<field name="parent_id" ref="104_COMPRAS"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="521" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ADQUISICIONES Y PAGOS (EXCLUYE ACTIVOS FIJOS) GRAVADOS TARIFA 12% (CON DERECHO A CRÉDITO TRIBUTARIO)</field>
+			<field name="code">521</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="529"/>
+			<field name="type">normal</field>
+		</record>
+
+		<record id="522" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">ADQUISICIONES LOCALES DE ACTIVOS FIJOS GRAVADOS TARIFA 12% (CON DERECHO A CRÉDITO TRIBUTARIO)</field>
+			<field name="code">522</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="529"/>
+			<field name="type">normal</field>
+		</record>		
+
+		<record id="523" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">OTRAS ADQUISICIONES Y PAGOS GRAVADOS TARIFA 12% (SIN DERECHO A CRÉDITO TRIBUTARIO)</field>
+			<field name="code">523</field>
+			<field name="sign">0.0</field>
+			<field name="parent_id" ref="529"/>
+			<field name="type">normal</field>
+		</record>		
+
+		<record id="524" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">IMPORTACIONES DE BIENES (EXCLUYE ACTIVOS FIJOS) GRAVADOS TARIFA 12%</field>
+			<field name="code">524</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="529"/>
+			<field name="type">normal</field>
+		</record>		
+
+		<record id="525" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">IMPORTACIONES DE ACTIVOS FIJOS GRAVADOS TARIFA 12%</field>
+			<field name="code">525</field>
+			<field name="sign">1.0</field>
+			<field name="parent_id" ref="529"/>
+			<field name="type">normal</field>
+		</record>
+		
+		<!-- AGENTES DE RETENCION DEL IMPUESTO AL VALOR AGREGADO -->
+		
+		<record id="721" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">RETENCIONES 30% IVA</field>
+			<field name="code">721</field>
+			<field name="parent_id" ref="799"/>
+			<field name="sign">1</field>
+			<field name="type">withholding</field>
+		</record>
+		
+		<record id="723" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">RETENCIONES 70% IVA</field>
+			<field name="code">723</field>
+			<field name="parent_id" ref="799"/>
+			<field name="sign">1</field>
+			<field name="type">withholding</field>
+		</record>
+
+		<record id="725" model="account.tax.code.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="name">RETENCIONES 100% IVA</field>
+			<field name="code">725</field>
+			<field name="parent_id" ref="799"/>
+			<field name="sign">1</field>
+			<field name="type">withholding</field>
+		</record>
+		
+		<!-- IMPUESTOS DE IVA VENTAS-->
+		
+		<record id="IVA0-NOCD" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA 0%(SIN DERECHO A CREDITO TRIBUTARIO)</field>
+			<field eval="0.00000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="base_code_id" ref="413"/>
+			<field name="ref_base_code_id" ref="413"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+		</record>
+
+		<record id="IVA0-AF-NOCD" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA 0%(ACTIVOS FIJOS SIN DERECHO A CREDITO TRIBUTARIO)</field>
+			<field eval="0.00000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="base_code_id" ref="414"/>
+			<field name="ref_base_code_id" ref="414"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+			<field name="assets">True</field>
+		</record>
+
+		<record id="IVA0-CD" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA 0%(CON DERECHO A CREDITO TRIBUTARIO)</field>
+			<field eval="0.00000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="base_code_id" ref="415"/>
+			<field name="ref_base_code_id" ref="415"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+		</record>
+
+		<record id="IVA0-AF-CD" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA 0%(ACTIVOS FIJOS CON DERECHO A CREDITO TRIBUTARIO)</field>
+			<field eval="0.00000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="base_code_id" ref="416"/>
+			<field name="ref_base_code_id" ref="416"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+			<field name="assets">True</field>
+		</record>
+
+		<record id="IVA12" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA COBRADO(12%)</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010101"/>
+			<field name="account_paid_id" ref="20114010101"/>
+			<field name="base_code_id" ref="411"/>
+			<field name="tax_code_id" ref="IVA-421"/>
+			<field name="ref_base_code_id" ref="411"/>
+			<field name="ref_tax_code_id" ref="IVA-421"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+		</record>
+
+		<record id="IVA12-AF" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA COBRADO(12%)(VENTA DE ACTIVOS FIJOS)</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010102"/>
+			<field name="account_paid_id" ref="20114010102"/>
+			<field name="base_code_id" ref="411"/>
+			<field name="tax_code_id" ref="IVA-421"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+			<field name="assets">True</field>
+		</record>
+
+		<record id="IVA12-E-B" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA COBRADO(12%)(EXPORTACIÓN DE BIENES)</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010103"/>
+			<field name="account_paid_id" ref="20114010103"/>
+			<field name="base_code_id" ref="417"/>
+			<field name="ref_base_code_id" ref="417"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+			<field name="exports">True</field>
+		</record>
+
+		<record id="IVA12-E-S" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA COBRADO(12%)(EXPORTACIÓN DE SERVICIOS)</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010104"/>
+			<field name="account_paid_id" ref="20114010104"/>
+			<field name="base_code_id" ref="418"/>
+			<field name="ref_base_code_id" ref="418"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+			<field name="exports">True</field>
+		</record>
+
+		<!-- IMPUESTOS DE IVA EN COMPRAS -->
+
+		<record id="IVA12-CD" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA(12%) PAGADO EN COMPRAS LOCALES</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="101050101"/>
+			<field name="account_paid_id" ref="101050101"/>
+			<field name="base_code_id" ref="511"/>
+			<field name="tax_code_id" ref="521"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+		</record>
+
+		<record id="IVA12-AF-CD" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA(12%) PAGADO EN COMPRAS LOCALES DE ACTIVOS FIJOS</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="101050102"/>
+			<field name="account_paid_id" ref="101050102"/>
+			<field name="base_code_id" ref="512"/>
+			<field name="tax_code_id" ref="522"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+			<field name="assets">True</field>
+		</record>
+
+		<record id="IVA12-NCD" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA(12%) PAGADO EN OTRAS ADQUISICIONES(SIN DERECHO A CRÉDITO TRIBUTARIO)</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="101050103"/>
+			<field name="account_paid_id" ref="101050103"/>
+			<field name="base_code_id" ref="513"/>
+			<field name="tax_code_id" ref="523"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+		</record>
+
+		<record id="IVA12-I-B-CD" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA(12%) PAGADO EN IMPORTACIÓN DE BIENES</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="101050104"/>
+			<field name="account_paid_id" ref="101050104"/>
+			<field name="base_code_id" ref="514"/>
+			<field name="tax_code_id" ref="524"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="-1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+		</record>
+
+		<record id="IVA12-I-AF-CD" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA(12%) PAGADO EN IMPORTACIÓN DE ACTIVOS FIJOS</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="101050105"/>
+			<field name="account_paid_id" ref="101050105"/>
+			<field name="base_code_id" ref="515"/>
+			<field name="tax_code_id" ref="525"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+			<field name="assets">True</field>
+			<field name="imports">True</field>
+		</record>
+		
+		<record id="IVA0-I-B" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA 0% EN IMPORTACIONES</field>
+			<field eval="0.00000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="base_code_id" ref="516"/>
+			<field name="ref_base_code_id" ref="516"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+			<field name="assets">True</field>
+			<field name="imports">True</field>
+		</record>
+		
+		<record id="IVA0-I-B" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">IVA 0% EN ADQUISICIONES LOCALES</field>
+			<field eval="0.00000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="base_code_id" ref="517"/>
+			<field name="ref_base_code_id" ref="517"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">vat</field>
+			<field name="type_ec">iva</field>
+		</record>
+
+		<!-- IMPUESTOS DE RETENCION DE IVA -->
+		
+		<record id="imp721" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">RETENCIONES 30% IVA BASE</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010301"/>
+			<field name="account_paid_id" ref="20114010301"/>
+			<field name="tax_code_id" ref="721"/>
+			<field name="ref_tax_code_id" ref="721"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="child_depend">True</field>
+			<field name="type_ec">iva</field>
+		</record>
+		
+		<record id="imp721_iva" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">RETENCIONES 30% IVA</field>
+			<field eval="-0.300000" name="amount"/>
+			<field name="account_collected_id" ref="20114010301"/>
+			<field name="account_paid_id" ref="20114010301"/>
+			<field name="tax_code_id" ref="721"/>
+			<field name="ref_tax_code_id" ref="721"/>
+			<field name="type">percent</field>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="parent_id" ref="imp721"></field>
+			<field name="type_ec">iva</field>
+		</record>
+
+
+		<record id="imp723" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">RETENCIONES 70% IVA BASE</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010302"/>
+			<field name="account_paid_id" ref="20114010302"/>
+			<field name="tax_code_id" ref="723"/>
+			<field name="ref_tax_code_id" ref="723"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="child_depend">True</field>
+			<field name="type_ec">iva</field>
+		</record>
+		
+		<record id="imp723_iva" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">RETENCIONES 70% IVA</field>
+			<field name="account_collected_id" ref="20114010302"/>
+			<field name="account_paid_id" ref="20114010302"/>
+			<field name="tax_code_id" ref="723"/>
+			<field name="ref_tax_code_id" ref="723"/>
+			<field eval="-0.70000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="parent_id" ref="imp723"></field>
+			<field name="type_ec">iva</field>
+		</record>
+		
+
+
+		<record id="imp725" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">RETENCIONES 100% IVA BASE</field>
+			<field eval="0.120000" name="amount"/>
+			<field name="type">percent</field>
+			<field name="account_collected_id" ref="20114010303"/>
+			<field name="account_paid_id" ref="20114010303"/>
+			<field name="tax_code_id" ref="725"/>
+			<field name="ref_tax_code_id" ref="725"/>
+			<field eval="1" name="tax_sign"/>
+			<field eval="1" name="base_sign"/>
+			<field eval="1" name="ref_tax_sign"/>
+			<field eval="1" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="child_depend">True</field>
+			<field name="type_ec">iva</field>
+		</record>
+		
+		<record id="imp725_iva" model="account.tax.template">
+			<field name="template_name">PGCE 2011</field>
+			<field name="chart_template_id" ref="ec_niif_minimal_chart_template"/>
+			<field name="name">RETENCIONES 100% IVA</field>
+			<field eval="-1.000000" name="amount"/>
+			<field name="account_collected_id" ref="20114010303"/>
+			<field name="account_paid_id" ref="20114010303"/>
+			<field name="tax_code_id" ref="725"/>
+			<field name="ref_tax_code_id" ref="725"/>
+			<field name="type">percent</field>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group">other</field>
+			<field name="parent_id" ref="imp725"></field>
+			<field name="type_ec">iva</field>
+		</record>
+		
+  </data>
+</openerp>

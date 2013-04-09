@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+    
+	    <record id="3011" model="account.ice.type">
+	    	<field name="code">3011</field>
+	    	<field name="name">CIGARRILLOS RUBIOS</field>
+	    	<field name="rate">1.5</field>
+	    </record>
+	    
+	    <record id="3021" model="account.ice.type">
+	    	<field name="code">3021</field>
+	    	<field name="name">CIGARRILLOS NEGROS</field>
+	    	<field name="rate">1.5</field>
+	    </record>
+	    
+	    <record id="3023" model="account.ice.type">
+	    	<field name="code">3023</field>
+	    	<field name="name">PRODUCTOS DEL TABACO Y SUCEDÁNEOS DEL TABACO, EXCEPTO CIGARRILLOS</field>
+	    	<field name="rate">1.5</field>
+	    </record>
+	    
+	    <record id="3031" model="account.ice.type">
+	    	<field name="code">3031</field>
+	    	<field name="name">ALCOHOL Y PRODUCTOS ALCOHÓLICOS DISTINTOS A LA CERVEZA</field>
+	    	<field name="rate">0.4</field>
+	    </record>
+	    
+	    <record id="3041" model="account.ice.type">
+	    	<field name="code">3041</field>
+	    	<field name="name">CERVEZA</field>
+	    	<field name="rate">0.3</field>
+	    </record>
+	    
+	    <record id="3051" model="account.ice.type">
+	    	<field name="code">3051</field>
+	    	<field name="name">GASEOSA</field>
+	    	<field name="rate">1.5</field>
+	    </record>
+	    
+	    <!-- Vehículos motorizados < 3,5 toneladas -->
+	    
+	    <record id="3072" model="account.ice.type">
+	    	<field name="code">3072</field>
+	    	<field name="name">CAMIONETAS, FURGONETAS, CAMIONES Y VEHÍCULOS DE RESCATE CUYO PVP SEA HASTA DE 30.000 USD</field>
+	    	<field name="rate">0.05</field>
+	    </record>
+	    
+	    <record id="3073" model="account.ice.type">
+	    	<field name="code">3073</field>
+	    	<field name="name">VEHÍCULOS MOTORIZADOS CUYO PVP SEA HASTA DE 20.000 USD</field>
+	    	<field name="rate">0.05</field>
+	    </record>
+	    
+	    <record id="3074" model="account.ice.type">
+	    	<field name="code">3074</field>
+	    	<field name="name">VEHÍCULOS MOTORIZADOS, EXCEPTO CAMIONETAS, FURGONETAS, CAMIONES Y VEHÍCULOS DE RESCATE CUYO PVP SE ENCUENTRE ENTRE 20.000 Y 30.000 USD</field>
+	    	<field name="rate">0.1</field>
+	    </record>
+	    
+	    <record id="3075" model="account.ice.type">
+	    	<field name="code">3075</field>
+	    	<field name="name">VEHÍCULOS MOTORIZADOS, CUYO PVP SE ENCUENTRE ENTRE 30.000 Y 40.000 USD</field>
+	    	<field name="rate">0.15</field>
+	    </record>
+	    
+	    <record id="3077" model="account.ice.type">
+	    	<field name="code">3077</field>
+	    	<field name="name">VEHÍCULOS MOTORIZADOS, CUYO PVP SE ENCUENTRE ENTRE 40.000 Y 50.000 USD</field>
+	    	<field name="rate">0.2</field>
+	    </record>
+	    
+	    <record id="3078" model="account.ice.type">
+	    	<field name="code">3078</field>
+	    	<field name="name">VEHÍCULOS MOTORIZADOS, CUYO PVP SE ENCUENTRE ENTRE 50.000 Y 60.000 USD</field>
+	    	<field name="rate">0.25</field>
+	    </record>
+	    
+	    <record id="3079" model="account.ice.type">
+	    	<field name="code">3079</field>
+	    	<field name="name">VEHÍCULOS MOTORIZADOS, CUYO PVP SE ENCUENTRE ENTRE 60.000 Y 70.000 USD</field>
+	    	<field name="rate">0.3</field>
+	    </record>
+
+	    <record id="3080" model="account.ice.type">
+	    	<field name="code">3080</field>
+	    	<field name="name">VEHÍCULOS MOTORIZADOS, CUYO PVP SEA SUPERIOR A 70.000 USD</field>
+	    	<field name="rate">0.35</field>
+	    </record>
+	    
+	    <record id="3081" model="account.ice.type">
+	    	<field name="code">3081</field>
+	    	<field name="name">AVIONES, AVIONETAS Y HELICÓPTEROS EXCEPTO AQUELLAS DESTINADAS AL TRANSPORTE COMERCIAL DE PASAJEROS, CARGA Y SERVICIOS; MOTOS ACUÁTICAS, TRICARES. CUADRONES, YATES Y BARCOS DE RECREO</field>
+	    	<field name="rate">0.15</field>
+	    </record>
+	    
+	    <!--  -->
+	    <record id="3092" model="account.ice.type">
+	    	<field name="code">3092</field>
+	    	<field name="name">SERVICIOS DE TELEVISIÓN PAGADA</field>
+	    	<field name="rate">0.15</field>
+	    </record>
+	    
+	    <record id="3610" model="account.ice.type">
+	    	<field name="code">3610</field>
+	    	<field name="name">PERFUMES Y AGUAS DE TOCADOR</field>
+	    	<field name="rate">0.2</field>
+	    </record>
+	    
+	    <record id="3620" model="account.ice.type">
+	    	<field name="code">3620</field>
+	    	<field name="name">VIDEOJUEGOS</field>
+	    	<field name="rate">0.35</field>
+	    </record>
+	    
+	    <record id="3630" model="account.ice.type">
+	    	<field name="code">3630</field>
+	    	<field name="name">ARMAS DE FUEGO, ARMAS DEPORTIVAS Y MUNICIONES, EXCEPTO AQUELLAS ADQUIRIDAS POR LA FUERZA PÚBLICA</field>
+	    	<field name="rate">3</field>
+	    </record>
+	    
+	    <record id="3640" model="account.ice.type">
+	    	<field name="code">3640</field>
+	    	<field name="name">FOCOS INCANDESCENTES EXCEPTO AQUELLOS UTILIZADOS COMO INSUMOS AUTOMOTRICES</field>
+	    	<field name="rate">1</field>
+	    </record>
+	    
+	    <record id="3650" model="account.ice.type">
+	    	<field name="code">3650</field>
+	    	<field name="name">SERVICIOS DE CASINOS, SALAS DE JUEGO (BINGO - MECÁNICOS) Y OTROS JUEGOS DE AZAR</field>
+	    	<field name="rate">0.35</field>
+	    </record>
+	    
+	    <record id="3660" model="account.ice.type">
+	    	<field name="code">3660</field>
+	    	<field name="name">LAS CUOTAS, MEMBRESÍAS, AFILIACIONES, ACCIONES Y SIMILARES QUE COBREN A SUS MIEMBROS Y USUARIOS LOS CLUBES SOCIALES, PARA PRESTAR SUS SERVICIOS, CUYO MONTO EN SU CONJUNTO SUPERE LOS 1.500 USD ANUALE</field>
+	    	<field name="rate">0.35</field>
+	    </record>
+    
+    </data>
+</openerp>
