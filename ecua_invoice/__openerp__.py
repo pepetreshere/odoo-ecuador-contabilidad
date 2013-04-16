@@ -29,17 +29,12 @@
     "author" : "TRESCLOUD CÍA LTDA",
     "website" : "http://www.trescloud.com/",
     "category" : "Ecuadorian Regulations",
+    # TODO agregar dependencia a aeroo
     "depends" : [
                  'base',
-                 'account',
-                 'account_voucher',
-                 'account_accountant',
-                 'purchase',
                  'sale',
                  'stock',
-                 'report_aeroo',
-                 'report_aeroo_ooo',
-                 #'ecua_documentos_sri',
+                 'account',
                  ],
     "description": """
     In Ecuador additional rules applies to invoices:

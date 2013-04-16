@@ -246,17 +246,30 @@ class account_invoice(osv.osv):
     
     # TRESCLOUD - No le vemos la necesidad, fue removida
     # def _get_invoice_line(self, cr, uid, ids, context=None):
+
+    # TRESCLOUD - TODO - La tienda deberia ser tomada de la tienda seleccionada en las preferencias del usuario
+    #    def _get_shop(self, cr, uid, context=None):
+    #        curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
+    #        shop_id = None
+    #        if curr_user:
+    #            if not curr_user.shop_ids:
+    #                if uid != 1:
+    #                    raise osv.except_osv('Error!', _("Your User doesn't have shops assigned"))
+    #            for shop in curr_user.shop_ids:
+    #                shop_id = shop.id
+    #                continue            
+    #        return shop_id
         
     _columns = {
                 #TODO hacer obligatorio el campo name que almacenara el numero de la factura
-                #TODO remover el campo create_date
-                'create_date': fields.date('Creation date', readonly=True),
+                #'internal_number': fields.char('Invoice Number', size=32, readonly=True, help="Unique number of the invoice, computed automatically when the invoice is created."),
                 'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
-                'invoice_address':fields.char("Invoice address as in VAT document, saved in invoice only not in partner"),
-                'invoice_phone':fields.char("Invoice phone as in VAT document, saved in invoice only not in partner"),
+                'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
+                'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
                }
 
     _defaults = {
+                 #'shop_id': _get_shop,
                  }
 
 
@@ -316,76 +329,76 @@ class account_invoice(osv.osv):
     #    def action_cancel_draft(self, cr, uid, ids, *args):
 
     #    TRESCLOUD - Revisar si debe ir en el codigo base, por ejemplo la localizacion venezolana lo tiene en un modulo separado
-    def split_invoice(self, cr, uid, invoice_id, context=None):
-        '''
-        Split the new_invoice_data when the lines exceed the maximum set for the shop
-        '''
-        doc_obj=self.pool.get('sri.type.document')
-        invoice = self.browse(cr, uid, invoice_id)
-        new_invoice_id = False
-        if invoice.type == 'out_invoice':
-            if invoice.shop_id.invoice_lines != 0 and len(invoice.invoice_line) > invoice.shop_id.invoice_lines:
-                lst = []
-                new_invoice_data = self.read(cr, uid, invoice.id, [
-                                                      'name',
-                                                      'origin',
-                                                      'fiscal_position',
-                                                      'date_invoice',
-                                                      'user_id',
-                                                      'shop_id',
-                                                      'printer_id',
-                                                      'authorization_sales',
-                                                      'authorization',
-                                                      'company_id',
-                                                      'type', 
-                                                      'reference', 
-                                                      'comment', 
-                                                      'date_due', 
-                                                      'partner_id', 
-                                                      'address_contact_id', 
-                                                      'address_invoice_id', 
-                                                      'payment_term', 
-                                                      'account_id', 
-                                                      'currency_id', 
-                                                      'invoice_line', 
-                                                      'tax_line', 
-                                                      'journal_id', 
-                                                      'period_id',
-                                                      ])
-                new_number = doc_obj.get_next_value_secuence(cr, uid, 'invoice', False, invoice.printer_id.id, 'account.invoice', 'invoice_number_out', context)
-                new_invoice_data.update({
-                    'automatic_number': new_number,
-                    'invoice_number_out': new_number,
-                    'state': 'draft',
-                    'number': False,
-                    'invoice_line': [],
-                    'tax_line': []
-                })
-                # take the id part of the tuple returned for many2one fields
-                for field in new_invoice_data:
-                    if isinstance(new_invoice_data[field], tuple):
-                        new_invoice_data[field] = new_invoice_data[field] and new_invoice_data[field][0]
-
-                new_invoice_id = self.create(cr, uid, new_invoice_data)
-                count = 0
-                lst = invoice.invoice_line
-                while count < invoice.shop_id.invoice_lines:
-                    lst.pop(0)
-                    count += 1
-                for il in lst:
-                    self.pool.get('account.invoice.line').write(cr,uid,il.id,{'invoice_id':new_invoice_id})
-                self.button_compute(cr, uid, [invoice.id])
-        
-            if new_invoice_id:
-                wf_service = netsvc.LocalService("workflow")
-                self.button_compute(cr, uid, [new_invoice_id])
-                wf_service.trg_validate(uid, 'account.invoice', new_invoice_id, 'invoice_open', cr)
-        return new_invoice_id
+#    def split_invoice(self, cr, uid, invoice_id, context=None):
+#        '''
+#        Split the new_invoice_data when the lines exceed the maximum set for the shop
+#        '''
+#        doc_obj=self.pool.get('sri.type.document')
+#        invoice = self.browse(cr, uid, invoice_id)
+#        new_invoice_id = False
+#        if invoice.type == 'out_invoice':
+#            if invoice.shop_id.invoice_lines != 0 and len(invoice.invoice_line) > invoice.shop_id.invoice_lines:
+#                lst = []
+#                new_invoice_data = self.read(cr, uid, invoice.id, [
+#                                                      'name',
+#                                                      'origin',
+#                                                      'fiscal_position',
+#                                                      'date_invoice',
+#                                                      'user_id',
+#                                                      'shop_id',
+#                                                      'printer_id',
+#                                                      'authorization_sales',
+#                                                      'authorization',
+#                                                      'company_id',
+#                                                      'type', 
+#                                                      'reference', 
+#                                                      'comment', 
+#                                                      'date_due', 
+#                                                      'partner_id', 
+#                                                      'address_contact_id', 
+#                                                      'address_invoice_id', 
+#                                                      'payment_term', 
+#                                                      'account_id', 
+#                                                      'currency_id', 
+#                                                      'invoice_line', 
+#                                                      'tax_line', 
+#                                                      'journal_id', 
+#                                                      'period_id',
+#                                                      ])
+#                new_number = doc_obj.get_next_value_secuence(cr, uid, 'invoice', False, invoice.printer_id.id, 'account.invoice', 'invoice_number_out', context)
+#                new_invoice_data.update({
+#                    'automatic_number': new_number,
+#                    'invoice_number_out': new_number,
+#                    'state': 'draft',
+#                    'number': False,
+#                    'invoice_line': [],
+#                    'tax_line': []
+#                })
+#                # take the id part of the tuple returned for many2one fields
+#                for field in new_invoice_data:
+#                    if isinstance(new_invoice_data[field], tuple):
+#                        new_invoice_data[field] = new_invoice_data[field] and new_invoice_data[field][0]
+#
+#                new_invoice_id = self.create(cr, uid, new_invoice_data)
+#                count = 0
+#                lst = invoice.invoice_line
+#                while count < invoice.shop_id.invoice_lines:
+#                    lst.pop(0)
+#                    count += 1
+#                for il in lst:
+#                    self.pool.get('account.invoice.line').write(cr,uid,il.id,{'invoice_id':new_invoice_id})
+#                self.button_compute(cr, uid, [invoice.id])
+#        
+#            if new_invoice_id:
+#                wf_service = netsvc.LocalService("workflow")
+#                self.button_compute(cr, uid, [new_invoice_id])
+#                wf_service.trg_validate(uid, 'account.invoice', new_invoice_id, 'invoice_open', cr)
+#        return new_invoice_id
     
     # TRESCLOUD - TODO - Mejorar la funcion removiendo el campo invoice.foreing y basandose en la posicion fiscal en su lugar.
     # TRESCLOUD - TODO - Mejorar la funcion moviendola a un objeto global ya que la misma funcion aplica para todo documento tributario en EC
     def _check_number_invoice(self,cr,uid,ids, context=None):
-    #        res = True
+            res = True
     #        for invoice in self.browse(cr, uid, ids):
     #            cadena='(\d{3})+\-(\d{3})+\-(\d{9})'
     #            if invoice.invoice_number_out:
