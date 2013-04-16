@@ -56,8 +56,12 @@ class account_retention_line(osv.osv):
             tax = tax_obj.search(cr, uid, [('tax_code_id', '=', tax_code), ('child_ids','=',False)])
             if line.description=="renta":
                 tax = tax_obj.search(cr, uid, [('base_code_id', '=', tax_code), ('child_ids','=',False)])
-            porcentaje= (tax_obj.browse(cr, uid, tax, context)[0]['amount'])*(-100)
-            res[line.id]=porcentaje
+            if tax_obj.browse(cr, uid, tax, context):
+                porcentaje= (tax_obj.browse(cr, uid, tax, context)[0]['amount'])*(-100)
+                res[line.id]=porcentaje
+            else:
+                raise osv.except_osv(_('Warning !'), _('The taxes is not usable for withhoold'))
+                
         return res
     
 

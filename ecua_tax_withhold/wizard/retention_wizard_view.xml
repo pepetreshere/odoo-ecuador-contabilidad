@@ -1,62 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-		<record id="retention_wizard_sales_form" model="ir.ui.view">
-			<field name="name">retention.wizard.sales.form</field>
-			<field name="model">account.retention.wizard</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Retention">
-					<group colspan="6" col="12" width="800" height="250">
-						<field name="number" required="1" colspan="2" />
-						<newline />
-						<field name="partner_id" invisible="1" colspan="2" />
-						<field name="creation_date" required="1" colspan="2" />
-						<field name="authorization_sale" invisible="1" colspan="2" />
-					<field name="authorization_sale_id" 
-					required="1"  
-					domain="[('partner_id', '=', partner_id),('type','=','withholding')]" 
-					context="{'document_type':'withholding', 'form_view_ref':'ecua_documentos_sri.sri_authorization_supplier_documents_form_view'}">
-					</field>
-						<field name="invoice_id" invisible="1" />
-						<field name="automatic" invisible="1" />
-						<newline />
-						<field name="lines_ids" colspan="6" rowspan="8" nolabel="1" height="150">
-							<tree string="Retention Lines" editable="top">
-								<field name="fiscalyear_id" widget="selection" required="1" />
-								<field name="description" required="1" />
-								<field name="tax_base" required="1" />
-								<field name="retention_percentage" required="1" />
-							</tree>
-						</field>
-					</group>
-					<newline />
-					<group colspan="6" col="12" width="800">
-						<button icon="gtk-cancel" name="button_cancel" special="cancel"
-							string="_Cancel" type="object" />
-						<button name="approve_late" string="Approve Late" icon="gtk-media-play"
-							type="object" />
-						<button name="approve_now" string="Approve Now" icon="gtk-apply"
-							type="object" />
-					</group>
-				</form>
-			</field>
-		</record>
-
-		<record id="retention_wizard_sales_line_form" model="ir.ui.view">
-			<field name="name">retention.wizard.sales.line.form</field>
-			<field name="model">account.retention.wizard.line</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Retention">
-					<field name="fiscalyear_id" />
-					<field name="description" />
-					<field name="tax_base" />
-					<field name="retention_percentage" />
-				</form>
-			</field>
-		</record>
-
 		<record id="retention_wizard_purchase_form" model="ir.ui.view">
 			<field name="name">retention.wizard.purchase.form</field>
 			<field name="model">account.retention.wizard</field>
@@ -65,23 +9,24 @@
 				<form string="Retention">
 					<group>
 						<group colspan="4">
-							<field name="shop_id"
+<!-- 							<field name="shop_id"
 								on_change="onchange_data(automatic, shop_id,printer_id,{'manual':False})"
-								invisible="0" />
-							<field name="printer_id"
-								on_change="onchange_data(automatic, shop_id,printer_id,{'manual':False})"
-								invisible="0" />
-							<field name="automatic_number" />
-							<field name="number"
-								attrs="{'readonly':[('automatic','=',True)], 'required':[('automatic','!=',True)]}" />
+								invisible="0" /> -->
+<!-- 							<field name="printer_id" -->
+<!-- 								on_change="onchange_data(automatic, shop_id,printer_id,{'manual':False})" -->
+<!-- 								invisible="0" /> -->
+<!-- 							<field name="automatic_number" /> -->
+							<field name="number" />
+<!-- 							<field name="number" -->
+<!-- 								attrs="{'readonly':[('automatic','=',True)], 'required':[('automatic','!=',True)]}" /> -->
 							<field name="creation_date" required="1" />
-							<field name="authorization_purchase_id" invisible="1" />
-							<field name="invoice_id" invisible="1" />
-							<field name="automatic" invisible="1" />
+						<!--  	<field name="authorization_purchase_id" invisible="1" />-->
+							<field name="invoice_id" invisible="0" />
+							<!-- <field name="automatic" invisible="1" /> -->
 						</group>
 						<group colspan="4">
-							<field name="lines_ids" nolabel="1" readonly="1" colspan="4" height="150">
-								<tree string="Retention Lines">
+							<field name="lines_ids" nolabel="1" readonly="0" colspan="4" height="150">
+								<tree string="Retention Lines" editable="bottom">
 									<!--field name="fiscalyear_id" widget="selection" /-->
 									<field name="description" />
 									<field name="tax_id" />
@@ -99,16 +44,6 @@
 					</group>
 				</form>
 			</field>
-		</record>
-
-		<record id="action_retention_wizard_sales" model="ir.actions.act_window">
-			<field name="name">Agree Retention</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">account.retention.wizard</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">form</field>
-			<field name="view_id" ref="retention_wizard_sales_form" />
-			<field name="target">new</field>
 		</record>
 
 		<record id="action_retention_wizard_purchase" model="ir.actions.act_window">

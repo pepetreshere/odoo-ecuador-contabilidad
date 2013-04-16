@@ -21,12 +21,12 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
-import authorization_wizard
-import invoice_print_wizard
-import cancel_delivery_notes_wizard
+#import authorization_wizard
+#import invoice_print_wizard
+#import cancel_delivery_notes_wizard
 import cancel_retentions_wizard
 import retention_wizard
-import stock_partial_picking
-import wizard_credit_note
-import wizard_invoice_ice
-import wizard_sale_order_ice
+#import stock_partial_picking
+#import wizard_credit_note
+#import wizard_invoice_ice
+#import wizard_sale_order_ice

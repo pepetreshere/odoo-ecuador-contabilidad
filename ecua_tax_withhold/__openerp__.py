@@ -24,7 +24,7 @@
 {
     "name" : "Ecuador Withhold Tax Document",
     "version" : "1.0",
-    'sequence': 4,
+   # 'sequence': 4,
     'complexity': "hard",
     "author" : "TRESCLOUD CÍA LTDA",
     "website" : "http://www.ecuadorenlinea.net/",
@@ -39,6 +39,7 @@
                  'stock',
                  'report_aeroo',
                  'report_aeroo_ooo',
+                 #'ecua_documentos_sri',
                  ],
     "description": """
     SRI is the tax authority in Ecuador. SRI demands that to
@@ -54,15 +55,18 @@
     
     Author,
     
-    Andres Calle
+    Andres Calle,
+    Andrea García,
     TRESCLOUD Cía Ltda.
     """,
     "init_xml": [],
     "update_xml": [ 
-                    'data/sequence_data.xml',
+                   # 'data/sequence_data.xml',
                     'report/withhold_report.xml',
                     'workflow/retention_workflow.xml',
                     'wizard/retention_wizard_view.xml',
+                    'views/withhold_view.xml',
+                    'views/invoice_view.xml',
     ],
     "installable": True,
     "auto_install": False,

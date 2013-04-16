@@ -21,4 +21,6 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
-import withhold,withhold_line,voucher
+import withhold,withhold_line,voucher,shop,authorization
+import authorization_supplier
+import invoice

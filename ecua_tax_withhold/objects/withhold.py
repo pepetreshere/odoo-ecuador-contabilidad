@@ -99,6 +99,7 @@ class account_invoice(osv.osv):
         for inv in invoice:
             cr.execute("DELETE FROM account_retention_line WHERE invoice_id=%s", (inv.id,))
             if (inv['type'] in ('in_invoice','in_refund')):
+                print inv['retention_ids']
                 if not (inv['retention_ids']):
                     
                     #TRESCLOUD - en éste modulo no interesan las autorizaciones
@@ -110,7 +111,7 @@ class account_invoice(osv.osv):
                               'creation_date': inv['date_invoice'],
                               'transaction_type':'purchase',
                               'invoice_id':inv['id'],
-                              'authorization_purchase_id':vals_aut['authorization'],
+                             # 'authorization_purchase_id':vals_aut['authorization'],
                               }
                     ret_id = ret_obj.create(cr, uid, vals_ret, context)
                     
@@ -228,7 +229,67 @@ account_invoice()
 class account_withhold(osv.osv):
         
     _name = 'account.retention'
+    _rec_name='number'
+        #Funcion para calcular el valor total a retener
+    def _total(self, cr, uid, ids, field_name, arg, context=None):
+        cur_obj = self.pool.get('res.currency')
+        res = {}
+        for ret in self.browse(cr, uid, ids, context=context):
+            val = 0.0
+            cur = ret.invoice_id.currency_id
+            for line in ret.retention_line_ids:
+                #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
+                if ret.transaction_type == 'purchase':
+                    val += line.retained_value
+                else:
+                    val += line.retained_value_manual
+            if cur:
+                res[ret.id] = cur_obj.round(cr, uid, cur, val)
+        return res
     
+    def _get_retention(self, cr, uid, ids, context=None):
+        result = {}
+        for line in self.pool.get('account.retention.line').browse(cr, uid, ids, context=context):
+            result[line.retention_id.id] = True
+        return result.keys()
+    
+     #TRESCLOUD - Definir funcion total_vat_withhold en su lugar o como alias
+    #retorna el valor total de la funcion
+    def _total_iva(self, cr, uid, ids, field_name, arg, context=None):
+        cur_obj = self.pool.get('res.currency')
+        res = {}
+        for ret in self.browse(cr, uid, ids, context=context):
+            val = 0.0
+            cur = ret.invoice_id.currency_id
+            for line in ret.retention_line_ids:
+                if line.description == 'iva':
+                    #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
+                    if ret.transaction_type == 'purchase':
+                        val += line.retained_value
+                    else:
+                        val += line.retained_value_manual
+            if cur:
+                res[ret.id] = cur_obj.round(cr, uid, cur, val)
+        return res
+
+    #TRESCLOUD - Definir funcion total_utilities_withhold en su lugar o como alias
+    # Valor total a retener por impuesto a la renta
+    def _total_renta(self, cr, uid, ids, field_name, arg, context=None):
+        cur_obj = self.pool.get('res.currency')
+        res = {}
+        for ret in self.browse(cr, uid, ids, context=context):
+            val = 0.0
+            cur = ret.invoice_id.currency_id
+            for line in ret.retention_line_ids:
+                if line.description == 'renta':
+                    #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
+                    if ret.transaction_type == 'purchase':
+                        val += line.retained_value
+                    else:
+                        val += line.retained_value_manual
+            if cur:
+                res[ret.id] = cur_obj.round(cr, uid, cur, val)
+        return res
     _columns = {
         'number': fields.char('Number', size=17, required=False, states={'approved':[('readonly',True)]}),
         #TRESCLOUD - Deberia usarse un solo campo en lugar de number_purchase y number_sale que se llame "documento origen", asi funciona en la mayoria de documentos
@@ -277,13 +338,7 @@ class account_withhold(osv.osv):
         'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
         'printer_id':fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]}),
     }
-    
-    _rec_name='number'
-    
-    _constraints = [(check_retention_out, _('The number of retention is incorrect, it must be like 001-00X-000XXXXXX, X is a number'),['number']),]
-    
-    _sql_constraints = [('withhold_number_purchase_uniq','unique(number_purchase, company_id)', _('There is another Withhold generated with this number, please verify'))]
-    
+        
     _defaults = {
                  'number': '',
                  'transaction_type': lambda *a: 'sale',
@@ -302,6 +357,11 @@ class account_withhold(osv.osv):
                     return False
             else:
                 return True
+            
+    _constraints = [(check_retention_out, _('The number of retention is incorrect, it must be like 001-00X-000XXXXXX, X is a number'),['number']),]
+    
+    _sql_constraints = [('withhold_number_purchase_uniq','unique(number_purchase, company_id)', _('There is another Withhold generated with this number, please verify'))]
+
     
 #    # valida numero de autorizacion de retencion
 #    # no forma parte de éste modulo, se deja para referencia.        
@@ -318,66 +378,8 @@ class account_withhold(osv.osv):
 #                        break
 #            return b
 
-    #Funcion para calcular el valor total a retener
-    def _total(self, cr, uid, ids, field_name, arg, context=None):
-        cur_obj = self.pool.get('res.currency')
-        res = {}
-        for ret in self.browse(cr, uid, ids, context=context):
-            val = 0.0
-            cur = ret.invoice_id.currency_id
-            for line in ret.retention_line_ids:
-                #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
-                if ret.transaction_type == 'purchase':
-                    val += line.retained_value
-                else:
-                    val += line.retained_value_manual
-            if cur:
-                res[ret.id] = cur_obj.round(cr, uid, cur, val)
-        return res
 
-    #TRESCLOUD - Definir funcion total_vat_withhold en su lugar o como alias
-    #retorna el valor total de la funcion
-    def _total_iva(self, cr, uid, ids, field_name, arg, context=None):
-        cur_obj = self.pool.get('res.currency')
-        res = {}
-        for ret in self.browse(cr, uid, ids, context=context):
-            val = 0.0
-            cur = ret.invoice_id.currency_id
-            for line in ret.retention_line_ids:
-                if line.description == 'iva':
-                    #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
-                    if ret.transaction_type == 'purchase':
-                        val += line.retained_value
-                    else:
-                        val += line.retained_value_manual
-            if cur:
-                res[ret.id] = cur_obj.round(cr, uid, cur, val)
-        return res
-
-    #TRESCLOUD - Definir funcion total_utilities_withhold en su lugar o como alias
-    # Valor total a retener por impuesto a la renta
-    def _total_renta(self, cr, uid, ids, field_name, arg, context=None):
-        cur_obj = self.pool.get('res.currency')
-        res = {}
-        for ret in self.browse(cr, uid, ids, context=context):
-            val = 0.0
-            cur = ret.invoice_id.currency_id
-            for line in ret.retention_line_ids:
-                if line.description == 'renta':
-                    #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
-                    if ret.transaction_type == 'purchase':
-                        val += line.retained_value
-                    else:
-                        val += line.retained_value_manual
-            if cur:
-                res[ret.id] = cur_obj.round(cr, uid, cur, val)
-        return res
-    
-    def _get_retention(self, cr, uid, ids, context=None):
-        result = {}
-        for line in self.pool.get('account.retention.line').browse(cr, uid, ids, context=context):
-            result[line.retention_id.id] = True
-        return result.keys()
+   
     
     #Funcion para generar numeros automaticamente
     def _get_generated_document(self, cr, uid, ids, context=None):
