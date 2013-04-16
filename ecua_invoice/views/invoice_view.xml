@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+			<!-- 
+				FACTURA DE VENTA Y DE COMPRA
+				En ambos casos se debe agregar la direccion y telefono
+			-->
+			<record model="ir.ui.view" id="account_invoice_view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice.form" />
+			<field name="arch" type="xml">
+				<!-- TOdo usar un xpath --> 
+				<field name="partner_id" position="after">
+					<field name="invoice_address"/> 
+					<field name="invoice_phone"/>
+				</field>
+			</field>			
+		</record>
+	</data>
+</openerp>
