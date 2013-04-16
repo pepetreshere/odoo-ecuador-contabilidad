@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<!-- Facturas de Clientes -->
+			<record model="ir.ui.view" id="account_invoice_purchase_form_view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<field name="fiscal_position" position="before">
+					<field name="address_invoice"/> 
+				</field>
+<!-- 								<page string="Payments" position="after">
+					<page string="Retenciones">
+								<field name="retention_ids" nolabel="1" readonly="1" widget="one2many"
+									colspan="4"
+									context="{'form_view_ref' : 'ecua_tax_withhold.view_account_retention_purchase_form'}">
+									<tree string="Withholdings">
+										<field name="number" />
+										<field name="period_id" />
+										<field name="creation_date" />
+										<field name="total_iva" sum="Total Retenciones IVA" />
+										<field name="total_renta" sum="Total Retenciones Renta" />
+										<field name="state" />
+									</tree>
+								</field>
+								<field name="retention_line_ids" nolabel="1" readonly="1"
+									colspan="4" widget="one2many">
+									<tree string="Withholding Lines">
+										<field name="fiscalyear_id" />
+										<field name="period_id" />
+										<field name="description" />
+										<field name="tax_id" />
+										<field name="tax_base" />
+										<field name="retention_percentage" />
+										<field name="retained_value" sum="Total Retained" />
+									</tree>
+									<form string="Withholding Line">
+										<field name="fiscalyear_id" />
+										<field name="period_id" />
+										<field name="description" />
+										<field name="tax_id" />
+										<field name="tax_base" />
+										<field name="retention_percentage" />
+										<field name="retained_value" />
+									</form>
+								</field>
+							</page>
+						</page> -->
+				<button string='Ask Refund' position="after">
+						<button name="%(action_retention_wizard_purchase)d" string="Withhold"
+								type="action" icon="terp-gtk-jump-to-ltr" attrs="{'invisible':[('state','=','draft')]}"/>
+				</button>
+
+			</field>
+			
+		</record>
+	</data>
+</openerp>

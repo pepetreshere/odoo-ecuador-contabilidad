@@ -8,22 +8,17 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Withhold">
-					<field name="shop_id" />
-					<!--  <field name="printer_id" />-->
-					<field name="number_purchase" select="1"
-						attrs="{'readonly':[('automatic','=',True)]}" />
-					<field name="creation_date" />
-					<field name="transaction_type" select="1" invisible="1" />
-					<field name="automatic" />
-					<!-- <field name="authorization_purchase_id"  />-->
-					<field name="invoice_id" select="1"
-						attrs="{'required':[('state','=','draft')]}" string="Reference of document"
-						 />
-					<!--  <field name="invoice_id" select="1"
-						attrs="{'required':[('state','=','draft')]}" string="Reference of document"
-						domain="[('type','in',('liquidacion','in_invoice'))]" />-->
+						<group colspan="4">
+ 							<field name="shop_id"/>
+							<field name="number" />
+							<field name="partner_id"/>
+							<field name="creation_date" required="1" />
+							<field name="invoice_id" invisible="0" />
+							<!-- <field name="currency_id"/> -->
+							<field name="company_id"/>
+					</group>
 					<separator string="Retention Lines" colspan="4" />
-					<field name="retention_line_ids" colspan="4" nolabel="1">
+<!-- 					<field name="retention_line_ids" colspan="4" nolabel="1">
 						<tree string="Retention Lines" editable="top">
 							<field name="fiscalyear_id" widget="selection" />
 							<field name="description" />
@@ -32,7 +27,7 @@
 							<field name="retention_percentage" />
 							<field name="retained_value" />
 						</tree>
-					</field>
+					</field> -->
 					<group col="6" colspan="4">
 						<field name="state" string='State' />
 						<button name="button_aprove" states="draft" string="Approved"

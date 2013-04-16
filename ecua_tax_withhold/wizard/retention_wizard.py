@@ -24,8 +24,10 @@ import time
 import netsvc
 import re
 from lxml import etree
+from datetime import datetime
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
-class retention_wizard(osv.osv_memory):
+class retention_wizard(osv.osv):
     
     def _check_number(self, cr, uid, ids, context=None):
         cadena = '(\d{3})+\-(\d{3})+\-(\d{9})'
@@ -39,9 +41,9 @@ class retention_wizard(osv.osv_memory):
             else:
                 return True
 
-    def _get_automatic(self, cr, uid, context=None):
-        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-        return user.company_id.generate_automatic
+#    def _get_automatic(self, cr, uid, context=None):
+#        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+#        return user.company_id.generate_automatic
 
     def _get_shop(self, cr, uid, context=None):
         curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
@@ -55,31 +57,32 @@ class retention_wizard(osv.osv_memory):
                 continue            
         return shop_id
     
-    def _get_printer(self, cr, uid, context=None):
-        curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
-        printer_id = None
-        if curr_user:
-            if not curr_user.shop_ids:
-                if uid != 1:
-                    raise osv.except_osv('Error!', _("Your User doesn't have shops assigned"))
-            for shop in curr_user.shop_ids:
-                printer_id = shop.printer_point_ids[0].id
-                continue
-        return printer_id
+#    def _get_printer(self, cr, uid, context=None):
+#        curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
+#        printer_id = None
+#        if curr_user:
+#            if not curr_user.shop_ids:
+#                if uid != 1:
+#                    raise osv.except_osv('Error!', _("Your User doesn't have shops assigned"))
+#            for shop in curr_user.shop_ids:
+#                printer_id = shop.printer_point_ids[0].id
+#                continue
+#        return printer_id
 
     _name = 'account.retention.wizard'
     _columns = {
-#                'partner_id':fields.many2one('res.partner', 'Partner', ),
+                'partner_id':fields.many2one('res.partner', 'Partner' ),
+                'currency_id': fields.many2one('res.currency', 'Currency', required=True),
+                'company_id': fields.many2one('res.company', 'Company', required=True, change_default=True),
                 'number':fields.char('Number', size=17,),
-              #  'automatic_number':fields.char('Number', size=17, readonly=True),
                 'creation_date': fields.date('Creation Date'),
-             #   'authorization_purchase_id':fields.many2one('sri.authorization', 'Authorization', required=False),
-              #  'authorization_sale':fields.char('Authorization', size=10, help='This Number is necesary for SRI reports'),
-              #  'authorization_sale_id':fields.many2one('sri.authorization.supplier', 'Authorization', ),
-              #  'shop_id':fields.many2one('sale.shop', 'Shop'),
-               # 'printer_id':fields.many2one('sri.printer.point', 'Printer Point',),
+                'shop_id':fields.many2one('sale.shop', 'Shop'),
                 'invoice_id': fields.many2one('account.invoice', 'Number of Invoice', readonly=True),
                 'automatic':fields.boolean('Automatic', required=True),
+                'transaction_type':fields.selection([
+                                                     ('purchase','Purchases'),
+                                                     ('sale','Sales'),
+                                                     ],  'Transaction type', required=True, readonly=True),
                 'type':fields.selection([
                                     ('automatic', 'Automatic'),
                                     ('manual', 'Manual'),
@@ -88,96 +91,126 @@ class retention_wizard(osv.osv_memory):
                 }
     _constraints = [(_check_number, _('The number is incorrect, it must be like 001-00X-000XXXXXX, X is a number'), ['number'])]
 
-
+    def _percentaje_retained(self, cr, uid,vals_ret_line, context=None):
+        res = {}
+        tax_code_id = self.pool.get('account.tax.code').search(cr, uid, [('id', '=', vals_ret_line['tax_id'])])
+        tax_code = None
+        if tax_code_id:
+            tax_code = self.pool.get('account.tax.code').browse(cr, uid, tax_code_id, context)[0]['code']
+        tax_obj = self.pool.get('account.tax')
+        tax = tax_obj.search(cr, uid, [('tax_code_id', '=', tax_code), ('child_ids','=',False)])
+        if vals_ret_line['description']=="renta":
+            tax = tax_obj.search(cr, uid, [('base_code_id', '=', tax_code), ('child_ids','=',False)])
+        porcentaje= (tax_obj.browse(cr, uid, tax, context)[0]['amount'])*(-100)
+        return porcentaje
+    
     def default_get(self, cr, uid, fields, context=None):
         if context is None:
             context = {}
         values = {}
         res = []
-        doc_obj = self.pool.get('sri.type.document')
-        objs = self.pool.get(context['active_model']).browse(cr , uid, context['active_ids'])
-        if 'value' not in context.keys():
-            for obj in objs:
-                if obj.type == 'out_invoice':
-                    values = {
-                             'partner_id': obj.partner_id.id,
-                             'invoice_id': obj.id,
-                             'creation_date': obj.date_invoice,
-                             'type':'manual',
-                            }
-                if obj.type in ('in_invoice'):
-                    for ret in obj.retention_ids:
-                        for line in ret.retention_line_ids:
-                            values_lines = {'fiscalyear_id':line.fiscalyear_id.id,
-                                      'description': line.description,
-                                      'tax_id': line.tax_id.id,
-                                      'tax_base': line.tax_base,
-                                      'retention_percentage': line.retention_percentage
-                                      }
-                            res.append(values_lines)
-                        #printer_id = self._get_printer(cr, uid, context)
-                       # shop_id = self._get_shop(cr, uid, context)
-                        #auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('state','=',True)])
-                        #if not auth_line_id:
-                         #   raise osv.except_osv(_('Error!'), _('No existe autorización activa para generar retenciones'))
-                        #auth = doc_obj.browse(cr, uid, auth_line_id[0], context).sri_authorization_id.id or None
+        ret_line_id=0
+        if context.get('active_model'):
+            objs = self.pool.get(context['active_model']).browse(cr , uid, context['active_ids'])
+            if 'value' not in context.keys():
+                for obj in objs:
+                    if obj.type == 'out_invoice':
                         values = {
-                                 'invoice_id': ret.invoice_id.id,
-                                 'creation_date': ret.creation_date,
+                                 'partner_id': obj.partner_id.id,
+                                 'invoice_id': obj.id,
+                                 'creation_date': obj.date_invoice,#cambiar
                                  'type':'manual',
-                               #  'authorization_purchase_id': auth,
-                                 'lines_ids': res,
-                                # 'automatic': self._get_automatic(cr, uid, context),
-                               #  'shop_id':self._get_shop(cr, uid, context),
-                               #  'printer_id':self._get_printer(cr, uid, context),
                                 }
-                        if ret.number_purchase:
-                            values['number'] = ret.number_purchase
-                        #if self._get_automatic(cr, uid, context) and not ret.number_purchase:
-                         #   values['number'] = doc_obj.get_next_value_secuence(cr, uid, 'withholding', False, self._get_printer(cr, uid, context), 'account.retention', 'number_purchase', context)
-                          #  values['automatic_number'] = values['number'] 
-        else:
-            values = context['value']
+                    if obj.type in ('in_invoice'):
+                            #shop_id = self._get_shop(cr, uid, context)
+                        for tax_line in obj.tax_line:
+                            fiscalyear_id = None
+                            if not obj['period_id']:
+                                period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')),])
+                                if period_ids:
+                                    fiscalyear_id= self.pool.get('account.period').browse(cr, uid, [period_ids[0]], context)[0]['fiscalyear_id']['id']
+                            else:
+                                fiscalyear_id = obj['period_id']['fiscalyear_id']['id']
+                            if (tax_line['tax_amount']< 0):
+                               # contador_impuestos = contador_impuestos + 1
+                                porcentaje= (float(tax_line['tax_amount']/tax_line['base']))*(-100)
+                                tax_id = tax_line['tax_code_id']['id']
+                                if tax_line['type_ec'] == 'renta':
+                                    tax_id = tax_line['base_code_id']['id']                           
+                                vals_ret_line = {
+                                                 'fiscalyear_id':fiscalyear_id,
+                                                 
+                                                 'description': tax_line['type_ec'],
+                                                 'tax_id': tax_id,
+                                                 'tax_base': tax_line['base'],
+                                                 'tax_amount': tax_line['amount'],
+                                                 'retention_percentage':0
+                                                 
+                                                 }  
+                                vals_ret_line['retention_percentage']=self._percentaje_retained(cr, uid, vals_ret_line, context)
+                                res.append(vals_ret_line)  
+                            elif tax_line['tax_amount'] == 0 and tax_line['type_ec'] == 'renta':
+                                vals_ret_line = {'tax_base':tax_line.base,
+                                                 'fiscalyear_id':fiscalyear_id,
+                                                 'invoice_without_retention_id': obj.id,
+                                                 'description': tax_line.type_ec,
+                                                 'tax_id': tax_line.base_code_id.id,
+                                                 'creation_date_invoice': obj.date_invoice,
+                                                 }
+                                #ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
+                        values = {
+                                     'invoice_id': obj.id,
+                                     'creation_date': datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+                                     'type':'manual',
+                                     'transaction_type':"purchase",
+                                     'currency_id':obj.currency_id.id,
+                                     'partner_id':obj.partner_id.id,
+                                     'company_id':obj.company_id.id,
+                                     #'shop_id':shop_id,
+                                     'lines_ids': res,
+                                    }
+            else:
+                values = context['value']
         return values
     
-    def onchange_data(self, cr, uid, ids, automatic, shop_id=None, printer_id=None, context=None):
-        printer_obj = self.pool.get('sri.printer.point')
-        doc_obj = self.pool.get('sri.type.document')
-        values = {}
-        if context is None:
-            context = {}
-        company_id = self.pool.get('res.company')._company_default_get(cr, uid, 'account.invoice', context=context)
-        manual = context.get('manual', False)
-        shop_ids = []
-        curr_user = False
-        curr_shop = False
-        if shop_id:
-            curr_shop = self.pool.get('sale.shop').browse(cr, uid, [shop_id, ], context)[0]
-        curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
-        if curr_user:
-            for s in curr_user.shop_ids:
-                shop_ids.append(s.id)
-        if curr_shop:
-            if printer_id:
-                auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('printer_id','=',printer_id), ('shop_id','=',curr_shop.id), ('state','=',True),])
-                if auth_line_id:
-                    values['authorization_purchase_id'] = doc_obj.browse(cr, uid, auth_line_id[0], context).sri_authorization_id.id
-                    if automatic:
-                        values['automatic_number'] = doc_obj.get_next_value_secuence(cr, uid, 'withholding', False, printer_id, 'account.retention', 'number_purchase', context)
-                        values['number'] = values['automatic_number']
-                        values['creation_date'] = time.strftime('%Y-%m-%d')
-                else:
-                    values['authorization_purchase_id'] = None
-                    values['automatic'] = False
-                    values['creation_date'] = None
-        return {'value': values, 'domain':{'shop_id':[('id', 'in', shop_ids)]}}
+#    def onchange_data(self, cr, uid, ids, automatic, shop_id=None, printer_id=None, context=None):
+#        printer_obj = self.pool.get('sri.printer.point')
+#        doc_obj = self.pool.get('sri.type.document')
+#        values = {}
+#        if context is None:
+#            context = {}
+#        company_id = self.pool.get('res.company')._company_default_get(cr, uid, 'account.invoice', context=context)
+#        manual = context.get('manual', False)
+#        shop_ids = []
+#        curr_user = False
+#        curr_shop = False
+#        if shop_id:
+#            curr_shop = self.pool.get('sale.shop').browse(cr, uid, [shop_id, ], context)[0]
+#        curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
+#        if curr_user:
+#            for s in curr_user.shop_ids:
+#                shop_ids.append(s.id)
+#        if curr_shop:
+#            if printer_id:
+#                auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('printer_id','=',printer_id), ('shop_id','=',curr_shop.id), ('state','=',True),])
+#                if auth_line_id:
+#                    values['authorization_purchase_id'] = doc_obj.browse(cr, uid, auth_line_id[0], context).sri_authorization_id.id
+#                    if automatic:
+#                        values['automatic_number'] = doc_obj.get_next_value_secuence(cr, uid, 'withholding', False, printer_id, 'account.retention', 'number_purchase', context)
+#                        values['number'] = values['automatic_number']
+#                        values['creation_date'] = time.strftime('%Y-%m-%d')
+#                else:
+#                    values['authorization_purchase_id'] = None
+#                    values['automatic'] = False
+#                    values['creation_date'] = None
+#        return {'value': values, 'domain':{'shop_id':[('id', 'in', shop_ids)]}}
     
     def create_retention(self, cr, uid, ids, context=None):
         if not context:
             context = {}
         retention_obj = self.pool.get('account.retention')
         retention_line_obj = self.pool.get('account.retention.line')
-        auth_s_obj = self.pool.get('sri.authorization.supplier')
+        #auth_s_obj = self.pool.get('sri.authorization.supplier')
         
         ret_vals = {}
         ret_line_vals = {}
@@ -200,22 +233,22 @@ class retention_wizard(osv.osv_memory):
             ret_vals = {
                  'number_sale':retention.number,
                  'creation_date': retention.creation_date,
-                 'transaction_type': 'sale',
+                 'transaction_type': retention.transaction_type,
                  'authorization_sale': number,
                  'authorization_sale_id': auth_id,
                  'invoice_id': retention.invoice_id.id,
                  'period_id': objs.period_id.id
                  }
             retention_id = retention_obj.create(cr, uid, ret_vals, context)
-            for line in retention.lines_ids:
-                ret_line_vals = {
-                     'retention_id':retention_id,
-                     'fiscalyear_id':line.fiscalyear_id.id,
-                     'description': line.description,
-                     'tax_base': line.tax_base,
-                     'retention_percentage_manual': line.retention_percentage,
-                     }
-                retention_line_obj.create(cr, uid, ret_line_vals, context)
+#            for line in retention.lines_ids:
+#                ret_line_vals = {
+#                     'retention_id':retention_id,
+#                     'fiscalyear_id':line.fiscalyear_id.id,
+#                     'description': line.description,
+#                     'tax_base': line.tax_base,
+#                     'retention_percentage_manual': line.retention_percentage,
+#                     }
+#                retention_line_obj.create(cr, uid, ret_line_vals, context)
         return retention_id
     
     def approve_now(self, cr, uid, ids, context=None):
@@ -239,41 +272,41 @@ class retention_wizard(osv.osv_memory):
                 self.pool.get('account.retention').write(cr, uid, [objs.retention_ids[0].id, ], {'automatic': obj.automatic,'creation_date': obj.creation_date, 'authorization_purchase_id': obj.authorization_purchase.id, 'shop_id':obj.shop_id.id, 'printer_id':obj.printer_id.id}, context)
         return {'type': 'ir.actions.act_window_close'}
     
-    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
-        if not context: context = {}
-        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-        res = super(retention_wizard, self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
-        if not context.get('sales', False):
-            if view_type == 'form':
-                for field in res['fields']:
-                    #if user.company_id.generate_automatic:
-                    if user.company_id:
-                        if field == 'automatic_number':
-                            doc = etree.XML(res['arch'])
-                            nodes = doc.xpath("//field[@name='automatic_number']")
-                            for node in nodes:
-                                node.set('invisible', "0")
-                            res['arch'] = etree.tostring(doc)
-                        if field == 'number':
-                            doc = etree.XML(res['arch'])
-                            nodes = doc.xpath("//field[@name='number']")
-                            for node in nodes:
-                                node.set('invisible', "1")
-                            res['arch'] = etree.tostring(doc)
-                    else:
-                        if field == 'automatic_number':
-                            doc = etree.XML(res['arch'])
-                            nodes = doc.xpath("//field[@name='automatic_number']")
-                            for node in nodes:
-                                node.set('invisible', "1")
-                            res['arch'] = etree.tostring(doc)
-                        if field == 'number':
-                            doc = etree.XML(res['arch'])
-                            nodes = doc.xpath("//field[@name='number']")
-                            for node in nodes:
-                                node.set('invisible', "0")
-                            res['arch'] = etree.tostring(doc)
-        return res
+#    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
+#        if not context: context = {}
+#        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+#        res = super(retention_wizard, self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
+#        if not context.get('sales', False):
+#            if view_type == 'form':
+#                for field in res['fields']:
+#                    #if user.company_id.generate_automatic:
+#                    if user.company_id:
+#                        if field == 'automatic_number':
+#                            doc = etree.XML(res['arch'])
+#                            nodes = doc.xpath("//field[@name='automatic_number']")
+#                            for node in nodes:
+#                                node.set('invisible', "0")
+#                            res['arch'] = etree.tostring(doc)
+#                        if field == 'number':
+#                            doc = etree.XML(res['arch'])
+#                            nodes = doc.xpath("//field[@name='number']")
+#                            for node in nodes:
+#                                node.set('invisible', "1")
+#                            res['arch'] = etree.tostring(doc)
+#                    else:
+#                        if field == 'automatic_number':
+#                            doc = etree.XML(res['arch'])
+#                            nodes = doc.xpath("//field[@name='automatic_number']")
+#                            for node in nodes:
+#                                node.set('invisible', "1")
+#                            res['arch'] = etree.tostring(doc)
+#                        if field == 'number':
+#                            doc = etree.XML(res['arch'])
+#                            nodes = doc.xpath("//field[@name='number']")
+#                            for node in nodes:
+#                                node.set('invisible', "0")
+#                            res['arch'] = etree.tostring(doc)
+#        return res
     
     def button_cancel(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window_close'}
@@ -282,13 +315,17 @@ retention_wizard()
 
 class retention_wizard_line(osv.osv_memory):
     _name = "account.retention.wizard.line"
-    
+
     _columns = {
             'wizard_id': fields.many2one('account.retention.wizard', 'wizard'),
             'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year'),
             'description': fields.selection([('iva', 'IVA'), ('renta', 'RENTA'), ], 'Impuesto'),
             'tax_base': fields.float('Tax Base', digits_compute=dp.get_precision('Account')),
             'retention_percentage': fields.float('Percentaje Value', digits_compute=dp.get_precision('Account')),
+            'tax_amount':fields.float('Amount', digits_compute=dp.get_precision('Account')),
+           # 'retention_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value',
+            #                             store={'account.retention.line': (lambda self, cr, uid, ids, c={}: ids, ['tax_id',], 1)},),
+            #'retention_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value'),
             'tax_id':fields.many2one('account.tax.code', 'Tax Code'),
             }
     

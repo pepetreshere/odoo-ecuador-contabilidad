@@ -1,13 +1,8 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_authorization","sri.authorization","model_sri_authorization","base.group_user",1,0,0,0
 "access_document_type","sri.type.document","model_sri_type_document","base.group_user",1,1,0,0
 "access_authorization_wizard","auth.wizard","model_auth_wizard","account.group_account_manager",1,1,1,0
 "access_authorization_wizard_line","auth.wizard.line","model_auth_wizard_line","account.group_account_manager",1,1,1,0
-"access_authorization_man","sri.authorization","model_sri_authorization","account.group_account_manager",1,1,1,1
 "access_document_type_man","sri.type.document","model_sri_type_document","account.group_account_manager",1,1,1,1
-"access_authorization_supplier_accountant","sri.authorization.supplier","model_sri_authorization_supplier","account.group_account_manager",1,1,1,1
-"access_authorization_supplier_invoice","sri.authorization.supplier","model_sri_authorization_supplier","account.group_account_invoice",1,1,1,0
-"access_authorization_supplier_base","sri.authorization.supplier","model_sri_authorization_supplier","base.group_user",1,0,0,0
 "access_printer","sri.printer.point","model_sri_printer_point","base.group_user",1,0,0,0
 "access_printer_manager","sri.printer.point","model_sri_printer_point","account.group_account_manager",1,1,1,1
 "access_retention","account.retention","model_account_retention","base.group_user",1,0,0,0

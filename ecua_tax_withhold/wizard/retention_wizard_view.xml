@@ -9,20 +9,13 @@
 				<form string="Retention">
 					<group>
 						<group colspan="4">
-<!-- 							<field name="shop_id"
-								on_change="onchange_data(automatic, shop_id,printer_id,{'manual':False})"
-								invisible="0" /> -->
-<!-- 							<field name="printer_id" -->
-<!-- 								on_change="onchange_data(automatic, shop_id,printer_id,{'manual':False})" -->
-<!-- 								invisible="0" /> -->
-<!-- 							<field name="automatic_number" /> -->
+ 							<field name="shop_id"/>
 							<field name="number" />
-<!-- 							<field name="number" -->
-<!-- 								attrs="{'readonly':[('automatic','=',True)], 'required':[('automatic','!=',True)]}" /> -->
+							<field name="partner_id"/>
 							<field name="creation_date" required="1" />
-						<!--  	<field name="authorization_purchase_id" invisible="1" />-->
 							<field name="invoice_id" invisible="0" />
-							<!-- <field name="automatic" invisible="1" /> -->
+							<field name="currency_id"/>
+							<field name="company_id"/>
 						</group>
 						<group colspan="4">
 							<field name="lines_ids" nolabel="1" readonly="0" colspan="4" height="150">
@@ -31,6 +24,7 @@
 									<field name="description" />
 									<field name="tax_id" />
 									<field name="tax_base" />
+									<field name="tax_amount"/>
 									<field name="retention_percentage" />
 								</tree>
 							</field>
@@ -51,7 +45,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">account.retention.wizard</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">form</field>
+			<field name="view_mode">form,tree</field>
 			<field name="view_id" ref="retention_wizard_purchase_form" />
 			<field name="target">new</field>
 		</record>

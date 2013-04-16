@@ -73,127 +73,127 @@ class account_invoice(osv.osv):
     # no necesitamos que se cargen valores automaticos o que se realicen validaciones
     # la edicion de esta seccion de impuestos la podriamos realizar manualmente en primera instancia
     # button_reset_taxes ... que hace esta funcion?
-    def button_reset_taxes(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        ctx = context.copy()
-        ait_obj = self.pool.get('account.invoice.tax')
-        for id in ids:
-            #if not self.pool.get('account.invoice').browse(cr, uid, id, context).invoice_line:
-            #raise osv.except_osv(_('Invalid action !'), _('You must enter at least one invoice line'))
-            cr.execute("DELETE FROM account_invoice_tax WHERE invoice_id=%s AND manual is False", (id,))
-            partner = self.browse(cr, uid, id, context=ctx).partner_id
-            if partner.lang:
-                ctx.update({'lang': partner.lang})
-            for taxe in ait_obj.compute(cr, uid, id, context=ctx).values():
-                ait_obj.create(cr, uid, taxe)
-        # Update the stored value (fields.function), so we write to trigger recompute
-        self.pool.get('account.invoice').write(cr, uid, ids, {'invoice_line':[]}, context=ctx)
-        inv_obj = self.pool.get('account.invoice')
-        tax_obj = self.pool.get('account.invoice.tax')
-        ret_obj = self.pool.get('account.retention')
-        ret_line= self.pool.get('account.retention.line')
-        seq_obj = self.pool.get('ir.sequence')
-        invoice = inv_obj.browse(cr, uid, ids, context)
-            
-        for inv in invoice:
-            cr.execute("DELETE FROM account_retention_line WHERE invoice_id=%s", (inv.id,))
-            if (inv['type'] in ('in_invoice','in_refund')):
-                print inv['retention_ids']
-                if not (inv['retention_ids']):
-                    
-                    #TRESCLOUD - en éste modulo no interesan las autorizaciones
-                    # vals_aut=self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'withholding')
-
-                    #crear retencion
-                    user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-                    vals_ret={
-                              'creation_date': inv['date_invoice'],
-                              'transaction_type':'purchase',
-                              'invoice_id':inv['id'],
-                             # 'authorization_purchase_id':vals_aut['authorization'],
-                              }
-                    ret_id = ret_obj.create(cr, uid, vals_ret, context)
-                    
-                    #creamos las lineas de retenciones
-                    contador_impuestos = 0
-                    for tax_line in inv.tax_line:
-                        fiscalyear_id = None
-                        if not inv['period_id']:
-                            period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')),])
-                            if period_ids:
-                                fiscalyear_id= self.pool.get('account.period').browse(cr, uid, [period_ids[0]], context)[0]['fiscalyear_id']['id']
-                        else:
-                            fiscalyear_id = inv['period_id']['fiscalyear_id']['id']
-                        if (tax_line['tax_amount']< 0):
-                            contador_impuestos = contador_impuestos + 1
-                            porcentaje= (float(tax_line['tax_amount']/tax_line['base']))*(-100)
-                            tax_id = tax_line['tax_code_id']['id']
-                            if tax_line['type_ec'] == 'renta':
-                                tax_id = tax_line['base_code_id']['id']                            
-                            vals_ret_line = {'tax_base':tax_line['base'] ,
-                                             'fiscalyear_id':fiscalyear_id,
-                                             'retention_id':ret_id,
-                                             'description': tax_line['type_ec'],
-                                             'tax_id': tax_id
-                                             }
-                            ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
-                        elif tax_line['tax_amount'] == 0 and tax_line['type_ec'] == 'renta':
-                            vals_ret_line = {'tax_base':tax_line.base,
-                                             'fiscalyear_id':fiscalyear_id,
-                                             'invoice_without_retention_id': inv.id,
-                                             'description': tax_line.type_ec,
-                                             'tax_id': tax_line.base_code_id.id,
-                                             'creation_date_invoice': inv.date_invoice,
-                                             }
-                            ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
-                    
-                    #TRESCLOUD - Para que un contador de impuestos?
-                    if(contador_impuestos<=0):
-                        ret_obj.unlink(cr, uid, [ret_id], context)
-                else:
-                    ret_actual = ret_obj.read(cr, uid, inv['retention_ids'][0]['id'], context)
-                    # actualizar retencion
-            
-                    cr.execute("DELETE FROM account_retention_line WHERE retention_id=%s", (ret_actual['id'],))                    
-                    
-                    #actualizamos las lineas de retenciones
-                    contador_impuestos = 0
-                    
-                    for tax_line in inv.tax_line:
-                        fiscalyear_id = None
-                        if not inv['period_id']:
-                            period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')),])
-                            if period_ids:
-                                fiscalyear_id= self.pool.get('account.period').browse(cr, uid, [period_ids[0]], context)[0]['fiscalyear_id']['id']
-                        else:
-                            fiscalyear_id = inv['period_id']['fiscalyear_id']['id']
-                        if (tax_line['tax_amount']< 0):
-                            contador_impuestos = contador_impuestos + 1
-                            porcentaje= (float(tax_line['tax_amount']/tax_line['base']))*(-100)
-                            tax_id = tax_line['tax_code_id']['id']
-                            if tax_line['type_ec'] == 'renta':
-                                tax_id = tax_line['base_code_id']['id']
-                            vals_ret_line = {'tax_base':tax_line['base'] ,
-                                                 'fiscalyear_id':fiscalyear_id,
-                                                 'retention_id':ret_actual['id'],
-                                                 'description': tax_line['type_ec'],
-                                                 'tax_id': tax_id
-                                                 }
-                            ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
-                        elif tax_line['tax_amount'] == 0 and tax_line['type_ec'] == 'renta':
-                            vals_ret_line = {'tax_base':tax_line['base'] ,
-                                             'fiscalyear_id':fiscalyear_id,
-                                             'invoice_without_retention_id': inv.id,
-                                             'description': tax_line['type_ec'],
-                                             'tax_id': tax_line['base_code_id']['id'],
-                                             'creation_date_invoice': inv.date_invoice,
-                                             }
-                            ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
-                    if(contador_impuestos<=0):
-                        ret_obj.unlink(cr, uid, [ret_actual['id']], context)
-                                
-        return super(account_invoice, self).button_reset_taxes(cr, uid, ids, context)
+#    def button_reset_taxes(self, cr, uid, ids, context=None):
+#        if context is None:
+#            context = {}
+#        ctx = context.copy()
+#        ait_obj = self.pool.get('account.invoice.tax')
+#        for id in ids:
+#            #if not self.pool.get('account.invoice').browse(cr, uid, id, context).invoice_line:
+#            #raise osv.except_osv(_('Invalid action !'), _('You must enter at least one invoice line'))
+#            cr.execute("DELETE FROM account_invoice_tax WHERE invoice_id=%s AND manual is False", (id,))
+#            partner = self.browse(cr, uid, id, context=ctx).partner_id
+#            if partner.lang:
+#                ctx.update({'lang': partner.lang})
+#            for taxe in ait_obj.compute(cr, uid, id, context=ctx).values():
+#                ait_obj.create(cr, uid, taxe)
+#        # Update the stored value (fields.function), so we write to trigger recompute
+#        self.pool.get('account.invoice').write(cr, uid, ids, {'invoice_line':[]}, context=ctx)
+#        inv_obj = self.pool.get('account.invoice')
+#        tax_obj = self.pool.get('account.invoice.tax')
+#        ret_obj = self.pool.get('account.retention')
+#        ret_line= self.pool.get('account.retention.line')
+#        seq_obj = self.pool.get('ir.sequence')
+#        invoice = inv_obj.browse(cr, uid, ids, context)
+#            
+#        for inv in invoice:
+#            cr.execute("DELETE FROM account_retention_line WHERE invoice_id=%s", (inv.id,))
+#            if (inv['type'] in ('in_invoice','in_refund')):
+#                print inv['retention_ids']
+#                if not (inv['retention_ids']):
+#                    
+#                    #TRESCLOUD - en éste modulo no interesan las autorizaciones
+#                    # vals_aut=self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'withholding')
+#
+#                    #crear retencion
+#                    user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+#                    vals_ret={
+#                              'creation_date': inv['date_invoice'],
+#                              'transaction_type':'purchase',
+#                              'invoice_id':inv['id'],
+#                             # 'authorization_purchase_id':vals_aut['authorization'],
+#                              }
+#                    ret_id = ret_obj.create(cr, uid, vals_ret, context)
+#                    
+#                    #creamos las lineas de retenciones
+#                    contador_impuestos = 0
+#                    for tax_line in inv.tax_line:
+#                        fiscalyear_id = None
+#                        if not inv['period_id']:
+#                            period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')),])
+#                            if period_ids:
+#                                fiscalyear_id= self.pool.get('account.period').browse(cr, uid, [period_ids[0]], context)[0]['fiscalyear_id']['id']
+#                        else:
+#                            fiscalyear_id = inv['period_id']['fiscalyear_id']['id']
+#                        if (tax_line['tax_amount']< 0):
+#                            contador_impuestos = contador_impuestos + 1
+#                            porcentaje= (float(tax_line['tax_amount']/tax_line['base']))*(-100)
+#                            tax_id = tax_line['tax_code_id']['id']
+#                            if tax_line['type_ec'] == 'renta':
+#                                tax_id = tax_line['base_code_id']['id']                            
+#                            vals_ret_line = {'tax_base':tax_line['base'] ,
+#                                             'fiscalyear_id':fiscalyear_id,
+#                                             'retention_id':ret_id,
+#                                             'description': tax_line['type_ec'],
+#                                             'tax_id': tax_id
+#                                             }
+#                            ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
+#                        elif tax_line['tax_amount'] == 0 and tax_line['type_ec'] == 'renta':
+#                            vals_ret_line = {'tax_base':tax_line.base,
+#                                             'fiscalyear_id':fiscalyear_id,
+#                                             'invoice_without_retention_id': inv.id,
+#                                             'description': tax_line.type_ec,
+#                                             'tax_id': tax_line.base_code_id.id,
+#                                             'creation_date_invoice': inv.date_invoice,
+#                                             }
+#                            ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
+#                    
+#                    #TRESCLOUD - Para que un contador de impuestos?
+#                    if(contador_impuestos<=0):
+#                        ret_obj.unlink(cr, uid, [ret_id], context)
+#                else:
+#                    ret_actual = ret_obj.read(cr, uid, inv['retention_ids'][0]['id'], context)
+#                    # actualizar retencion
+#            
+#                    cr.execute("DELETE FROM account_retention_line WHERE retention_id=%s", (ret_actual['id'],))                    
+#                    
+#                    #actualizamos las lineas de retenciones
+#                    contador_impuestos = 0
+#                    
+#                    for tax_line in inv.tax_line:
+#                        fiscalyear_id = None
+#                        if not inv['period_id']:
+#                            period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')),])
+#                            if period_ids:
+#                                fiscalyear_id= self.pool.get('account.period').browse(cr, uid, [period_ids[0]], context)[0]['fiscalyear_id']['id']
+#                        else:
+#                            fiscalyear_id = inv['period_id']['fiscalyear_id']['id']
+#                        if (tax_line['tax_amount']< 0):
+#                            contador_impuestos = contador_impuestos + 1
+#                            porcentaje= (float(tax_line['tax_amount']/tax_line['base']))*(-100)
+#                            tax_id = tax_line['tax_code_id']['id']
+#                            if tax_line['type_ec'] == 'renta':
+#                                tax_id = tax_line['base_code_id']['id']
+#                            vals_ret_line = {'tax_base':tax_line['base'] ,
+#                                                 'fiscalyear_id':fiscalyear_id,
+#                                                 'retention_id':ret_actual['id'],
+#                                                 'description': tax_line['type_ec'],
+#                                                 'tax_id': tax_id
+#                                                 }
+#                            ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
+#                        elif tax_line['tax_amount'] == 0 and tax_line['type_ec'] == 'renta':
+#                            vals_ret_line = {'tax_base':tax_line['base'] ,
+#                                             'fiscalyear_id':fiscalyear_id,
+#                                             'invoice_without_retention_id': inv.id,
+#                                             'description': tax_line['type_ec'],
+#                                             'tax_id': tax_line['base_code_id']['id'],
+#                                             'creation_date_invoice': inv.date_invoice,
+#                                             }
+#                            ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
+#                    if(contador_impuestos<=0):
+#                        ret_obj.unlink(cr, uid, [ret_actual['id']], context)
+#                                
+#        return super(account_invoice, self).button_reset_taxes(cr, uid, ids, context)
 
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
     def copy(self, cr, uid, id, default={}, context=None):
