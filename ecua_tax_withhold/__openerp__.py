@@ -62,10 +62,11 @@
     """,
     "init_xml": [],
     "update_xml": [ 
-                   # 'data/sequence_data.xml',
+                    'data/sequence_data.xml',
                     'report/withhold_report.xml',
                     'workflow/retention_workflow.xml',
                     'wizard/retention_wizard_view.xml',
+                    'views/company_view.xml',
                     'views/withhold_view.xml',
                     'views/invoice_view.xml',
     ],
