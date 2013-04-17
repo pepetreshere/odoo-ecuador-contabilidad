@@ -22,4 +22,4 @@
 ########################################################################
 
 import withhold,withhold_line,voucher,shop
-import invoice
+import invoice,company
