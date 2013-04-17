@@ -9,7 +9,7 @@
 			<field name="arch" type="xml">
 				<form string="Withhold">
 						<group colspan="4">
- 							<field name="shop_id"/>
+ 							<field name="shop_id" select="1"/>
 							<field name="number" />
 							<field name="partner_id"/>
 							<field name="creation_date" required="1" />
@@ -17,17 +17,20 @@
 							<!-- <field name="currency_id"/> -->
 							<field name="company_id"/>
 					</group>
-					<separator string="Retention Lines" colspan="4" />
-<!-- 					<field name="retention_line_ids" colspan="4" nolabel="1">
-						<tree string="Retention Lines" editable="top">
-							<field name="fiscalyear_id" widget="selection" />
-							<field name="description" />
-							<field name="tax_id" widget="selection" />
-							<field name="tax_base" />
-							<field name="retention_percentage" />
-							<field name="retained_value" />
+					<separator string="Account voucher lines" colspan="4" />
+ 					<field name="account_voucher_ids" colspan="4" nolabel="1">
+						<tree string="Account voucher lines">
+							<field name="date"/>
+		                    <field name="number"/>
+		                    <field name="reference"/>
+		                    <field name="partner_id"/>
+		                    <field name="journal_id"/>
+		                    <field name="period_id"/>
+		                    <field name="type"/>
+		                    <field name="amount"/>
+		                    <field name="state"/>
 						</tree>
-					</field> -->
+					</field> 
 					<group col="6" colspan="4">
 						<field name="state" string='State' />
 						<button name="button_aprove" states="draft" string="Approved"
