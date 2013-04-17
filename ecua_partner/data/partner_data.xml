@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="1">
+		<record id="consumidor_final" model="res.partner">
+			<field name="name">Consumidor Final</field>
+			<field name="ref">9999999999999</field>
+			<!-- TOdo - Poner direccion igual a "Ecuador" -->
+			<!-- 			<field name="street">Ecuador</field> -->
+		</record>
+	</data>
+</openerp>
