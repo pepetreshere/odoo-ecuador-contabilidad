@@ -35,6 +35,7 @@ class account_voucher(osv.osv):
 
     _columns = {
                 #TRESCLOUD - Maybe should remove this line as the taxes were already recorded in the invoice
+                'type_account':fields.char('Type account',size=5),
                 'retention_id':fields.many2one('account.retention', 'Retention', required=False), 
                     } 
 account_voucher()
