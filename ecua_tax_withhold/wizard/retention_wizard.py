@@ -27,7 +27,7 @@ from lxml import etree
 from datetime import datetime
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
-class retention_wizard(osv.osv):
+class retention_wizard(osv.osv_memory):
     
     def _check_number(self, cr, uid, ids, context=None):
         cadena = '(\d{3})+\-(\d{3})+\-(\d{9})'
@@ -209,46 +209,60 @@ class retention_wizard(osv.osv):
         if not context:
             context = {}
         retention_obj = self.pool.get('account.retention')
-        retention_line_obj = self.pool.get('account.retention.line')
-        #auth_s_obj = self.pool.get('sri.authorization.supplier')
-        
+        account_voucher_obj = self.pool.get('account.voucher')
+        res_company=self.pool.get('res.company')
         ret_vals = {}
         ret_line_vals = {}
         objs = self.pool.get(context['active_model']).browse(cr , uid, context['active_ids'])[0]
+        vouchers = []
         for retention in self.browse(cr, uid, ids, context):
             if not retention.number:
                 raise osv.except_osv(_('Error!'), _('Number to be entered to approve the retention'))
             if not retention.creation_date:
                 raise osv.except_osv(_('Error!'), _('Date to be entered to approve the retention'))
-#            if not retention.authorization_sale_id:
-#                raise osv.except_osv(_('Error!'), _('Authorization to be entered to approve the retention'))
             if not retention.lines_ids:
                 raise osv.except_osv(_('Error!'), _('must enter at least one tax to approve the retention'))
             number = None
             auth_id = None
-#            if retention.authorization_sale_id:
-#                auth_s_obj.check_number_document(cr, uid, retention.number, retention.authorization_sale_id, retention.creation_date, 'account.retention', 'number', _('Withholding') ,context)
-#                number = retention.authorization_sale_id.number
-#                auth_id = retention.authorization_sale_id.id
+            company = res_company.browse(cr, uid,retention.company_id.id)
             ret_vals = {
-                 'number_sale':retention.number,
+                 'number':retention.number,
                  'creation_date': retention.creation_date,
                  'transaction_type': retention.transaction_type,
-                 'authorization_sale': number,
-                 'authorization_sale_id': auth_id,
                  'invoice_id': retention.invoice_id.id,
-                 'period_id': objs.period_id.id
+                 'period_id': objs.period_id.id,
                  }
-            retention_id = retention_obj.create(cr, uid, ret_vals, context)
-#            for line in retention.lines_ids:
-#                ret_line_vals = {
-#                     'retention_id':retention_id,
-#                     'fiscalyear_id':line.fiscalyear_id.id,
-#                     'description': line.description,
-#                     'tax_base': line.tax_base,
-#                     'retention_percentage_manual': line.retention_percentage,
-#                     }
-#                retention_line_obj.create(cr, uid, ret_line_vals, context)
+            retention_id = retention_obj.create(cr, uid, ret_vals,context)
+            for line in retention.lines_ids:
+                if line.description=="iva":
+                    journal_iva = company.journal_iva_id
+                    journal= journal_iva.id
+                    account_id=journal_iva.default_debit_account_id
+                    if not account_id:
+                        raise osv.except_osv('Error!', _("Iva Retention Journal doesn't have debit account assigned!, can't complete operation"))
+                elif line.description=="renta":
+                    journal_ir = company.journal_ir_id
+                    journal= journal_ir.id
+                    account_id=journal_ir.default_debit_account_id
+                    if not account_id:
+                        raise osv.except_osv('Error!', _("IR Retention Journal doesn't have debit account assigned!, can't complete operation"))
+                ret_line_vals = {
+                     'period_id':objs.period_id.id,
+                     'date': retention.creation_date,
+                     'journal_id': journal,
+                     'reference':_('RET CLI: %s') % retention.number,
+                     'account_id':account_id.id,
+                     'retention_id':retention_id,
+                     'type':'receipt',
+                     'company_id' : company.id,
+                     'amount': 500,
+                     'currency_id': retention.currency_id.id,
+                     'partner_id': retention.partner_id.id
+                     }
+                voucher_l= account_voucher_obj.create(cr, uid, ret_line_vals , context)
+                vouchers.append(voucher_l)
+                if vouchers:
+                       account_voucher_obj.write(cr, uid, vouchers, {'retention_id':retention_id},context)
         return retention_id
     
     def approve_now(self, cr, uid, ids, context=None):
