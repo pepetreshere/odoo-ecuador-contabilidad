@@ -19,16 +19,17 @@
 					</group>
 					<separator string="Account voucher lines" colspan="4" />
  					<field name="account_voucher_ids" colspan="4" nolabel="1">
-						<tree string="Account voucher lines">
-							<field name="date"/>
-		                    <field name="number"/>
-		                    <field name="reference"/>
-		                    <field name="partner_id"/>
-		                    <field name="journal_id"/>
-		                    <field name="period_id"/>
-		                    <field name="type"/>
-		                    <field name="amount"/>
-		                    <field name="state"/>
+		 				<tree string="Account voucher lines">
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="account_id" />
+                                    <field name="date_maturity"/>
+                                    <field name="debit" />
+                                    <field name="credit" />
+                                    <field name="amount_currency"/>
+                                    <field name="tax_amount"/>
+                                    <field name="state"/>
+
 						</tree>
 					</field> 
 					<group col="6" colspan="4">
@@ -90,5 +91,13 @@
 			parent="account.menu_finance" />
 		<menuitem name="Withhold of Purchases" id="retentions_purchases"
 			parent="retentions" action="action_account_retention_purchase" />
+		<record model="ir.actions.act_window" id="action_account_retention_purchase_v">
+			<field name="name">Withhold of Purchases</field>
+			<field name="res_model">account.retention</field>
+			<field name="domain">[('transaction_type','=','purchase')]</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" eval="False" />
+		</record>
 	</data>
 </openerp>

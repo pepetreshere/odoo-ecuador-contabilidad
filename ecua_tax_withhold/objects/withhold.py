@@ -177,7 +177,7 @@ class account_withhold(osv.osv):
                                  'account.retention': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
                                  'account.retention.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
                                  }),
-        'account_voucher_ids':fields.one2many('account.voucher', 'retention_id', 'Retention', required=False),
+        'account_voucher_ids':fields.one2many('account.move.line', 'retention_id', 'Retention'),
         'automatic':fields.boolean('Automatic?',),
         'period_id': fields.related('invoice_id','period_id', type='many2one', relation='account.period', string='Period', store=True), 
         'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
@@ -593,30 +593,30 @@ class account_withhold(osv.osv):
                 else:
                     user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
                     period = self.pool.get('account.period').search(cr, uid, [('date_start','<=',ret.invoice_id.date_invoice),('date_stop','>=',ret.invoice_id.date_invoice), ('company_id', '=', user.company_id.id)])
-                if not ret.authorization_purchase_id:
-                    raise osv.except_osv(_('Invalid action!'), _('Not exist authorization for the document, please check'))
-                if not ret.automatic:
-                    if not ret.number_purchase:
-                        raise osv.except_osv(_('Invalid action!'), _('Not exist number for the document, please check'))
-                    for doc in ret.authorization_purchase_id.type_document_ids:
-                        if doc.name=='withholding':
-                            document_obj.add_document(cr, uid, [doc.id,], context)
-                    self.write(cr, uid, [ret.id], {'number': ret.number_purchase, 'state': 'approved', 'period_id': period}, context)
-                else:
-                    if not ret.number_purchase:
-                        b = True
-                        vals_aut = self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'withholding')
-                        while b :
-                            number = self.pool.get('ir.sequence').get_id(cr, uid, vals_aut['sequence'])
-                            if not self.pool.get('account.retention').search(cr, uid, [('transaction_type','=','purchase'),('number','=',number),('id','not in',tuple(ids))],):
-                                b=False
-                    else:
-                        number = ret.number_purchase
-                    for doc in ret.authorization_purchase_id.type_document_ids:
-                        if doc.name=='withholding':
-                            if doc.automatic:
-                                context['automatic'] = True
-                            document_obj.add_document(cr, uid, [doc.id,], context)
+#                if not ret.authorization_purchase_id:
+#                    raise osv.except_osv(_('Invalid action!'), _('Not exist authorization for the document, please check'))
+#                if not ret.automatic:
+#                    if not ret.number_purchase:
+#                        raise osv.except_osv(_('Invalid action!'), _('Not exist number for the document, please check'))
+#                    for doc in ret.authorization_purchase_id.type_document_ids:
+#                        if doc.name=='withholding':
+#                            document_obj.add_document(cr, uid, [doc.id,], context)
+#                    self.write(cr, uid, [ret.id], {'number': ret.number_purchase, 'state': 'approved', 'period_id': period}, context)
+                
+                if not ret.number_purchase:
+                    b = True
+                    #vals_aut = self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'withholding')
+#                    while b :
+#                        number = self.pool.get('ir.sequence').get_id(cr, uid, vals_aut['sequence'])
+#                        if not self.pool.get('account.retention').search(cr, uid, [('transaction_type','=','purchase'),('number','=',number),('id','not in',tuple(ids))],):
+#                            b=False
+#                    else:
+                    number = ret.number
+#                    for doc in ret.authorization_purchase_id.type_document_ids:
+#                        if doc.name=='withholding':
+#                            if doc.automatic:
+#                                context['automatic'] = True
+#                            document_obj.add_document(cr, uid, [doc.id,], context)
                     self.write(cr, uid, [ret.id], {'number': number, 'state': 'approved', 'period_id': period, 'number_purchase':number}, context)
         return True
     

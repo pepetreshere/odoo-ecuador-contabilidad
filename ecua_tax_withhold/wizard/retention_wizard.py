@@ -41,9 +41,6 @@ class retention_wizard(osv.osv_memory):
             else:
                 return True
 
-#    def _get_automatic(self, cr, uid, context=None):
-#        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-#        return user.company_id.generate_automatic
 
     def _get_shop(self, cr, uid, context=None):
         curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
@@ -57,17 +54,6 @@ class retention_wizard(osv.osv_memory):
                 continue            
         return shop_id
     
-#    def _get_printer(self, cr, uid, context=None):
-#        curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
-#        printer_id = None
-#        if curr_user:
-#            if not curr_user.shop_ids:
-#                if uid != 1:
-#                    raise osv.except_osv('Error!', _("Your User doesn't have shops assigned"))
-#            for shop in curr_user.shop_ids:
-#                printer_id = shop.printer_point_ids[0].id
-#                continue
-#        return printer_id
 
     _name = 'account.retention.wizard'
     _columns = {
@@ -173,48 +159,21 @@ class retention_wizard(osv.osv_memory):
                 values = context['value']
         return values
     
-#    def onchange_data(self, cr, uid, ids, automatic, shop_id=None, printer_id=None, context=None):
-#        printer_obj = self.pool.get('sri.printer.point')
-#        doc_obj = self.pool.get('sri.type.document')
-#        values = {}
-#        if context is None:
-#            context = {}
-#        company_id = self.pool.get('res.company')._company_default_get(cr, uid, 'account.invoice', context=context)
-#        manual = context.get('manual', False)
-#        shop_ids = []
-#        curr_user = False
-#        curr_shop = False
-#        if shop_id:
-#            curr_shop = self.pool.get('sale.shop').browse(cr, uid, [shop_id, ], context)[0]
-#        curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
-#        if curr_user:
-#            for s in curr_user.shop_ids:
-#                shop_ids.append(s.id)
-#        if curr_shop:
-#            if printer_id:
-#                auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('printer_id','=',printer_id), ('shop_id','=',curr_shop.id), ('state','=',True),])
-#                if auth_line_id:
-#                    values['authorization_purchase_id'] = doc_obj.browse(cr, uid, auth_line_id[0], context).sri_authorization_id.id
-#                    if automatic:
-#                        values['automatic_number'] = doc_obj.get_next_value_secuence(cr, uid, 'withholding', False, printer_id, 'account.retention', 'number_purchase', context)
-#                        values['number'] = values['automatic_number']
-#                        values['creation_date'] = time.strftime('%Y-%m-%d')
-#                else:
-#                    values['authorization_purchase_id'] = None
-#                    values['automatic'] = False
-#                    values['creation_date'] = None
-#        return {'value': values, 'domain':{'shop_id':[('id', 'in', shop_ids)]}}
-    
     def create_retention(self, cr, uid, ids, context=None):
         if not context:
             context = {}
         retention_obj = self.pool.get('account.retention')
         account_voucher_obj = self.pool.get('account.voucher')
+        #acc_move_line_obj = self.pool.get('account.move.line')
+        acc_vou_line_obj = self.pool.get('account.voucher.line')
+        move_line_pool = self.pool.get('account.move.line')
         res_company=self.pool.get('res.company')
+        move_pool = self.pool.get('account.move')
         ret_vals = {}
         ret_line_vals = {}
         objs = self.pool.get(context['active_model']).browse(cr , uid, context['active_ids'])[0]
         vouchers = []
+        res=[]
         for retention in self.browse(cr, uid, ids, context):
             if not retention.number:
                 raise osv.except_osv(_('Error!'), _('Number to be entered to approve the retention'))
@@ -231,38 +190,15 @@ class retention_wizard(osv.osv_memory):
                  'transaction_type': retention.transaction_type,
                  'invoice_id': retention.invoice_id.id,
                  'period_id': objs.period_id.id,
+                 'account_voucher_ids':[],
                  }
             retention_id = retention_obj.create(cr, uid, ret_vals,context)
             for line in retention.lines_ids:
-                if line.description=="iva":
-                    journal_iva = company.journal_iva_id
-                    journal= journal_iva.id
-                    account_id=journal_iva.default_debit_account_id
-                    if not account_id:
-                        raise osv.except_osv('Error!', _("Iva Retention Journal doesn't have debit account assigned!, can't complete operation"))
-                elif line.description=="renta":
-                    journal_ir = company.journal_ir_id
-                    journal= journal_ir.id
-                    account_id=journal_ir.default_debit_account_id
-                    if not account_id:
-                        raise osv.except_osv('Error!', _("IR Retention Journal doesn't have debit account assigned!, can't complete operation"))
-                ret_line_vals = {
-                     'period_id':objs.period_id.id,
-                     'date': retention.creation_date,
-                     'journal_id': journal,
-                     'reference':_('RET CLI: %s') % retention.number,
-                     'account_id':account_id.id,
-                     'retention_id':retention_id,
-                     'type':'receipt',
-                     'company_id' : company.id,
-                     'amount': 500,
-                     'currency_id': retention.currency_id.id,
-                     'partner_id': retention.partner_id.id
-                     }
-                voucher_l= account_voucher_obj.create(cr, uid, ret_line_vals , context)
-                vouchers.append(voucher_l)
-                if vouchers:
-                       account_voucher_obj.write(cr, uid, vouchers, {'retention_id':retention_id},context)
+                move_id=retention.invoice_id.move_id.id
+                move_line_ids = move_line_pool.search(cr, uid, [('move_id', '=', move_id),('amount_currency','=',line.tax_amount),('state','=','valid')], context=context)              
+                move_line_pool.write(cr,uid,move_line_ids,{'retention_id':retention_id})
+            #ret_vals['account_voucher_ids']=res
+            
         return retention_id
     
     def approve_now(self, cr, uid, ids, context=None):
