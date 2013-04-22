@@ -62,7 +62,7 @@ class sale_shop(osv.osv):
                     break
             return b
 
-    _constraints = [(_check_number,_('This field is only for numbers'), ['number'])]
+   # _constraints = [(_check_number,_('This field is only for numbers'), ['number'])]
     
     
 sale_shop()

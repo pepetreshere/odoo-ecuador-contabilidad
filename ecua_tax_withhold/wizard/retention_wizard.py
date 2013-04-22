@@ -75,7 +75,9 @@ class retention_wizard(osv.osv_memory):
                                     ], 'type', required=True, readonly=True),
                 'lines_ids': fields.one2many('account.retention.wizard.line', 'wizard_id', 'Retention line'),
                 }
-    _constraints = [(_check_number, _('The number is incorrect, it must be like 001-00X-000XXXXXX, X is a number'), ['number'])]
+#    _constraints = [(
+#                   #  _check_number, _('The number is incorrect, it must be like 001-00X-000XXXXXX, X is a number'), ['number']
+#                     )]
 
     def _percentaje_retained(self, cr, uid,vals_ret_line, context=None):
         res = {}

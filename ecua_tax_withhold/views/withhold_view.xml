@@ -59,8 +59,8 @@
 					<field name="period_id" />
 					<field name="creation_date" />
 					<field name="transaction_type" />
-					<field name="total_iva" sum="Total Retenciones IVA" />
-					<field name="total_renta" sum="Total Retenciones Renta" />
+			<!--  		<field name="total_iva" sum="Total Retenciones IVA" />
+					<field name="total_renta" sum="Total Retenciones Renta" />-->
 					<field name="state" />
 				</tree>
 			</field>
