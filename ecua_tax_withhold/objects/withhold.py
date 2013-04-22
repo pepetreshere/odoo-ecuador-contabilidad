@@ -250,7 +250,7 @@ class account_withhold(osv.osv):
 #            if inv.move_id:
 #                continue
 #            context_multi_currency = context.copy()
-#            context_multi_currency.update({'date': inv.date})
+#            context_multi_cu    Draftrrency.update({'date': inv.date})
 #
 #            if inv.number:
 #                name = inv.number
@@ -362,7 +362,9 @@ class account_withhold(osv.osv):
 #                    'date': inv.date
 #                }
 #                #print 'Por cada linea del voucher'
-#                #print move_line
+#     
+#        def _get_payment_term_lines(term_id, amount):
+#            term_pool = self.pool.get('account.payment.term')           #print move_line
 #                if amount < 0:
 #                    amount = -amount
 #                    if line.type == 'dr':
