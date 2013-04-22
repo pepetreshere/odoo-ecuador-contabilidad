@@ -27,21 +27,29 @@ from openerp.tools.translate import _
 import time
 
 class res_partner(osv.osv):
-    _inherit = "res.parnter"
+    _inherit = "res.partner"
     
+    # agregamos codigo de ecuador al modulo base_vat
+    #_ref_vat['ec']='EC1234567891001'
     _ref_vat = {
                 'ec': 'EC1234567891001',
                 }
-    
-    def _get_user_id(self, cr, uid, ids, context={}):
-        return uid
-    
+        
     def _get_user_default_sales_team(self, cr, uid, ids, context={}):
-        return uid.default_section_id
-    
+        sales_team = self.pool.get('res.users').browse(cr,uid,uid).default_section_id
+        sales_team_id = sales_team.id
+        if sales_team_id:
+            return sales_team_id
+        return
+
     def _get_user_country_id(self, cr, uid, ids, context={}):
-        return uid.country_id
-    
+        #TODO - Validar si sirve para entorno multicompania
+        company_id = self.pool.get('res.users').browse(cr,uid,uid).company_id
+        country_id = company_id.country_id.id
+        if country_id:
+            return country_id
+        return 
+
     _columns = {
                 'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
                 'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
@@ -49,10 +57,12 @@ class res_partner(osv.osv):
                }
 
     _defaults = {
-                 'user_id': _get_user_id,
+                 'user_id': lambda self, cr, uid, context: uid,
                  'section_id': _get_user_default_sales_team,
                  'country_id': _get_user_country_id,
-                 'property_account_position': 1,
+                 'date': fields.date.context_today
+                 # TODO - Evaluar los modulos account_fiscal_position_rule, account_fiscal_position_country, y account_fiscal_position_country_sale
+                 #'property_account_position': _get_default_fiscal_position_id,
                  }
     #    _sql_constraints = [
     #    ]
@@ -220,19 +230,19 @@ class res_partner(osv.osv):
    
     # TRESCLOUD TODO - Incluir estas funciones en el espacio de nombres de check_vat_ec
     # TRESCLOUD TODO - Revisar la necesidad de esta funcion
-    def _defined_type_ref(self, cr, uid, ids, field_name, arg, context=None):
-        res={}
-        for partner in self.browse(cr, uid, ids, context):
-            ref = partner['ref']
-            if(len(ref)==13):
-                if self.verifica_ruc_pnat(ref) or self.verifica_ruc_spri(ref) or self.verifica_ruc_spub(ref):
-                    res[partner.id]= 'ruc'
-                elif self.verifica_id_cons_final(ref):
-                    res[partner.id]= 'consumidor'
-            elif (len(ref)==10):
-                if self.verifica_cedula(ref):
-                    res[partner.id]= 'cedula'
-        return res
+    #    def _defined_type_ref(self, cr, uid, ids, field_name, arg, context=None):
+    #        res={}
+    #        for partner in self.browse(cr, uid, ids, context):
+    #            ref = partner['ref']
+    #            if(len(ref)==13):
+    #                if self.verifica_ruc_pnat(ref) or self.verifica_ruc_spri(ref) or self.verifica_ruc_spub(ref):
+    #                    res[partner.id]= 'ruc'
+    #                elif self.verifica_id_cons_final(ref):
+    #                    res[partner.id]= 'consumidor'
+    #            elif (len(ref)==10):
+    #                if self.verifica_cedula(ref):
+    #                    res[partner.id]= 'cedula'
+    #        return res
 
     # Ecuador VAT validation, contributed by TRESCLOUD (info@trescloud.com)
     # and based on https://launchpad.net/openerp-ecuador
