@@ -197,7 +197,7 @@ class retention_wizard(osv.osv_memory):
             retention_id = retention_obj.create(cr, uid, ret_vals,context)
             for line in retention.lines_ids:
                 move_id=retention.invoice_id.move_id.id
-                move_line_ids = move_line_pool.search(cr, uid, [('move_id', '=', move_id),('amount_currency','=',line.tax_amount),('state','=','valid')], context=context)              
+                move_line_ids = move_line_pool.search(cr, uid, [('move_id', '=', move_id),('tax_code_id','=',line.tax_id.id),('state','=','valid')], context=context)              
                 move_line_pool.write(cr,uid,move_line_ids,{'retention_id':retention_id})
             #ret_vals['account_voucher_ids']=res
             
