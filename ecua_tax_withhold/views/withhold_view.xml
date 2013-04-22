@@ -34,8 +34,8 @@
 					</field> 
 					<group col="6" colspan="4">
 						<field name="state" string='State' />
-						<button name="button_aprove" states="draft" string="Approved"
-							icon="gtk-go-forward" type="object" />
+						<!-- <button name="button_aprove" states="draft" string="Approved"
+							icon="gtk-go-forward" type="object" /> -->
 						<button name="button_cancel" states="approved" string="Cancel"
 							groups="account.group_account_manager" icon="gtk-cancel" type="object" />
 						<button name="button_set_draft" states="canceled" string="Set to draft"
@@ -59,8 +59,6 @@
 					<field name="period_id" />
 					<field name="creation_date" />
 					<field name="transaction_type" />
-			<!--  		<field name="total_iva" sum="Total Retenciones IVA" />
-					<field name="total_renta" sum="Total Retenciones Renta" />-->
 					<field name="state" />
 				</tree>
 			</field>
