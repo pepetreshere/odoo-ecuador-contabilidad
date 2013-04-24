@@ -123,13 +123,14 @@ class retention_wizard(osv.osv_memory):
                                # contador_impuestos = contador_impuestos + 1
                                 porcentaje= (float(tax_line['tax_amount']/tax_line['base']))*(-100)
                                 tax_id = tax_line['tax_code_id']['id']
+                                tax_ac_id=tax_id
                                 if tax_line['type_ec'] == 'renta':
                                     tax_id = tax_line['base_code_id']['id']                           
                                 vals_ret_line = {
-                                                 'fiscalyear_id':fiscalyear_id,
-                                                 
+                                                 'fiscalyear_id':fiscalyear_id,  
                                                  'description': tax_line['type_ec'],
                                                  'tax_id': tax_id,
+                                                 'tax_ac_id':tax_ac_id,
                                                  'tax_base': tax_line['base'],
                                                  'tax_amount': tax_line['amount'],
                                                  'retention_percentage':0
@@ -143,6 +144,7 @@ class retention_wizard(osv.osv_memory):
                                                  'invoice_without_retention_id': obj.id,
                                                  'description': tax_line.type_ec,
                                                  'tax_id': tax_line.base_code_id.id,
+                                                 'tax_ac_id':tax_ac_id,
                                                  'creation_date_invoice': obj.date_invoice,
                                                  }
                                 #ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
@@ -197,7 +199,7 @@ class retention_wizard(osv.osv_memory):
             retention_id = retention_obj.create(cr, uid, ret_vals,context)
             for line in retention.lines_ids:
                 move_id=retention.invoice_id.move_id.id
-                move_line_ids = move_line_pool.search(cr, uid, [('move_id', '=', move_id),('tax_code_id','=',line.tax_id.id),('state','=','valid')], context=context)              
+                move_line_ids = move_line_pool.search(cr, uid, [('move_id', '=', move_id),('tax_code_id','=',line.tax_ac_id.id),('state','=','valid')], context=context)              
                 move_line_pool.write(cr,uid,move_line_ids,{'retention_id':retention_id})
             #ret_vals['account_voucher_ids']=res
             
@@ -279,6 +281,7 @@ class retention_wizard_line(osv.osv_memory):
             #                             store={'account.retention.line': (lambda self, cr, uid, ids, c={}: ids, ['tax_id',], 1)},),
             #'retention_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value'),
             'tax_id':fields.many2one('account.tax.code', 'Tax Code'),
+            'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code'),
             }
     
 retention_wizard_line()
