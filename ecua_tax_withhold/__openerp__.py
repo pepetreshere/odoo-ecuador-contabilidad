@@ -63,6 +63,7 @@
     "init_xml": [],
     "update_xml": [ 
                     'data/sequence_data.xml',
+                    'security/ir.model.access.csv',
                     'report/withhold_report.xml',
                     'workflow/retention_workflow.xml',
                     'wizard/retention_wizard_view.xml',
