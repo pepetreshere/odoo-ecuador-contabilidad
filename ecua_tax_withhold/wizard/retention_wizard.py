@@ -195,6 +195,7 @@ class retention_wizard(osv.osv_memory):
                  'invoice_id': retention.invoice_id.id,
                  'period_id': objs.period_id.id,
                  'account_voucher_ids':[],
+                 'state':'approved',
                  }
             retention_id = retention_obj.create(cr, uid, ret_vals,context)
             for line in retention.lines_ids:
