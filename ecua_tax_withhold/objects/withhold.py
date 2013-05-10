@@ -52,20 +52,16 @@ class account_invoice(osv.osv):
     
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
     def action_cancel(self, cr, uid, ids, *args):
-        ret_line_obj = self.pool.get('account.retention.line')
+     #   ret_line_obj = self.pool.get('account.retention.line')
         context={}
         wf_service = netsvc.LocalService("workflow")
-        invoices = self.pool.get('account.invoice').browse(cr, uid, ids, context)
-        for inv in invoices:
-            if inv.retention_ids:
-                retencion = inv.retention_ids[0]
-                if retencion.state == 'approved':
-                    wf_service.trg_validate(uid, 'account.retention', retencion.id, 'canceled_signal', cr)
-                self.pool.get('account.retention').unlink(cr, uid, [retencion.id, ], context={'invoice':True})
-                   #TODO: Se debe verificar que la retencion que tiene la factura este aprobada
-            if inv.retention_line_ids:
-                for ret_line in inv.retention_line_ids:
-                    ret_line_obj.unlink(cr, uid, [ret_line.id])
+        invoices = self.pool.get('account.invoice')
+        invoice_obj=invoices.browse(cr, uid, ids, context)[0]
+        retention=self.pool.get('account.retention').search(cr,uid,[('invoice_id','=',invoice_obj.id)])
+        retention_obj=self.pool.get('account.retention').browse(cr,uid,retention)
+        for lines in retention_obj:
+            if lines.state == 'approved':
+                    wf_service.trg_validate(uid, 'account.retention', lines.id, 'canceled_signal', cr)
         return super(account_invoice, self).action_cancel(cr, uid, ids, context)
 
 account_invoice()
@@ -619,24 +615,7 @@ class account_withhold(osv.osv):
     
     def action_cancel(self,cr,uid,ids,context=None):
         #TRESCLOUD - No deberia depender del tipo de documento origen, remover sri.type.document o usar siempre el valor "factura"
-#        document_obj = self.pool.get('sri.type.document')
-#        retentions = self.pool.get('account.retention').browse(cr, uid, ids, context)
-#        for ret in retentions:
-#            if ret.state == "draft":
-#                self.unlink(cr, uid, [ret.id,], context)
-#            else:
-#                if ret.transaction_type == "purchase":
-#                    for doc in ret.authorization_purchase_id.type_document_ids:
-#                        if doc.name=='withholding':
-#                            document_obj.rest_document(cr, uid, [doc.id,])
-#                    self.pool.get('account.retention').write(cr, uid, [ret.id, ], {'state':'canceled'}, context)
-#                if ret.transaction_type == "sale":
-#                    vouchers = []
-#                    for vou in ret.account_voucher_ids:
-#                        vouchers.append(vou.id)
-#                    self.pool.get('account.voucher').cancel_voucher(cr, uid, vouchers, context)
-#                    self.pool.get('account.retention').write(cr, uid, [ret.id, ], {'state':'canceled'}, context)
-                    #self.pool.get('account.retention').unlink(cr, uid, [ret.id, ], context)
+        self.write(cr, uid, ids, {'state': 'canceled'}, context=context)
         return True
 
     def button_aprove(self, cr, uid, ids, context=None):
