@@ -433,7 +433,7 @@ class account_invoice(osv.osv):
         #                unlink_ids.append(inv['id'])
         #            else:
         #                raise osv.except_osv(_('Invalid action!'), _('You can delete Invoice in state Draft'))
-        return super(account_invoice, self).unlink(cr, uid, unlink_ids, context)
+        return super(account_invoice, self).unlink(cr, uid, ids, context)
 
 
     _constraints = [(_check_number_invoice,_('The number of Document is incorrect, it must be like 00X-00X-000XXXXXX, X is a number'),['invoice_number_out','invoice_number_in','number_liquidacion'])]
