@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Christopher Ormaza
-# Copyright (C) 2013  Ecuadorenlinea.net
+# @authors: TRESCLOUD CÍA LTDA, 4RSOFT, Christopher Ormaza
+# Copyright (C) 2013  www.trescloud.com
 #
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by

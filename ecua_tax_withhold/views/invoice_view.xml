@@ -12,7 +12,7 @@
 				<field name="fiscal_position" position="before">
 					<field name="address_invoice"/> 
 				</field>
-<!-- 								<page string="Payments" position="after">
+<!-- 					<page string="Payments" position="after">
 					<page string="Retenciones">
 								<field name="retention_ids" nolabel="1" readonly="1" widget="one2many"
 									colspan="4"
@@ -25,8 +25,8 @@
 										<field name="total_renta" sum="Total Retenciones Renta" />
 										<field name="state" />
 									</tree>
-								</field>
-								<field name="retention_line_ids" nolabel="1" readonly="1"
+								</field> -->
+<!-- 								<field name="retention_line_ids" nolabel="1" readonly="1"
 									colspan="4" widget="one2many">
 									<tree string="Withholding Lines">
 										<field name="fiscalyear_id" />
@@ -47,8 +47,8 @@
 										<field name="retained_value" />
 									</form>
 								</field>
-							</page>
-						</page> -->
+							</page> -->
+						</page> 
 				<button string='Ask Refund' position="after">
 						<button name="%(action_retention_wizard_purchase)d" string="Withhold"
 								type="action" icon="terp-gtk-jump-to-ltr" attrs="{'invisible':[('state','=','draft')]}"/>
