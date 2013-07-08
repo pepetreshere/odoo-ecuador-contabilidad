@@ -56,7 +56,7 @@
     """,
     "init_xml": [],
     "update_xml": [ 
-                    #'views/invoice_view.xml',
+                    
     ],
     "installable": True,
     "auto_install": False,

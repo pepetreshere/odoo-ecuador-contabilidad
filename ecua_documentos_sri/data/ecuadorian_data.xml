@@ -7,11 +7,6 @@
 			<field name="ref">9999999999999</field>
 		</record>
 		
-<!-- 		<record id="address" model="res.partner.address"> -->
-<!-- 			<field name="partner_id" ref="consumidor_final"/> -->
-<!-- 			<field name="street">Ecuador</field> -->
-<!-- 		</record> -->
-		
 		<record model="ir.sequence.type" id="account_invoice_out_type_sequence">
 			<field name="name">Facturas en Ventas</field>
 			<field name="code">account.invoice.out_invoice</field>

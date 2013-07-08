@@ -51,14 +51,14 @@ class res_partner(osv.osv):
         return 
 
     _columns = {
-                'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
-                'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
-                'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
+#                'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
+#                'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
+#                'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
                }
 
     _defaults = {
                  'user_id': lambda self, cr, uid, context: uid,
-                 'section_id': _get_user_default_sales_team,
+                 #'section_id': _get_user_default_sales_team,
                  'country_id': _get_user_country_id,
                  'date': fields.date.context_today
                  # TODO - Evaluar los modulos account_fiscal_position_rule, account_fiscal_position_country, y account_fiscal_position_country_sale
