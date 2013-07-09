@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Andres Calle
+# @authors: Andres Calle, Andrea García
 # Copyright (C) 2013  TRESCLOUD CÍA LTDA
 #
 #This program is free software: you can redistribute it and/or modify
@@ -48,6 +48,7 @@
     Author,
     
     Andres Calle,
+    Andrea García
     TRESCLOUD Cía Ltda.
     """,
     "init_xml": [],
