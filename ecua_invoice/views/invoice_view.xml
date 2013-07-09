@@ -16,7 +16,7 @@
 					<attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)</attribute>
 				</xpath>
 				<xpath expr="//field[@name='partner_id']" position="after">
-				    <field name="internal_number" required="1"/>
+					<field name="internal_number"/>
 					<field name="invoice_address"/> 
 					<field name="invoice_phone"/>
 					<field name="printer_id"/>
@@ -34,7 +34,7 @@
 					<attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)</attribute>
 				</xpath>
 				<xpath expr="//field[@name='partner_id']" position="after">
-				    <field name="internal_number" required="1"/>
+				    <field name="internal_number" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
 					<field name="invoice_address"/> 
 					<field name="invoice_phone"/>
 					<field name="printer_id"/>
