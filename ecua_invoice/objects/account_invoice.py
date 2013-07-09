@@ -68,6 +68,7 @@ class account_invoice(osv.osv):
     _columns = {
                 #TODO hacer obligatorio el campo name que almacenara el numero de la factura
                 'internal_number': fields.char('Invoice Number', size=18, readonly=False, help="Unique number of the invoice, computed automatically when the invoice is created."),
+                #'supplier_invoice_number': fields.char('Supplier Invoice Number', size=18, help="The reference of this invoice as provided by the supplier.", readonly=True, states={'draft':[('readonly',False)]}),
                # 'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
                 'printer_id':fields.many2one('sri.printer.point', 'Printer Point', required=True),
                 'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
