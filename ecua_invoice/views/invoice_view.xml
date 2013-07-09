@@ -16,10 +16,10 @@
 					<attribute name="on_change">onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)</attribute>
 				</xpath>
 				<xpath expr="//field[@name='partner_id']" position="after">
-					<field name="internal_number"/>
-					<field name="invoice_address"/> 
-					<field name="invoice_phone"/>
-					<field name="printer_id"/>
+					<field name="internal_number" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+					<field name="invoice_address" attrs="{'readonly':[('state','!=','draft')]}"/> 
+					<field name="invoice_phone" attrs="{'readonly':[('state','!=','draft')]}"/>
+					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}"/>
 				</xpath>
 			</field>			
 		</record>
@@ -35,9 +35,9 @@
 				</xpath>
 				<xpath expr="//field[@name='partner_id']" position="after">
 				    <field name="internal_number" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
-					<field name="invoice_address"/> 
-					<field name="invoice_phone"/>
-					<field name="printer_id"/>
+					<field name="invoice_address" attrs="{'readonly':[('state','!=','draft')]}"/> 
+					<field name="invoice_phone" attrs="{'readonly':[('state','!=','draft')]}"/>
+					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}"/>
 				</xpath>
 			</field>			
 		</record>
