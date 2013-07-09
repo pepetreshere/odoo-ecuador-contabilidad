@@ -248,8 +248,9 @@ class res_partner(osv.osv):
     # and based on https://launchpad.net/openerp-ecuador
     def check_vat_ec(self, vat):
         #Separa companias de personas naturales
+        # P.R. This version Don't return a dictionary, must return True or False
         
-        type_identification = ''
+        #type_identification = ''
         valid = False
         
         #validamos que solo se utilicen caracteres numericos
@@ -257,35 +258,37 @@ class res_partner(osv.osv):
             try:
                 int(i)
             except:
-                return {
-                'type_ref' : type_identification,
-                'valid': valid
-                }
+                #return {
+                #'type_ref' : type_identification,
+                #'valid': valid
+                #}
+                return valid
         
         if(len(vat)==13):
             #Se verifica que el cliente es una compañia privada
             if(int(vat[2])==9):
                 if self.verifica_ruc_spri(vat):
                     valid = True
-                    type_identification='ruc'
+                    #type_identification='ruc'
                 elif self.verifica_id_cons_final(vat):
                     valid = True
-                    type_identification='consumidor'
+                    #type_identification='consumidor'
             #Se verifica que sea una empresa estatal
             elif(int(vat[2])==6) and self.verifica_ruc_spub(vat):
                 valid = True
-                type_identification='ruc'
+                #type_identification='ruc'
             #Se verifica que el ruc sea de una persona natural
             elif(int(vat[2])<6) and self.verifica_ruc_pnat(vat):
                 valid = True
-                type_identification='ruc'
+                #type_identification='ruc'
         #Se verifica el número de cedula
         elif(len(vat)==10) and self.verifica_cedula(vat):
             valid = True
-            type_identification='cedula'
-        return {
-                'type_ref' : type_identification,
-                'valid': valid
-                }
+            #type_identification='cedula'
+        #return {
+               # 'type_ref' : type_identification,
+               # 'valid': valid
+               # }
+        return valid
         
 res_partner()
