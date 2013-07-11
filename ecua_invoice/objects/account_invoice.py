@@ -37,32 +37,7 @@ class account_invoice(osv.osv):
 
     _inherit = "account.invoice"
 
-    # Indica si la empresa es auto-impresor    
-#    def _get_automatic(self, cr, uid, context=None):
-#        user = self.pool.get('res.users').browse(cr, uid, uid, context)
-#        return user.company_id.generate_automatic
-#        return False 
-    
-    # TRESCLOUD - TODO - Dejar solo la parte del numero automatico de factura / importante
-    # Carga automaticamente el numero de factura para venta
-#    def create(self, cr, uid, vals, context=None):
-#        company_id = vals.get('company_id', False)
-#        if not context:
-#            context = {}
-#        if vals.get('invoice_number_out', False):
-#            if context.get('type', False) == 'out_invoice':
-#                number_out = vals.get('invoice_number_out', False)
-#                company_id = vals.get('company_id', False)
-#                vals['automatic_number'] = vals.get('invoice_number_out', False)
-#        res = super(account_invoice, self).create(cr, uid, vals, context)
-#        return res
-    
-    # TRESCLOUD - Las validaciones de RUC y documentos se deben realizar al aprobar la factura, no al guardar
-    # por eso se removio en esta funcion las validaciones. 
-#    def write(self, cr, uid, ids, vals, context=None):
-#        # no hacemos nada
-#        res = super(account_invoice, self).write(cr, uid, ids, vals, context)
-#        return res 
+  
     
         
     _columns = {
