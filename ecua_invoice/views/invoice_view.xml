@@ -19,7 +19,7 @@
 					<field name="internal_number" attrs="{'readonly': [('state','not in',('draft'))]}"/>
 					<field name="invoice_address" attrs="{'readonly':[('state','!=','draft')]}"/> 
 					<field name="invoice_phone" attrs="{'readonly':[('state','!=','draft')]}"/>
-					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}" />
 				</xpath>
 			</field>			
 		</record>
@@ -37,7 +37,7 @@
 				    <field name="internal_number" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
 					<field name="invoice_address" attrs="{'readonly':[('state','!=','draft')]}"/> 
 					<field name="invoice_phone" attrs="{'readonly':[('state','!=','draft')]}"/>
-					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}"  />
 				</xpath>
 			</field>			
 		</record>
