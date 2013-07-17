@@ -92,7 +92,7 @@ class sri_printer_point(osv.osv):
             shop_id = r['shop_id'][0]
             name_shop = None
             if shop_id:
-                name_shop = self.pool.get('sale.shop').browse(cr, uid, shop_id, context).name
+                name_shop = self.pool.get('sale.shop').browse(cr, uid, shop_id, context).number
             if name_shop:
                 name += " - " + name_shop
             res.append((r['id'], name))
