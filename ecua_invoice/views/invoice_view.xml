@@ -12,9 +12,15 @@
 			<field name="type">form</field>
 			<field name="inherit_id" ref="account.invoice_supplier_form" />
 			<field name="arch" type="xml">
-				<xpath expr="//field[@name='partner_id']" position="after">
-					<field name="invoice_address" attrs="{'readonly':[('state','!=','draft')]}"/> 
-					<field name="invoice_phone" attrs="{'readonly':[('state','!=','draft')]}"/>
+				<xpath expr="//field[@name='account_id']" position="after">
+					<label for="street" string="Address"/>
+                            <div>
+                                <div class="address_format">
+					<field name="invoice_address" style="width: 40%%" attrs="{'readonly':[('state','!=','draft')]}"/> 
+					<label string="Phone"/>
+					<field name="invoice_phone" style="width: 35%%"  attrs="{'readonly':[('state','!=','draft')]}"/>	
+					</div>
+					</div>
 				</xpath>
 				<xpath expr="/form/sheet/group/group/field[@name='origin']" position="attributes">
 					<attribute name="invisible">True</attribute>
@@ -36,9 +42,15 @@
 			<field name="type">form</field>
      	   <field name="inherit_id" ref="account.invoice_form" />
 			<field name="arch" type="xml">
-				<xpath expr="//field[@name='partner_id']" position="after">
-					<field name="invoice_address" attrs="{'readonly':[('state','!=','draft')]}"/> 
-					<field name="invoice_phone" attrs="{'readonly':[('state','!=','draft')]}"/>	
+				<xpath expr="//field[@name='account_id']" position="after">
+					<label for="street" string="Address"/>
+                            <div>
+                                <div class="address_format">
+					<field name="invoice_address" style="width: 40%%" attrs="{'readonly':[('state','!=','draft')]}"/> 
+					<label string="Phone"/>
+					<field name="invoice_phone" style="width: 35%%"  attrs="{'readonly':[('state','!=','draft')]}"/>	
+					</div>
+					</div>
 				</xpath>
 				<xpath expr="/form/sheet/group/group/field[@name='fiscal_position']" position="after">
 					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}" required="1" />
