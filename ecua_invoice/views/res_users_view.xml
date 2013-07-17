@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+	 <record id="view_users_form_preferences_printer" model="ir.ui.view">
+	            <field name="name">res.users.preferences.printer.form</field>
+	            <field name="model">res.users</field>
+	            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+	            <field name="arch" type="xml">
+	            <data>
+	                    <xpath expr="//field[@name='tz']" position="after">
+	                        <field name="printer_id"/>
+	                    </xpath>
+	                </data>
+	            </field>
+	        </record>
+</data>
+</openerp>
+    

@@ -67,6 +67,12 @@ class sale_shop(osv.osv):
     
 sale_shop()
 
+class res_users(osv.Model):
+    _inherit = 'res.users'
+    _columns = {
+        'printer_id':fields.many2one('sri.printer.point', 'Default Printer Point'),
+    }
+    
 class sri_printer_point(osv.osv):
     
     _name = 'sri.printer.point'
@@ -93,4 +99,6 @@ class sri_printer_point(osv.osv):
         return res
     
 sri_printer_point()
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
