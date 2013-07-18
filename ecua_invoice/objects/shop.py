@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Christopher Ormaza
+# @authors: Christopher Ormaza, TRESCloud Cia Ltda.
 # Copyright (C) 2013  Ecuadorenlinea.net
 #
 #This program is free software: you can redistribute it and/or modify
@@ -94,11 +94,4 @@ class sri_printer_point(osv.osv):
         return res
     
 sri_printer_point()
-
-class res_users(osv.Model):
-    _inherit = 'res.users'
-    _columns = {
-        'printer_id':fields.many2one('sri.printer.point', 'Default Printer Point'),
-    }
-res_users()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
