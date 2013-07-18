@@ -35,6 +35,7 @@
                  'sale',
                  'stock',
                  'account',
+                 'account_accountant'
                  ],
     "description": """
     In Ecuador additional rules applies to invoices:
