@@ -9,7 +9,7 @@
 				<form string="Retention">
 					<group>
 						<group colspan="4">
- 							<field name="shop_id"/>
+ 							<field name="printer_id"/>
 							<field name="number" />
 							<field name="partner_id"/>
 							<field name="creation_date" required="1" />

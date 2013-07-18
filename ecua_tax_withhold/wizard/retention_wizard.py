@@ -40,19 +40,6 @@ class retention_wizard(osv.osv_memory):
                     return False
             else:
                 return True
-
-
-    def _get_shop(self, cr, uid, context=None):
-        curr_user = self.pool.get('res.users').browse(cr, uid, [uid, ], context)[0]
-        shop_id = None
-        if curr_user:
-            if not curr_user.shop_ids:
-                if uid != 1:
-                    raise osv.except_osv('Error!', _("Your User doesn't have shops assigned"))
-            for shop in curr_user.shop_ids:
-                shop_id = shop.id
-                continue            
-        return shop_id
     
 
     _name = 'account.retention.wizard'
@@ -62,7 +49,7 @@ class retention_wizard(osv.osv_memory):
                 'company_id': fields.many2one('res.company', 'Company', required=True, change_default=True),
                 'number':fields.char('Number', size=17,),
                 'creation_date': fields.date('Creation Date'),
-                'shop_id':fields.many2one('sale.shop', 'Shop'),
+                'printer_id':fields.many2one('sri.printer.point', 'Printer Point', required=False),
                 'invoice_id': fields.many2one('account.invoice', 'Number of Invoice', readonly=True),
                 'automatic':fields.boolean('Automatic', required=True),
                 'transaction_type':fields.selection([
@@ -104,6 +91,7 @@ class retention_wizard(osv.osv_memory):
                 for obj in objs:
                     if obj.type == 'out_invoice':
                         values = {
+                                 'printer_id':obj.printer_id,
                                  'partner_id': obj.partner_id.id,
                                  'invoice_id': obj.id,
                                  'creation_date': obj.date_invoice,#cambiar
@@ -149,6 +137,7 @@ class retention_wizard(osv.osv_memory):
                                                  }
                                 #ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
                         values = {
+                                     'printer_id':obj.printer_id.id,
                                      'invoice_id': obj.id,
                                      'creation_date': datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
                                      'type':'manual',

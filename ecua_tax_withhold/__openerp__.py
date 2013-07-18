@@ -40,6 +40,7 @@
                  'report_aeroo',
                  'report_aeroo_ooo',
                  'l10n_ec_niif_minimal',
+                 'ecua_invoice',
                  #'ecua_documentos_sri',
                  ],
     "description": """
