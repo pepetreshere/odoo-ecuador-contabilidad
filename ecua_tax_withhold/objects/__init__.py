@@ -21,5 +21,5 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
-import withhold,account_move_line,shop
+import withhold,account_move_line
 import invoice,company
