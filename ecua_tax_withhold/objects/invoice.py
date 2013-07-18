@@ -35,14 +35,13 @@ class account_invoice(osv.osv):
 
     _inherit = "account.invoice"
     
-    def _number(self, cr, uid, ids, name, args, context=None):
-        result = {}
-        for invoice in self.browse(cr, uid, ids, args):
-            print "entro"
-            #result[invoice.id] = invoice.invoice_number
-        return result
+#    def _number(self, cr, uid, ids, name, args, context=None):
+#        result = {}
+#        for invoice in self.browse(cr, uid, ids, args):
+#            #result[invoice.id] = invoice.invoice_number
+#        return result
     _columns = {
-                'number': fields.function(_number, method=True, type='char', size=17, string='Invoice Number', store=True, help='Unique number of the invoice, computed automatically when the invoice is created in Sales.'),
+                #'number': fields.function(_number, method=True, type='char', size=17, string='Invoice Number', store=True, help='Unique number of the invoice, computed automatically when the invoice is created in Sales.'),
                 'address_invoice':fields.char("Invoice address"),
 #                'total_retencion': fields.function(_amount_all, method=True, digits_compute=dp.get_precision('Account'), string='Total Retenido',
 #                    store={
