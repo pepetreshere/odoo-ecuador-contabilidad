@@ -9,9 +9,9 @@
 			<field name="type">form</field>
 			<field name="inherit_id" ref="account.invoice_supplier_form" />
 			<field name="arch" type="xml">
-				<field name="fiscal_position" position="before">
+				<!--  <field name="fiscal_position" position="before">
 					<field name="address_invoice"/> 
-				</field>
+				</field>-->
 <!-- 					<page string="Payments" position="after">
 					<page string="Retenciones">
 								<field name="retention_ids" nolabel="1" readonly="1" widget="one2many"
