@@ -30,7 +30,7 @@
 				</xpath>
 				<xpath expr="/form/sheet/group/group/field[@name='fiscal_position']" position="after">
 					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}" required="0" />
-					<field name="internal_number" required="1" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+					<field name="internal_number" required="1" attrs="{'readonly': [('state','!=','draft')]}"/>
 				</xpath>
 			</field>			
 		</record>
