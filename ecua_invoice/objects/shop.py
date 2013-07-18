@@ -75,7 +75,6 @@ class sri_printer_point(osv.osv):
     _columns = {
                     'name':fields.char('Name', size=3, required=True,help='This number is assigned by the SRI'), 
                     'shop_id':fields.many2one('sale.shop', 'Shop'),
-#                    'number':fields.char('SRI Number', size=3, required=True, help='This number is assigned by the SRI'),
                     }
     
     def name_get(self,cr,uid,ids, context=None):
