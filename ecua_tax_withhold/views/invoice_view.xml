@@ -47,8 +47,8 @@
 										<field name="retained_value" />
 									</form>
 								</field>
-							</page> -->
-						</page> 
+							</page> 
+						</page> -->
 				<button string='Ask Refund' position="after">
 						<button name="%(action_retention_wizard_purchase)d" string="Withhold"
 								type="action" icon="terp-gtk-jump-to-ltr" attrs="{'invisible':[('state','=','draft')]}"/>
