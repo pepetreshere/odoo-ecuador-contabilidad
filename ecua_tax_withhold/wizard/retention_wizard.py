@@ -49,7 +49,7 @@ class retention_wizard(osv.osv_memory):
                 'company_id': fields.many2one('res.company', 'Company', required=True, change_default=True),
                 'number':fields.char('Number', size=17,),
                 'creation_date': fields.date('Creation Date'),
-                'printer_id':fields.many2one('sri.printer.point', 'Printer Point', required=False),
+                'printer_id':fields.many2one('sri.printer.point', 'Printer Point'),
                 'invoice_id': fields.many2one('account.invoice', 'Number of Invoice', readonly=True),
                 'automatic':fields.boolean('Automatic', required=True),
                 'transaction_type':fields.selection([
@@ -62,10 +62,6 @@ class retention_wizard(osv.osv_memory):
                                     ], 'type', required=True, readonly=True),
                 'lines_ids': fields.one2many('account.retention.wizard.line', 'wizard_id', 'Retention line'),
                 }
-#    _constraints = [(
-#                   #  _check_number, _('The number is incorrect, it must be like 001-00X-000XXXXXX, X is a number'), ['number']
-#                     )]
-
     def _percentaje_retained(self, cr, uid,vals_ret_line, context=None):
         res = {}
         tax_code_id = self.pool.get('account.tax.code').search(cr, uid, [('id', '=', vals_ret_line['tax_id'])])
@@ -85,20 +81,21 @@ class retention_wizard(osv.osv_memory):
         values = {}
         res = []
         ret_line_id=0
+        users=self.pool.get('res.users')
+        printer_id=users.browse(cr,uid,uid).printer_id.id
         if context.get('active_model'):
             objs = self.pool.get(context['active_model']).browse(cr , uid, context['active_ids'])
             if 'value' not in context.keys():
                 for obj in objs:
                     if obj.type == 'out_invoice':
                         values = {
-                                 'printer_id':obj.printer_id,
+                                 'printer_id':printer_id,
                                  'partner_id': obj.partner_id.id,
                                  'invoice_id': obj.id,
                                  'creation_date': obj.date_invoice,#cambiar
                                  'type':'manual',
                                 }
                     if obj.type in ('in_invoice'):
-                            #shop_id = self._get_shop(cr, uid, context)
                         for tax_line in obj.tax_line:
                             fiscalyear_id = None
                             if not obj['period_id']:
@@ -108,7 +105,6 @@ class retention_wizard(osv.osv_memory):
                             else:
                                 fiscalyear_id = obj['period_id']['fiscalyear_id']['id']
                             if (tax_line['tax_amount']< 0):
-                               # contador_impuestos = contador_impuestos + 1
                                 porcentaje= (float(tax_line['tax_amount']/tax_line['base']))*(-100)
                                 tax_id = tax_line['tax_code_id']['id']
                                 tax_ac_id=tax_id
@@ -135,9 +131,8 @@ class retention_wizard(osv.osv_memory):
                                                  'tax_ac_id':tax_ac_id,
                                                  'creation_date_invoice': obj.date_invoice,
                                                  }
-                                #ret_line_id = ret_line.create(cr, uid, vals_ret_line, context)
                         values = {
-                                     'printer_id':obj.printer_id.id,
+                                     'printer_id':printer_id,
                                      'invoice_id': obj.id,
                                      'creation_date': datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
                                      'type':'manual',
@@ -145,7 +140,6 @@ class retention_wizard(osv.osv_memory):
                                      'currency_id':obj.currency_id.id,
                                      'partner_id':obj.partner_id.id,
                                      'company_id':obj.company_id.id,
-                                     #'shop_id':shop_id,
                                      'lines_ids': res,
                                     }
             else:
