@@ -81,15 +81,17 @@ class sri_printer_point(osv.osv):
         if not context:
             context = {}
         res = []
+        shop_id=False
         for r in self.read(cr,uid,ids,['name','shop_id'], context):
             name = r['name']
-            shop_id = r['shop_id'][0]
-            name_shop = None
-            if shop_id:
-                name_shop = self.pool.get('sale.shop').browse(cr, uid, shop_id, context).number
-            if name_shop:
-                name += " - " + name_shop
-            res.append((r['id'], name))
+            if r['shop_id']:
+                shop_id = r['shop_id'][0] or False
+                name_shop = None
+                if shop_id:
+                    name_shop = self.pool.get('sale.shop').browse(cr, uid, shop_id, context).number
+                if name_shop:
+                    name += " - " + name_shop
+                res.append((r['id'], name))
         return res
     
 sri_printer_point()
