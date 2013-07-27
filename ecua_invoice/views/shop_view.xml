@@ -17,7 +17,6 @@
 								<field name="sales_journal_id" colspan="2" required="1"/>
 								<field name="invoice_lines"/>
 								<field name="purchases_journal_id" colspan="2" required="1"/>							
-								<field name="liquidation_journal_id"/>
 								</group>
 							</page>
 							<page string="Users Asigned">

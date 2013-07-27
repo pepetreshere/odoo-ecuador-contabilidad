@@ -37,7 +37,7 @@ class sale_shop(osv.osv):
                 'user_ids':fields.many2many('res.users', 'rel_user_shop', 'shop_id', 'user_id', 'Users'),
                 'sales_journal_id':fields.many2one('account.journal', 'Sales Journal', domain=[('type','=','sale')]), 
                 'purchases_journal_id':fields.many2one('account.journal', 'Purchases Journal', domain=[('type','=','purchase')]), 
-                'liquidation_journal_id':fields.many2one('account.journal', 'Liquidation of Purchases Journal', domain=[('type','=','purchase'),('liquidation','=',True)]),
+               # 'liquidation_journal_id':fields.many2one('account.journal', 'Liquidation of Purchases Journal', domain=[('type','=','purchase'),('liquidation','=',True)]),
                 'credit_note_purchase_journal_id':fields.many2one('account.journal', 'Credit Note Purchases Journal', domain=[('type','=','purchase_refund')]),           
                 'credit_note_sale_journal_id':fields.many2one('account.journal', 'Credit Note Sales Journal', domain=[('type','=','sale_refund')]),
                 #'address_id':fields.many2one('res.partner.address', 'Address', ),
