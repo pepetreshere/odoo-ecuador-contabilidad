@@ -2,9 +2,9 @@
 <openerp>
 	<data>
 		
-		<!-- Facturas de Clientes -->
-			<record model="ir.ui.view" id="account_invoice_purchase_form_view">
-			<field name="name">account.invoice.form</field>
+		<!-- Facturas de Proveedores -->
+		<record model="ir.ui.view" id="account_invoice_purchase_withhold_form_view">
+			<field name="name">account.invoice.purchase.withhold.form</field>
 			<field name="model">account.invoice</field>
 			<field name="type">form</field>
 			<field name="inherit_id" ref="account.invoice_supplier_form" />
@@ -13,9 +13,22 @@
 						<button name="%(action_retention_wizard_purchase)d" string="Withhold"
 								type="action" icon="terp-gtk-jump-to-ltr" attrs="{'invisible':[('state','=','draft')]}"/>
 				</button>
-
 			</field>
-			
 		</record>
+		
+		<!-- Facturas de Clientes -->
+		<record model="ir.ui.view" id="account_invoice_sale_withhold_form_view">
+			<field name="name">account.invoice.sale.withhold.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<button string='Re-Open' position="after">
+						<button name="%(action_retention_wizard_sale)d" string="Withhold"
+								type="action" icon="terp-gtk-jump-to-ltr" attrs="{'invisible':[('state','=','draft')]}"/>
+				</button>
+			</field>
+		</record>
+		
 	</data>
 </openerp>

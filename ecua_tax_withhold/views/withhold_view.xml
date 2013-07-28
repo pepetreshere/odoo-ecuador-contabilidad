@@ -8,28 +8,29 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Withhold">
-						<group colspan="4">
- 							<field name="shop_id" select="1"/>
-							<field name="number" />
-							<field name="partner_id"/>
-							<field name="creation_date" required="1" />
-							<field name="invoice_id" invisible="0" />
-							<!-- <field name="currency_id"/> -->
-							<field name="company_id"/>
+					<group colspan="4">
+						<field name="shop_id" select="1"/>
+						<field name="printer_id" select="1"/>
+						<field name="number" />
+						<field name="partner_id"/>
+						<field name="creation_date" required="1" />
+						<field name="invoice_id" invisible="0" />
+						<!-- <field name="transaction_type" /> -->
+						<!-- <field name="currency_id"/> -->
+						<field name="company_id"/>
 					</group>
 					<separator string="Account voucher lines" colspan="4" />
  					<field name="account_voucher_ids" colspan="4" nolabel="1">
 		 				<tree string="Account voucher lines">
-                                    <field name="name"/>
-                                    <field name="partner_id"/>
-                                    <field name="account_id" />
-                                    <field name="date_maturity"/>
-                                    <field name="debit" />
-                                    <field name="credit" />
-                                    <field name="amount_currency"/>
-                                    <field name="tax_amount"/>
-                                    <field name="state"/>
-
+	                        <field name="name"/>
+	                        <field name="partner_id"/>
+	                        <field name="account_id" />
+	                        <field name="date_maturity"/>
+	                        <field name="debit" />
+	                        <field name="credit" />
+	                        <field name="amount_currency"/>
+	                        <field name="tax_amount"/>
+	                        <field name="state"/>
 						</tree>
 					</field> 
 					<group col="6" colspan="4">
@@ -47,8 +48,108 @@
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_account_retention_tree">
-			<field name="name">account.retention.tree</field>
+		<record model="ir.ui.view" id="view_account_retention_purchase_tree">
+			<field name="name">account.retention.purchase.tree</field>
+			<field name="model">account.retention</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Withhold" colors="blue:state in ('draft');black:state in ('approved');gray:state in ('canceled')">
+					<field name="number" />
+					<field name="invoice_id" string="Document" />
+					<field name="partner_id" string="Client" />
+					<field name="period_id" />
+					<field name="creation_date" />
+					<!-- <field name="transaction_type" /> -->
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_account_retention_purchase">
+			<field name="name">Withhold of Purchases</field>
+			<field name="res_model">account.retention</field>
+			<field name="domain">[('transaction_type','=','purchase')]</field>
+			<field name="context">{'transaction_type':'purchase'}</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="False" />
+		</record>
+
+		<record id="action_sale_receipt_tree" model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_account_retention_purchase_tree" />
+			<field name="act_window_id" ref="action_account_retention_purchase" />
+		</record>
+
+		<record id="action_sale_receipt_form" model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_account_retention_purchase_form" />
+			<field name="act_window_id" ref="action_account_retention_purchase" />
+		</record>
+		
+		<menuitem name="Withhold" id="retentions"
+			parent="account.menu_finance" />
+			
+		<menuitem name="Withhold of Purchases" id="retentions_purchases"
+			parent="retentions" action="action_account_retention_purchase" />
+			
+		<record model="ir.actions.act_window" id="action_account_retention_purchase_v">
+			<field name="name">Withhold of Purchases</field>
+			<field name="res_model">account.retention</field>
+			<field name="domain">[('transaction_type','=','purchase')]</field>
+			<!-- <field name="context">{'transaction_type':'purchase'}</field> -->
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" eval="False" />
+		</record>
+		
+<!-- P.R: SALE WHITHHOLDS  -->
+
+		<record model="ir.ui.view" id="view_account_retention_sale_form">
+			<field name="name">account.retention.sale.form</field>
+			<field name="model">account.retention</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Withhold">
+					<group colspan="4">
+						<field name="partner_id" required="1"/>
+						<!-- <field name="authorization_sale_id" required="1" /> --> 
+						<field name="number" required="1"/>
+						<field name="invoice_id" required="1" />
+						<field name="creation_date" required="1" />
+						<field name="company_id"/>
+						<field name="transaction_type" />
+					</group>
+					<separator string="Account voucher lines" colspan="4" />
+ 					<field name="account_voucher_ids" colspan="4" nolabel="1">
+		 				<tree string="Account voucher lines">
+	                        <field name="name"/>
+	                        <field name="partner_id"/>
+	                        <field name="account_id" />
+	                        <field name="date_maturity"/>
+	                        <field name="debit" />
+	                        <field name="credit" />
+	                        <field name="amount_currency"/>
+	                        <field name="tax_amount"/>
+	                        <field name="state"/>
+						</tree>
+					</field> 
+					<group col="6" colspan="4">
+						<field name="state" string='State' />
+						<button name="button_aprove" states="draft" string="Approved"
+							icon="gtk-go-forward" type="object" />
+						<button name="button_cancel" states="approved" string="Cancel"
+							groups="account.group_account_manager" icon="gtk-cancel" type="object" />
+						<button name="button_set_draft" states="canceled" string="Set to draft"
+							icon="terp-stock_effects-object-colorize" type="object" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_retention_sale_tree">
+			<field name="name">account.retention.sale.tree</field>
 			<field name="model">account.retention</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
@@ -63,15 +164,16 @@
 				</tree>
 			</field>
 		</record>
-		<record model="ir.actions.act_window" id="action_account_retention_purchase">
-			<field name="name">Withhold of Purchases</field>
+		<record model="ir.actions.act_window" id="action_account_retention_sale">
+			<field name="name">Withhold of Sales</field>
 			<field name="res_model">account.retention</field>
-			<field name="domain">[('transaction_type','=','purchase')]</field>
+			<field name="domain">[('transaction_type','=','sale')]</field>
+			<field name="context">{'transaction_type':'sale'}</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" eval="False" />
 		</record>
-
+<!-- 
 		<record id="action_sale_receipt_tree" model="ir.actions.act_window.view">
 			<field eval="1" name="sequence" />
 			<field name="view_mode">tree</field>
@@ -85,17 +187,19 @@
 			<field name="view_id" ref="view_account_retention_purchase_form" />
 			<field name="act_window_id" ref="action_account_retention_purchase" />
 		</record>
-		<menuitem name="Withhold" id="retentions"
-			parent="account.menu_finance" />
-		<menuitem name="Withhold of Purchases" id="retentions_purchases"
-			parent="retentions" action="action_account_retention_purchase" />
-		<record model="ir.actions.act_window" id="action_account_retention_purchase_v">
-			<field name="name">Withhold of Purchases</field>
+ -->		
+		<menuitem name="Withhold of Sales" id="retentions_sales"
+			parent="retentions" action="action_account_retention_sale" />
+			
+		<record model="ir.actions.act_window" id="action_account_retention_sale_v">
+			<field name="name">Withhold of Sales</field>
 			<field name="res_model">account.retention</field>
-			<field name="domain">[('transaction_type','=','purchase')]</field>
+			<field name="domain">[('transaction_type','=','sale')]</field>
+			<!-- <field name="context">{'transaction_type':'sale'}</field>  -->
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
 			<field name="view_id" eval="False" />
 		</record>
+		
 	</data>
 </openerp>

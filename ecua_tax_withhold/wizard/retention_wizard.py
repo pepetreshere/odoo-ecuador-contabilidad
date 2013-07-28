@@ -41,27 +41,40 @@ class retention_wizard(osv.osv_memory):
             else:
                 return True
     
+    def _retention_type(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        return context.get('retention_type', False)
 
     _name = 'account.retention.wizard'
     _columns = {
-                'partner_id':fields.many2one('res.partner', 'Partner' ),
-                'currency_id': fields.many2one('res.currency', 'Currency', required=True),
-                'company_id': fields.many2one('res.company', 'Company', required=True, change_default=True),
-                'number':fields.char('Number', size=17,),
-                'creation_date': fields.date('Creation Date'),
-                'printer_id':fields.many2one('sri.printer.point', 'Printer Point'),
-                'invoice_id': fields.many2one('account.invoice', 'Number of Invoice', readonly=True),
-                'automatic':fields.boolean('Automatic', required=True),
-                'transaction_type':fields.selection([
-                                                     ('purchase','Purchases'),
-                                                     ('sale','Sales'),
-                                                     ],  'Transaction type', required=True, readonly=True),
-                'type':fields.selection([
-                                    ('automatic', 'Automatic'),
-                                    ('manual', 'Manual'),
-                                    ], 'type', required=True, readonly=True),
-                'lines_ids': fields.one2many('account.retention.wizard.line', 'wizard_id', 'Retention line'),
+        'partner_id':fields.many2one('res.partner', 'Partner' ),
+        'currency_id': fields.many2one('res.currency', 'Currency', required=True),
+        'company_id': fields.many2one('res.company', 'Company', required=True, change_default=True),
+        'number':fields.char('Number', size=17,),
+        'creation_date': fields.date('Creation Date'),
+        'printer_id':fields.many2one('sri.printer.point', 'Printer Point'),
+        'invoice_id': fields.many2one('account.invoice', 'Number of Invoice', readonly=True),
+        'automatic':fields.boolean('Automatic', required=True),
+        'transaction_type':fields.selection([
+                                             ('purchase','Purchases'),
+                                             ('sale','Sales'),
+                                             ],  'Transaction type', required=True, readonly=True),
+        'type':fields.selection([
+                            ('automatic', 'Automatic'),
+                            ('manual', 'Manual'),
+                            ], 'type', required=True, readonly=True),
+        'lines_ids': fields.one2many('account.retention.wizard.line', 'wizard_id', 'Retention line'),
+        'retention_type':fields.selection([
+            ('purchase','Purchases'),
+            ('sale','Sales'),
+            ],  'Retention type', required=True, readonly=True),
                 }
+
+    _defaults = {
+        'retention_type': _retention_type,
+                 }
+    
     def _percentaje_retained(self, cr, uid,vals_ret_line, context=None):
         res = {}
         tax_code_id = self.pool.get('account.tax.code').search(cr, uid, [('id', '=', vals_ret_line['tax_id'])])

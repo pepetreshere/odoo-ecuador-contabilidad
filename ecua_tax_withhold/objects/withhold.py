@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Christopher Ormaza
-# Copyright (C) 2013  Ecuadorenlinea.net
+# @authors: TRESCLOUD CIA. LTDA.
+# Copyright (C) 2013  trescloud.com
 #
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -131,6 +131,13 @@ class account_withhold(osv.osv):
             if cur:
                 res[ret.id] = cur_obj.round(cr, uid, cur, val)
         return res
+    
+    def _transaction_type(self, cr, uid, context = None):
+        if context is None:
+            context = {}
+        return context.get('transaction_type', False)
+                
+    
     _columns = {
         'number': fields.char('Number', size=17, required=False),
         #TRESCLOUD - Deberia usarse un solo campo en lugar de number_purchase y number_sale que se llame "documento origen", asi funciona en la mayoria de documentos
@@ -173,17 +180,20 @@ class account_withhold(osv.osv):
 #                                 'account.retention': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
 #                                 'account.retention.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
 #                                 }),
-        'account_voucher_ids':fields.one2many('account.move.line', 'retention_id', 'Retention'),
-        'automatic':fields.boolean('Automatic?',),
+        'account_voucher_ids': fields.one2many('account.move.line', 'retention_id', 'Retention'),
+        'automatic': fields.boolean('Automatic?',),
         'period_id': fields.related('invoice_id','period_id', type='many2one', relation='account.period', string='Period', store=True), 
-        'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
-        'printer_id':fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]}),
+        'shop_id': fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
+        'printer_id': fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]}),
+        #P.R: Required the authorization asociated depending if is purchase or sale
+        #'authorization_purchase_id': fields.many2one('sri.authorization', 'Authorization', readonly=True, states={'draft':[('readonly',False)]}),
+        #'authorization_sale_id': fields.many2one('sri.authorization.supplier', 'Authorization', readonly=True, states={'draft':[('readonly',False)]}),
     }
         
     _defaults = {
-                'number': '',
-                'transaction_type': lambda *a: 'purchase',
-                'state': lambda *a: 'draft',
+        'number': '',
+        'transaction_type': _transaction_type,
+        'state': lambda *a: 'draft',
                  }
     
     #Validacion básica del numero de retencion
