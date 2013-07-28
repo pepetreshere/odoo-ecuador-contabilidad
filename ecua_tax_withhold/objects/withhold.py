@@ -231,7 +231,9 @@ class account_withhold(osv.osv):
             
     #_constraints = [(check_retention_out, _('The number of retention is incorrect, it must be like 001-00X-000XXXXXX, X is a number'),['number']),]
     
-    _sql_constraints = [('withhold_number_purchase_uniq','unique(number_purchase, company_id)', _('There is another Withhold generated with this number, please verify'))]
+    _sql_constraints = [
+                        ('withhold_number_purchase_uniq','unique(number_purchase)','There is another Withhold generated with this number, please verify'),
+                        ]
 
     
     
