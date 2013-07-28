@@ -27,7 +27,7 @@ from lxml import etree
 from datetime import datetime
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
-class retention_wizard(osv.osv_memory):
+class account_withhold_wizard(osv.osv_memory):
     
     def _check_number(self, cr, uid, ids, context=None):
         cadena = '(\d{3})+\-(\d{3})+\-(\d{9})'
@@ -41,12 +41,15 @@ class retention_wizard(osv.osv_memory):
             else:
                 return True
     
-    def _retention_type(self, cr, uid, ids, context=None):
+    def _transaction_type(self, cr, uid, ids, context=None):
         if context is None:
-            context = {}
-        return context.get('retention_type', False)
+            context = {
+                'transaction_type':'purchase',
+                       }
+        return context.get('transaction_type', False)
 
     _name = 'account.retention.wizard'
+
     _columns = {
         'partner_id':fields.many2one('res.partner', 'Partner' ),
         'currency_id': fields.many2one('res.currency', 'Currency', required=True),
@@ -65,14 +68,10 @@ class retention_wizard(osv.osv_memory):
                             ('manual', 'Manual'),
                             ], 'type', required=True, readonly=True),
         'lines_ids': fields.one2many('account.retention.wizard.line', 'wizard_id', 'Retention line'),
-        'retention_type':fields.selection([
-            ('purchase','Purchases'),
-            ('sale','Sales'),
-            ],  'Retention type', required=True, readonly=True),
                 }
 
     _defaults = {
-        'retention_type': _retention_type,
+        'transaction_type': _transaction_type,
                  }
     
     def _percentaje_retained(self, cr, uid,vals_ret_line, context=None):
@@ -191,6 +190,8 @@ class retention_wizard(osv.osv_memory):
                  'invoice_id': retention.invoice_id.id,
                  'period_id': objs.period_id.id,
                  'account_voucher_ids':[],
+                 #Para la constancia de la retencion estaslineas deben guardarse con la retencion
+                 #'withhold_line_ids': retention.lines_ids,
                  'state':'approved',
                  }
             retention_id = retention_obj.create(cr, uid, ret_vals,context)
@@ -262,9 +263,9 @@ class retention_wizard(osv.osv_memory):
     def button_cancel(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window_close'}
 
-retention_wizard()
+account_withhold_wizard()
 
-class retention_wizard_line(osv.osv_memory):
+class account_retention_wizard_line(osv.osv_memory):
     _name = "account.retention.wizard.line"
 
     _columns = {
@@ -281,4 +282,4 @@ class retention_wizard_line(osv.osv_memory):
             'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code'),
             }
     
-retention_wizard_line()
+account_retention_wizard_line()

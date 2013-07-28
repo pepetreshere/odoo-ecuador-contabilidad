@@ -66,6 +66,24 @@ class account_invoice(osv.osv):
 
 account_invoice()
 
+class account_withhold_line(osv.osv):
+    _name = "account.withhold.line"
+
+    _columns = {
+            'withhold_id': fields.many2one('account.retention', 'Withhold'),
+            'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year'),
+            'description': fields.selection([('iva', 'IVA'), ('renta', 'RENTA'), ], 'Impuesto'),
+            'tax_base': fields.float('Tax Base', digits_compute=dp.get_precision('Account')),
+            'retention_percentage': fields.float('Percentaje Value', digits_compute=dp.get_precision('Account')),
+            'tax_amount':fields.float('Amount', digits_compute=dp.get_precision('Account')),
+           # 'retention_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value',
+            #                             store={'account.retention.line': (lambda self, cr, uid, ids, c={}: ids, ['tax_id',], 1)},),
+            #'retention_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value'),
+            'tax_id':fields.many2one('account.tax.code', 'Tax Code'),
+            'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code'),
+            }
+    
+account_withhold_line()
 
 class account_withhold(osv.osv):
         
@@ -186,8 +204,10 @@ class account_withhold(osv.osv):
         'shop_id': fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
         'printer_id': fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]}),
         #P.R: Required the authorization asociated depending if is purchase or sale
-        #'authorization_purchase_id': fields.many2one('sri.authorization', 'Authorization', readonly=True, states={'draft':[('readonly',False)]}),
-        #'authorization_sale_id': fields.many2one('sri.authorization.supplier', 'Authorization', readonly=True, states={'draft':[('readonly',False)]}),
+        'authorization_sri': fields.text('Authorization', readonly=True, states={'draft':[('readonly',False)]}),
+        #P.R: Required in this format to generate the account moves using this lines
+        'withhold_line_ids': fields.one2many('account.withhold.line', 'withhold_id', 'Withhold lines'),
+
     }
         
     _defaults = {
@@ -440,6 +460,7 @@ class account_withhold(osv.osv):
 #    TRESCLOUD - funcion importante!... en el sprint 1 no requiere funcionar a la perfeccion    
     def action_aprove(self,cr,uid,ids,context=None):
         #TRESCLOUD - No deberia depender del tipo de documento origen, remover sri.type.document o usar siempre el valor "factura"
+        #P.R: Se debe reutilizar esta funcion para que cree la retencion en venta
 #        document_obj = self.pool.get('sri.type.document')
 #        acc_vou_obj = self.pool.get('account.voucher')
 #        acc_vou_line_obj = self.pool.get('account.voucher.line')

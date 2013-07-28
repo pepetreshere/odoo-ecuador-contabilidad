@@ -4,15 +4,15 @@
 
 <!-- WIZARD WITHHOLD PURCHASE -->
 
-		<record id="retention_wizard_purchase_form" model="ir.ui.view">
-			<field name="name">retention.wizard.purchase.form</field>
+		<record id="withhold_wizard_purchase_form" model="ir.ui.view">
+			<field name="name">withhold.wizard.purchase.form</field>
 			<field name="model">account.retention.wizard</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Retention">
+				<form string="Withhold">
 					<group>
 						<group colspan="4">
- 							<field name="retention_type"/>
+ 							<field name="transaction_type"/>
  							<field name="printer_id"/>
 							<field name="number" />
 							<field name="partner_id"/>
@@ -23,7 +23,7 @@
 						</group>
 						<group colspan="4">
 							<field name="lines_ids" nolabel="1" readonly="0" colspan="4" height="150">
-								<tree string="Retention Lines" editable="bottom">
+								<tree string="Withhold Lines" editable="bottom">
 									<!--field name="fiscalyear_id" widget="selection" /-->
 									<field name="description" />
 									<field name="tax_id" />
@@ -44,28 +44,28 @@
 			</field>
 		</record>
 
-		<record id="action_retention_wizard_purchase" model="ir.actions.act_window">
-			<field name="name">Complete data Retention</field>
+		<record id="action_withhold_wizard_purchase" model="ir.actions.act_window">
+			<field name="name">Complete data Withhold</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">account.retention.wizard</field>
-			<field name="context">{'retention_type':'purchase'}</field>
+			<!-- <field name="context">{'transaction_type':'purchase'}</field>  -->
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
-			<field name="view_id" ref="retention_wizard_purchase_form" />
+			<field name="view_id" ref="withhold_wizard_purchase_form" />
 			<field name="target">new</field>
 		</record>
 
-<!-- WIZARD WITHHOLD PURCHASE -->
+<!-- WIZARD WITHHOLD SALE -->
 
-		<record id="retention_wizard_sale_form" model="ir.ui.view">
-			<field name="name">retention.wizard.sale.form</field>
+		<record id="withhold_wizard_sale_form" model="ir.ui.view">
+			<field name="name">withhold.wizard.sale.form</field>
 			<field name="model">account.retention.wizard</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Retention">
+				<form string="Withhold">
 					<group>
 						<group colspan="4">
- 							<field name="retention_type"/>
+ 							<field name="transaction_type"/>
  							<field name="printer_id"/>
 							<field name="number" />
 							<field name="partner_id"/>
@@ -76,7 +76,7 @@
 						</group>
 						<group colspan="4">
 							<field name="lines_ids" nolabel="1" readonly="0" colspan="4" height="150">
-								<tree string="Retention Lines" editable="bottom">
+								<tree string="Withhold Lines" editable="bottom">
 									<!--field name="fiscalyear_id" widget="selection" /-->
 									<field name="description" />
 									<field name="tax_id" />
@@ -97,14 +97,14 @@
 			</field>
 		</record>
 
-		<record id="action_retention_wizard_sale" model="ir.actions.act_window">
-			<field name="name">Complete data Retention</field>
+		<record id="action_withhold_wizard_sale" model="ir.actions.act_window">
+			<field name="name">Complete data Withhold</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">account.retention.wizard</field>
-			<field name="context">{'retention_type':'sale'}</field>
+			<!-- <field name="context">{'transaction_type':'sale'}</field>  -->
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
-			<field name="view_id" ref="retention_wizard_sale_form" />
+			<field name="view_id" ref="withhold_wizard_sale_form" />
 			<field name="target">new</field>
 		</record>
 

@@ -2,7 +2,7 @@
 <openerp>
 	<data>
 		
-		<!-- Facturas de Proveedores -->
+		<!-- Purchase Invoice -->
 		<record model="ir.ui.view" id="account_invoice_purchase_withhold_form_view">
 			<field name="name">account.invoice.purchase.withhold.form</field>
 			<field name="model">account.invoice</field>
@@ -10,13 +10,15 @@
 			<field name="inherit_id" ref="account.invoice_supplier_form" />
 			<field name="arch" type="xml">
 				<button string='Ask Refund' position="after">
-						<button name="%(action_retention_wizard_purchase)d" string="Withhold"
-								type="action" icon="terp-gtk-jump-to-ltr" attrs="{'invisible':[('state','=','draft')]}"/>
+						<button name="%(action_withhold_wizard_purchase)d" string="Withhold"
+								type="action" icon="terp-gtk-jump-to-ltr" 
+								attrs="{'invisible':[('state','=','draft')]}"
+								context="{'transaction_type':'purchase'}" />
 				</button>
 			</field>
 		</record>
 		
-		<!-- Facturas de Clientes -->
+		<!-- Sale Invoice -->
 		<record model="ir.ui.view" id="account_invoice_sale_withhold_form_view">
 			<field name="name">account.invoice.sale.withhold.form</field>
 			<field name="model">account.invoice</field>
@@ -24,8 +26,10 @@
 			<field name="inherit_id" ref="account.invoice_form" />
 			<field name="arch" type="xml">
 				<button string='Re-Open' position="after">
-						<button name="%(action_retention_wizard_sale)d" string="Withhold"
-								type="action" icon="terp-gtk-jump-to-ltr" attrs="{'invisible':[('state','=','draft')]}"/>
+						<button name="%(action_withhold_wizard_sale)d" string="Withhold"
+								type="action" icon="terp-gtk-jump-to-ltr" 
+								attrs="{'invisible':[('state','=','draft')]}"
+								context="{'transaction_type':'sale'}"/>
 				</button>
 			</field>
 		</record>
