@@ -159,7 +159,9 @@
 					</field> 
 					<group col="6" colspan="4">
 						<field name="state" string='State' />
-						<button name="button_aprove" states="draft" string="Approved"
+						<!-- <button name="button_aprove" states="draft" string="Approved"
+							icon="gtk-go-forward" type="object" /> -->
+						<button name="action_aprove" states="draft" string="Approved"
 							icon="gtk-go-forward" type="object" />
 						<button name="button_cancel" states="approved" string="Cancel"
 							groups="account.group_account_manager" icon="gtk-cancel" type="object" />
