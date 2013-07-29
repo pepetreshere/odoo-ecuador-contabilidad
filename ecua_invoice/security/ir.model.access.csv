@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_sale_shop","sale.shop","model_sale_shop","account.group_account_invoice",1,1,1,0
+"access_sri_printer_point","sri.printer.point","model_sri_printer_point","account.group_account_invoice",1,1,1,0
