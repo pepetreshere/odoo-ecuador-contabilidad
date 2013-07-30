@@ -198,13 +198,13 @@ class account_withhold(osv.osv):
 #                                 'account.retention': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
 #                                 'account.retention.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
 #                                 }),
-        'account_voucher_ids': fields.one2many('account.move.line', 'retention_id', 'Retention'),
+        'account_voucher_ids': fields.one2many('account.move.line', 'withhold_id', 'Retention'),
         'automatic': fields.boolean('Automatic?',),
         'period_id': fields.related('invoice_id','period_id', type='many2one', relation='account.period', string='Period', store=True), 
         'shop_id': fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
         'printer_id': fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]}),
         #P.R: Required the authorization asociated depending if is purchase or sale
-        'authorization_sri': fields.text('Authorization', readonly=True, states={'draft':[('readonly',False)]}),
+        'authorization_sri': fields.char('Authorization', readonly=True, states={'draft':[('readonly',False)]}, size=32),
         #P.R: Required in this format to generate the account moves using this lines
         'withhold_line_ids': fields.one2many('account.withhold.line', 'withhold_id', 'Withhold lines'),
 
@@ -258,212 +258,233 @@ class account_withhold(osv.osv):
                 unlink_ids.append(r['id'])
         return super(account_withhold, self).unlink(cr, uid, unlink_ids, context)
     
-#    TRESCLOUD - funcion importante!... en el sprint 1 no requiere funcionar a la perfeccion
     def action_move_line_create(self, cr, uid, ids, context=None):
-#        def _get_payment_term_lines(term_id, amount):
-#            term_pool = self.pool.get('account.payment.term')
-#            if term_id and amount:
-#                terms = term_pool.compute(cr, uid, term_id, amount)
-#                return terms
-#            return False
-#
-#        if context is None:
-#            context = {}
-#        move_pool = self.pool.get('account.move')
-#        move_line_pool = self.pool.get('account.move.line')
-#        currency_pool = self.pool.get('res.currency')
-#        tax_obj = self.pool.get('account.tax')
-#        seq_obj = self.pool.get('ir.sequence')
-#        for inv in self.pool.get('account.voucher').browse(cr, uid, ids, context=context):
-#            if inv.move_id:
-#                continue
-#            context_multi_currency = context.copy()
-#            context_multi_cu    Draftrrency.update({'date': inv.date})
-#
-#            if inv.number:
-#                name = inv.number
-#            elif inv.journal_id.sequence_id:
-#                name = seq_obj.get_id(cr, uid, inv.journal_id.sequence_id.id)
-#            else:
-#                raise osv.except_osv(_('Error !'), _('Please define a sequence on the journal !'))
-#            if not inv.reference:
-#                ref = name.replace('/','')
-#            else:
-#                ref = inv.reference
-#
-#            move = {
-#                'name': name,
-#                'journal_id': inv.journal_id.id,
-#                'narration': inv.narration,
-#                'date': inv.date,
-#                'ref': ref,
-#                'period_id': inv.period_id and inv.period_id.id or False
-#            }
-#            move_id = move_pool.create(cr, uid, move)
-#
-#            #create the first line manually
-#            company_currency = inv.journal_id.company_id.currency_id.id
-#            current_currency = inv.currency_id.id
-#            debit = 0.0
-#            credit = 0.0
-#            # TODO: is there any other alternative then the voucher type ??
-#            # -for sale, purchase we have but for the payment and receipt we do not have
-#            # -as based on the bank/cash journal we can not know its payment or receipt
-#            if inv.type in ('purchase', 'payment'):
-#                credit = currency_pool.compute(cr, uid, current_currency, company_currency, inv.amount, context=context_multi_currency)
-#            elif inv.type in ('sale', 'receipt'):
-#                debit = currency_pool.compute(cr, uid, current_currency, company_currency, inv.amount, context=context_multi_currency)
-#            if debit < 0:
-#                credit = -debit
-#                debit = 0.0
-#            if credit < 0:
-#                debit = -credit
-#                credit = 0.0
-#            sign = debit - credit < 0 and -1 or 1
-#            #create the first line of the voucher
-#            #TODO: se debe especificar el codigo de impuesto para la realizacion del informe de impuestos
-#            tax_code_obj = self.pool.get('account.tax.code')
-#            move_line = {}
-#            try:
-#                #TRESCLOUD - TODO - Los impuestos deben tener un flag/propiedad que indique si son retencion iva o renta.... 
-#                if context['tax']=='iva':
-#                    move_line = {
-#                        'name': inv.name or '/',
-#                        'debit': debit,
-#                        'credit': credit,
-#                        'account_id': inv.account_id.id,
-#                        'move_id': move_id,
-#                        'journal_id': inv.journal_id.id,
-#                        'period_id': inv.period_id.id,
-#                        'partner_id': inv.partner_id.id,
-#                        'currency_id': company_currency <> current_currency and  current_currency or False,
-#                        'amount_currency': company_currency <> current_currency and sign * inv.amount or 0.0,
-#                        'date': inv.date,
-#                        'date_maturity': inv.date_due,
-#                    }
-#                elif context['tax']=='renta':
-#                    move_line = {
-#                        'name': inv.name or '/',
-#                        'debit': debit,
-#                        'credit': credit,
-#                        'account_id': inv.account_id.id,
-#                        'move_id': move_id,
-#                        'journal_id': inv.journal_id.id,
-#                        'period_id': inv.period_id.id,
-#                        'partner_id': inv.partner_id.id,
-#                        'currency_id': company_currency <> current_currency and  current_currency or False,
-#                        'amount_currency': company_currency <> current_currency and sign * inv.amount or 0.0,
-#                        'date': inv.date,
-#                        'date_maturity': inv.date_due,
-#                    }
-#            except:
-#                raise osv.except_osv('Error!', _("The residual value of invoice is lower than total value of withholding"))
-#            move_line_pool.create(cr, uid, move_line)
-#            rec_list_ids = []
-#            line_total = debit - credit
-#            if inv.type == 'sale':
-#                line_total = line_total - currency_pool.compute(cr, uid, inv.currency_id.id, company_currency, inv.tax_amount, context=context_multi_currency)
-#            elif inv.type == 'purchase':
-#                line_total = line_total + currency_pool.compute(cr, uid, inv.currency_id.id, company_currency, inv.tax_amount, context=context_multi_currency)
-#
-#            for line in inv.line_ids:
-#                #create one move line per voucher line where amount is not 0.0
-#                if not line.amount:
-#                    continue
-#                #we check if the voucher line is fully paid or not and create a move line to balance the payment and initial invoice if needed
-#                if line.amount == line.amount_unreconciled:
-#                    amount = line.move_line_id.amount_residual #residual amount in company currency
-#                else:
-#                    amount = currency_pool.compute(cr, uid, current_currency, company_currency, line.untax_amount or line.amount, context=context_multi_currency)
-#                move_line = {
-#                    'journal_id': inv.journal_id.id,
-#                    'period_id': inv.period_id.id,
-#                    'name': line.name and line.name or '/',
-#                    'account_id': line.account_id.id,
-#                    'move_id': move_id,
-#                    'partner_id': inv.partner_id.id,
-#                    'currency_id': company_currency <> current_currency and current_currency or False,
-#                    'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
-#                    'quantity': 1,
-#                    'credit': 0.0,
-#                    'debit': 0.0,
-#                    'date': inv.date
-#                }
-#                #print 'Por cada linea del voucher'
-#     
-#        def _get_payment_term_lines(term_id, amount):
-#            term_pool = self.pool.get('account.payment.term')           #print move_line
-#                if amount < 0:
-#                    amount = -amount
-#                    if line.type == 'dr':
-#                        line.type = 'cr'
-#                    else:
-#                        line.type = 'dr'
-#
-#                if (line.type=='dr'):
-#                    line_total += amount
-#                    move_line['debit'] = amount
-#                else:
-#                    line_total -= amount
-#                    move_line['credit'] = amount
-#
-#                if inv.tax_id and inv.type in ('sale', 'purchase'):
-#                    move_line.update({
-#                        'account_tax_id': inv.tax_id.id,
-#                    })
-#                if move_line.get('account_tax_id', False):
-#                    tax_data = tax_obj.browse(cr, uid, [move_line['account_tax_id']], context=context)[0]
-#                    if not (tax_data.base_code_id and tax_data.tax_code_id):
-#                        raise osv.except_osv(_('No Account Base Code and Account Tax Code!'),_("You have to configure account base code and account tax code on the '%s' tax!") % (tax_data.name))
-#                sign = (move_line['debit'] - move_line['credit']) < 0 and -1 or 1
-#                move_line['amount_currency'] = company_currency <> current_currency and sign * line.amount or 0.0
-#                voucher_line = move_line_pool.create(cr, uid, move_line)
-#                if line.move_line_id.id:
-#                    rec_ids = [voucher_line, line.move_line_id.id]
-#                    rec_list_ids.append(rec_ids)
-#
-#            if not currency_pool.is_zero(cr, uid, inv.currency_id, line_total):
-#                diff = line_total
-#                account_id = False
-#                if inv.payment_option == 'with_writeoff':
-#                    account_id = inv.writeoff_acc_id.id
-#                elif inv.type in ('sale', 'receipt'):
-#                    #TRESCLOUD - porque el cambio¿?
-#                    #account_id = inv.partner_id.property_account_receivable.id
-#                    account_id = inv.journal_id.default_debit_account_id.id
-#                else:
-#                    #account_id = inv.partner_id.property_account_payable.id
-#                    account_id = inv.journal_id.default_credit_account_id.id
-#                move_line = {
-#                    'name': name,
-#                    'account_id': account_id,
-#                    'move_id': move_id,
-#                    'partner_id': inv.partner_id.id,
-#                    'date': inv.date,
-#                    'credit': diff > 0 and diff or 0.0,
-#                    'debit': diff < 0 and -diff or 0.0,
-#                    #'amount_currency': company_currency <> current_currency and currency_pool.compute(cr, uid, company_currency, current_currency, diff * -1, context=context_multi_currency) or 0.0,
-#                    #'currency_id': company_currency <> current_currency and current_currency or False,
-#                }
-#                move_line_pool.create(cr, uid, move_line)
-#                #print 'asiento con desajuste'
-#                #print move_line
-#            self.pool.get('account.voucher').write(cr, uid, [inv.id], {
-#                'move_id': move_id,
-#                'state': 'posted',
-#                'number': name,
-#            })
-#            move_pool.post(cr, uid, [move_id], context={})
-#            for rec_ids in rec_list_ids:
-#                if len(rec_ids) >= 2:
-#                    move_line_pool.reconcile_partial(cr, uid, rec_ids)
-        return True
 
-#    TRESCLOUD - funcion importante!... en el sprint 1 no requiere funcionar a la perfeccion    
+        def _get_payment_term_lines(term_id, amount):
+            term_pool = self.pool.get('account.payment.term')
+            if term_id and amount:
+                terms = term_pool.compute(cr, uid, term_id, amount)
+                return terms
+            return False
+        
+        if context is None:
+            context = {}
+        
+        withhold_id = False
+        
+        if 'withhold_id' in context:
+            withhold_id = context['withhold_id']
+            
+        move_pool = self.pool.get('account.move')
+        move_line_pool = self.pool.get('account.move.line')
+        currency_pool = self.pool.get('res.currency')
+        tax_obj = self.pool.get('account.tax')
+        seq_obj = self.pool.get('ir.sequence')
+        
+        for inv in self.pool.get('account.voucher').browse(cr, uid, ids, context=context):
+        
+            if inv.move_id:
+                continue
+            
+            context_multi_currency = context.copy()
+            context_multi_currency.update({'date': inv.date})
+
+            if inv.number:
+                name = inv.number
+            elif inv.journal_id.sequence_id:
+                name = seq_obj.get_id(cr, uid, inv.journal_id.sequence_id.id)
+            else:
+                raise osv.except_osv(_('Error !'), _('Please define a sequence on the journal !'))
+            if not inv.reference:
+                ref = name.replace('/','')
+            else:
+                ref = inv.reference
+
+            move = {
+                'name': name,
+                'journal_id': inv.journal_id.id,
+                'narration': inv.narration,
+                'date': inv.date,
+                'ref': ref,
+                'period_id': inv.period_id and inv.period_id.id or False
+            }
+            move_id = move_pool.create(cr, uid, move)
+
+            #create the first line manually
+            company_currency = inv.journal_id.company_id.currency_id.id
+            current_currency = inv.currency_id.id
+            debit = 0.0
+            credit = 0.0
+            # TODO: is there any other alternative then the voucher type ??
+            # -for sale, purchase we have but for the payment and receipt we do not have as based on the bank/cash journal we can not know its payment or receipt
+            if inv.type in ('purchase', 'payment'):
+                credit = currency_pool.compute(cr, uid, current_currency, company_currency, inv.amount, context=context_multi_currency)
+            elif inv.type in ('sale', 'receipt'):
+                debit = currency_pool.compute(cr, uid, current_currency, company_currency, inv.amount, context=context_multi_currency)
+            if debit < 0:
+                credit = -debit
+                debit = 0.0
+            if credit < 0:
+                debit = -credit
+                credit = 0.0
+            sign = debit - credit < 0 and -1 or 1
+            #create the first line of the voucher
+            #TODO: se debe especificar el codigo de impuesto para la realizacion del informe de impuestos
+            tax_code_obj = self.pool.get('account.tax.code')
+            move_line = {}
+            try:
+                if context['tax']=='iva':
+                    move_line = {
+                        'name': inv.name or '/',
+                        'debit': debit,
+                        'credit': credit,
+                        'account_id': inv.account_id.id,
+                        'move_id': move_id,
+                        'journal_id': inv.journal_id.id,
+                        'period_id': inv.period_id.id,
+                        'partner_id': inv.partner_id.id,
+                        'currency_id': company_currency <> current_currency and  current_currency or False,
+                        'amount_currency': company_currency <> current_currency and sign * inv.amount or 0.0,
+                        'date': inv.date,
+                        'date_maturity': inv.date_due,
+                    }
+                    
+                elif context['tax']=='renta':
+                    move_line = {
+                        'name': inv.name or '/',
+                        'debit': debit,
+                        'credit': credit,
+                        'account_id': inv.account_id.id,
+                        'move_id': move_id,
+                        'journal_id': inv.journal_id.id,
+                        'period_id': inv.period_id.id,
+                        'partner_id': inv.partner_id.id,
+                        'currency_id': company_currency <> current_currency and  current_currency or False,
+                        'amount_currency': company_currency <> current_currency and sign * inv.amount or 0.0,
+                        'date': inv.date,
+                        'date_maturity': inv.date_due,
+                    }
+
+            except:
+                raise osv.except_osv('Error!', _("The residual value of invoice is lower than total value of withholding"))
+                    
+            # Add the id of withhold
+            if withhold_id:
+                move_line['withhold_id'] = withhold_id
+
+            move_line_pool.create(cr, uid, move_line)
+            rec_list_ids = []
+            line_total = debit - credit
+            if inv.type == 'sale':
+                line_total = line_total - currency_pool.compute(cr, uid, inv.currency_id.id, company_currency, inv.tax_amount, context=context_multi_currency)
+            elif inv.type == 'purchase':
+                line_total = line_total + currency_pool.compute(cr, uid, inv.currency_id.id, company_currency, inv.tax_amount, context=context_multi_currency)
+
+            for line in inv.line_ids:
+                #create one move line per voucher line where amount is not 0.0
+                if not line.amount:
+                    continue
+                #we check if the voucher line is fully paid or not and create a move line to balance the payment and initial invoice if needed
+                if line.amount == line.amount_unreconciled:
+                    amount = line.move_line_id.amount_residual #residual amount in company currency
+                else:
+                    amount = currency_pool.compute(cr, uid, current_currency, company_currency, line.untax_amount or line.amount, context=context_multi_currency)
+                move_line = {
+                    'journal_id': inv.journal_id.id,
+                    'period_id': inv.period_id.id,
+                    'name': line.name and line.name or '/',
+                    'account_id': line.account_id.id,
+                    'move_id': move_id,
+                    'partner_id': inv.partner_id.id,
+                    'currency_id': company_currency <> current_currency and current_currency or False,
+                    'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
+                    'quantity': 1,
+                    'credit': 0.0,
+                    'debit': 0.0,
+                    'date': inv.date
+                }
+                #print 'Por cada linea del voucher'
+                #print move_line
+                if amount < 0:
+                    amount = -amount
+                    if line.type == 'dr':
+                        line.type = 'cr'
+                    else:
+                        line.type = 'dr'
+
+                if (line.type=='dr'):
+                    line_total += amount
+                    move_line['debit'] = amount
+                else:
+                    line_total -= amount
+                    move_line['credit'] = amount
+
+                if inv.tax_id and inv.type in ('sale', 'purchase'):
+                    move_line.update({
+                        'account_tax_id': inv.tax_id.id,
+                    })
+                if move_line.get('account_tax_id', False):
+                    tax_data = tax_obj.browse(cr, uid, [move_line['account_tax_id']], context=context)[0]
+                    if not (tax_data.base_code_id and tax_data.tax_code_id):
+                        raise osv.except_osv(_('No Account Base Code and Account Tax Code!'),_("You have to configure account base code and account tax code on the '%s' tax!") % (tax_data.name))
+                sign = (move_line['debit'] - move_line['credit']) < 0 and -1 or 1
+                move_line['amount_currency'] = company_currency <> current_currency and sign * line.amount or 0.0
+                    
+                # Add the id of withhold
+                if withhold_id:
+                    move_line['withhold_id'] = withhold_id
+                
+                voucher_line = move_line_pool.create(cr, uid, move_line)
+                if line.move_line_id.id:
+                    rec_ids = [voucher_line, line.move_line_id.id]
+                    rec_list_ids.append(rec_ids)
+
+            if not currency_pool.is_zero(cr, uid, inv.currency_id, line_total):
+                diff = line_total
+                account_id = False
+                if inv.payment_option == 'with_writeoff':
+                    account_id = inv.writeoff_acc_id.id
+                elif inv.type in ('sale', 'receipt'):
+                    #account_id = inv.partner_id.property_account_receivable.id
+                    account_id = inv.journal_id.default_debit_account_id.id
+                else:
+                    #account_id = inv.partner_id.property_account_payable.id
+                    account_id = inv.journal_id.default_credit_account_id.id
+                move_line = {
+                    'name': name,
+                    'account_id': account_id,
+                    'move_id': move_id,
+                    'partner_id': inv.partner_id.id,
+                    'date': inv.date,
+                    'credit': diff > 0 and diff or 0.0,
+                    'debit': diff < 0 and -diff or 0.0,
+                    #'amount_currency': company_currency <> current_currency and currency_pool.compute(cr, uid, company_currency, current_currency, diff * -1, context=context_multi_currency) or 0.0,
+                    #'currency_id': company_currency <> current_currency and current_currency or False,
+                }
+                    
+                # Add the id of withhold
+                if withhold_id:
+                    move_line['withhold_id'] = withhold_id
+                
+                move_line_pool.create(cr, uid, move_line)
+                #print 'asiento con desajuste'
+                #print move_line
+            self.pool.get('account.voucher').write(cr, uid, [inv.id], {
+                'move_id': move_id,
+                'state': 'posted',
+                'number': name,
+            })
+            move_pool.post(cr, uid, [move_id], context={})
+            for rec_ids in rec_list_ids:
+                if len(rec_ids) >= 2:
+                    move_line_pool.reconcile_partial(cr, uid, rec_ids)
+        return True
+     
+    # All actions exist because this work througth wizars and to prevent freezeing the screen 
+    # the buttons call object function that execute the transition in workflow   
     def action_aprove(self, cr, uid, ids, context=None):
         #TRESCLOUD - No deberia depender del tipo de documento origen, remover sri.type.document o usar siempre el valor "factura"
-        #P.R: Se debe reutilizar esta funcion para que cree la retencion en venta
-        document_obj = self.pool.get('sri.type.document')
+        #document_obj = self.pool.get('sri.type.document')
         acc_vou_obj = self.pool.get('account.voucher')
         acc_vou_line_obj = self.pool.get('account.voucher.line')
         acc_move_line_obj = self.pool.get('account.move.line')
@@ -510,9 +531,10 @@ class account_withhold(osv.osv):
                 # TRESCLOUD - TODO - solo debe botar un warning, queda atribucion del contador.
                 raise osv.except_osv('Error!', _("The date of retention can not be more than 5 days from the date of the invoice"))
             if ((ret['transaction_type'])=='sale'):
-                for retention in ret_obj.search(cr, uid, [('invoice_id.partner_id.id', '=', ret.invoice_id.partner_id.id), ('transaction_type','=','sale'), ('id','not in',tuple(ids))]):
-                    if ret_obj.browse(cr, uid, [retention,], context)[0].number_sale == ret.number_sale:
-                        raise osv.except_osv(_('Error!'), _("There is an retention with number %s of client %s") % (ret.number_sale, ret.invoice_id.partner_id.name))                        
+                #P.R. puede emitirse mas de 1 retencion, una por el iva y otra por la renta
+                #for retention in ret_obj.search(cr, uid, [('invoice_id.partner_id.id', '=', ret.invoice_id.partner_id.id), ('transaction_type','=','sale'), ('id','not in',tuple(ids))]):
+                    #if ret_obj.browse(cr, uid, [retention,], context)[0].number_sale == ret.number_sale:
+                        #raise osv.except_osv(_('Error!'), _("There is an retention with number %s of client %s") % (ret.number_sale, ret.invoice_id.partner_id.name))                        
                 move_line_ids = acc_move_line_obj.search(cr, uid, [('invoice', '=', ret.invoice_id.id),('state','=','valid'), ('account_id.type', '=', 'receivable'), ('reconcile_id', '=', False)], context=context)
                 #se asume que solo existira un movimiento sin conciliar por factura 
                 #TODO ->>> Esto debe ser verificado mediante pruebas
@@ -544,13 +566,13 @@ class account_withhold(osv.osv):
                                 #el diario de iva de la compania
                                 'journal_id': journal_iva.id,
                                 #numero de retencion como referencia
-                                'reference':_('RET CLI: %s') % ret.number_sale,
+                                'reference':_('RET CLI: %s') % ret.invoice_id.number,
                                 #la cuenta de debido que va a registrar el impuesto
                                 'account_id': journal_iva.default_debit_account_id.id,
                                 'company_id' : company.id,
                                 'amount': sub_iva,
                                 'currency_id': ret.invoice_id.currency_id.id,
-                                'retention_id': ret.id,
+                                #'retention_id': ret.id,
                                 'partner_id': ret.invoice_id.partner_id.id
                                 
                     }
@@ -566,13 +588,13 @@ class account_withhold(osv.osv):
                                 #el diario de iva de la compania
                                 'journal_id': journal_ir.id,
                                 #numero de retencion como referencia
-                                'reference':_('RET CLI: %s') % ret.number_sale,
+                                'reference':_('RET CLI: %s') % ret.invoice_id.number,
                                 #la cuenta de debido que va a registrar el impuesto
                                 'account_id': journal_ir.default_debit_account_id.id,
                                 'company_id' : company.id,
                                 'amount': sub_renta,
                                 'currency_id': ret.invoice_id.currency_id.id,
-                                'retention_id': ret.id,
+                                #'retention_id': ret.id,
                                 'partner_id': ret.invoice_id.partner_id.id
                     }
                     #creo la cabecera del voucher para las lineas de renta
@@ -607,7 +629,7 @@ class account_withhold(osv.osv):
                     #acc_vou_obj.proforma_voucher(cr, uid, [voucher_iva, voucher_ir,], context)
                     if iva:
                         #por medio de la variable contexto se especifica que tipo de impuesto es del voucher
-                        self.action_move_line_create(cr, uid, [voucher_iva,], context={'tax':'iva'})
+                        self.action_move_line_create(cr, uid, [voucher_iva,], context={'tax':'iva', 'withhold_id':ret.id})
                     #en caso de no existir lineas en el voucher se elimina el que se creo anteriormente
                     else:
                         acc_vou_obj.unlink(cr, uid,[voucher_iva,])
@@ -615,7 +637,7 @@ class account_withhold(osv.osv):
                     
                     if renta:
                         #por medio de la variable contexto se especifica que tipo de impuesto es del voucher
-                        self.action_move_line_create(cr, uid, [voucher_ir,], context={'tax':'renta'})
+                        self.action_move_line_create(cr, uid, [voucher_ir,], context={'tax':'renta', 'withhold_id':ret.id})
                     #en caso de no existir lineas en el voucher se elimina el que se creo anteriormente
                     else:
                         acc_vou_obj.unlink(cr, uid,[voucher_ir,])
@@ -623,7 +645,7 @@ class account_withhold(osv.osv):
                     #print vouchers
                     #se cambia el estado de la retencion
                     if vouchers:
-                        acc_vou_obj.write(cr, uid, vouchers, {'retention_id':ret.id},context)
+                        acc_vou_obj.write(cr, uid, vouchers, {'withhold_id':ret.id},context)
                     date_ret = None
                     if not ret.creation_date:
                         date_ret = time.strftime('%Y-%m-%d')
@@ -662,32 +684,50 @@ class account_withhold(osv.osv):
 #                            if doc.automatic:
 #                                context['automatic'] = True
 #                            document_obj.add_document(cr, uid, [doc.id,], context)
-                    self.write(cr, uid, [ret.id], {'number': number, 'state': 'approved', 'period_id': period, 'number_purchase':number}, context)
+                    self.write(cr, uid, [ret.id], {'number': number, 'state': 'approved', 'period_id': period}, context)
         return True
     
     def action_cancel(self,cr,uid,ids,context=None):
-        #TRESCLOUD - No deberia depender del tipo de documento origen, remover sri.type.document o usar siempre el valor "factura"
-        self.write(cr, uid, ids, {'state': 'canceled'}, context=context)
+        #document_obj = self.pool.get('sri.type.document')
+        withhold = self.pool.get('account.retention').browse(cr, uid, ids, context)
+        for ret in withhold:
+            if ret.state == "draft":
+                self.unlink(cr, uid, [ret.id,], context)
+            else:
+                #if ret.transaction_type == "automatic":
+                    #for doc in ret.authorization_purchase.type_document_ids:
+                        #if doc.name=='withholding':
+                            #document_obj.rest_document(cr, uid, [doc.id,])
+                    #self.pool.get('account.retention').write(cr, uid, [ret.id, ], {'state':'canceled'}, context)
+                if ret.transaction_type == "sale":
+                    vouchers = []
+                    for vou in ret.account_voucher_ids:
+                        vouchers.append(vou.id)
+                    self.pool.get('account.voucher').cancel_voucher(cr, uid, vouchers, context)
+                    self.pool.get('account.retention').write(cr, uid, [ret.id, ], {'state':'canceled'}, context)
+                    #self.pool.get('account.retention').unlink(cr, uid, [ret.id, ], context)
         return True
 
+    # Buttons to operate the workflow to prevet troubles whit double workflow
     def button_aprove(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
-#        for id in ids:
-#            wf_service.trg_validate(uid, 'account.retention', id, 'approve_signal', cr)
+        for id in ids:
+            wf_service.trg_validate(uid, 'account.retention', id, 'approve_signal', cr)
         return True
     
     def button_cancel(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
-#        for id in ids:
-#            wf_service.trg_validate(uid, 'account.retention', id, 'canceled_signal', cr)
+        for id in ids:
+            self.pool.get('account.retention').write(cr, uid, id, {'state':'canceled'}, context)
+            #wf_service.trg_validate(uid, 'account.retention', id, 'canceled_signal', cr)
         return True
     
     def button_set_draft(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'draft'})
         wf_service = netsvc.LocalService("workflow")
-#        for id in ids:
-#            wf_service.trg_delete(uid, 'account.retention', id, cr)
-#            wf_service.trg_create(uid, 'account.retention', id, cr)
+        for id in ids:
+            wf_service.trg_delete(uid, 'account.retention', id, cr)
+            wf_service.trg_create(uid, 'account.retention', id, cr)
         return True
 
 account_withhold()

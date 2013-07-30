@@ -2,21 +2,23 @@
 <openerp>
 	<data>
 
-		<record model="workflow" id="retention_workflow">
-			<field name="name">workflow.retention</field>
+<!-- Workflow in case that Withholds need more states -->
+
+		<record model="workflow" id="withhold_workflow">
+			<field name="name">withhold.workflow</field>
 			<field name="osv">account.retention</field>
 			<field name="on_create">True</field>
 		</record>
 
 		<record id="act_draft" model="workflow.activity">
-			<field name="wkf_id" ref="retention_workflow" />
+			<field name="wkf_id" ref="withhold_workflow" />
 			<field name="flow_start">True</field>
 			<field name="name">draft</field>
 			<!-- <field name="action">action_draft()</field> -->
 		</record>
 
 		<record id="act_approve" model="workflow.activity">
-			<field name="wkf_id" ref="retention_workflow" />
+			<field name="wkf_id" ref="withhold_workflow" />
 			<field name="name">approve</field>
 			<field name="kind">function</field>
 			<field name="action">action_aprove()</field>
@@ -24,7 +26,7 @@
 		</record>
 		
 		<record id="act_cancel" model="workflow.activity">
-			<field name="wkf_id" ref="retention_workflow" />
+			<field name="wkf_id" ref="withhold_workflow" />
 			<field name="name">canceled</field>
 			<field name="kind">function</field>
 			<field name="action">action_cancel()</field>
@@ -55,5 +57,6 @@
 			<field name="signal">canceled_signal</field>
 			<field name="condition">True</field>
 		</record>
+		
 	</data>
 </openerp>

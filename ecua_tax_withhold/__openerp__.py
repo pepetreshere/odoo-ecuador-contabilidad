@@ -55,10 +55,11 @@
     and reuses mainly code based on work by Christopher Ormaza and 
     improvements from TRESCLOUD and 4RSOFT.
     
-    Author,
+    Authors,
     
     Andres Calle,
     Andrea García,
+    Patricio Rangles,
     TRESCLOUD Cía Ltda.
     """,
     "init_xml": [],
@@ -66,8 +67,8 @@
                     'data/sequence_data.xml',
                     'security/ir.model.access.csv',
                     'report/withhold_report.xml',
-                    'workflow/retention_workflow.xml',
-                    'wizard/retention_wizard_view.xml',
+                    'workflow/withhold_workflow.xml',
+                    'wizard/withhold_wizard_view.xml',
                     'views/company_view.xml',
                     'views/withhold_view.xml',
                     'views/invoice_view.xml',

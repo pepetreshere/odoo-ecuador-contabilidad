@@ -6,7 +6,7 @@
 
 		<record id="withhold_wizard_purchase_form" model="ir.ui.view">
 			<field name="name">withhold.wizard.purchase.form</field>
-			<field name="model">account.retention.wizard</field>
+			<field name="model">account.withhold.wizard</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Withhold">
@@ -29,7 +29,7 @@
 									<field name="tax_id" />
 									<field name="tax_base" />
 									<field name="tax_amount"/>
-									<field name="retention_percentage" />
+									<field name="withhold_percentage" />
 								</tree>
 							</field>
 						</group>
@@ -47,7 +47,7 @@
 		<record id="action_withhold_wizard_purchase" model="ir.actions.act_window">
 			<field name="name">Complete data Withhold</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">account.retention.wizard</field>
+			<field name="res_model">account.withhold.wizard</field>
 			<!-- <field name="context">{'transaction_type':'purchase'}</field>  -->
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
@@ -59,7 +59,7 @@
 
 		<record id="withhold_wizard_sale_form" model="ir.ui.view">
 			<field name="name">withhold.wizard.sale.form</field>
-			<field name="model">account.retention.wizard</field>
+			<field name="model">account.withhold.wizard</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Withhold">
@@ -82,7 +82,7 @@
 									<field name="tax_id" />
 									<field name="tax_base" />
 									<field name="tax_amount"/>
-									<field name="retention_percentage" />
+									<field name="withhold_percentage" />
 								</tree>
 							</field>
 						</group>
@@ -100,7 +100,7 @@
 		<record id="action_withhold_wizard_sale" model="ir.actions.act_window">
 			<field name="name">Complete data Withhold</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">account.retention.wizard</field>
+			<field name="res_model">account.withhold.wizard</field>
 			<!-- <field name="context">{'transaction_type':'sale'}</field>  -->
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>

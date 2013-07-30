@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Christopher Ormaza
-# Copyright (C) 2013  Ecuadorenlinea.net
+# @authors: Patrcio Rangles
+# Copyright (C) 2013  TRESCLOUD CIA. LTDA., trescloud.com
 #
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -21,12 +21,4 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
-#import authorization_wizard
-#import invoice_print_wizard
-#import cancel_delivery_notes_wizard
-#import cancel_retentions_wizard
-import retention_wizard
-#import stock_partial_picking
-#import wizard_credit_note
-#import wizard_invoice_ice
-#import wizard_sale_order_ice
+import withhold_wizard
