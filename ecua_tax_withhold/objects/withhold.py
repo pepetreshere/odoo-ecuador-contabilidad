@@ -158,21 +158,14 @@ class account_withhold(osv.osv):
     
     _columns = {
         'number': fields.char('Number', size=17, required=False),
-        #TRESCLOUD - Deberia usarse un solo campo en lugar de number_purchase y number_sale que se llame "documento origen", asi funciona en la mayoria de documentos
-        'number_purchase': fields.char('Retention Number', size=17, required=False, readonly=False, states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]}),
-        'number_sale': fields.char('Retention Number', size=17, required=False, states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]}),
+        #'origin': fields.char('Origin Document', size=128, required=False),
         'creation_date': fields.date('Creation Date',states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]}),
-#        #TRESCLOUD - Authorizations should belong to another module
-#        'authorization_purchase_id':fields.many2one('sri.authorization', 'Authorization', required=False, readonly=True),
-#        'authorization_sale':fields.char('Authorization', size=10, required=False, readonly=False, states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]}, help='This Number is necesary for SRI reports'),
-#        'authorization_sale_id':fields.many2one('sri.authorization.supplier', 'Authorization', ),
 
-        #TRESCLOUD - este es usado para el ATS??
+        #Campo utilizado para identificar el tipo de documento de origen y alterar su funcionamiento
         'transaction_type':fields.selection([
             ('purchase','Purchases'),
             ('sale','Sales'),
             ],  'Transaction type', required=True, readonly=True),
-#        'retention_line_ids': fields.one2many('account.voucher', 'retention_id', 'Retention Lines'),
 
         #TRESCLOUD - Removimos el "ondelete='cascade" del invoice_id, puede llevar a borrados inintencionales!
         'invoice_id': fields.many2one('account.invoice', 'Number of document', required=False, states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]}),
@@ -232,7 +225,7 @@ class account_withhold(osv.osv):
     #_constraints = [(check_retention_out, _('The number of retention is incorrect, it must be like 001-00X-000XXXXXX, X is a number'),['number']),]
     
     _sql_constraints = [
-                        ('withhold_number_purchase_uniq','unique(number_purchase)','There is another Withhold generated with this number, please verify'),
+            ('withhold_number_transaction_uniq','unique(number, transaction_type)','There is another Withhold generated with this number, please verify'),
                         ]
 
     
@@ -651,7 +644,7 @@ class account_withhold(osv.osv):
                         date_ret = time.strftime('%Y-%m-%d')
                     else:
                         date_ret = ret.creation_date
-                    self.write(cr, uid, [ret.id,], { 'state': 'approved','creation_date': date_ret,'number':ret.number_sale, 'period_id': period}, context)
+                    self.write(cr, uid, [ret.id,], { 'state': 'approved','creation_date': date_ret,'number':ret.number, 'period_id': period}, context)
                 else:
                     raise osv.except_osv('Error!', _("You can't aprove a retention without retention lines"))
             elif(ret['transaction_type']=='purchase'):
@@ -670,7 +663,7 @@ class account_withhold(osv.osv):
 #                            document_obj.add_document(cr, uid, [doc.id,], context)
 #                    self.write(cr, uid, [ret.id], {'number': ret.number_purchase, 'state': 'approved', 'period_id': period}, context)
                 
-                if not ret.number_purchase:
+                if not ret.origin:
                     b = True
                     #vals_aut = self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'withholding')
 #                    while b :

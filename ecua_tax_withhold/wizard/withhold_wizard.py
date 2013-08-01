@@ -243,7 +243,8 @@ class account_withhold_wizard(osv.osv_memory):
                 if not obj.automatic:
                     if not obj.number:
                         raise osv.except_osv(_('Error!'), _('number to be entered to approve the withhold'))
-                self.pool.get('account.retention').write(cr, uid, [objs.withhold_ids[0].id, ], {'number_purchase':obj.number}, context)
+                #P.R: No se requiere?? el docuemnto origen me da el numero del invoice
+                #self.pool.get('account.retention').write(cr, uid, [objs.withhold_ids[0].id, ], {'origin':obj.number}, context)
                 self.pool.get('account.retention').write(cr, uid, [objs.withhold_ids[0].id, ], {'automatic': obj.automatic,'creation_date': obj.creation_date, 'authorization_purchase_id': obj.authorization_purchase.id, 'shop_id':obj.shop_id.id, 'printer_id':obj.printer_id.id}, context)
         return {'type': 'ir.actions.act_window_close'}
     
