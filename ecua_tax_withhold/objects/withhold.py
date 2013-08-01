@@ -89,7 +89,18 @@ class account_withhold(osv.osv):
         
     _name = 'account.retention'
     _rec_name='number'
-        #Funcion para calcular el valor total a retener
+
+#    _inherit = ['mail.thread']
+#    _track = {
+#        'type': {
+#        },
+#        'state': {
+#            'account.mt_invoice_paid': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'paid' and obj['type'] in ('out_invoice', 'out_refund'),
+#            'account.mt_invoice_validated': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'open' and obj['type'] in ('out_invoice', 'out_refund'),
+#        },
+#    }
+    
+    #Funcion para calcular el valor total a retener
     def _total(self, cr, uid, ids, field_name, arg, context=None):
         cur_obj = self.pool.get('res.currency')
         res = {}

@@ -9,70 +9,79 @@ en caso de modificaciones se lo haga una sola vez -->
 			<field name="model">account.retention</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Withhold">
-					<group colspan="4">
-						<field name="transaction_type" invisible="1" />
-						<field name="shop_id" 
-						attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')], 'readonly':[('state','!=','draft')]}"/>
-						<field name="printer_id"
-						attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')], 'readonly':[('state','!=','draft')]}"/>
-						<field name="number" 
-						attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
-						<field name="partner_id"
-						attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
-						<field name="creation_date" 
-						attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
-						<field name="invoice_id" 
-						attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
-						<!-- <field name="currency_id"/> -->
-						<field name="company_id"
-						attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
-					</group>
-					<separator colspan="4" />
-					<notebook colspan="4">
-						<page string="Withhold Lines">
-							<field name="withhold_line_ids" nolabel="1" readonly="0" colspan="4" height="150">
-								<tree string="Withhold Lines" editable="bottom">
-									<!--field name="fiscalyear_id" widget="selection" /-->
-									<field name="description" />
-									<field name="tax_id" />
-									<field name="tax_base" />
-									<field name="tax_amount"/>
-									<field name="retention_percentage" />
-								</tree>
-							</field>
-						</page>
-						<page string="Account voucher lines">
-		 					<field name="account_voucher_ids" colspan="4" nolabel="1">
-				 				<tree string="Account voucher lines">
-			                        <field name="name"/>
-			                        <field name="partner_id"/>
-			                        <field name="account_id" />
-			                        <field name="date_maturity"/>
-			                        <field name="debit" />
-			                        <field name="credit" />
-			                        <field name="amount_currency"/>
-			                        <field name="tax_amount"/>
-			                        <field name="state"/>
-								</tree>
-							</field> 
-						</page>
-					</notebook>
-					<group col="6" colspan="4">
-						<field name="state" string='State' />
-						<button name="button_aprove" states="draft" string="Approved"
-							icon="gtk-go-forward" type="object" />
-						<button name="button_cancel" states="approved" string="Cancel"
-							groups="account.group_account_manager" icon="gtk-cancel" type="object" />
-						<button name="button_set_draft" states="canceled" string="Set to draft"
-							icon="terp-stock_effects-object-colorize" type="object" />
-						<button name="%(withhold_report)d" string="Print Withhold"
-							type="action" icon="gtk-print" states="approved" 
-							attrs="{'invisible':[('transaction_type','=','sale')]}"/>
-					</group>
-				</form>
-			</field>
-		</record>
+	            <form string="Supplier Invoice" version="7.0">
+	                <header>
+							<button name="button_aprove" states="draft" string="Approved"
+								icon="gtk-go-forward" type="object" />
+							<button name="button_cancel" states="approved" string="Cancel"
+								groups="account.group_account_manager" icon="gtk-cancel" type="object" />
+							<button name="button_set_draft" states="canceled" string="Set to draft"
+								icon="terp-stock_effects-object-colorize" type="object" />
+							<button name="%(withhold_report)d" string="Print Withhold"
+								type="action" icon="gtk-print" states="approved" 
+								attrs="{'invisible':[('transaction_type','=','sale')]}"/>
+						<field name="state" widget="statusbar" 
+						statusbar_visible="draft,approved,canceled" 
+						statusbar_colors='{"approved":"blue","canceled":"red"}' />
+	                </header>
+	                <sheet string="Supplier Invoice">
+	                	<div>
+							<group>
+								<field name="transaction_type" invisible="1" />
+								<field name="shop_id" 
+								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')], 'readonly':[('state','!=','draft')]}"/>
+								<field name="printer_id"
+								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')], 'readonly':[('state','!=','draft')]}"/>
+								<field name="number" 
+								attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
+								<field name="partner_id"
+								attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
+								<field name="creation_date" 
+								attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
+								<field name="invoice_id" 
+								attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
+								<!-- <field name="currency_id"/> -->
+								<field name="company_id"
+								attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
+							</group>
+	                	</div>
+						<notebook>
+							<page string="Withhold Lines">
+								<field name="withhold_line_ids" nolabel="1" readonly="0" colspan="4" height="150">
+									<tree string="Withhold Lines" editable="bottom">
+										<!--field name="fiscalyear_id" widget="selection" /-->
+										<field name="description" />
+										<field name="tax_id" />
+										<field name="tax_base" />
+										<field name="tax_amount"/>
+										<field name="retention_percentage" />
+									</tree>
+								</field>
+							</page>
+							<page string="Account voucher lines">
+			 					<field name="account_voucher_ids" colspan="4" nolabel="1">
+					 				<tree string="Account voucher lines">
+				                        <field name="name"/>
+				                        <field name="partner_id"/>
+				                        <field name="account_id" />
+				                        <field name="date_maturity"/>
+				                        <field name="debit" />
+				                        <field name="credit" />
+				                        <field name="amount_currency"/>
+				                        <field name="tax_amount"/>
+				                        <field name="state"/>
+									</tree>
+								</field> 
+							</page>
+						</notebook>
+	                </sheet>
+<!-- 	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>  -->
+                </form>
+            </field>
+        </record>
 
 		<record model="ir.ui.view" id="view_account_withhold_tree">
 			<field name="name">account.withhold.tree</field>
