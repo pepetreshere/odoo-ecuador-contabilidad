@@ -1,5 +1,3 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_authorization_wizard","auth.wizard","model_account_withhold_wizard","account.group_account_manager",1,1,1,0
-"access_authorization_wizard_line","auth.wizard.line","model_account_withhold_wizard_line","account.group_account_manager",1,1,1,0
 "access_withhold_acc_user_inv","account.retention","model_account_retention","account.group_account_invoice",1,1,1,1
 "access_withhold_acc_user","account.retention","model_account_retention","account.group_account_manager",1,1,1,1
