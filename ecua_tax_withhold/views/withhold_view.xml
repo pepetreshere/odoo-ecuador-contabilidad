@@ -9,7 +9,7 @@ en caso de modificaciones se lo haga una sola vez -->
 			<field name="model">account.retention</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-	            <form string="Supplier Invoice" version="7.0">
+	            <form string="Withhold" version="7.0">
 	                <header>
 							<button name="button_aprove" states="draft" string="Approved"
 								icon="gtk-go-forward" type="object" />
@@ -54,7 +54,7 @@ en caso de modificaciones se lo haga una sola vez -->
 										<field name="tax_id" />
 										<field name="tax_base" />
 										<field name="tax_amount"/>
-										<field name="retention_percentage" />
+										<field name="withhold_percentage" />
 									</tree>
 								</field>
 							</page>
@@ -100,6 +100,16 @@ en caso de modificaciones se lo haga una sola vez -->
 			</field>
 		</record>
 		
+		<record model="ir.actions.act_window" id="action_account_withhold_sale">
+			<field name="name">Withhold of Sales</field>
+			<field name="res_model">account.retention</field>
+			<field name="domain">[('transaction_type','=','sale')]</field>
+			<field name="context">{'transaction_type':'sale'}</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_withhold_tree" />
+		</record>
+
 		<record model="ir.actions.act_window" id="action_account_withhold_purchase">
 			<field name="name">Withhold of Purchases</field>
 			<field name="res_model">account.retention</field>
@@ -112,22 +122,11 @@ en caso de modificaciones se lo haga una sola vez -->
 
 		<menuitem name="Withhold" id="withhold"
 			parent="account.menu_finance" />
-			
-		<menuitem name="Withhold of Purchases" id="withhold_purchases"
-			parent="withhold" action="action_account_withhold_purchase" />
-
-		<record model="ir.actions.act_window" id="action_account_withhold_sale">
-			<field name="name">Withhold of Sales</field>
-			<field name="res_model">account.retention</field>
-			<field name="domain">[('transaction_type','=','sale')]</field>
-			<field name="context">{'transaction_type':'sale'}</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="view_account_withhold_tree" />
-		</record>
 
 		<menuitem name="Withhold of Sales" id="withhold_sales"
 			parent="withhold" action="action_account_withhold_sale" />
-
+			
+		<menuitem name="Withhold of Purchases" id="withhold_purchases"
+			parent="withhold" action="action_account_withhold_purchase" />
 	</data>
 </openerp>
