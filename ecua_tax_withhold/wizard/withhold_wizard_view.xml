@@ -6,7 +6,7 @@
 
 		<record id="withhold_wizard_form" model="ir.ui.view">
 			<field name="name">withhold.wizard.form</field>
-			<field name="model">account.retention</field>
+			<field name="model">account.withhold</field>
 			<field name="type">form</field>
 			<field name="priority" eval="32" />
 			<field name="arch" type="xml">
@@ -65,7 +65,7 @@
 			<field name="name">Complete data Purchase Withhold </field>
 			<field name="view_id" ref="withhold_wizard_form" />
 			<field name="context">{'transaction_type':'purchase'}</field>
-			<field name="res_model">account.retention</field>
+			<field name="res_model">account.withhold</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
 			<field name="target">new</field>
@@ -75,7 +75,7 @@
 			<field name="name">Complete data Sale Withhold</field>
 			<field name="view_id" ref="withhold_wizard_form" />
 			<field name="context">{'transaction_type':'sale'}</field>
-			<field name="res_model">account.retention</field>
+			<field name="res_model">account.withhold</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
 			<field name="target">new</field>

@@ -40,14 +40,14 @@ class account_withhold_line(osv.osv):
     _name = "account.withhold.line"
 
     _columns = {
-            'withhold_id': fields.many2one('account.retention', 'Withhold'),
+            'withhold_id': fields.many2one('account.withhold', 'Withhold'),
             'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year'),
             'description': fields.selection([('iva', 'IVA'), ('renta', 'RENTA'), ], 'Impuesto'),
             'tax_base': fields.float('Tax Base', digits_compute=dp.get_precision('Account')),
             'withhold_percentage': fields.float('Percentaje Value', digits_compute=dp.get_precision('Account')),
             'tax_amount':fields.float('Amount', digits_compute=dp.get_precision('Account')),
            # 'retention_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value',
-            #                             store={'account.retention.line': (lambda self, cr, uid, ids, c={}: ids, ['tax_id',], 1)},),
+            #                             store={'account.withhold.line': (lambda self, cr, uid, ids, c={}: ids, ['tax_id',], 1)},),
             #'retention_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value'),
             'tax_id':fields.many2one('account.tax.code', 'Tax Code'),
             'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code'),
@@ -57,7 +57,7 @@ account_withhold_line()
 
 class account_withhold(osv.osv):
         
-    _name = 'account.retention'
+    _name = 'account.withhold'
     _rec_name='number'
 
 #    _inherit = ['mail.thread']
@@ -205,7 +205,7 @@ class account_withhold(osv.osv):
     
 #    def _get_retention(self, cr, uid, ids, context=None):
 #        result = {}
-#        for line in self.pool.get('account.retention.line').browse(cr, uid, ids, context=context):
+#        for line in self.pool.get('account.withhold.line').browse(cr, uid, ids, context=context):
 #            result[line.retention_id.id] = True
 #        return result.keys()
     
@@ -277,16 +277,16 @@ class account_withhold(osv.osv):
             ('canceled','Canceled'),
             ],  'State', required=True, readonly=True),
 #        'total': fields.function(_total, method=True, type='float', string='Total Retenido', store = {
-#                                 'account.retention': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
-#                                 'account.retention.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
+#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
+#                                 'account.withhold.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
 #                                 }), 
 #        'total_iva': fields.function(_total_iva, method=True, type='float', string='Total IVA', store = {
-#                                 'account.retention': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
-#                                 'account.retention.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
+#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
+#                                 'account.withhold.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
 #                                 }), 
 #        'total_renta': fields.function(_total_renta, method=True, type='float', string='Total Renta', store = {
-#                                 'account.retention': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
-#                                 'account.retention.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
+#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
+#                                 'account.withhold.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
 #                                 }),
         'account_voucher_ids': fields.one2many('account.move.line', 'withhold_id', 'Retention'),
         'automatic': fields.boolean('Automatic?',),
@@ -316,7 +316,7 @@ class account_withhold(osv.osv):
     def unlink(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        retention = self.pool.get('account.retention').browse(cr, uid, ids, context)
+        retention = self.pool.get('account.withhold').browse(cr, uid, ids, context)
         flag = context.get('invoice', False)
         unlink_ids = []
         for r in retention:
@@ -558,7 +558,7 @@ class account_withhold(osv.osv):
     def action_aprove(self, cr, uid, ids, context=None):
         
         #depending the origin approve in diferent way
-        withhold_obj = self.pool.get('account.retention')
+        withhold_obj = self.pool.get('account.withhold')
         
         for withhold in withhold_obj.browse(cr, uid, ids, context):
         
@@ -597,7 +597,7 @@ class account_withhold(osv.osv):
             raise osv.except_osv('Error!', _("IR Retention Journal doesn't have debit account assigned!, can't complete operation"))
         
         currency_pool = self.pool.get('res.currency')
-        ret_obj = self.pool.get('account.retention')
+        ret_obj = self.pool.get('account.withhold')
         
         for ret in self.browse(cr, uid, ids, context=None):
             #lineas contables no conciliadas que pertenecen a la factura
@@ -789,7 +789,7 @@ class account_withhold(osv.osv):
     
     def action_cancel(self,cr,uid,ids,context=None):
 
-        for withhold in self.pool.get('account.retention').browse(cr, uid, ids, context):
+        for withhold in self.pool.get('account.withhold').browse(cr, uid, ids, context):
 
             if withhold.state == "draft":
                 self.unlink(cr, uid, [withhold.id,], context)
@@ -817,7 +817,7 @@ class account_withhold(osv.osv):
                     self.pool.get('account.voucher').cancel_voucher(cr, uid, vouchers, context)
                     self.pool.get('account.voucher').unlink(cr, uid, vouchers, context)
                 
-                self.pool.get('account.retention').write(cr, uid, [withhold.id, ], {'state':'canceled'}, context)
+                self.pool.get('account.withhold').write(cr, uid, [withhold.id, ], {'state':'canceled'}, context)
                 
         return True
     
@@ -837,7 +837,7 @@ class account_withhold(osv.osv):
                         raise osv.except_osv(_('Error!'), _('number to be entered to approve the withhold'))
 
                 #withhold = self.create_withhold(cr, uid, ids, context)
-                #self.pool.get('account.retention').write(cr, uid, [obj.withhold_ids[0].id, ], {'creation_date': obj.creation_date, 'authorization_purchase_id': obj.authorization_purchase.id, 'shop_id':obj.shop_id.id, 'printer_id':obj.printer_id.id}, context)
+                #self.pool.get('account.withhold').write(cr, uid, [obj.withhold_ids[0].id, ], {'creation_date': obj.creation_date, 'authorization_purchase_id': obj.authorization_purchase.id, 'shop_id':obj.shop_id.id, 'printer_id':obj.printer_id.id}, context)
                 
         return {'type': 'ir.actions.act_window_close'}
 
@@ -846,21 +846,21 @@ class account_withhold(osv.osv):
     def button_aprove(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
         for id in ids:
-            wf_service.trg_validate(uid, 'account.retention', id, 'approve_signal', cr)
+            wf_service.trg_validate(uid, 'account.withhold', id, 'approve_signal', cr)
         return True
     
     def button_cancel(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
         for id in ids:
-            wf_service.trg_validate(uid, 'account.retention', id, 'canceled_signal', cr)
+            wf_service.trg_validate(uid, 'account.withhold', id, 'canceled_signal', cr)
         return True
     
     def button_set_draft(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'draft'})
         wf_service = netsvc.LocalService("workflow")
         for id in ids:
-            wf_service.trg_delete(uid, 'account.retention', id, cr)
-            wf_service.trg_create(uid, 'account.retention', id, cr)
+            wf_service.trg_delete(uid, 'account.withhold', id, cr)
+            wf_service.trg_create(uid, 'account.withhold', id, cr)
         return True
 
 account_withhold()

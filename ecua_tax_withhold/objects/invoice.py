@@ -32,7 +32,7 @@ class account_invoice(osv.osv):
     _inherit = "account.invoice"
 
     _columns = {
-                'withhold_id': fields.many2one('account.retention', 'Withhold', states={'paid':[('readonly',True)]}),      
+                'withhold_id': fields.many2one('account.withhold', 'Withhold', states={'paid':[('readonly',True)]}),      
                 'withhold_line_ids': fields.related('withhold_id', 'withhold_line_ids', 
                                                     type='one2many', relation='account.withhold.line',
                                                     string='Withhold Lines', 
@@ -52,16 +52,16 @@ class account_invoice(osv.osv):
     
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
     def action_cancel(self, cr, uid, ids, *args):
-     #   ret_line_obj = self.pool.get('account.retention.line')
+     #   ret_line_obj = self.pool.get('account.withhold.line')
         context={}
         wf_service = netsvc.LocalService("workflow")
         invoices = self.pool.get('account.invoice')
         invoice_obj=invoices.browse(cr, uid, ids, context)[0]
-        retention=self.pool.get('account.retention').search(cr,uid,[('invoice_id','=',invoice_obj.id)])
-        retention_obj=self.pool.get('account.retention').browse(cr,uid,retention)
+        retention=self.pool.get('account.withhold').search(cr,uid,[('invoice_id','=',invoice_obj.id)])
+        retention_obj=self.pool.get('account.withhold').browse(cr,uid,retention)
         for lines in retention_obj:
             if lines.state == 'approved':
-                    wf_service.trg_validate(uid, 'account.retention', lines.id, 'canceled_signal', cr)
+                    wf_service.trg_validate(uid, 'account.withhold', lines.id, 'canceled_signal', cr)
         return super(account_invoice, self).action_cancel(cr, uid, ids, context)
 
 account_invoice()

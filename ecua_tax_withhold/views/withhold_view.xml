@@ -6,7 +6,7 @@
 en caso de modificaciones se lo haga una sola vez -->
 		<record model="ir.ui.view" id="view_account_withhold_form">
 			<field name="name">account.withhold.form</field>
-			<field name="model">account.retention</field>
+			<field name="model">account.withhold</field>
 			<field name="type">form</field>
 			<field name="priority" eval="16" />
 			<field name="arch" type="xml">
@@ -84,7 +84,7 @@ en caso de modificaciones se lo haga una sola vez -->
 
 		<record model="ir.ui.view" id="view_account_withhold_tree">
 			<field name="name">account.withhold.tree</field>
-			<field name="model">account.retention</field>
+			<field name="model">account.withhold</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Withhold" colors="blue:state in ('draft');black:state in ('approved');gray:state in ('canceled')">
@@ -101,7 +101,7 @@ en caso de modificaciones se lo haga una sola vez -->
 		
 		<record model="ir.actions.act_window" id="action_account_withhold_sale">
 			<field name="name">Withhold of Sales</field>
-			<field name="res_model">account.retention</field>
+			<field name="res_model">account.withhold</field>
 			<field name="domain">[('transaction_type','=','sale')]</field>
 			<field name="context">{'transaction_type':'sale'}</field>
 			<field name="view_type">form</field>
@@ -111,7 +111,7 @@ en caso de modificaciones se lo haga una sola vez -->
 
 		<record model="ir.actions.act_window" id="action_account_withhold_purchase">
 			<field name="name">Withhold of Purchases</field>
-			<field name="res_model">account.retention</field>
+			<field name="res_model">account.withhold</field>
 			<field name="domain">[('transaction_type','=','purchase')]</field>
 			<field name="context">{'transaction_type':'purchase'}</field>
 			<field name="view_type">form</field>
