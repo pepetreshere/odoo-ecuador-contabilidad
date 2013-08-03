@@ -120,13 +120,13 @@ en caso de modificaciones se lo haga una sola vez -->
 			<field name="view_id" ref="view_account_withhold_tree" />
 		</record>
 
-		<menuitem name="Withhold" id="withhold"
-			parent="account.menu_finance" />
+		<!-- <menuitem name="Withhold" id="withhold"
+			parent="account.menu_finance" /> -->
 
-		<menuitem name="Withhold of Sales" id="withhold_sales"
-			parent="withhold" action="action_account_withhold_sale" />
+		<menuitem name="Withhold of Sales" id="withhold_sales" sequence="20"
+			parent="account.menu_finance_receivables" action="action_account_withhold_sale" />
 			
-		<menuitem name="Withhold of Purchases" id="withhold_purchases"
-			parent="withhold" action="action_account_withhold_purchase" />
+		<menuitem name="Withhold of Purchases" id="withhold_purchases" sequence="20"
+			parent="account.menu_finance_payables" action="action_account_withhold_purchase" />
 	</data>
 </openerp>
