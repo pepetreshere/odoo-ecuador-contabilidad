@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-	  	<record model="ir.sequence.type" id="account_retention_view">
-			<field name="name">Retentions</field>
+	  	<record model="ir.sequence.type" id="account_withhold_view">
+			<field name="name">Withhold</field>
 			<field name="code">ret_seq</field>
 		</record>
 
-		<record id="retention_iva_sequence" model="ir.sequence">
+		<record id="withhold_iva_sequence" model="ir.sequence">
 			<field name="name">Sequencia Retenciones IVA</field>
 			<field name="code">ret_seq</field>
 			<field eval="6" name="padding" />
 			<field name="prefix">RETIVA-%(y)s-%(month)s-%(day)s</field>
 		</record>
  
-		<record id="retention_ir_sequence" model="ir.sequence">
+		<record id="withhold_ir_sequence" model="ir.sequence">
 			<field name="name">Sequencia Retenciones IR</field>
 			<field name="code">ret_seq</field>
 			<field eval="6" name="padding" />
 			<field name="prefix">RETIR-%(y)s-%(month)s-%(day)s</field>
 		</record>
 
-		<record id="iva_retention_journal" model="account.journal">
+		<record id="iva_withhold_journal" model="account.journal">
 			<field name="name">Diario de Retención IVA</field>
 			<field name="code">DRIVA</field>
 			<field name="type">general</field>
-			<field name="sequence_id" ref="retention_iva_sequence" />
+			<field name="sequence_id" ref="withhold_iva_sequence" />
 			<field name="user_id" ref="base.user_root" />
 		</record>
 
-		<record id="ir_retention_journal" model="account.journal">
+		<record id="ir_withhold_journal" model="account.journal">
 			<field name="name">Diario de Retención I.R.</field>
 			<field name="code">DRIR</field>
 			<field name="type">general</field>
-			<field name="sequence_id" ref="retention_ir_sequence" />
+			<field name="sequence_id" ref="withhold_ir_sequence" />
 			<field name="user_id" ref="base.user_root" />
 		</record>
 

@@ -45,8 +45,8 @@ class account_invoice(osv.osv):
         if context is None:
             context = {}
         default.update({
-            'retention_ids':[],
-            'retention_line_ids':[],
+            'withhold_ids':[],
+            'withhold_line_ids':[],
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context)
     
@@ -57,9 +57,9 @@ class account_invoice(osv.osv):
         wf_service = netsvc.LocalService("workflow")
         invoices = self.pool.get('account.invoice')
         invoice_obj=invoices.browse(cr, uid, ids, context)[0]
-        retention=self.pool.get('account.withhold').search(cr,uid,[('invoice_id','=',invoice_obj.id)])
-        retention_obj=self.pool.get('account.withhold').browse(cr,uid,retention)
-        for lines in retention_obj:
+        withhold=self.pool.get('account.withhold').search(cr,uid,[('invoice_id','=',invoice_obj.id)])
+        withhold_obj=self.pool.get('account.withhold').browse(cr,uid,withhold)
+        for lines in withhold_obj:
             if lines.state == 'approved':
                     wf_service.trg_validate(uid, 'account.withhold', lines.id, 'canceled_signal', cr)
         return super(account_invoice, self).action_cancel(cr, uid, ids, context)

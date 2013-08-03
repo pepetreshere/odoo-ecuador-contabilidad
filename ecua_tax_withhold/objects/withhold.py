@@ -46,9 +46,9 @@ class account_withhold_line(osv.osv):
             'tax_base': fields.float('Tax Base', digits_compute=dp.get_precision('Account')),
             'withhold_percentage': fields.float('Percentaje Value', digits_compute=dp.get_precision('Account')),
             'tax_amount':fields.float('Amount', digits_compute=dp.get_precision('Account')),
-           # 'retention_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value',
+           # 'withhold_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value',
             #                             store={'account.withhold.line': (lambda self, cr, uid, ids, c={}: ids, ['tax_id',], 1)},),
-            #'retention_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value'),
+            #'withhold_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value'),
             'tax_id':fields.many2one('account.tax.code', 'Tax Code'),
             'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code'),
             }
@@ -193,7 +193,7 @@ class account_withhold(osv.osv):
         for ret in self.browse(cr, uid, ids, context=context):
             val = 0.0
             cur = ret.invoice_id.currency_id
-            for line in ret.retention_line_ids:
+            for line in ret.withhold_line_ids:
                 #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
                 if ret.transaction_type == 'purchase':
                     val += line.retained_value
@@ -203,10 +203,10 @@ class account_withhold(osv.osv):
                 res[ret.id] = cur_obj.round(cr, uid, cur, val)
         return res
     
-#    def _get_retention(self, cr, uid, ids, context=None):
+#    def _get_withhold(self, cr, uid, ids, context=None):
 #        result = {}
 #        for line in self.pool.get('account.withhold.line').browse(cr, uid, ids, context=context):
-#            result[line.retention_id.id] = True
+#            result[line.withhold_id.id] = True
 #        return result.keys()
     
      #TRESCLOUD - Definir funcion total_vat_withhold en su lugar o como alias
@@ -217,7 +217,7 @@ class account_withhold(osv.osv):
         for ret in self.browse(cr, uid, ids, context=context):
             val = 0.0
             cur = ret.invoice_id.currency_id
-            for line in ret.retention_line_ids:
+            for line in ret.withhold_line_ids:
                 if line.description == 'iva':
                     #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
                     if ret.transaction_type == 'purchase':
@@ -236,7 +236,7 @@ class account_withhold(osv.osv):
         for ret in self.browse(cr, uid, ids, context=context):
             val = 0.0
             cur = ret.invoice_id.currency_id
-            for line in ret.retention_line_ids:
+            for line in ret.withhold_line_ids:
                 if line.description == 'renta':
                     #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
                     if ret.transaction_type == 'purchase':
@@ -277,16 +277,16 @@ class account_withhold(osv.osv):
             ('canceled','Canceled'),
             ],  'State', required=True, readonly=True),
 #        'total': fields.function(_total, method=True, type='float', string='Total Retenido', store = {
-#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
-#                                 'account.withhold.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
+#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['withhold_line_ids'], 11),
+#                                 'account.withhold.line': (_get_withhold, ['tax_base', 'withhold_percentage', 'retained_value',], 11),
 #                                 }), 
 #        'total_iva': fields.function(_total_iva, method=True, type='float', string='Total IVA', store = {
-#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
-#                                 'account.withhold.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
+#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['withhold_line_ids'], 11),
+#                                 'account.withhold.line': (_get_withhold, ['tax_base', 'withhold_percentage', 'retained_value',], 11),
 #                                 }), 
 #        'total_renta': fields.function(_total_renta, method=True, type='float', string='Total Renta', store = {
-#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['retention_line_ids'], 11),
-#                                 'account.withhold.line': (_get_retention, ['tax_base', 'retention_percentage', 'retained_value',], 11),
+#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['withhold_line_ids'], 11),
+#                                 'account.withhold.line': (_get_withhold, ['tax_base', 'withhold_percentage', 'retained_value',], 11),
 #                                 }),
         'account_voucher_ids': fields.one2many('account.move.line', 'withhold_id', 'Retention'),
         'automatic': fields.boolean('Automatic?',),
@@ -306,7 +306,7 @@ class account_withhold(osv.osv):
         'state': lambda *a: 'draft',
                  }
             
-    #_constraints = [(check_retention_out, _('The number of retention is incorrect, it must be like 001-00X-000XXXXXX, X is a number'),['number']),]
+    #_constraints = [(check_withhold_out, _('The number of withhold is incorrect, it must be like 001-00X-000XXXXXX, X is a number'),['number']),]
     
     _sql_constraints = [
             ('withhold_number_transaction_uniq','unique(number, transaction_type)','There is another Withhold generated with this number, please verify'),
@@ -316,10 +316,10 @@ class account_withhold(osv.osv):
     def unlink(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        retention = self.pool.get('account.withhold').browse(cr, uid, ids, context)
+        withhold = self.pool.get('account.withhold').browse(cr, uid, ids, context)
         flag = context.get('invoice', False)
         unlink_ids = []
-        for r in retention:
+        for r in withhold:
             if not flag:
                 if r['state'] == 'draft':
                     unlink_ids.append(r['id'])
@@ -328,7 +328,7 @@ class account_withhold(osv.osv):
                         if r['transaction_type'] == 'sale':
                             unlink_ids.append(r['id'])
                         else:
-                            raise osv.except_osv(_('Invalid action !'), _('Cannot delete retention(s) that are already assigned Number!'))
+                            raise osv.except_osv(_('Invalid action !'), _('Cannot delete withhold(s) that are already assigned Number!'))
             else:
                 unlink_ids.append(r['id'])
         return super(account_withhold, self).unlink(cr, uid, unlink_ids, context)
@@ -562,7 +562,7 @@ class account_withhold(osv.osv):
         
         for withhold in withhold_obj.browse(cr, uid, ids, context):
         
-            # verify if exist a retention approve for the invoice related
+            # verify if exist a withhold approve for the invoice related
             if withhold_obj.search(cr, uid, [('invoice_id','=',withhold.invoice_id.id),('state','=','approved')], context):
                 raise osv.except_osv('Warning!', _("Withhold for this invoice already exist!!"))
                         
@@ -619,24 +619,24 @@ class account_withhold(osv.osv):
             day = datetime.timedelta(days=5)
             add_date = datetime.datetime(*time.strptime(ret.invoice_id.date_invoice,'%Y-%m-%d')[:5])+ day
             if ret.invoice_id.amount_total < total:
-                raise osv.except_osv('Error!', _("Amount of retention is bigger than residual value of invoice, please verify"))
+                raise osv.except_osv('Error!', _("Amount of withhold is bigger than residual value of invoice, please verify"))
             if ret.creation_date < ret.invoice_id.date_invoice:
-                raise osv.except_osv('Error!', _("The date of retention can not be least than the date of invoice"))
+                raise osv.except_osv('Error!', _("The date of withhold can not be least than the date of invoice"))
             if ret.creation_date > add_date.strftime('%Y-%m-%d'):
                 # TRESCLOUD - TODO - solo debe botar un warning, queda atribucion del contador.
-                raise osv.except_osv('Error!', _("The date of retention can not be more than 5 days from the date of the invoice"))
+                raise osv.except_osv('Error!', _("The date of withhold can not be more than 5 days from the date of the invoice"))
 
             #P.R. puede emitirse mas de 1 retencion, una por el iva y otra por la renta
-            #for retention in ret_obj.search(cr, uid, [('invoice_id.partner_id.id', '=', ret.invoice_id.partner_id.id), ('transaction_type','=','sale'), ('id','not in',tuple(ids))]):
-                #if ret_obj.browse(cr, uid, [retention,], context)[0].number_sale == ret.number_sale:
-                    #raise osv.except_osv(_('Error!'), _("There is an retention with number %s of client %s") % (ret.number_sale, ret.invoice_id.partner_id.name))                        
+            #for withhold in ret_obj.search(cr, uid, [('invoice_id.partner_id.id', '=', ret.invoice_id.partner_id.id), ('transaction_type','=','sale'), ('id','not in',tuple(ids))]):
+                #if ret_obj.browse(cr, uid, [withhold,], context)[0].number_sale == ret.number_sale:
+                    #raise osv.except_osv(_('Error!'), _("There is an withhold with number %s of client %s") % (ret.number_sale, ret.invoice_id.partner_id.name))                        
             move_line_ids = acc_move_line_obj.search(cr, uid, [('invoice', '=', ret.invoice_id.id),('state','=','valid'), ('account_id.type', '=', 'receivable'), ('reconcile_id', '=', False)], context=context)
             #se asume que solo existira un movimiento sin conciliar por factura 
             #TODO ->>> Esto debe ser verificado mediante pruebas
             move_line = acc_move_line_obj.browse(cr, uid, move_line_ids, context)[0]
             #se comprueba que la factura se encuentre abierta
             if not ret.invoice_id.state == 'open':
-                raise osv.except_osv('Error!', "The invoice is not open, you cannot add a retention")
+                raise osv.except_osv('Error!', "The invoice is not open, you cannot add a withhold")
             #Se verifica que el residuo de la factura no sea superior a lo que se va a retener
             #TRESCLOUD - TODO discutir si se elimina esta condicion, los saldos a favor del cliente podrian conciliarse con otras facturas.
             #if ret.invoice_id.residual < ret.total:
@@ -667,7 +667,7 @@ class account_withhold(osv.osv):
                             'company_id' : company.id,
                             'amount': sub_iva,
                             'currency_id': ret.invoice_id.currency_id.id,
-                            #'retention_id': ret.id,
+                            #'withhold_id': ret.id,
                             'partner_id': ret.invoice_id.partner_id.id,
                             'withhold_id': ret.id,
                 }
@@ -689,7 +689,7 @@ class account_withhold(osv.osv):
                             'company_id' : company.id,
                             'amount': sub_renta,
                             'currency_id': ret.invoice_id.currency_id.id,
-                            #'retention_id': ret.id,
+                            #'withhold_id': ret.id,
                             'partner_id': ret.invoice_id.partner_id.id,
                             'withhold_id': ret.id,
                 }
@@ -751,7 +751,7 @@ class account_withhold(osv.osv):
                     date_ret = ret.creation_date
                 self.write(cr, uid, [ret.id,], { 'state': 'approved','creation_date': date_ret,'number':ret.number, 'period_id': period}, context)
             else:
-                raise osv.except_osv('Error!', _("You can't aprove a retention without retention lines"))
+                raise osv.except_osv('Error!', _("You can't aprove a withhold without withhold lines"))
             
         return True
     
