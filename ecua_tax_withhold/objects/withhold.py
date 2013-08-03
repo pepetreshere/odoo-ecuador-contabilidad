@@ -150,11 +150,12 @@ class account_withhold(osv.osv):
                 if transaction_type == 'sale':
 
                     values = {
-                             'printer_id':printer_id,
+                             'printer_id': printer_id,
                              'partner_id': obj.partner_id.id,
                              'invoice_id': obj.id,
                              'creation_date': obj.date_invoice,
                              'transaction_type': transaction_type,
+                             'company_id': obj.company_id.id,
                             }
                     
                 if transaction_type == 'purchase':
@@ -237,11 +238,11 @@ class account_withhold(osv.osv):
                 res[ret.id] = cur_obj.round(cr, uid, cur, val)
         return res
     
-    def _get_retention(self, cr, uid, ids, context=None):
-        result = {}
-        for line in self.pool.get('account.retention.line').browse(cr, uid, ids, context=context):
-            result[line.retention_id.id] = True
-        return result.keys()
+#    def _get_retention(self, cr, uid, ids, context=None):
+#        result = {}
+#        for line in self.pool.get('account.retention.line').browse(cr, uid, ids, context=context):
+#            result[line.retention_id.id] = True
+#        return result.keys()
     
      #TRESCLOUD - Definir funcion total_vat_withhold en su lugar o como alias
     #retorna el valor total de la funcion

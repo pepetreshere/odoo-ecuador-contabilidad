@@ -24,7 +24,7 @@ en caso de modificaciones se lo haga una sola vez -->
 						statusbar_visible="draft,approved,canceled" 
 						statusbar_colors='{"approved":"blue","canceled":"red"}' />
 	                </header>
-	                <sheet string="Supplier Invoice">
+	                <sheet string="Withhold Supplier">
 	                	<div>
 							<group>
 								<field name="transaction_type" invisible="1" />
@@ -40,9 +40,7 @@ en caso de modificaciones se lo haga una sola vez -->
 								attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
 								<field name="invoice_id" 
 								attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
-								<!-- <field name="currency_id"/> -->
-								<field name="company_id"
-								attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
+								<field name="company_id" invisible="1" />
 							</group>
 	                	</div>
 						<notebook>
@@ -91,7 +89,7 @@ en caso de modificaciones se lo haga una sola vez -->
 				<tree string="Withhold" colors="blue:state in ('draft');black:state in ('approved');gray:state in ('canceled')">
 					<field name="number"/>
 					<field name="invoice_id" string="Document" />
-					<field name="partner_id" string="Client" />
+					<field name="partner_id" string="Partner" />
 					<field name="period_id" />
 					<field name="creation_date" />
 					<field name="transaction_type" />

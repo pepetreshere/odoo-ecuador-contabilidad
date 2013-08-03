@@ -16,7 +16,7 @@
 	                	<div>
 							<group>
 								<field name="state" invisible="1" />
-								<field name="transaction_type" invisible="0" />
+								<field name="transaction_type" invisible="1" />
 								<field name="shop_id" 
 								attrs="{'invisible':[('transaction_type','=','sale')]}"/>
 								<field name="printer_id"
@@ -29,9 +29,7 @@
 								attrs="{'required':True}"/>
 								<field name="invoice_id" 
 								attrs="{'required':True}"/>
-								<!-- <field name="currency_id"/> -->
-								<field name="company_id"
-								attrs="{'required':True}"/>
+								<field name="company_id" invisible="1" />
 							</group>
 						</div>
 						<div>
