@@ -8,6 +8,7 @@ en caso de modificaciones se lo haga una sola vez -->
 			<field name="name">account.withhold.form</field>
 			<field name="model">account.retention</field>
 			<field name="type">form</field>
+			<field name="priority" eval="16" />
 			<field name="arch" type="xml">
 	            <form string="Withhold" version="7.0">
 	                <header>

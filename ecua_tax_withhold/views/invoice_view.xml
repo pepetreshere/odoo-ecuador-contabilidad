@@ -15,8 +15,22 @@
 								attrs="{'invisible':[('state','=','draft')]}"
 								context="{'transaction_type':'purchase'}" />
 				</button>
+                <page string="Payments" position="after">
+	                <page string="Withholds">
+						<field name="withhold_id" nolabel="0" string="Withhold Number" readonly="1"/>
+						<field name="withhold_line_ids" nolabel="1" readonly="1">
+							<tree string="Withhold Lines">
+								<field name="description" />
+								<field name="tax_id" />
+								<field name="tax_base" />
+								<field name="tax_amount" />
+								<field name="withhold_percentage" />
+							</tree>
+						</field>
+					</page>
+                </page>
 			</field>
-		</record>
+		</record> 
 		
 		<!-- Sale Invoice -->
 		<record model="ir.ui.view" id="account_invoice_sale_withhold_form_view">
@@ -31,6 +45,20 @@
 								attrs="{'invisible':[('state','=','draft')]}"
 								context="{'transaction_type':'sale'}"/>
 				</button>
+                <page string="Payments" position="after">
+	                <page string="Withholds">
+						<field name="withhold_id" string="Withhold Number" nolabel="0" readonly="1"/>
+						<field name="withhold_line_ids" nolabel="1" readonly="1">
+							<tree string="Withhold Lines">
+								<field name="description" />
+								<field name="tax_id" />
+								<field name="tax_base" />
+								<field name="tax_amount" />
+								<field name="withhold_percentage" />
+							</tree>
+						</field>
+					</page>
+                </page>
 			</field>
 		</record>
 		

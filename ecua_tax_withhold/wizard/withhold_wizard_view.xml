@@ -8,6 +8,7 @@
 			<field name="name">withhold.wizard.form</field>
 			<field name="model">account.retention</field>
 			<field name="type">form</field>
+			<field name="priority" eval="32" />
 			<field name="arch" type="xml">
 	            <form string="Withhold Wizard" version="7.0">
 	                <header>

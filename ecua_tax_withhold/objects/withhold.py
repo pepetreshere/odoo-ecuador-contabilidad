@@ -35,43 +35,8 @@ import datetime
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
-class account_invoice(osv.osv):
-
-    _inherit = "account.invoice"
-
-    _columns = {
-                #TRESCLOUD - Talvez deberia usarse solo retention_ids en lugar de retetion_ids y retention_line_ids. 
-                'withhold_ids':fields.one2many('account.retention', 'invoice_id', 'Withhold', states={'paid':[('readonly',True)]}),      
-               # 'retention_line_ids':fields.one2many('account.retention.line', 'invoice_id', 'Retention Lines', states={'paid':[('readonly',True)]}),      
-               }
-
-#    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
-    def copy(self, cr, uid, id, default={}, context=None):
-        if context is None:
-            context = {}
-        default.update({
-            'retention_ids':[],
-            'retention_line_ids':[],
-        })
-        return super(account_invoice, self).copy(cr, uid, id, default, context)
-    
-#    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
-    def action_cancel(self, cr, uid, ids, *args):
-     #   ret_line_obj = self.pool.get('account.retention.line')
-        context={}
-        wf_service = netsvc.LocalService("workflow")
-        invoices = self.pool.get('account.invoice')
-        invoice_obj=invoices.browse(cr, uid, ids, context)[0]
-        retention=self.pool.get('account.retention').search(cr,uid,[('invoice_id','=',invoice_obj.id)])
-        retention_obj=self.pool.get('account.retention').browse(cr,uid,retention)
-        for lines in retention_obj:
-            if lines.state == 'approved':
-                    wf_service.trg_validate(uid, 'account.retention', lines.id, 'canceled_signal', cr)
-        return super(account_invoice, self).action_cancel(cr, uid, ids, context)
-
-account_invoice()
-
 class account_withhold_line(osv.osv):
+   
     _name = "account.withhold.line"
 
     _columns = {
@@ -607,6 +572,9 @@ class account_withhold(osv.osv):
             if withhold.transaction_type == 'purchase':
                 self.action_approve_purchase(cr, uid, ids, context=context)
         
+            #asign the id in the invoice
+            self.pool.get('account.invoice').write(cr, uid, [withhold.invoice_id.id, ], {'withhold_id': withhold.id})
+            
         return True
      
     # All actions exist because this work througth wizars and to prevent freezeing the screen 
