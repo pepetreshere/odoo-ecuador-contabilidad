@@ -592,8 +592,14 @@ class account_withhold(osv.osv):
     def action_aprove(self, cr, uid, ids, context=None):
         
         #depending the origin approve in diferent way
-        for withhold in self.pool.get('account.retention').browse(cr, uid, ids, context):
+        withhold_obj = self.pool.get('account.retention')
         
+        for withhold in withhold_obj.browse(cr, uid, ids, context):
+        
+            # verify if exist a retention approve for the invoice related
+            if withhold_obj.search(cr, uid, [('invoice_id','=',withhold.invoice_id.id),('state','=','approved')], context):
+                raise osv.except_osv('Warning!', _("Withhold for this invoice already exist!!"))
+                        
             if withhold.transaction_type == 'sale':
                 self.action_approve_sale(cr, uid, ids, context=context)
             
@@ -601,7 +607,6 @@ class account_withhold(osv.osv):
                 self.action_approve_purchase(cr, uid, ids, context=context)
         
         return True
-
      
     # All actions exist because this work througth wizars and to prevent freezeing the screen 
     # the buttons call object function that execute the transition in workflow   
