@@ -19,9 +19,9 @@
 								<field name="state" invisible="1" />
 								<field name="transaction_type" invisible="1" />
 								<field name="shop_id" 
-								attrs="{'invisible':[('transaction_type','=','sale')]}"/>
+								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
 								<field name="printer_id"
-								attrs="{'invisible':[('transaction_type','=','sale')]}"/>
+								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
 								<field name="number" 
 								attrs="{'required':True}"/>
 								<field name="partner_id"
