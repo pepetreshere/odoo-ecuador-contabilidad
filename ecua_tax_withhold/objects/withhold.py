@@ -106,7 +106,7 @@ class account_withhold(osv.osv):
         users = self.pool.get('res.users')
         printer_id = users.browse(cr, uid, uid).printer_id.id
         
-        if context.get('transaction_type') and context['active_id']:
+        if context.get('transaction_type') and context.get('active_id'):
             
             transaction_type = context.get('transaction_type')
             obj = self.pool.get('account.invoice').browse(cr, uid, context['active_id'])
