@@ -25,24 +25,60 @@ import netsvc
 from osv import osv
 from osv import fields
 from tools.translate import _
-import time
-import psycopg2
-import re
-from lxml import etree
 import decimal_precision as dp
 
 class account_invoice(osv.osv):
 
     _inherit = "account.invoice"
+
+    _columns = {
+                'withhold_id': fields.many2one('account.withhold', 'Withhold', states={'paid':[('readonly',True)]}),      
+                'withhold_line_ids': fields.related('withhold_id', 'withhold_line_ids', 
+                                                    type='one2many', relation='account.withhold.line',
+                                                    string='Withhold Lines', 
+                                                    states={'paid':[('readonly',True)]}),      
+                'address_invoice':fields.char("Invoice address"),
+               }
+
+#    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
+    def copy(self, cr, uid, id, default={}, context=None):
+        if context is None:
+            context = {}
+        default.update({
+            'withhold_ids':[],
+            'withhold_line_ids':[],
+        })
+        return super(account_invoice, self).copy(cr, uid, id, default, context)
     
+#    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
+    def action_cancel(self, cr, uid, ids, *args):
+     #   ret_line_obj = self.pool.get('account.withhold.line')
+        context={}
+        wf_service = netsvc.LocalService("workflow")
+        invoices = self.pool.get('account.invoice')
+        invoice_obj=invoices.browse(cr, uid, ids, context)[0]
+        withhold=self.pool.get('account.withhold').search(cr,uid,[('invoice_id','=',invoice_obj.id)])
+        withhold_obj=self.pool.get('account.withhold').browse(cr,uid,withhold)
+        for lines in withhold_obj:
+            if lines.state == 'approved':
+                    wf_service.trg_validate(uid, 'account.withhold', lines.id, 'canceled_signal', cr)
+        return super(account_invoice, self).action_cancel(cr, uid, ids, context)
+
+account_invoice()
+
+
+#class account_invoice(osv.osv):
+#
+#    _inherit = "account.invoice"
+#    
 #    def _number(self, cr, uid, ids, name, args, context=None):
 #        result = {}
 #        for invoice in self.browse(cr, uid, ids, args):
 #            #result[invoice.id] = invoice.invoice_number
 #        return result
-    _columns = {
-                #'number': fields.function(_number, method=True, type='char', size=17, string='Invoice Number', store=True, help='Unique number of the invoice, computed automatically when the invoice is created in Sales.'),
-                'address_invoice':fields.char("Invoice address"),
+#    _columns = {
+#                #'number': fields.function(_number, method=True, type='char', size=17, string='Invoice Number', store=True, help='Unique number of the invoice, computed automatically when the invoice is created in Sales.'),
+#                'address_invoice':fields.char("Invoice address"),
 #                'total_retencion': fields.function(_amount_all, method=True, digits_compute=dp.get_precision('Account'), string='Total Retenido',
 #                    store={
 #                        'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
@@ -50,11 +86,8 @@ class account_invoice(osv.osv):
 #                        'account.invoice.line': (_get_invoice_line, ['price_unit','invoice_line_tax_id','quantity','discount','invoice_id'], 20),
 #                    },
 #                    multi='all1'),
-                }
-    
-    _defaults = {
-               
-                 }
+#                }
+#    
 #    def onchange_partner_id(self, cr, uid, ids, type, partner_id,\
 #            date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
 #        partner_obj = self.pool.get('res.partner')
@@ -65,5 +98,5 @@ class account_invoice(osv.osv):
 #            
 #        res['value']['address_invoice'] = address_invoice
 #        return res
-    
-account_invoice()
+#    
+#account_invoice()

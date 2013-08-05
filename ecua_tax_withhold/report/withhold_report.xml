@@ -4,8 +4,8 @@
 		<record id="withhold_report" model="ir.actions.report.xml">
 			<field name="name">Retenciones</field>
 			<field name="type">ir.actions.report.xml</field>
-			<field name="model">account.retention</field>
-			<field name="report_name">retention</field>
+			<field name="model">account.withhold</field>
+			<field name="report_name">withhold</field>
 			<field name="report_type">aeroo</field>
 			<field name="in_format">oo-odt</field>
       		<field name='out_format' eval="ref('report_aeroo_ooo.report_mimetypes_pdf_odt')"/>

@@ -49,7 +49,7 @@
     tax collection for tax authority.
     
     This module adds the base features for issuing tributary document
-    called "retention" in sales and purchases.
+    called "withhold" in sales and purchases.
     
     This module is part of a bigger framework of "ecua" modules, 
     and reuses mainly code based on work by Christopher Ormaza and 

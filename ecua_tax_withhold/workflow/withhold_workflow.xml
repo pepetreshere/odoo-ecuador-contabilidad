@@ -6,7 +6,7 @@
 
 		<record model="workflow" id="withhold_workflow">
 			<field name="name">withhold.workflow</field>
-			<field name="osv">account.retention</field>
+			<field name="osv">account.withhold</field>
 			<field name="on_create">True</field>
 		</record>
 

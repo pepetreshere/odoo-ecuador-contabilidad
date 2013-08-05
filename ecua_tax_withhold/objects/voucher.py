@@ -34,9 +34,7 @@ class account_voucher(osv.osv):
     _inherit = 'account.voucher'
 
     _columns = {
-                #TRESCLOUD - Maybe should remove this line as the taxes were already recorded in the invoice
-                'type_account':fields.char('Type account',size=5),
-                'retention_id':fields.many2one('account.retention', 'Retention', required=False), 
+                'withhold_id':fields.many2one('account.withhold', 'Withhold', required=False), 
                     } 
 account_voucher()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

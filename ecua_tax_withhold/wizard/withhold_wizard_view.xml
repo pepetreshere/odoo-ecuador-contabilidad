@@ -2,109 +2,82 @@
 <openerp>
 	<data>
 
-<!-- WIZARD WITHHOLD PURCHASE -->
+<!-- WIZARD WITHHOLD -->
 
-		<record id="withhold_wizard_purchase_form" model="ir.ui.view">
-			<field name="name">withhold.wizard.purchase.form</field>
-			<field name="model">account.withhold.wizard</field>
+		<record id="withhold_wizard_form" model="ir.ui.view">
+			<field name="name">withhold.wizard.form</field>
+			<field name="model">account.withhold</field>
 			<field name="type">form</field>
+			<field name="priority" eval="32" />
 			<field name="arch" type="xml">
-				<form string="Withhold">
-					<group>
-						<group colspan="4">
- 							<field name="transaction_type"/>
- 							<field name="printer_id"/>
-							<field name="number" />
-							<field name="partner_id"/>
-							<field name="creation_date" required="1" />
-							<field name="invoice_id" invisible="0" />
-							<field name="currency_id"/>
-							<field name="company_id"/>
-						</group>
-						<group colspan="4">
-							<field name="lines_ids" nolabel="1" readonly="0" colspan="4" height="150">
-								<tree string="Withhold Lines" editable="bottom">
-									<!--field name="fiscalyear_id" widget="selection" /-->
-									<field name="description" />
-									<field name="tax_id" />
-									<field name="tax_base" />
-									<field name="tax_amount"/>
-									<field name="withhold_percentage" />
-								</tree>
-							</field>
-						</group>
-						<group colspan="4">
-							<button colspan="2" icon="gtk-cancel" name="button_cancel"
-								special="cancel" string="_Cancel" type="object" />
-							<button colspan="2" name="approve_late" string="Confirm Information"
-								icon="gtk-apply" type="object" />
-						</group>
-					</group>
+	            <form string="Withhold Wizard" version="7.0">
+	                <header>
+	                </header>
+	                <sheet string="Withhold Wizard">
+	                	<div>
+							<group>
+								<field name="state" invisible="1" />
+								<field name="transaction_type" invisible="1" />
+								<field name="shop_id" 
+								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
+								<field name="printer_id"
+								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
+								<field name="number" 
+								attrs="{'required':True}"/>
+								<field name="partner_id"
+								attrs="{'required':True}"/>
+								<field name="creation_date" 
+								attrs="{'required':True}"/>
+								<field name="invoice_id" 
+								attrs="{'required':True}"/>
+								<field name="company_id" invisible="1" />
+							</group>
+						</div>
+						<div>
+							<group>
+								<field name="withhold_line_ids" nolabel="1" readonly="0" height="150">
+									<tree string="Withhold Lines" editable="bottom">
+										<!--field name="fiscalyear_id" widget="selection" /-->
+										<field name="description" />
+										<field name="tax_id" />
+										<field name="tax_base" />
+										<field name="tax_amount"/>
+										<field name="withhold_percentage" />
+									</tree>
+								</field>
+							</group>
+						</div>
+	                </sheet>
+                    <footer>
+						<button name="button_aprove" string="Approve"
+							icon="gtk-apply" class="oe_highlight" type="object" />
+						<button name="approve_late" string="Save"
+							icon="gtk-apply" type="object"/>
+						<button name="button_cancel" icon="gtk-cancel" 
+							special="cancel" string="_Cancel" type="object" />
+<!--                         <button string="Cancel" class="oe_link" special="cancel"/>  -->
+                    </footer>
 				</form>
 			</field>
 		</record>
 
 		<record id="action_withhold_wizard_purchase" model="ir.actions.act_window">
-			<field name="name">Complete data Withhold</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">account.withhold.wizard</field>
-			<!-- <field name="context">{'transaction_type':'purchase'}</field>  -->
+			<field name="name">Complete data Purchase Withhold </field>
+			<field name="view_id" ref="withhold_wizard_form" />
+			<field name="context">{'transaction_type':'purchase'}</field>
+			<field name="res_model">account.withhold</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">form,tree</field>
-			<field name="view_id" ref="withhold_wizard_purchase_form" />
+			<field name="view_mode">form</field>
 			<field name="target">new</field>
 		</record>
 
-<!-- WIZARD WITHHOLD SALE -->
-
-		<record id="withhold_wizard_sale_form" model="ir.ui.view">
-			<field name="name">withhold.wizard.sale.form</field>
-			<field name="model">account.withhold.wizard</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Withhold">
-					<group>
-						<group colspan="4">
- 							<field name="transaction_type"/>
- 							<field name="printer_id"/>
-							<field name="number" />
-							<field name="partner_id"/>
-							<field name="creation_date" required="1" />
-							<field name="invoice_id" invisible="0" />
-							<field name="currency_id"/>
-							<field name="company_id"/>
-						</group>
-						<group colspan="4">
-							<field name="lines_ids" nolabel="1" readonly="0" colspan="4" height="150">
-								<tree string="Withhold Lines" editable="bottom">
-									<!--field name="fiscalyear_id" widget="selection" /-->
-									<field name="description" />
-									<field name="tax_id" />
-									<field name="tax_base" />
-									<field name="tax_amount"/>
-									<field name="withhold_percentage" />
-								</tree>
-							</field>
-						</group>
-						<group colspan="4">
-							<button colspan="2" icon="gtk-cancel" name="button_cancel"
-								special="cancel" string="_Cancel" type="object" />
-							<button colspan="2" name="approve_late" string="Confirm Information"
-								icon="gtk-apply" type="object" />
-						</group>
-					</group>
-				</form>
-			</field>
-		</record>
-
 		<record id="action_withhold_wizard_sale" model="ir.actions.act_window">
-			<field name="name">Complete data Withhold</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">account.withhold.wizard</field>
-			<!-- <field name="context">{'transaction_type':'sale'}</field>  -->
+			<field name="name">Complete data Sale Withhold</field>
+			<field name="view_id" ref="withhold_wizard_form" />
+			<field name="context">{'transaction_type':'sale'}</field>
+			<field name="res_model">account.withhold</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">form,tree</field>
-			<field name="view_id" ref="withhold_wizard_sale_form" />
+			<field name="view_mode">form</field>
 			<field name="target">new</field>
 		</record>
 
