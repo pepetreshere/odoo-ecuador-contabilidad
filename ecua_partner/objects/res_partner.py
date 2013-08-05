@@ -48,8 +48,8 @@ class res_partner(osv.osv):
         country_id = company_id.country_id.id
         if country_id:
             return country_id
-        return 
-
+        return    
+ 
     _columns = {
 #                'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
 #                'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
@@ -207,11 +207,14 @@ class res_partner(osv.osv):
     # TRESCLOUD TODO - Incluir estas funciones en el espacio de nombres de check_vat_ec
     def verifica_cedula(self,ced):
         try:
-            valores = [ int(ced[x]) * (2 - x % 2) for x in range(9) ]
-            suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
-            veri = 10 - (suma - (10*(suma/10)))
-            if int(ced[9]) == int(str(veri)[-1:]):
-                return True
+            if ced!='9999999999':
+                valores = [ int(ced[x]) * (2 - x % 2) for x in range(9) ]
+                suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
+                veri = 10 - (suma - (10*(suma/10)))
+                if int(ced[9]) == int(str(veri)[-1:]):
+                    return True
+                else:
+                    return False
             else:
                 return False
         except:
@@ -290,5 +293,23 @@ class res_partner(osv.osv):
                # 'valid': valid
                # }
         return valid
+    
+    def get_number_identification(self, vat):
+        '''Función que toma como argumento el campo vat, se hace un slicing para tomar la parte númerica.'''  
+       
+        identification=''        
+        if vat:
+            identification = vat[2:]
+        
+        return identification
+    
+    def get_code_country(self, vat):
+        '''Función que toma como argumento el campo vat, se hace un slicing para tomar la parte del código de país.'''
+        
+        code_country=''
+        if vat:
+            code_country = vat[:2] 
+       
+        return code_country
         
 res_partner()
