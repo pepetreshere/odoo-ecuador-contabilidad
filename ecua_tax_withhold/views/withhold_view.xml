@@ -25,7 +25,7 @@ en caso de modificaciones se lo haga una sola vez -->
 						statusbar_visible="draft,approved,canceled" 
 						statusbar_colors='{"approved":"blue","canceled":"red"}' />
 	                </header>
-	                <sheet string="Withhold Supplier">
+	                <sheet string="Withhold">
 	                	<div>
 							<group>
 								<field name="transaction_type" invisible="1" />
@@ -42,6 +42,7 @@ en caso de modificaciones se lo haga una sola vez -->
 								<field name="invoice_id" 
 								attrs="{'required':True, 'readonly':[('state','!=','draft')]}"/>
 								<field name="company_id" invisible="1" />
+								<field name="total" readonly="1"/>
 							</group>
 	                	</div>
 						<notebook>

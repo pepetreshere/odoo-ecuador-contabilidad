@@ -51,6 +51,7 @@ class account_withhold_line(osv.osv):
             #'withhold_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value'),
             'tax_id':fields.many2one('account.tax.code', 'Tax Code'),
             'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code'),
+
             }
     
 account_withhold_line()
@@ -186,21 +187,21 @@ class account_withhold(osv.osv):
                 
         return values
     
-    #Funcion para calcular el valor total a retener
     def _total(self, cr, uid, ids, field_name, arg, context=None):
+        
         cur_obj = self.pool.get('res.currency')
         res = {}
+        
         for ret in self.browse(cr, uid, ids, context=context):
+            
             val = 0.0
             cur = ret.invoice_id.currency_id
+            
             for line in ret.withhold_line_ids:
-                #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
-                if ret.transaction_type == 'purchase':
-                    val += line.retained_value
-                else:
-                    val += line.retained_value_manual
+                    val += line.tax_amount
             if cur:
                 res[ret.id] = cur_obj.round(cr, uid, cur, val)
+                
         return res
     
 #    def _get_withhold(self, cr, uid, ids, context=None):
@@ -209,43 +210,43 @@ class account_withhold(osv.osv):
 #            result[line.withhold_id.id] = True
 #        return result.keys()
     
-     #TRESCLOUD - Definir funcion total_vat_withhold en su lugar o como alias
-    #retorna el valor total de la funcion
-    def _total_iva(self, cr, uid, ids, field_name, arg, context=None):
-        cur_obj = self.pool.get('res.currency')
-        res = {}
-        for ret in self.browse(cr, uid, ids, context=context):
-            val = 0.0
-            cur = ret.invoice_id.currency_id
-            for line in ret.withhold_line_ids:
-                if line.description == 'iva':
-                    #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
-                    if ret.transaction_type == 'purchase':
-                        val += line.retained_value
-                    else:
-                        val += line.retained_value_manual
-            if cur:
-                res[ret.id] = cur_obj.round(cr, uid, cur, val)
-        return res
-
-    #TRESCLOUD - Definir funcion total_utilities_withhold en su lugar o como alias
-    # Valor total a retener por impuesto a la renta
-    def _total_renta(self, cr, uid, ids, field_name, arg, context=None):
-        cur_obj = self.pool.get('res.currency')
-        res = {}
-        for ret in self.browse(cr, uid, ids, context=context):
-            val = 0.0
-            cur = ret.invoice_id.currency_id
-            for line in ret.withhold_line_ids:
-                if line.description == 'renta':
-                    #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
-                    if ret.transaction_type == 'purchase':
-                        val += line.retained_value
-                    else:
-                        val += line.retained_value_manual
-            if cur:
-                res[ret.id] = cur_obj.round(cr, uid, cur, val)
-        return res
+#     #TRESCLOUD - Definir funcion total_vat_withhold en su lugar o como alias
+#    #retorna el valor total de la funcion
+#    def _total_iva(self, cr, uid, ids, field_name, arg, context=None):
+#        cur_obj = self.pool.get('res.currency')
+#        res = {}
+#        for ret in self.browse(cr, uid, ids, context=context):
+#            val = 0.0
+#            cur = ret.invoice_id.currency_id
+#            for line in ret.withhold_line_ids:
+#                if line.description == 'iva':
+#                    #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
+#                    if ret.transaction_type == 'purchase':
+#                        val += line.retained_value
+#                    else:
+#                        val += line.retained_value_manual
+#            if cur:
+#                res[ret.id] = cur_obj.round(cr, uid, cur, val)
+#        return res
+#
+#    #TRESCLOUD - Definir funcion total_utilities_withhold en su lugar o como alias
+#    # Valor total a retener por impuesto a la renta
+#    def _total_renta(self, cr, uid, ids, field_name, arg, context=None):
+#        cur_obj = self.pool.get('res.currency')
+#        res = {}
+#        for ret in self.browse(cr, uid, ids, context=context):
+#            val = 0.0
+#            cur = ret.invoice_id.currency_id
+#            for line in ret.withhold_line_ids:
+#                if line.description == 'renta':
+#                    #TRESCLOUD - solo debería haber un campo line.retained_value (borrar line.retained_value_manual)
+#                    if ret.transaction_type == 'purchase':
+#                        val += line.retained_value
+#                    else:
+#                        val += line.retained_value_manual
+#            if cur:
+#                res[ret.id] = cur_obj.round(cr, uid, cur, val)
+#        return res
     
     def _transaction_type(self, cr, uid, context = None):
         if context is None:
@@ -297,7 +298,8 @@ class account_withhold(osv.osv):
         'authorization_sri': fields.char('Authorization', readonly=True, states={'draft':[('readonly',False)]}, size=32),
         #P.R: Required in this format to generate the account moves using this lines
         'withhold_line_ids': fields.one2many('account.withhold.line', 'withhold_id', 'Withhold lines'),
-
+        #P.R: Required to show in the printed report
+        'total': fields.function(_total, method=True, type='float', string='Total Withhold', store = True), 
     }
         
     _defaults = {
