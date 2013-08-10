@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Andres Calle
+# @authors: Andres Calle, Patricio Rangles
 # Copyright (C) 2013  TRESCLOUD Cia Ltda
 #
 #This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ import time
 
 class res_partner(osv.osv):
     _inherit = "res.partner"
+    _name = "res.partner"
     
     # agregamos codigo de ecuador al modulo base_vat
     #_ref_vat['ec']='EC1234567891001'
@@ -51,6 +52,7 @@ class res_partner(osv.osv):
         return    
  
     _columns = {
+                'comercial_name': fields.char('Comercial Name', size=256),
 #                'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
 #                'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
 #                'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
@@ -58,6 +60,7 @@ class res_partner(osv.osv):
 
     _defaults = {
                  'user_id': lambda self, cr, uid, context: uid,
+                 'comercial_name': "",
                  #'section_id': _get_user_default_sales_team,
                  'country_id': _get_user_country_id,
                  'date': fields.date.context_today
