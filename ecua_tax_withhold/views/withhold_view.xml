@@ -57,6 +57,10 @@ en caso de modificaciones se lo haga una sola vez -->
 										<field name="withhold_percentage" />
 									</tree>
 								</field>
+								<div class="oe_clear">
+		                            <label for="comment"/>
+		                        </div>
+		                        <field name="comment"/>
 							</page>
 							<page string="Account voucher lines">
 			 					<field name="account_voucher_ids" colspan="4" nolabel="1">
