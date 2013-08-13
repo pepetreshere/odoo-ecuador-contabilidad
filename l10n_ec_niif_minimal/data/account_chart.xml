@@ -1072,7 +1072,64 @@
 			<field ref="20105" name="parent_id" />
 			<field name="note"></field>
 		</record>
+		
+		<record model="account.account.template" id="201050101">
+			<field name="name">Provisiones a favor de los empleados</field>
+			<field name="code">201050101</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010501" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		
+		<record model="account.account.template" id="201050102">
+			<field name="name">Otras provisiones locales</field>
+			<field name="code">201050102</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010501" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		<record model="account.account.template" id="20105010101">
+			<field name="name">Provisión de Vacaciones</field>
+			<field name="code">20105010101</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="201050101" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		<record model="account.account.template" id="20105010102">
+			<field name="name">Provisión de Decimo Tercero</field>
+			<field name="code">20105010102</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="201050101" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		<record model="account.account.template" id="20105010103">
+			<field name="name">Provisión de Decimo Cuarto</field>
+			<field name="code">20105010103</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="201050101" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		<record model="account.account.template" id="20105010104">
+			<field name="name">Otras provisiones a favor de los empleados</field>
+			<field name="code">20105010104</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="201050101" name="parent_id" />
+			<field name="note"></field>
+		</record>
 
+		
 		<record model="account.account.template" id="20106">
 			<field name="name">PORCIÓN CORRIENTE DE OBLIGACIONES EMITIDAS</field>
 			<field name="code">20106</field>
@@ -1152,7 +1209,77 @@
 			<field ref="20107" name="parent_id" />
 			<field name="note"></field>
 		</record>
-
+		
+		<record model="account.account.template" id="201070301">
+			<field name="name">Prestamos Quirografarios</field>
+			<field name="code">201070301</field>
+			<field name="reconcile" eval="True"/>
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010703" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		
+		<record model="account.account.template" id="201070302">
+			<field name="name">Aportacion Patronal al IESS</field>
+			<field name="code">201070302</field>
+			<field name="reconcile" eval="True"/>
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010703" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		
+		<record model="account.account.template" id="201070303">
+			<field name="name">Aportacion Personal al IESS</field>
+			<field name="code">201070303</field>
+			<field name="reconcile" eval="True"/>
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010703" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		
+		<record model="account.account.template" id="201070304">
+			<field name="name">Fondos de Reserva retenidos a empleados</field>
+			<field name="code">201070304</field>
+			<field name="reconcile" eval="True"/>
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010703" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		
+		<record model="account.account.template" id="201070305">
+			<field name="name">Otras obligaciones corrientes con el IESS</field>
+			<field name="code">201070305</field>
+			<field name="reconcile" eval="True"/>
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010703" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		
+		<record model="account.account.template" id="201070401">
+			<field name="name">Sueldos y Salarios por Pagar</field>
+			<field name="code">201070401</field>
+			<field name="reconcile" eval="True"/>
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010704" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		
+		<record model="account.account.template" id="201070402">
+			<field name="name">Otras Obligaciones corrientes por beneficios de ley a empleados</field>
+			<field name="code">201070402</field>
+			<field name="reconcile" eval="True"/>
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010704" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		
 		<record model="account.account.template" id="20108">
 			<field name="name">CUENTAS POR PAGAR DIVERSAS/RELACIONADAS</field>
 			<field name="code">20108</field>
