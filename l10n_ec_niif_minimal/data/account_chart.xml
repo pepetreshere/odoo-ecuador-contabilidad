@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
+	<data noupdate="0">
 
 		<!-- Account Types -->
 
@@ -1058,7 +1058,7 @@
 			<field name="code">2010501</field>
 			<field name="reconcile" eval="True" />
 			<field ref="account.data_account_type_payable" name="user_type" />
-			<field name="type">payable</field>
+			<field name="type">view</field>
 			<field ref="20105" name="parent_id" />
 			<field name="note"></field>
 		</record>
@@ -1070,62 +1070,6 @@
 			<field ref="account.data_account_type_payable" name="user_type" />
 			<field name="type">payable</field>
 			<field ref="20105" name="parent_id" />
-			<field name="note"></field>
-		</record>
-		
-		<record model="account.account.template" id="201050101">
-			<field name="name">Provisiones a favor de los empleados</field>
-			<field name="code">201050101</field>
-			<field name="reconcile" eval="True" />
-			<field ref="account.data_account_type_payable" name="user_type" />
-			<field name="type">payable</field>
-			<field ref="2010501" name="parent_id" />
-			<field name="note"></field>
-		</record>
-		
-		<record model="account.account.template" id="201050102">
-			<field name="name">Otras provisiones locales</field>
-			<field name="code">201050102</field>
-			<field name="reconcile" eval="True" />
-			<field ref="account.data_account_type_payable" name="user_type" />
-			<field name="type">payable</field>
-			<field ref="2010501" name="parent_id" />
-			<field name="note"></field>
-		</record>
-		<record model="account.account.template" id="20105010101">
-			<field name="name">Provisión de Vacaciones</field>
-			<field name="code">20105010101</field>
-			<field name="reconcile" eval="True" />
-			<field ref="account.data_account_type_payable" name="user_type" />
-			<field name="type">payable</field>
-			<field ref="201050101" name="parent_id" />
-			<field name="note"></field>
-		</record>
-		<record model="account.account.template" id="20105010102">
-			<field name="name">Provisión de Decimo Tercero</field>
-			<field name="code">20105010102</field>
-			<field name="reconcile" eval="True" />
-			<field ref="account.data_account_type_payable" name="user_type" />
-			<field name="type">payable</field>
-			<field ref="201050101" name="parent_id" />
-			<field name="note"></field>
-		</record>
-		<record model="account.account.template" id="20105010103">
-			<field name="name">Provisión de Decimo Cuarto</field>
-			<field name="code">20105010103</field>
-			<field name="reconcile" eval="True" />
-			<field ref="account.data_account_type_payable" name="user_type" />
-			<field name="type">payable</field>
-			<field ref="201050101" name="parent_id" />
-			<field name="note"></field>
-		</record>
-		<record model="account.account.template" id="20105010104">
-			<field name="name">Otras provisiones a favor de los empleados</field>
-			<field name="code">20105010104</field>
-			<field name="reconcile" eval="True" />
-			<field ref="account.data_account_type_payable" name="user_type" />
-			<field name="type">payable</field>
-			<field ref="201050101" name="parent_id" />
 			<field name="note"></field>
 		</record>
 
@@ -3785,6 +3729,63 @@
 			<field name="property_account_expense_categ" ref="520402" />
 			<field name="property_account_income_categ" ref="4101" />
 			<field name="property_reserve_and_surplusaccount" ref="30601" />
+		</record>
+		
+	<!--  nuevas cuentas -->
+	<record model="account.account.template" id="201050101">
+			<field name="name">Provisiones a favor de los empleados</field>
+			<field name="code">201050101</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">view</field>
+			<field ref="2010501" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		
+		<record model="account.account.template" id="201050102">
+			<field name="name">Otras provisiones locales</field>
+			<field name="code">201050102</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="2010501" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		<record model="account.account.template" id="20105010101">
+			<field name="name">Provisión de Vacaciones</field>
+			<field name="code">20105010101</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="201050101" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		<record model="account.account.template" id="20105010102">
+			<field name="name">Provisión de Decimo Tercero</field>
+			<field name="code">20105010102</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="201050101" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		<record model="account.account.template" id="20105010103">
+			<field name="name">Provisión de Decimo Cuarto</field>
+			<field name="code">20105010103</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">payable</field>
+			<field ref="201050101" name="parent_id" />
+			<field name="note"></field>
+		</record>
+		<record model="account.account.template" id="20105010104">
+			<field name="name">Otras provisiones a favor de los empleados</field>
+			<field name="code">20105010104</field>
+			<field name="reconcile" eval="True" />
+			<field ref="account.data_account_type_payable" name="user_type" />
+			<field name="type">view</field>
+			<field ref="201050101" name="parent_id" />
+			<field name="note"></field>
 		</record>
 	</data>
 </openerp>
