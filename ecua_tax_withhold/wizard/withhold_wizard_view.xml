@@ -18,18 +18,17 @@
 							<group>
 								<field name="state" invisible="1" />
 								<field name="transaction_type" invisible="1" />
-								<field name="shop_id" 
+								<field name="shop_id" invisible="0" 
 								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
 								<field name="printer_id"
-								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
+								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
+								on_change="onchange_printer_id(printer_id)"/>
 								<field name="number" 
 								attrs="{'required':True}"/>
-								<field name="partner_id"
-								attrs="{'required':True}"/>
+								<field name="partner_id" readonly="1"/>
 								<field name="creation_date" 
 								attrs="{'required':True}"/>
-								<field name="invoice_id" 
-								attrs="{'required':True}"/>
+								<field name="invoice_id" readonly="1"/>
 								<field name="company_id" invisible="1" />
 							</group>
 						</div>

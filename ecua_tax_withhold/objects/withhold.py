@@ -110,8 +110,10 @@ class account_withhold(osv.osv):
         values = {}
         res = []
         ret_line_id = 0
-        users = self.pool.get('res.users')
-        printer_id = users.browse(cr, uid, uid).printer_id.id
+        printer_id = False
+        shop_id = False
+        
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         
         if context.get('transaction_type') and context.get('active_id'):
             
@@ -122,15 +124,22 @@ class account_withhold(osv.osv):
                 if transaction_type == 'sale':
 
                     values = {
-                             'printer_id': printer_id,
-                             'partner_id': obj.partner_id.id,
-                             'invoice_id': obj.id,
-                             'creation_date': obj.date_invoice,
-                             'transaction_type': transaction_type,
-                             'company_id': obj.company_id.id,
+                         'shop_id': shop_id,
+                         'printer_id': printer_id,
+                         'partner_id': obj.partner_id.id,
+                         'invoice_id': obj.id,
+                         'creation_date': obj.date_invoice,
+                         'transaction_type': transaction_type,
+                         'company_id': obj.company_id.id,
                             }
                     
                 if transaction_type == 'purchase':
+
+                    if user.printer_id:
+                        printer_id = user.printer_id.id
+                        if user.printer_id.shop_id:
+                            shop_id = user.printer_id.shop_id.id
+
                     for tax_line in obj.tax_line:
                         
                         fiscalyear_id = None
@@ -176,14 +185,15 @@ class account_withhold(osv.osv):
                                              'creation_date_invoice': obj.date_invoice,
                                              }
                     values = {
-                                 'printer_id':printer_id,
-                                 'invoice_id': obj.id,
-                                 'creation_date': datetime.datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
-                                 'transaction_type': transaction_type,
-                                 'currency_id':obj.currency_id.id,
-                                 'partner_id':obj.partner_id.id,
-                                 'company_id':obj.company_id.id,
-                                 'withhold_line_ids': res,
+                         'shop_id': shop_id,
+                         'printer_id':printer_id,
+                         'invoice_id': obj.id,
+                         'creation_date': datetime.datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+                         'transaction_type': transaction_type,
+                         'currency_id':obj.currency_id.id,
+                         'partner_id':obj.partner_id.id,
+                         'company_id':obj.company_id.id,
+                         'withhold_line_ids': res,
                                 }
                 #Initial state 
                 values['state'] = 'draft'
@@ -254,11 +264,22 @@ class account_withhold(osv.osv):
 #                res[ret.id] = cur_obj.round(cr, uid, cur, val)
 #        return res
     
-    def _transaction_type(self, cr, uid, context = None):
+#    def _transaction_type(self, cr, uid, context = None):
+#        if context is None:
+#            context = {}
+#        return context.get('transaction_type', False)
+                
+    def _printer_id(self, cr, uid, context = None):
+        
         if context is None:
             context = {}
-        return context.get('transaction_type', False)
-                
+        
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        
+        if user.printer_id:
+            return user.printer_id.id
+        else:
+            return False
     
     _columns = {
         'number': fields.char('Number', size=17, required=False, 
@@ -320,18 +341,77 @@ class account_withhold(osv.osv):
                                  help="Total value of withhold"),
         'comment': fields.text('Additional Information'), 
     }
-        
-    _defaults = {
-        'number': '',
-        'transaction_type': _transaction_type,
-        'state': lambda *a: 'draft',
-                 }
+
+# Existe un default get, reemplaza al defaults       
+#    _defaults = {
+#        'number': '',
+#        'transaction_type': _transaction_type,
+#        'state': lambda *a: 'draft',
+#        'printer_id': _printer_id,
+#                 }
             
     #_constraints = [(check_withhold_out, _('The number of withhold is incorrect, it must be like 001-00X-000XXXXXX, X is a number'),['number']),]
     
     _sql_constraints = [
             ('withhold_number_transaction_uniq','unique(number, transaction_type)','There is another Withhold generated with this number, please verify'),
                         ]
+    
+    def onchange_printer_id(self, cr, uid, printer_id, context=None):
+        
+        if not context:
+            context={}
+            
+        printer = self.pool.get('sri.printer.point').browse(cr, uid, printer_id, context=context)
+
+        shop_id = False
+        
+        if printer.shop_id:
+            shop_id = printer.shop_id.id
+
+        value = {
+                 'shop_id': shop_id,
+                 }            
+
+        
+#        value = {}
+#        domain = {}
+#        warning = {}
+#        
+#        auth_supplier_obj = self.pool.get('sri.authorization.supplier')
+#        
+#        if not date:
+#            date = time.strftime('%Y-%m-%d')
+#        if number:
+#            auth_data = auth_supplier_obj.get_supplier_authorizations(cr, uid, number, "withhold", partner_id, date)
+#            if not auth_data.get('auth_ids', []):
+#                warning = {
+#                           'title': _(u'Advertencia!!!'),
+#                           'message':auth_data.get('message',''),
+#                           }
+#                return {'value': values, 'domain':domain, 'warning': warning}
+#            if auth_data.get('multi_auth', False):
+#                values = {
+#                         'number' : ""
+#                         }
+#                warning = {
+#                           'title': _(u'Advertencia!!!'),
+#                           'message':auth_data.get('message',''),
+#                           }
+#                return {'value': values, 'domain':domain, 'warning': warning}
+#            else:
+#                auth_id = auth_data.get('auth_ids', []) and auth_data.get('auth_ids', [])[0] or None
+#                if auth_id:
+#                    values = {
+#                             'number' : auth_data.get('res_number', ''),
+#                             'authorization_sale': auth_id,
+#                             }            
+        return {
+            'value': value, 
+            #'domain': domain,
+            #'warning': warning
+                 }
+    
+    
     
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
     def unlink(self, cr, uid, ids, context=None):
