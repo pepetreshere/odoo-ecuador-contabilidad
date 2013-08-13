@@ -299,7 +299,8 @@ class account_withhold(osv.osv):
         #P.R: Required in this format to generate the account moves using this lines
         'withhold_line_ids': fields.one2many('account.withhold.line', 'withhold_id', 'Withhold lines'),
         #P.R: Required to show in the printed report
-        'total': fields.function(_total, method=True, type='float', string='Total Withhold', store = True), 
+        'total': fields.function(_total, method=True, type='float', string='Total Withhold', store = True),
+        'comment': fields.text('Additional Information'), 
     }
         
     _defaults = {
