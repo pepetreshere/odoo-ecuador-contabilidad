@@ -32,12 +32,15 @@ class account_invoice(osv.osv):
     _inherit = "account.invoice"
 
     _columns = {
-                'withhold_id': fields.many2one('account.withhold', 'Withhold', states={'paid':[('readonly',True)]}),      
+                'withhold_id': fields.many2one('account.withhold', 'Withhold', states={'paid':[('readonly',True)]},
+                                               help="number of related withhold"),      
                 'withhold_line_ids': fields.related('withhold_id', 'withhold_line_ids', 
                                                     type='one2many', relation='account.withhold.line',
                                                     string='Withhold Lines', 
-                                                    states={'paid':[('readonly',True)]}),      
-                'address_invoice':fields.char("Invoice address"),
+                                                    states={'paid':[('readonly',True)]},
+                                                    help="Lines description of related withhold"),      
+                'address_invoice':fields.char("Invoice address",
+                                              help="Address of invoice"),
                }
 
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico

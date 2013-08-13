@@ -34,7 +34,8 @@ class account_voucher(osv.osv):
     _inherit = 'account.voucher'
 
     _columns = {
-                'withhold_id':fields.many2one('account.withhold', 'Withhold', required=False), 
+                'withhold_id':fields.many2one('account.withhold', 'Withhold', required=False,
+                                              help="Number of related withhold"), 
                     } 
 account_voucher()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -34,7 +34,8 @@ class account_move_line(osv.osv):
 
     _columns = {
                 #TRESCLOUD - Maybe should remove this line as the taxes were already recorded in the invoice
-                'withhold_id':fields.many2one('account.withhold', 'Withhold'), 
+                'withhold_id':fields.many2one('account.withhold', 'Withhold',
+                                              help="Relation with the withholding"), 
                } 
 account_move_line()
 

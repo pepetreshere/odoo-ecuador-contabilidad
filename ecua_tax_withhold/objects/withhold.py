@@ -40,17 +40,23 @@ class account_withhold_line(osv.osv):
     _name = "account.withhold.line"
 
     _columns = {
-            'withhold_id': fields.many2one('account.withhold', 'Withhold'),
-            'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year'),
-            'description': fields.selection([('iva', 'IVA'), ('renta', 'RENTA'), ], 'Impuesto'),
-            'tax_base': fields.float('Tax Base', digits_compute=dp.get_precision('Account')),
-            'withhold_percentage': fields.float('Percentaje Value', digits_compute=dp.get_precision('Account')),
-            'tax_amount':fields.float('Amount', digits_compute=dp.get_precision('Account')),
+            'withhold_id': fields.many2one('account.withhold', 'Withhold',
+                                           help="Number of related withhold"),
+            'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year',
+                                             help="Fiscal Year of transaction"),
+            'description': fields.selection([('iva', 'IVA'), ('renta', 'RENTA'), ], 'Tax',
+                                            help="Type of Tax (IVA/RENTA)"),
+            'tax_base': fields.float('Tax Base', digits_compute=dp.get_precision('Account'),
+                                     help="Base Value for the compute of tax"),
+            'withhold_percentage': fields.float('Percentaje Value', digits_compute=dp.get_precision('Account'),
+                                                help="Percentage Value of tax withhold"),
+            'tax_amount':fields.float('Amount', digits_compute=dp.get_precision('Account'),
+                                      help="Amount of tax withhold"),
            # 'withhold_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value',
             #                             store={'account.withhold.line': (lambda self, cr, uid, ids, c={}: ids, ['tax_id',], 1)},),
             #'withhold_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value'),
-            'tax_id':fields.many2one('account.tax.code', 'Tax Code'),
-            'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code'),
+            'tax_id':fields.many2one('account.tax.code', 'Tax Code', help="Tax"),
+            'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code', help="Tax"),
 
             }
     
@@ -255,9 +261,11 @@ class account_withhold(osv.osv):
                 
     
     _columns = {
-        'number': fields.char('Number', size=17, required=False),
+        'number': fields.char('Number', size=17, required=False, 
+                              help="Number of Withhold"),
         #'origin': fields.char('Origin Document', size=128, required=False),
-        'creation_date': fields.date('Creation Date',states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]}),
+        'creation_date': fields.date('Creation Date',states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]},
+                                     help="Date of creation of Withhold"),
 
         #Campo utilizado para identificar el tipo de documento de origen y alterar su funcionamiento
         'transaction_type':fields.selection([
@@ -266,12 +274,15 @@ class account_withhold(osv.osv):
             ],  'Transaction type', required=True, readonly=True),
 
         #TRESCLOUD - Removimos el "ondelete='cascade" del invoice_id, puede llevar a borrados inintencionales!
-        'invoice_id': fields.many2one('account.invoice', 'Number of document', required=False, states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]}),
-        'partner_id': fields.related('invoice_id','partner_id', type='many2one', relation='res.partner', string='Partner', store=True),
+        'invoice_id': fields.many2one('account.invoice', 'Number of document', required=False, states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]},
+                                      help="Invoice related with this withhold"),
+        'partner_id': fields.related('invoice_id','partner_id', type='many2one', relation='res.partner', string='Partner', store=True,
+                                     help="Partner related with this withhold"),
 
         #TRESCLOUD - Deberia guardarse el nombre del partner, su RUC, direccion, etc (ejemplo el año que viene el cliente cambia de direccion,
         # entonces el documento tributario del año 2012 no deberia verse afectado)  
-        'company_id': fields.related('invoice_id','company_id', type='many2one', relation='res.company', string='Company', store=True, change_default=True),
+        'company_id': fields.related('invoice_id','company_id', type='many2one', relation='res.company', string='Company', store=True, change_default=True,
+                                     help="Company related with this withhold (in multi-company environment)"),
         'state':fields.selection([
             ('draft','Draft'),
             ('approved','Approved'),
@@ -289,17 +300,24 @@ class account_withhold(osv.osv):
 #                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['withhold_line_ids'], 11),
 #                                 'account.withhold.line': (_get_withhold, ['tax_base', 'withhold_percentage', 'retained_value',], 11),
 #                                 }),
-        'account_voucher_ids': fields.one2many('account.move.line', 'withhold_id', 'Retention'),
+        'account_voucher_ids': fields.one2many('account.move.line', 'withhold_id', 'Withhold',
+                                               help="List of account moves"),
         'automatic': fields.boolean('Automatic?',),
-        'period_id': fields.related('invoice_id','period_id', type='many2one', relation='account.period', string='Period', store=True), 
-        'shop_id': fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
-        'printer_id': fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]}),
+        'period_id': fields.related('invoice_id','period_id', type='many2one', relation='account.period', string='Period', store=True,
+                                    help="Period related with this transaction"), 
+        'shop_id': fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]},
+                                   help="Shop related with this transaction, only need in Purchase"),
+        'printer_id': fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]},
+                                      help="Printer Point related with this transaction, only need in Purchase"),
         #P.R: Required the authorization asociated depending if is purchase or sale
-        'authorization_sri': fields.char('Authorization', readonly=True, states={'draft':[('readonly',False)]}, size=32),
+        'authorization_sri': fields.char('Authorization', readonly=True, states={'draft':[('readonly',False)]}, size=32,
+                                         help="Number of authorization use by the withhold"),
         #P.R: Required in this format to generate the account moves using this lines
-        'withhold_line_ids': fields.one2many('account.withhold.line', 'withhold_id', 'Withhold lines'),
+        'withhold_line_ids': fields.one2many('account.withhold.line', 'withhold_id', 'Withhold lines',
+                                             help="List of withholds"),
         #P.R: Required to show in the printed report
-        'total': fields.function(_total, method=True, type='float', string='Total Withhold', store = True),
+        'total': fields.function(_total, method=True, type='float', string='Total Withhold', store = True,
+                                 help="Total value of withhold"),
         'comment': fields.text('Additional Information'), 
     }
         

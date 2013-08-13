@@ -20,7 +20,9 @@ from osv import fields,osv
 class res_company(osv.osv):
     _inherit = 'res.company'
     _columns = {
-                'journal_iva_id':fields.many2one('account.journal', 'IVA Journal'), 
-                'journal_ir_id':fields.many2one('account.journal', 'IR Journal'), 
+                'journal_iva_id':fields.many2one('account.journal', 'IVA Journal',
+                                                 help="Journal for IVA Movements"), 
+                'journal_ir_id':fields.many2one('account.journal', 'IR Journal',
+                                                help="Journal for IR Movements"), 
                 }
 res_company()
