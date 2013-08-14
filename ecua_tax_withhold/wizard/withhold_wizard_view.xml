@@ -21,8 +21,7 @@
 								<field name="shop_id" invisible="0" 
 								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
 								<field name="printer_id"
-								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
-								on_change="onchange_printer_id(printer_id)"/>
+								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
 								<field name="number" 
 								attrs="{'required':True}"/>
 								<field name="partner_id" readonly="1"/>

@@ -269,17 +269,17 @@ class account_withhold(osv.osv):
 #            context = {}
 #        return context.get('transaction_type', False)
                 
-    def _printer_id(self, cr, uid, context = None):
-        
-        if context is None:
-            context = {}
-        
-        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-        
-        if user.printer_id:
-            return user.printer_id.id
-        else:
-            return False
+#    def _printer_id(self, cr, uid, context = None):
+#        
+#        if context is None:
+#            context = {}
+#        
+#        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+#        
+#        if user.printer_id:
+#            return user.printer_id.id
+#        else:
+#            return False
     
     _columns = {
         'number': fields.char('Number', size=17, required=False, 
@@ -355,62 +355,6 @@ class account_withhold(osv.osv):
     _sql_constraints = [
             ('withhold_number_transaction_uniq','unique(number, transaction_type)','There is another Withhold generated with this number, please verify'),
                         ]
-    
-    def onchange_printer_id(self, cr, uid, printer_id, context=None):
-        
-        if not context:
-            context={}
-            
-        printer = self.pool.get('sri.printer.point').browse(cr, uid, printer_id, context=context)
-
-        shop_id = False
-        
-        if printer.shop_id:
-            shop_id = printer.shop_id.id
-
-        value = {
-                 'shop_id': shop_id,
-                 }            
-
-        
-#        value = {}
-#        domain = {}
-#        warning = {}
-#        
-#        auth_supplier_obj = self.pool.get('sri.authorization.supplier')
-#        
-#        if not date:
-#            date = time.strftime('%Y-%m-%d')
-#        if number:
-#            auth_data = auth_supplier_obj.get_supplier_authorizations(cr, uid, number, "withhold", partner_id, date)
-#            if not auth_data.get('auth_ids', []):
-#                warning = {
-#                           'title': _(u'Advertencia!!!'),
-#                           'message':auth_data.get('message',''),
-#                           }
-#                return {'value': values, 'domain':domain, 'warning': warning}
-#            if auth_data.get('multi_auth', False):
-#                values = {
-#                         'number' : ""
-#                         }
-#                warning = {
-#                           'title': _(u'Advertencia!!!'),
-#                           'message':auth_data.get('message',''),
-#                           }
-#                return {'value': values, 'domain':domain, 'warning': warning}
-#            else:
-#                auth_id = auth_data.get('auth_ids', []) and auth_data.get('auth_ids', [])[0] or None
-#                if auth_id:
-#                    values = {
-#                             'number' : auth_data.get('res_number', ''),
-#                             'authorization_sale': auth_id,
-#                             }            
-        return {
-            'value': value, 
-            #'domain': domain,
-            #'warning': warning
-                 }
-    
     
     
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
