@@ -174,6 +174,9 @@ class account_withhold(osv.osv):
                             res.append(vals_ret_line)  
                         
                         elif tax_line['tax_amount'] == 0 and tax_line['type_ec'] == 'renta':
+                            
+                            # Por que el amount deberia ser 0?
+                            tax_ac_id = tax_line['tax_code_id']['id']
 
                             vals_ret_line = {
                                              'tax_base':tax_line.base,
