@@ -18,22 +18,26 @@
 							<group>
 								<field name="state" invisible="1" />
 								<field name="transaction_type" invisible="1" />
-								<field name="shop_id" invisible="0" 
-								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
+								<field name="shop_id" invisible="1" /> 
+								<field name="company_id" invisible="1" />
+							</group>
+							<group col="4">
 								<field name="printer_id"
 								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
+							</group>
+							<group col="4">
 								<field name="number" 
 								attrs="{'required':True}"/>
-								<field name="partner_id" readonly="1"/>
 								<field name="creation_date" 
 								attrs="{'required':True}"/>
+								<field name="partner_id" readonly="1"/>
 								<field name="invoice_id" readonly="1"/>
-								<field name="company_id" invisible="1" />
 							</group>
 						</div>
 						<div>
 							<group>
-								<field name="withhold_line_ids" nolabel="1" readonly="0" height="150">
+								<field name="withhold_line_ids" nolabel="1" height="150"
+								attrs="{'readonly':[('transaction_type','!=','sale')], 'required':[('transaction_type','=','sale')]}">
 									<tree string="Withhold Lines" editable="bottom">
 										<!--field name="fiscalyear_id" widget="selection" /-->
 										<field name="description" />
