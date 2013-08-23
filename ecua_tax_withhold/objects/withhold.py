@@ -223,6 +223,42 @@ class account_withhold(osv.osv):
                 
         return res
     
+    def _total_iva(self, cr, uid, ids, field_name, arg, context=None):
+        
+        cur_obj = self.pool.get('res.currency')
+        res = {}
+        
+        for ret in self.browse(cr, uid, ids, context=context):
+            
+            val_iva = 0.0
+            cur = ret.invoice_id.currency_id
+            
+            for line in ret.withhold_line_ids:
+                if line.description == 'iva':
+                    val_iva += line.tax_amount
+            if cur:
+                res[ret.id] = cur_obj.round(cr, uid, cur, val_iva)
+                
+        return res
+    
+    def _total_renta(self, cr, uid, ids, field_name, arg, context=None):
+        
+        cur_obj = self.pool.get('res.currency')
+        res = {}
+        
+        for ret in self.browse(cr, uid, ids, context=context):
+            
+            val_renta = 0.0
+            cur = ret.invoice_id.currency_id
+            
+            for line in ret.withhold_line_ids:
+                if line.description == 'renta':
+                    val_renta += line.tax_amount
+            if cur:
+                res[ret.id] = cur_obj.round(cr, uid, cur, val_renta)
+                
+        return res
+    
 #    def _get_withhold(self, cr, uid, ids, context=None):
 #        result = {}
 #        for line in self.pool.get('account.withhold.line').browse(cr, uid, ids, context=context):
@@ -312,18 +348,6 @@ class account_withhold(osv.osv):
             ('approved','Approved'),
             ('canceled','Canceled'),
             ],  'State', required=True, readonly=True),
-#        'total': fields.function(_total, method=True, type='float', string='Total Retenido', store = {
-#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['withhold_line_ids'], 11),
-#                                 'account.withhold.line': (_get_withhold, ['tax_base', 'withhold_percentage', 'retained_value',], 11),
-#                                 }), 
-#        'total_iva': fields.function(_total_iva, method=True, type='float', string='Total IVA', store = {
-#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['withhold_line_ids'], 11),
-#                                 'account.withhold.line': (_get_withhold, ['tax_base', 'withhold_percentage', 'retained_value',], 11),
-#                                 }), 
-#        'total_renta': fields.function(_total_renta, method=True, type='float', string='Total Renta', store = {
-#                                 'account.withhold': (lambda self, cr, uid, ids, c={}: ids, ['withhold_line_ids'], 11),
-#                                 'account.withhold.line': (_get_withhold, ['tax_base', 'withhold_percentage', 'retained_value',], 11),
-#                                 }),
         'account_voucher_ids': fields.one2many('account.move.line', 'withhold_id', 'Withhold',
                                                help="List of account moves"),
         'automatic': fields.boolean('Automatic?',),
@@ -342,6 +366,11 @@ class account_withhold(osv.osv):
         #P.R: Required to show in the printed report
         'total': fields.function(_total, method=True, type='float', string='Total Withhold', store = True,
                                  help="Total value of withhold"),
+        #P.R: Required to show in the ats report
+        'total_iva': fields.function(_total_iva, method=True, type='float', string='Total IVA', store = False,
+                                 help="Total IVA value of withhold"),   
+        'total_renta': fields.function(_total_renta, method=True, type='float', string='Total RENTA', store = False,
+                                 help="Total renta value of withhold"),      
         'comment': fields.text('Additional Information'), 
     }
 
