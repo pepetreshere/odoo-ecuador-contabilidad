@@ -43,6 +43,8 @@
 								<field name="partner_id" readonly="1"/>
 								<field name="invoice_id" readonly="1"/>
 								<field name="total" readonly="1"/>
+								<field name="total_iva" invisible="0"/>
+								<field name="total_renta" invisible="0"/>
 							</group>
 	                	</div>
 						<notebook>
