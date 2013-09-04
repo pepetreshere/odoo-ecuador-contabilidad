@@ -40,6 +40,6 @@
    "version" : "1.0",
    'depends': ['base','hr_payroll','account_check_writing',],
    'init_xml': [],
-   'update_xml': ['hr_payroll_report.xml'],
+   'update_xml': ['modify_report.xml'],
    'installable': True,
 }
