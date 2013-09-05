@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+		<!-- Menu: Payroll / Employee Payslips -->
+		
+        <report id="hr_payroll.payslip_report"
+                auto="False"
+            	menu="False"            
+            	model="hr.payslip"
+            	name="payslip"
+            	rml=""
+            	string="Employee PaySlip" />
+
+        <report id="hr_payroll.payslip_details_report"
+            	auto="False"
+            	menu="False"           
+            	model="hr.payslip"
+            	name="paylip.details"
+            	rml=""
+            	string="PaySlip Details" />
+        
+        <!-- Menu: Suppliers / Supplier Payments -->
+        
+        <report id="account_check_writing.account_print_check_top"
+	            string="Print Check (Top)"
+	            model="account.voucher"
+	            name="account.print.check.top"
+	            rml=""
+	            multi="True"
+	            auto="False"
+	            menu="False"/>	            
+
+	    <report id="account_check_writing.account_print_check_middle"
+	            string="Print Check (Middle)"
+	            model="account.voucher"
+	            name="account.print.check.middle"
+	            rml=""
+	            multi="True"
+	            auto="False"
+	            menu="False"/>
+	            
+	    <report id="account_check_writing.account_print_check_bottom"
+	            string="Print Check (Bottom)"
+	            model="account.voucher"
+	            name="account.print.check.bottom"
+	            rml=""
+	            multi="True"
+	            auto="False"
+	            menu="False"/>
+            
+    </data>
+</openerp>
