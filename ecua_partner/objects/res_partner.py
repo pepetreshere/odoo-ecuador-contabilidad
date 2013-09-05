@@ -37,11 +37,9 @@ class res_partner(osv.osv):
                 }
         
     def _get_user_default_sales_team(self, cr, uid, ids, context={}):
-        sales_team = self.pool.get('res.users').browse(cr,uid,uid).default_section_id
-        sales_team_id = sales_team.id
-        if sales_team_id:
-            return sales_team_id
-        return
+        user= self.pool.get('res.users').browse(cr,uid,uid)
+        sale_team_id=user.default_section_id.id
+        return sale_team_id or False
 
     def _get_user_country_id(self, cr, uid, ids, context={}):
         #TODO - Validar si sirve para entorno multicompania
@@ -61,7 +59,7 @@ class res_partner(osv.osv):
     _defaults = {
                  'user_id': lambda self, cr, uid, context: uid,
                  'comercial_name': "",
-                 #'section_id': _get_user_default_sales_team,
+                 'section_id': _get_user_default_sales_team,
                  'country_id': _get_user_country_id,
                  'date': fields.date.context_today
                  # TODO - Evaluar los modulos account_fiscal_position_rule, account_fiscal_position_country, y account_fiscal_position_country_sale
