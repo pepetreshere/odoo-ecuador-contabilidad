@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Andres Calle
+# @authors: Andres Calle, Andrea García
 # Copyright (C) 2013  TRESCLOUD Cia Ltda
 #
 #This program is free software: you can redistribute it and/or modify
@@ -38,8 +38,6 @@ class account_invoice(osv.osv):
     _inherit = "account.invoice"
 
   
-    
-        
     _columns = {
                 #TODO hacer obligatorio el campo name que almacenara el numero de la factura
                 'internal_number': fields.char('Invoice Number', size=17, readonly=False, help="Unique number of the invoice, computed automatically when the invoice is created."),
@@ -49,10 +47,6 @@ class account_invoice(osv.osv):
                 'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
                 'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
                }
-
-    _defaults = {
-                 #'shop_id': _get_shop,
-                 }
 
 
     def _check_number_invoice(self,cr,uid,ids, context=None):

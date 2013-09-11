@@ -58,6 +58,7 @@
                     'views/invoice_view.xml',
                     'views/shop_view.xml',
                     'views/res_users_view.xml',
+                    'views/sale_create_invoice_view.xml',
     ],
     "installable": True,
     "auto_install": False,
