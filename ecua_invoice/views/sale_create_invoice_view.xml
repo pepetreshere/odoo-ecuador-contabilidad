@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+		    <record id="view_order_form_context_button" model="ir.ui.view">
+	            <field name="name">sale.order.form.editable.list</field>
+	            <field name="model">sale.order</field>
+	            <field name="inherit_id" ref="sale.view_order_form"/>
+	            <field name="arch" type="xml">
+		            <xpath expr="//button[@string='Create Invoice']" position="attributes">
+							<attribute name="context">{'partner_id': partner_id}</attribute>
+					</xpath>
+				</field>
+	            </record>
+    </data>
+</openerp>

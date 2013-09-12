@@ -24,6 +24,7 @@
 from openerp.osv import osv
 from openerp.osv import fields
 from openerp.tools.translate import _
+from openerp.tools.misc import ustr
 import time
 
 class res_partner(osv.osv):
@@ -69,7 +70,26 @@ class res_partner(osv.osv):
     #    ]
     #    _order = 'name asc'
 
-
+    def check_vat(self, cr, uid, ids, context=None):
+        res = super(res_partner, self).check_vat(cr, uid, ids, context=context)
+        valid=0
+        if context:
+            valid=context.get('default_vat_subjected')     
+        if valid!=1:
+            for partner in self.browse(cr, uid, ids, context=context):
+                if not partner.vat:
+                    continue
+                vat_country, vat_number = self._split_vat(partner.vat)
+            if not ustr(vat_country).encode('utf-8').isalpha():
+                res=True
+        return res
+    
+    def _construct_constraint_msg(self, cr, uid, ids, context=None):
+        res = super(res_partner, self)._construct_constraint_msg(cr, uid, ids, context=context)
+        return res
+    _constraints = [(check_vat,_construct_constraint_msg, ["vat"])]
+    
+    
     # Ecuador VAT validation, contributed by TRESCLOUD (info@trescloud.com)
     # and based on https://launchpad.net/openerp-ecuador
     # TRESCLOUD TODO - Incluir estas funciones en el espacio de nombres de check_vat_ec

@@ -13,6 +13,15 @@
 				</xpath>
             </field>
 		</record>
-
+		  <record id="view_partner_button_edit_form" model="ir.ui.view">
+            <field name="name">res.partner.vat.button.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base_vat.view_partner_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//button[@name='button_check_vat']" position="attributes">
+            		<attribute name="contex">{'default_vat_subjected': 1}</attribute>
+            	</xpath>
+            </field>
+        </record>
    </data>
 </openerp>
