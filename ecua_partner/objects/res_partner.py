@@ -73,6 +73,8 @@ class res_partner(osv.osv):
     def check_vat(self, cr, uid, ids, context=None):
         res = super(res_partner, self).check_vat(cr, uid, ids, context=context)
         valid=0
+        vat_country=False
+        vat_number=False
         if context:
             valid=context.get('default_vat_subjected')     
         if valid!=1:
