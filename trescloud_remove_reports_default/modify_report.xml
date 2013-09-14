@@ -48,6 +48,17 @@
 	            multi="True"
 	            auto="False"
 	            menu="False"/>
+	            
+	    <report id="account.account_invoices"
+	            auto="False"            
+	            model="account.invoice"
+	            name="account.invoice"
+	            rml="account/report/account_print_invoice.rml"
+	            string="Invoices"
+	            attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+	            attachment_use="True"
+	            usage="default"
+	            menu="False"/>
             
     </data>
 </openerp>
