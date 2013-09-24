@@ -918,6 +918,20 @@ class account_withhold(osv.osv):
                 
         return {'type': 'ir.actions.act_window_close'}
 
+    def print_withhold(self, cr, uid, ids, context=None):
+        
+        # First Aprove the withhold
+        self.button_aprove(cr, uid, ids, context=None)
+
+        # Second Generate the pdf
+        return {
+             'type': 'ir.actions.report.xml',
+             'report_name': 'withhold', 
+             'datas' : {
+                     'model' : 'account.withhold',
+                     'res_ids' : ids
+                       }        
+              }
 
     # Buttons to operate the workflow to prevet troubles whit double workflow
     def button_aprove(self, cr, uid, ids, context=None):

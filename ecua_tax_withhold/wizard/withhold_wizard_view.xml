@@ -53,7 +53,9 @@
                     <footer>
 						<button name="button_aprove" string="Approve"
 							icon="gtk-apply" class="oe_highlight" type="object" />
-						<button name="approve_late" string="Save"
+						<!-- <button name="approve_late" string="Save"
+							icon="gtk-apply" type="object"/> -->
+						<button name="print_withhold" string="Print"
 							icon="gtk-apply" type="object"/>
 						<button name="button_cancel" icon="gtk-cancel" 
 							special="cancel" string="_Cancel" type="object" />
