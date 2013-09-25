@@ -16,7 +16,8 @@
 								context="{'transaction_type':'purchase'}" />
 				</button>
                 <page string="Payments" position="after">
-	                <page string="Withholds">
+	                <page string="Withholds"
+	                attrs="{'invisible':[('withhold_exist','=',False)]}">
 						<field name="withhold_exist" invisible="1"/>
 						<field name="withhold_id" nolabel="0" string="Withhold Number" readonly="1"/>
 						<field name="withhold_line_ids" nolabel="1" readonly="1">
@@ -47,7 +48,8 @@
 								context="{'transaction_type':'sale'}"/>
 				</button>
                 <page string="Payments" position="after">
-	                <page string="Withholds">
+	                <page string="Withholds"
+	                attrs="{'invisible':[('withhold_exist','=',False)]}">
 						<field name="withhold_exist" invisible="1"/>
 						<field name="withhold_id" string="Withhold Number" nolabel="0" readonly="1"/>
 						<field name="withhold_line_ids" nolabel="1" readonly="1">
