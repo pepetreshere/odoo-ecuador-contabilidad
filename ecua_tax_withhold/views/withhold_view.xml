@@ -134,5 +134,6 @@
 			
 		<menuitem name="Withhold of Purchases" id="withhold_purchases" sequence="20"
 			parent="account.menu_finance_payables" action="action_account_withhold_purchase" />
+
 	</data>
 </openerp>

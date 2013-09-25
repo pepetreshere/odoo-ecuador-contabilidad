@@ -12,11 +12,12 @@
 				<button string='Ask Refund' position="after">
 						<button name="%(action_withhold_wizard_purchase)d" string="Withhold"
 								type="action" icon="terp-gtk-jump-to-ltr" 
-								attrs="{'invisible':[('state','=','draft')]}"
+								attrs="{'invisible':['|',('state','=','draft'),('withhold_exist','=',True)]}"
 								context="{'transaction_type':'purchase'}" />
 				</button>
                 <page string="Payments" position="after">
 	                <page string="Withholds">
+						<field name="withhold_exist" invisible="1"/>
 						<field name="withhold_id" nolabel="0" string="Withhold Number" readonly="1"/>
 						<field name="withhold_line_ids" nolabel="1" readonly="1">
 							<tree string="Withhold Lines">
@@ -42,11 +43,12 @@
 				<button string='Re-Open' position="after">
 						<button name="%(action_withhold_wizard_sale)d" string="Withhold"
 								type="action" icon="terp-gtk-jump-to-ltr" 
-								attrs="{'invisible':[('state','=','draft')]}"
+								attrs="{'invisible':['|',('state','=','draft'),('withhold_exist','=',True)]}"
 								context="{'transaction_type':'sale'}"/>
 				</button>
                 <page string="Payments" position="after">
 	                <page string="Withholds">
+						<field name="withhold_exist" invisible="1"/>
 						<field name="withhold_id" string="Withhold Number" nolabel="0" readonly="1"/>
 						<field name="withhold_line_ids" nolabel="1" readonly="1">
 							<tree string="Withhold Lines">
@@ -61,6 +63,7 @@
                 </page>
 			</field>
 		</record>
+
 		
 	</data>
 </openerp>

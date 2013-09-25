@@ -31,6 +31,24 @@ class account_invoice(osv.osv):
 
     _inherit = "account.invoice"
 
+
+    def _withhold_exist(self, cr, uid ,ids, filed_name, arg, context=None):
+        """
+        Check if the invoice have a withhold asociated, return True or False
+        """
+        value = {}
+        exist = False
+        
+        for invoice in self.browse(cr, uid, ids, context):
+            
+            if invoice.withhold_id:
+                 exist = True
+                 
+            value[invoice.id] = exist
+        
+        return value
+
+
     _columns = {
                 'withhold_id': fields.many2one('account.withhold', 'Withhold', states={'paid':[('readonly',True)]},
                                                help="number of related withhold"),      
@@ -39,8 +57,10 @@ class account_invoice(osv.osv):
                                                     string='Withhold Lines', 
                                                     states={'paid':[('readonly',True)]},
                                                     help="Lines description of related withhold"),      
-                'address_invoice':fields.char("Invoice address",
-                                              help="Address of invoice"),
+                'address_invoice': fields.char("Invoice address",
+                                               help="Address of invoice"),
+                'withhold_exist': fields.function(_withhold_exist, type='boolean', method=True, store=False,
+                                                  help="Show internally if a withhold asociated exist"),
                }
 
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico

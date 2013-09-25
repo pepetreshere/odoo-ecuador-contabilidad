@@ -901,9 +901,6 @@ class account_withhold(osv.osv):
     def approve_late(self, cr, uid, ids, context=None):
 
         for obj in self.browse(cr, uid, ids, context=None):
-
-            #if obj.transaction_type == 'sale':
-                #withhold = self.create_withhold(cr, uid, ids, context)
             
             if obj.transaction_type == 'purchase':
                 if not obj.creation_date:
@@ -913,8 +910,7 @@ class account_withhold(osv.osv):
                     if not obj.number:
                         raise osv.except_osv(_('Error!'), _('number to be entered to approve the withhold'))
 
-                #withhold = self.create_withhold(cr, uid, ids, context)
-                #self.pool.get('account.withhold').write(cr, uid, [obj.withhold_ids[0].id, ], {'creation_date': obj.creation_date, 'authorization_purchase_id': obj.authorization_purchase.id, 'shop_id':obj.shop_id.id, 'printer_id':obj.printer_id.id}, context)
+            self.pool.get('account.invoice').write(cr, uid, [obj.invoice_id.id, ], {'withhold_id': obj.id})
                 
         return {'type': 'ir.actions.act_window_close'}
 
