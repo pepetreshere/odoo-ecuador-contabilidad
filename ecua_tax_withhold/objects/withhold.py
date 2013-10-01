@@ -388,6 +388,30 @@ class account_withhold(osv.osv):
             ('withhold_number_transaction_uniq','unique(number, transaction_type)','There is another Withhold generated with this number, please verify'),
                         ]
     
+    def onchange_number(self, cr, uid, ids, authorization_id, number, context=None):
+        
+        value = {}
+        
+        if authorization_id:
+            
+            number_split = str.split(number,"-")
+            if len(number_split) == 3 and number_split[2] !="":
+                if len(number_split[2]) < 17:
+                    #require auto complete
+                    pos = 0
+                    fill = 9 - len(number_split[2])
+                    for car in number_split[2]:
+                        if car != '0':
+                            break
+                        pos = pos + 1
+                        
+                    number_split[2] = number_split[2][:pos] + "0" * fill + number_split[2][pos:] 
+                    
+                    value.update({
+                        'number': number_split[0] + "-" + number_split[1] + "-" + number_split[2],
+                                })
+            
+        return {'value': value}
     
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
     def unlink(self, cr, uid, ids, context=None):

@@ -27,7 +27,8 @@
 							</group>
 							<group col="4">
 								<field name="number" 
-								attrs="{'required':True}"/>
+								attrs="{'required':True}"
+								on_change="onchange_number(authorization_id, number)"/>
 								<field name="creation_date" 
 								attrs="{'required':True}"/>
 								<field name="partner_id" readonly="1"/>
