@@ -153,10 +153,14 @@ class res_partner(osv.osv):
     #SECTOR PUBLICO
     def verifica_ruc_spub(self,ruc):
         try: 
-            if (int(ruc[0]+ruc[1]))<23:
-                prueba1=True
+            #This part is modified because Ecuador add 2 states, this mean we have 24 states
+            # also control the first 2 digits don't be "00"
+            state_num = (int(ruc[0]+ruc[1]))
+            
+            if state_num > 0 and state_num < 25 :
+                 prueba1=True
             else:
-                prueba1=False
+                 prueba1=False
             
             if (int(ruc[2])==6):
                 prueba2=True
@@ -201,10 +205,14 @@ class res_partner(osv.osv):
     # TRESCLOUD TODO - Incluir estas funciones en el espacio de nombres de check_vat_ec
     def verifica_ruc_pnat(self,ruc):
         try:
-            if (int(ruc[0]+ruc[1]))<23:
-                prueba1=True
+            #This part is modified because Ecuador add 2 states, this mean we have 24 states
+            # also control the first 2 digits don't be "00"
+            state_num = (int(ruc[0]+ruc[1]))
+            
+            if state_num > 0 and state_num < 25 :
+                 prueba1=True
             else:
-                prueba1=False
+                 prueba1=False
             
             if (int(ruc[2])<6):
                 prueba2=True
