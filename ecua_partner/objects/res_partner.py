@@ -98,7 +98,11 @@ class res_partner(osv.osv):
     def verifica_ruc_spri(self,ruc):
         try:
             #validate VAT has 10 or 13 digits
-            if (int(ruc[0]+ruc[1]))<23:
+            #This part is modified because Ecuador add 2 states, this mean we have 24 states
+            # also control the first 2 digits don't be "00"
+            state_num = (int(ruc[0]+ruc[1]))
+            
+            if state_num > 0 and state_num < 25 :
                  prueba1=True
             else:
                  prueba1=False
