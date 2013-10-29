@@ -1,0 +1,182 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_invoice
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0-20130930-231020\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-29 22:12+0000\n"
+"PO-Revision-Date: 2013-10-29 22:12+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ecua_invoice
+#: field:account.invoice,invoice_address:0
+msgid "Invoice address"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "My Printer Point"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:sale.shop:0
+#: field:sale.shop,number:0
+msgid "SRI Number"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:sale.shop,invoice_lines:0
+msgid "Número de Líneas x Factura"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:sale.shop:0
+msgid "Users Asigned"
+msgstr ""
+
+#. module: ecua_invoice
+#: help:account.invoice,invoice_address:0
+msgid "Invoice address as in VAT document, saved in invoice only not in partner"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:sale.shop:0
+#: field:sale.shop,printer_point_ids:0
+#: view:sri.printer.point:0
+msgid "Printer Points"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:sale.shop:0
+msgid "Defaults Journals"
+msgstr ""
+
+#. module: ecua_invoice
+#: model:ir.model,name:ecua_invoice.model_res_users
+#: field:sale.shop,user_ids:0
+msgid "Users"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "El punto de impresion o caja de mi Empresa donde recibo o emito documentos"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:account.invoice,invoice_phone:0
+msgid "Invoice phone"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Phone"
+msgstr ""
+
+#. module: ecua_invoice
+#: model:ir.model,name:ecua_invoice.model_sale_shop
+msgid "Sales Shop"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Address"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:sale.shop,credit_note_sale_journal_id:0
+msgid "Credit Note Sales Journal"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "True"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:account.invoice,printer_id:0
+msgid "Printer Point"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:sale.shop,purchases_journal_id:0
+msgid "Purchases Journal"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:sri.printer.point,name:0
+msgid "Name"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:sale.shop,credit_note_purchase_journal_id:0
+msgid "Credit Note Purchases Journal"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:sale.shop:0
+msgid "Print Points"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:sale.shop:0
+msgid "SRI Configuration"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:sale.shop,sales_journal_id:0
+msgid "Sales Journal"
+msgstr ""
+
+#. module: ecua_invoice
+#: help:account.invoice,invoice_phone:0
+msgid "Invoice phone as in VAT document, saved in invoice only not in partner"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:sri.printer.point,shop_id:0
+msgid "Shop"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:sale.order:0
+msgid "{'partner_id': partner_id}"
+msgstr ""
+
+#. module: ecua_invoice
+#: model:ir.model,name:ecua_invoice.model_sri_printer_point
+msgid "sri.printer.point"
+msgstr ""
+
+#. module: ecua_invoice
+#: help:sale.shop,number:0
+#: help:sri.printer.point,name:0
+msgid "This number is assigned by the SRI"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:sale.shop:0
+msgid "Print Point"
+msgstr ""
+
+#. module: ecua_invoice
+#: field:res.users,printer_id:0
+msgid "Default Printer Point"
+msgstr ""
+
+#. module: ecua_invoice
+#: model:ir.model,name:ecua_invoice.model_account_invoice
+msgid "Invoice"
+msgstr ""
+
+#. module: ecua_invoice
+#: model:ir.model,name:ecua_invoice.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
