@@ -381,11 +381,46 @@ class account_withhold(osv.osv):
 #        'state': lambda *a: 'draft',
 #        'printer_id': _printer_id,
 #                 }
+    def check_withhold_number_uniq(self, cr, uid, ids):
+        """
+        Check if the withhold number is unique under this conditions:
+        1) if the transaction type is "sale", verify that the number and RUC is unique
+        2) if the transaction type is "purchase", verify that only the number be unique
+        """
+        for withhold in self.browse(cr, uid, ids):
             
-    #_constraints = [(check_withhold_out, _('The number of withhold is incorrect, it must be like 001-00X-000XXXXXX, X is a number'),['number']),]
+            number = withhold['number']
+            type = withhold['transaction_type']
+            partner = withhold.partner_id.id
+            search_param = []
+
+            search_param.append(('id', '!=', withhold.id))
+            search_param.append(('number', '=', number))
+            search_param.append(('transaction_type', '=', type))
+
+            if type == "sale":
+                search_param.append(('partner_id', '=', partner))
+
+            resul = self.search(cr, uid, search_param)
+            
+            if resul:
+                return False
+            else:
+                return True
+            
+    # General check of number of withhold
+    _constraints = [(check_withhold_number_uniq, _('There is another Withhold generated with this number, please verify'),['number']),]
     
+    # Constrain Removed, only verify the number, don't check the case if a diferent customer have the same
+    # withhold number
+    #_sql_constraints = [
+    #        ('withhold_number_transaction_uniq','unique(number, transaction_type)','There is another Withhold generated with this number, please verify'),
+    #                    ]
+    
+    # Need to eliminate the old constrain, rewrite with this one
+    # TODO: Could be Erase the next time we update the server  
     _sql_constraints = [
-            ('withhold_number_transaction_uniq','unique(number, transaction_type)','There is another Withhold generated with this number, please verify'),
+            ('withhold_number_transaction_uniq','1',''),
                         ]
     
     def onchange_number(self, cr, uid, ids, authorization_id, number, context=None):
