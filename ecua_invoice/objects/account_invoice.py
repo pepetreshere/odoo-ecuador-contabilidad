@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Andres Calle, Andrea García
+# @authors: Andres Calle, Andrea García, Patricio Rangles
 # Copyright (C) 2013  TRESCLOUD Cia Ltda
 #
 #This program is free software: you can redistribute it and/or modify
@@ -52,16 +52,22 @@ class account_invoice(osv.osv):
     def _check_number_invoice(self,cr,uid,ids, context=None):
             res = True
 
-    # TRESCLOUD - TODO - Esta funcion ya no es necesaria en OE7 ya que es el comportamiento por defecto, se elimina
     def unlink(self, cr, uid, ids, context=None):
-        #        invoices = self.read(cr, uid, ids, ['state'], context=context)
-        #        unlink_ids = []
-        #        for inv in invoices:
-        #            if inv['state'] == 'draft':
-        #                unlink_ids.append(inv['id'])
-        #            else:
-        #                raise osv.except_osv(_('Invalid action!'), _('You can delete Invoice in state Draft'))
-        return super(account_invoice, self).unlink(cr, uid, ids, context)
+        """
+        ALlow delete a invoice in draft state
+        """
+        invoices = self.read(cr, uid, ids, ['state'], context=context)
+        unlink_ids = []
+        
+        for inv in invoices:
+            if inv['state'] == 'draft':
+                unlink_ids.append(inv['id'])
+                # write False in the invoice number, this allow eliminate the invoice
+                self.write(cr, uid, inv['id'], {'internal_number':False}) 
+            else:
+                raise osv.except_osv(_('Invalid action!'), _('You can delete Invoice in state Draft'))
+            
+        return super(account_invoice, self).unlink(cr, uid, unlink_ids, context)
 
 
 #    _constraints = [(_check_number_invoice,_('The number of Document is incorrect, it must be like 00X-00X-000XXXXXX, X is a number'),['invoice_number_out','invoice_number_in','number_liquidacion'])]

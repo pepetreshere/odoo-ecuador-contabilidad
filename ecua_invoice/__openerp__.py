@@ -49,7 +49,8 @@
     Author,
     
     Andres Calle,
-    Andrea García
+    Andrea García,
+    Patricio Rangles
     TRESCLOUD Cía Ltda.
     """,
     "init_xml": [],
