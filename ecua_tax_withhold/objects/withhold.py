@@ -220,7 +220,10 @@ class account_withhold(osv.osv):
                     val += line.tax_amount
             if cur:
                 res[ret.id] = cur_obj.round(cr, uid, cur, val)
-                
+            else:
+                # if the invoice is delete, show val
+                res[ret.id] = val
+               
         return res
     
     def _total_iva(self, cr, uid, ids, field_name, arg, context=None):
@@ -238,6 +241,9 @@ class account_withhold(osv.osv):
                     val_iva += line.tax_amount
             if cur:
                 res[ret.id] = cur_obj.round(cr, uid, cur, val_iva)
+            else:
+                # if the invoice is delete, show val_iva
+                res[ret.id] = val_iva
                 
         return res
     
@@ -256,6 +262,9 @@ class account_withhold(osv.osv):
                     val_renta += line.tax_amount
             if cur:
                 res[ret.id] = cur_obj.round(cr, uid, cur, val_renta)
+            else:
+                # if the invoice is delete, show val_renta
+                res[ret.id] = val_renta
                 
         return res
     
