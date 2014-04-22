@@ -87,6 +87,17 @@ class account_invoice(osv.osv):
                     wf_service.trg_validate(uid, 'account.withhold', lines.id, 'canceled_signal', cr)
         return super(account_invoice, self).action_cancel(cr, uid, ids, context)
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        if context is None:
+            context = {}
+        default = default.copy()
+        default['withhold_line_ids'] = False
+        default['withhold_id']=False
+        
+        return super(account_invoice, self).copy(cr, uid, id, default, context=context)
+    
 account_invoice()
 
 
