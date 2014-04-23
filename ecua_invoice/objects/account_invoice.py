@@ -70,26 +70,32 @@ class account_invoice(osv.osv):
         return super(account_invoice, self).unlink(cr, uid, unlink_ids, context)
 
 
-#    _constraints = [(_check_number_invoice,_('The number of Document is incorrect, it must be like 00X-00X-000XXXXXX, X is a number'),['invoice_number_out','invoice_number_in','number_liquidacion'])]
-    
-    #TRESCLOUD - se removio las lineas de la funcion ya que la evaluacion de extranjero se debe realizar en las posicioens fiscales
-#    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
-#        # no hacemos nada
-#        res = super(account_invoice, self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
-#        
-#        # actualizamos los campos nuevos de direccion y telefono
-#        partner_obj = self.pool.get('res.partner')
-#        address_invoice=False
-#        address_phone=False
-#        if partner_id:
-#            partner = partner_obj.browse(cr, uid, partner_id)
-#            #TODO - Deberia ser la direccion y telefono de facturacion
-#            address_invoice = partner.street
-#            address_phone = partner.phone
-#        res['value']['invoice_address'] = address_invoice
-#        res['value']['invoice_phone'] = address_phone
-#
-#        return res
+    def onchange_internal_number(self, cr, uid, ids, internal_number, context=None):
+        
+        value = {}
+        
+        if not internal_number:
+            return {'value': value}
+        
+        number_split = str.split(internal_number,"-")
+
+        if len(number_split) == 3 and number_split[2] !="":
+            if len(number_split[2]) < 17:
+                #require auto complete
+                pos = 0
+                fill = 9 - len(number_split[2])
+                for car in number_split[2]:
+                    if car != '0':
+                        break
+                    pos = pos + 1
+                    
+                number_split[2] = number_split[2][:pos] + "0" * fill + number_split[2][pos:] 
+                
+                value.update({
+                    'internal_number': number_split[0] + "-" + number_split[1] + "-" + number_split[2],
+                            })
+            
+        return {'value': value}
     
 
 account_invoice()

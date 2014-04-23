@@ -30,7 +30,9 @@
 				</xpath>
 				<xpath expr="/form/sheet/group/group/field[@name='fiscal_position']" position="after">
 					<field name="printer_id" string="My Printer Point" help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos" attrs="{'readonly':[('state','!=','draft')]}" required="0" />
-					<field name="internal_number" required="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+					<field name="internal_number" required="1" 
+					attrs="{'readonly': [('state','!=','draft')]}"
+					on_change="onchange_internal_number(internal_number)"/>
 				</xpath>
 			</field>			
 		</record>
@@ -54,7 +56,9 @@
 				</xpath>
 				<xpath expr="/form/sheet/group/group/field[@name='fiscal_position']" position="after">
 					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}" required="1" />
-					<field name="internal_number" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+					<field name="internal_number" required="1" 
+					attrs="{'readonly':[('state','!=','draft')]}"
+					on_change="onchange_internal_number(internal_number)"/>
 				</xpath>
 			</field>			
 		</record>
