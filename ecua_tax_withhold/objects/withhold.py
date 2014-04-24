@@ -219,10 +219,10 @@ class account_withhold(osv.osv):
             for line in ret.withhold_line_ids:
                     val += line.tax_amount
             if cur:
-                res[ret.id] = cur_obj.round(cr, uid, cur, val)
+                res[ret.id] = cur_obj.round(cr, uid, cur, abs(val))
             else:
                 # if the invoice is delete, show val
-                res[ret.id] = val
+                res[ret.id] = abs(val)
                
         return res
     
@@ -240,10 +240,10 @@ class account_withhold(osv.osv):
                 if line.description == 'iva':
                     val_iva += line.tax_amount
             if cur:
-                res[ret.id] = cur_obj.round(cr, uid, cur, val_iva)
+                res[ret.id] = cur_obj.round(cr, uid, cur, abs(val_iva))
             else:
                 # if the invoice is delete, show val_iva
-                res[ret.id] = val_iva
+                res[ret.id] = abs(val_iva)
                 
         return res
     
@@ -261,12 +261,55 @@ class account_withhold(osv.osv):
                 if line.description == 'renta':
                     val_renta += line.tax_amount
             if cur:
-                res[ret.id] = cur_obj.round(cr, uid, cur, val_renta)
+                res[ret.id] = cur_obj.round(cr, uid, cur, abs(val_renta))
             else:
                 # if the invoice is delete, show val_renta
-                res[ret.id] = val_renta
+                res[ret.id] = abs(val_renta)
                 
         return res
+
+    def _total_base_iva(self, cr, uid, ids, field_name, arg, context=None):
+        
+        cur_obj = self.pool.get('res.currency')
+        res = {}
+        
+        for ret in self.browse(cr, uid, ids, context=context):
+            
+            val_base_iva = 0.0
+            cur = ret.invoice_id.currency_id
+            
+            for line in ret.withhold_line_ids:
+                if line.description == 'iva':
+                    val_base_iva += line.tax_base
+            if cur:
+                res[ret.id] = cur_obj.round(cr, uid, cur, val_base_iva)
+            else:
+                # if the invoice is delete, show val_iva
+                res[ret.id] = val_base_iva
+                
+        return res
+
+    def _total_base_renta(self, cr, uid, ids, field_name, arg, context=None):
+        
+        cur_obj = self.pool.get('res.currency')
+        res = {}
+        
+        for ret in self.browse(cr, uid, ids, context=context):
+            
+            val_base_renta = 0.0
+            cur = ret.invoice_id.currency_id
+            
+            for line in ret.withhold_line_ids:
+                if line.description == 'renta':
+                    val_base_renta += line.tax_base
+            if cur:
+                res[ret.id] = cur_obj.round(cr, uid, cur, val_base_renta)
+            else:
+                # if the invoice is delete, show val_renta
+                res[ret.id] = val_base_renta
+                
+        return res
+
     
 #    def _get_withhold(self, cr, uid, ids, context=None):
 #        result = {}
@@ -380,6 +423,11 @@ class account_withhold(osv.osv):
                                  help="Total IVA value of withhold"),   
         'total_renta': fields.function(_total_renta, method=True, type='float', string='Total RENTA', store = False,
                                  help="Total renta value of withhold"),      
+        #P.R: Required to show in the tree view
+        'total_base_iva': fields.function(_total_base_iva, method=True, type='float', string='Total Base IVA', store = False,
+                                 help="Total base IVA of withhold"),   
+        'total_base_renta': fields.function(_total_base_renta, method=True, type='float', string='Total Base RENTA', store = False,
+                                 help="Total base renta of withhold"),      
         'comment': fields.text('Additional Information'), 
     }
 

@@ -42,9 +42,6 @@
 								attrs="{'required':True}"/>
 								<field name="partner_id" readonly="1"/>
 								<field name="invoice_id" readonly="1"/>
-								<field name="total" readonly="1"/>
-								<field name="total_iva" invisible="0"/>
-								<field name="total_renta" invisible="0"/>
 							</group>
 	                	</div>
 						<notebook>
@@ -59,6 +56,13 @@
 										<field name="withhold_percentage" />
 									</tree>
 								</field>
+	                            <group class="oe_subtotal_footer oe_right">
+									<field name="total_base_iva" />
+									<field name="total_iva" />
+									<field name="total_base_renta" />
+									<field name="total_renta" />
+									<field name="total" class="oe_subtotal_footer_separator" />
+								</group>
 								<div class="oe_clear">
 		                            <label for="comment"/>
 		                        </div>
@@ -98,9 +102,12 @@
 					<field name="number"/>
 					<field name="invoice_id" string="Document" />
 					<field name="partner_id" string="Partner" />
-					<field name="period_id" />
 					<field name="creation_date" />
-					<field name="transaction_type" />
+					<field name="total_base_iva" />
+					<field name="total_iva" />
+					<field name="total_base_renta" />
+					<field name="total_renta" />
+					<field name="total" />
 					<field name="state" />
 				</tree>
 			</field>
