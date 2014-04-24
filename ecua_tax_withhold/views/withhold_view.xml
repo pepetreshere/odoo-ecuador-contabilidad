@@ -112,34 +112,30 @@
 				</tree>
 			</field>
 		</record>
-<!-- 
-        <record id="view_account_invoice_filter" model="ir.ui.view">
-            <field name="name">account.invoice.select</field>
-            <field name="model">account.invoice</field>
+
+        <record id="view_account_withhold_filter" model="ir.ui.view">
+            <field name="name">account.withhold.select</field>
+            <field name="model">account.withhold</field>
             <field name="arch" type="xml">
                 <search string="Search Invoice">
-                    <field name="number" string="Withhold" filter_domain="['|','|','|', ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+<!--                     <field name="number" string="Withhold" filter_domain="['|','|','|', ('number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"/> -->
+					<field name="number" string="Withhold" filter_domain="[('number','ilike',self)]"/>
                     <filter name="draft" string="Draft" domain="[('state','=','draft')]" help="Draft Withholds"/>
                     <filter name="approved" string="Approved" domain="[('state','=','approved')]" help="Approve Withholds"/>
-                    <filter name="unpaid" string="Unpaid" domain="[('state','=','open')]" help="Unpaid Invoices"/>
                     <separator/>
-                    <filter domain="[('user_id','=',uid)]" help="My Invoices" icon="terp-personal"/>
-                    <field name="partner_id" filter_domain="[('partner_id', 'child_of', self)]"/>
-                    <field name="user_id" string="Salesperson"/>
+                    <field name="partner_id" string="Partner" filter_domain="[('partner_id', 'child_of', self)]"/>
+                    <field name="invoice_id" string="Invoice" filter_domain="[('invoice_id', 'ilike', self)]"/>
                     <field name="period_id" string="Period"/>
+                    <field name="state" string="State"/>
                     <group expand="0" string="Group By...">
                         <filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
-                        <filter string="Responsible" icon="terp-personal" domain="[]"  context="{'group_by':'user_id'}"/>
-                        <filter string="Journal" icon="terp-folder-orange" domain="[]" context="{'group_by':'journal_id'}"/>
                         <filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]"  context="{'group_by':'state'}"/>
                         <filter string="Period" icon="terp-go-month" domain="[]" context="{'group_by':'period_id'}"/>
-                        <filter string="Invoice Date" icon="terp-go-month" domain="[]"  context="{'group_by':'date_invoice'}"/>
-                        <filter string="Due Date" icon="terp-go-month" domain="[]"  context="{'group_by':'date_due'}"/>
                     </group>
                </search>
             </field>
         </record>
-	 -->	
+	
 		<record model="ir.actions.act_window" id="action_account_withhold_sale">
 			<field name="name">Withhold of Sales</field>
 			<field name="res_model">account.withhold</field>
@@ -148,7 +144,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_account_withhold_tree" />
-<!--             <field name="search_view_id" ref="view_account_invoice_filter"/>			 -->
+            <field name="search_view_id" ref="view_account_withhold_filter"/>			
 		</record>
 
 		<record model="ir.actions.act_window" id="action_account_withhold_purchase">
@@ -159,7 +155,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="view_id" ref="view_account_withhold_tree" />
-<!--             <field name="search_view_id" ref="view_account_invoice_filter"/> -->
+            <field name="search_view_id" ref="view_account_withhold_filter"/>
         </record>
 
 		<!-- <menuitem name="Withhold" id="withhold"
