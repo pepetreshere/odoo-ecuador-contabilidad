@@ -28,11 +28,9 @@ import netsvc
 import re
 
 from mx import DateTime
-import datetime
+from datetime import datetime,timedelta
 
-#from datetime import datetime
-#from lxml import etree
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class account_withhold_line(osv.osv):
@@ -507,6 +505,15 @@ class account_withhold(osv.osv):
             
         return {'value': value}
     
+    def onchange_creation_date(self, cr, uid, ids, creation_date, invoice_id, context=None):    
+        
+        value = {}
+        if not creation_date or not invoice_id:
+            return {'value': value}
+
+        return self._validate_period_date(cr, uid, creation_date, invoice_id, context=context)
+    
+    
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
     def unlink(self, cr, uid, ids, context=None):
         if context is None:
@@ -750,6 +757,47 @@ class account_withhold(osv.osv):
                     move_line_pool.reconcile_partial(cr, uid, rec_ids)
         return True
 
+    def _validate_period_date(self, cr, uid, creation_date, invoice_id, raise_error=False, context=None):
+        
+        value = {}
+        
+        if not creation_date or not invoice_id:
+            return {'value':value}
+        
+        invoice_brow = self.pool.get('account.invoice').browse(cr, uid, invoice_id, context=context)
+        date_invoice = datetime.strptime(invoice_brow.date_invoice, DEFAULT_SERVER_DATE_FORMAT)
+        date_withhold = datetime.strptime(creation_date, DEFAULT_SERVER_DATE_FORMAT)
+        delta_withhold = date_withhold - date_invoice
+        
+        #Check if the date is in the same period
+        if date_invoice.year != date_withhold.year or date_invoice.month != date_withhold.month:
+            message = _('The withhold must be in the same period that the invoice.!')
+            if raise_error:
+                raise osv.except_osv(_('Error !'), message)
+            else:
+                warning = {
+                       'title': _('Warning!!!'),
+                       'message': message,
+                           }
+                return {
+                    'warning': warning,
+                    }
+        
+        #Check if the date is more than 5 days from invoice date
+        if delta_withhold.days > 5:
+            if not raise_error:
+                message = _('The withhold should be issued up to 5 days of invoice. Currently the system allows you to record this withhold at your own risk')
+                warning = {
+                       'title': _('Warning!!!'),
+                       'message': message,
+                           }
+                return {
+                    'warning': warning,
+                    }
+
+            
+        return {'value':value}
+
     def action_aprove(self, cr, uid, ids, context=None):
         
         #depending the origin approve in diferent way
@@ -760,6 +808,8 @@ class account_withhold(osv.osv):
             # verify if exist a withhold approve for the invoice related
             if withhold_obj.search(cr, uid, [('invoice_id','=',withhold.invoice_id.id),('state','=','approved')], context):
                 raise osv.except_osv('Warning!', _("Withhold for this invoice already exist!!"))
+           
+            self._validate_period_date(cr, uid, withhold.creation_date, withhold.invoice_id.id, raise_error=True, context=context)
                         
             if withhold.transaction_type == 'sale':
                 self.action_approve_sale(cr, uid, ids, context=context)

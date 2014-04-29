@@ -30,7 +30,8 @@
 								attrs="{'required':True}"
 								on_change="onchange_number(number)"/>
 								<field name="creation_date" 
-								attrs="{'required':True}"/>
+								attrs="{'required':True}"
+								on_change="onchange_creation_date(creation_date,invoice_id)"/>
 								<field name="partner_id" readonly="1"/>
 								<field name="invoice_id" readonly="1"/>
 							</group>

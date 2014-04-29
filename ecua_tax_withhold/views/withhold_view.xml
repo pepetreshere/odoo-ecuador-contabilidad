@@ -39,7 +39,7 @@
 								<field name="number" 
 								attrs="{'readonly':[('state','!=','draft')], 'required':True }"/>
 								<field name="creation_date" 
-								attrs="{'required':True}"/>
+								attrs="{'required':True}" />
 								<field name="partner_id" readonly="1"/>
 								<field name="invoice_id" readonly="1"/>
 							</group>
