@@ -26,7 +26,6 @@
 	                <sheet string="Withhold">
 	                	<div>
 							<group>
-								<field name="state" invisible="1" />
 								<field name="transaction_type" invisible="1" />
 								<field name="shop_id" invisible="1" /> 
 								<field name="company_id" invisible="1" />
