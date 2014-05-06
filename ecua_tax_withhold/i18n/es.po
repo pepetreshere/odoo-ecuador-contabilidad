@@ -62,8 +62,8 @@ msgstr "Documento"
 
 #. module: ecua_tax_withhold
 #: field:account.withhold.line,withhold_percentage:0
-msgid "Percentaje Value"
-msgstr "Valor Porcentual"
+msgid "Percentaje Value (%)"
+msgstr "Valor Porcentual (%)"
 
 #. module: ecua_tax_withhold
 #: help:account.move.line,withhold_id:0

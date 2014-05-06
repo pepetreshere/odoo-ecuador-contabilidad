@@ -26,7 +26,7 @@
 								<field name="tax_id" />
 								<field name="tax_base" />
 								<field name="tax_amount" />
-								<field name="withhold_percentage" />
+								<field name="withhold_percentage"/>
 							</tree>
 						</field>
 					</page>
@@ -58,7 +58,7 @@
 								<field name="tax_id" />
 								<field name="tax_base" />
 								<field name="tax_amount" />
-								<field name="withhold_percentage" />
+								<field name="withhold_percentage"/>
 							</tree>
 						</field>
 					</page>

@@ -46,7 +46,7 @@ class account_withhold_line(osv.osv):
                                             help="Type of Tax (IVA/RENTA)"),
             'tax_base': fields.float('Tax Base', digits_compute=dp.get_precision('Account'),
                                      help="Base Value for the compute of tax"),
-            'withhold_percentage': fields.float('Percentaje Value', digits_compute=dp.get_precision('Account'),
+            'withhold_percentage': fields.float('Percentaje Value (%)', digits_compute=dp.get_precision('Account'),
                                                 help="Percentage Value of tax withhold"),
             'tax_amount':fields.float('Amount', digits_compute=dp.get_precision('Account'),
                                       help="Amount of tax withhold"),
