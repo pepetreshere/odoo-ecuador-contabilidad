@@ -98,6 +98,40 @@ class account_invoice(osv.osv):
         
         return super(account_invoice, self).copy(cr, uid, id, default, context=context)
     
+    def add_witthold(self, cr, uid, ids, context=None):
+        
+        if ids:
+            invoice = self.browse(cr, uid, ids[0])
+            # check it's a purchase invoice
+            if invoice.type == 'in_invoice':
+                # Check if the invoice have retention value
+                if invoice.total_to_withhold == 0.0:
+                    warn = _("Warning")
+                    message = _("The total value of withhold is zero")
+                    raise osv.except_osv(warn, message)
+                else:
+                    data_obj = self.pool.get('ir.model.data')
+                    view = data_obj.get_object_reference(cr, uid, 'ecua_tax_withhold', 'withhold_wizard_form')
+                    view_id = view and view[1] or False
+                    
+                    if view_id:
+                        res =  {
+                            'name': _("Complete data Purchase Withhold"),
+                            'view_type': 'form',
+                            'view_mode': 'form',
+                            'res_model': 'account.withhold',
+                            'view_id': view_id,
+                            'type': 'ir.actions.act_window',
+                            'nodestroy' : True,
+                            'auto_refresh' : True, 
+                            'target': 'new',
+                            'context':{'transaction_type':'purchase'},
+                                }
+                
+                        return res
+
+        return {}
+    
 account_invoice()
 
 

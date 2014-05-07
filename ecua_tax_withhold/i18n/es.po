@@ -665,3 +665,20 @@ msgstr "Fecha que debe ser ingresada para aprobar la retención"
 msgid "number to be entered to approve the withhold"
 msgstr "Numero que debe ser ingresado para aprobar la retención"
 
+#. module: ecua_tax_withhold
+#: code:addons/ecua_tax_withhold/objects/invoice.py:109
+#, python-format
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: ecua_tax_withhold
+#: code:addons/ecua_tax_withhold/objects/invoice.py:110
+#, python-format
+msgid "The total value of withhold is zero"
+msgstr "El valor total a retener es cero"
+
+#. module: ecua_tax_withhold
+#: code:addons/ecua_tax_withhold/objects/invoice.py:119
+#, python-format
+msgid "Complete data Purchase Withhold"
+msgstr "Completar los datos de la Retención en Compra"

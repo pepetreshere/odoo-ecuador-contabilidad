@@ -664,3 +664,21 @@ msgstr ""
 #, python-format
 msgid "number to be entered to approve the withhold"
 msgstr ""
+
+#. module: ecua_tax_withhold
+#: code:addons/ecua_tax_withhold/objects/invoice.py:109
+#, python-format
+msgid "Warning"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: code:addons/ecua_tax_withhold/objects/invoice.py:110
+#, python-format
+msgid "The total value of withhold is zero"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: code:addons/ecua_tax_withhold/objects/invoice.py:119
+#, python-format
+msgid "Complete data Purchase Withhold"
+msgstr ""
