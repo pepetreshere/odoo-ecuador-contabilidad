@@ -861,8 +861,8 @@ class account_withhold(osv.osv):
                     sub_renta = sub_renta + withhold.tax_amount
                 
             # TRESCLOUD - TODO - days deberia seleccionarse en una seccion de configuracion contable
-            day = datetime.timedelta(days=5)
-            add_date = datetime.datetime(*time.strptime(ret.invoice_id.date_invoice,'%Y-%m-%d')[:5])+ day
+            day = timedelta(days=5)
+            add_date = datetime(*time.strptime(ret.invoice_id.date_invoice,'%Y-%m-%d')[:5])+ day
             if ret.invoice_id.amount_total < total:
                 raise osv.except_osv('Error!', _("Amount of withhold is bigger than residual value of invoice, please verify"))
             if ret.creation_date < ret.invoice_id.date_invoice:
