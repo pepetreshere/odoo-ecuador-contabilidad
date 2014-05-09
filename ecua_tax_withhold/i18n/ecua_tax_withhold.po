@@ -612,9 +612,9 @@ msgid "The date of withhold can not be least than the date of invoice"
 msgstr ""
 
 #. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:872
+#: code:addons/ecua_tax_withhold/objects/withhold.py:874
 #, python-format
-msgid "The date of withhold can not be more than 5 days from the date of the invoice"
+msgid "Amount of withhold can't be zero, please verify"
 msgstr ""
 
 #. module: ecua_tax_withhold

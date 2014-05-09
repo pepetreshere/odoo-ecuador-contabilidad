@@ -867,10 +867,11 @@ class account_withhold(osv.osv):
                 raise osv.except_osv('Error!', _("Amount of withhold is bigger than residual value of invoice, please verify"))
             if ret.creation_date < ret.invoice_id.date_invoice:
                 raise osv.except_osv('Error!', _("The date of withhold can not be least than the date of invoice"))
-            if ret.creation_date > add_date.strftime('%Y-%m-%d'):
-                # TRESCLOUD - TODO - solo debe botar un warning, queda atribucion del contador.
-                raise osv.except_osv('Error!', _("The date of withhold can not be more than 5 days from the date of the invoice"))
-
+            # P.R: Esta parte se controla con los onchage ya que es solo una advertencia
+            #if ret.creation_date > add_date.strftime('%Y-%m-%d'):
+                #raise osv.except_osv('Error!', _("The date of withhold can not be more than 5 days from the date of the invoice"))
+            if total == 0.0:
+                raise osv.except_osv('Error!', _("Amount of withhold can't be zero, please verify"))
             #P.R. puede emitirse mas de 1 retencion, una por el iva y otra por la renta
             #for withhold in ret_obj.search(cr, uid, [('invoice_id.partner_id.id', '=', ret.invoice_id.partner_id.id), ('transaction_type','=','sale'), ('id','not in',tuple(ids))]):
                 #if ret_obj.browse(cr, uid, [withhold,], context)[0].number_sale == ret.number_sale:

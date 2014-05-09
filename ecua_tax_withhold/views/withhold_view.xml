@@ -41,7 +41,8 @@
 								<field name="printer_id"
 								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
 								<field name="creation_date" 
-								attrs="{'required':True}" />								
+								attrs="{'required':True}" 
+								on_change="onchange_creation_date(creation_date,invoice_id)"/>								
 							</group>
 							<!-- <group col="4">
 								<field name="number" 
@@ -52,14 +53,15 @@
 	                	</div>
 						<notebook>
 							<page string="Withhold Lines">
-								<field name="withhold_line_ids" nolabel="1" readonly="0" colspan="4" height="150">
+								<field name="withhold_line_ids" nolabel="1" colspan="4" height="150"
+								attrs="{'readonly':['|',('transaction_type','!=','sale'),('state','!=','draft')], 'required':[('transaction_type','=','sale')]}">
 									<tree string="Withhold Lines" editable="bottom">
 										<!--field name="fiscalyear_id" widget="selection" /-->
-										<field name="description" />
-										<field name="tax_id" />
-										<field name="tax_base" />
-										<field name="tax_amount"/>
-										<field name="withhold_percentage" />
+										<field name="description" required="1"/>
+										<field name="tax_id" required="1"/>
+										<field name="tax_base" required="1"/>
+										<field name="tax_amount" required="1"/>
+										<field name="withhold_percentage" required="1"/>
 									</tree>
 								</field>
 	                            <group class="oe_subtotal_footer oe_right">
@@ -75,7 +77,8 @@
 		                        <field name="comment"/>
 							</page>
 							<page string="Account voucher lines">
-			 					<field name="account_voucher_ids" colspan="4" nolabel="1">
+			 					<field name="account_voucher_ids" colspan="4" 
+			 					nolabel="1" readonly="1">
 					 				<tree string="Account voucher lines">
 				                        <field name="name"/>
 				                        <field name="partner_id"/>
