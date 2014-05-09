@@ -15,7 +15,9 @@
 	                </header>
 	                <sheet string="Withhold Wizard">
 	                	<div>
-							<group>
+							<group  col="4">
+								<field name="partner_id" readonly="1"/>
+								<field name="invoice_id" readonly="1"/>
 								<field name="state" invisible="1" />
 								<field name="transaction_type" invisible="1" />
 								<field name="shop_id" invisible="1" /> 
@@ -32,8 +34,6 @@
 								<field name="creation_date" 
 								attrs="{'required':True}"
 								on_change="onchange_creation_date(creation_date,invoice_id)"/>
-								<field name="partner_id" readonly="1"/>
-								<field name="invoice_id" readonly="1"/>
 							</group>
 						</div>
 						<div>
@@ -42,25 +42,25 @@
 								attrs="{'readonly':[('transaction_type','!=','sale')], 'required':[('transaction_type','=','sale')]}">
 									<tree string="Withhold Lines" editable="bottom">
 										<!--field name="fiscalyear_id" widget="selection" /-->
-										<field name="description" />
-										<field name="tax_id" />
-										<field name="tax_base" />
-										<field name="tax_amount"/>
-										<field name="withhold_percentage" />
+										<field name="description" required="1"/>
+										<field name="tax_id" required="1"/>
+										<field name="tax_base" required="1"/>
+										<field name="tax_amount" required="1"/>
+										<field name="withhold_percentage" required="1"/>
 									</tree>
 								</field>
 							</group>
 						</div>
 	                </sheet>
                     <footer>
+						<button name="print_withhold" string="Print"
+							icon="gtk-apply" type="object" class="oe_highlight"
+							attrs="{'invisible':[('transaction_type','=','sale')]}"/>
 						<button name="button_aprove" string="Approve"
-							icon="gtk-apply" class="oe_highlight" type="object" />
+							icon="gtk-apply" type="object"/>
 						<button name="approve_late" string="Save"
 							icon="gtk-apply" type="object"
 							attrs="{'invisible':[('transaction_type','=','purchase')]}"/>
-						<button name="print_withhold" string="Print"
-							icon="gtk-apply" type="object"
-							attrs="{'invisible':[('transaction_type','=','sale')]}"/>
 						<button name="button_cancel" icon="gtk-cancel" 
 							special="cancel" string="_Cancel" type="object" />
 <!--                         <button string="Cancel" class="oe_link" special="cancel"/>  -->

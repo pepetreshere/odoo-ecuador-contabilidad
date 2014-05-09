@@ -24,8 +24,15 @@
 						statusbar_colors='{"approved":"blue","canceled":"red"}' />
 	                </header>
 	                <sheet string="Withhold">
+	                    <h1>
+	                        <label string="Number of Withhold "/>
+	                        <field name="number" class="oe_inline" required="1"
+	                        attrs="{'readonly':[('state','!=','draft')]}" />
+	                    </h1>
 	                	<div>
-							<group>
+							<group col="4">
+								<field name="partner_id" readonly="1"/>
+								<field name="invoice_id" readonly="1"/>
 								<field name="transaction_type" invisible="1" />
 								<field name="shop_id" invisible="1" /> 
 								<field name="company_id" invisible="1" />
@@ -33,15 +40,15 @@
 							<group col="4">
 								<field name="printer_id"
 								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
+								<field name="creation_date" 
+								attrs="{'required':True}" />								
 							</group>
-							<group col="4">
+							<!-- <group col="4">
 								<field name="number" 
 								attrs="{'readonly':[('state','!=','draft')], 'required':True }"/>
 								<field name="creation_date" 
 								attrs="{'required':True}" />
-								<field name="partner_id" readonly="1"/>
-								<field name="invoice_id" readonly="1"/>
-							</group>
+							</group> -->
 	                	</div>
 						<notebook>
 							<page string="Withhold Lines">

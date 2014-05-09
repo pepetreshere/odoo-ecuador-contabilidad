@@ -682,3 +682,8 @@ msgstr ""
 #, python-format
 msgid "Complete data Purchase Withhold"
 msgstr ""
+
+#. module: ecua_tax_withhold
+#: view:account.withhold:0
+msgid "Number of Withhold "
+msgstr ""

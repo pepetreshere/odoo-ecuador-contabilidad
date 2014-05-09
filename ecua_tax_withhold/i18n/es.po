@@ -682,3 +682,8 @@ msgstr "El valor total a retener es cero"
 #, python-format
 msgid "Complete data Purchase Withhold"
 msgstr "Completar los datos de la Retención en Compra"
+
+#. module: ecua_tax_withhold
+#: view:account.withhold:0
+msgid "Number of Withhold "
+msgstr "Retención Número "
