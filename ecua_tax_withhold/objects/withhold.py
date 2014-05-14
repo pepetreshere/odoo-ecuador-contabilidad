@@ -58,6 +58,39 @@ class account_withhold_line(osv.osv):
 
             }
     
+    def onchange_description(self, cr, uid, ids, description, context=None):
+        """ This function change the domain for tax_id using the description.
+        Only show taxes according they description
+        """
+        
+        res = {'domain':{},
+               'value': {
+                         'tax_id':False,
+                         'tax_ac_id':False,
+                         }
+               }
+
+        if not description:
+            return res
+    
+        #search the tax like description need
+        account_tax_obj = self.pool.get('account.tax')
+        list_tax = account_tax_obj.search(cr, uid, [('type_ec', '=', description),
+                                                    ('tax_code_id', '!=', False)], context=context)
+
+        code_id_list = []
+        for tax in account_tax_obj.browse(cr, uid, list_tax, context=context):
+            if tax.tax_code_id.id not in code_id_list:
+                code_id_list.append(tax.tax_code_id.id)
+
+        
+        if code_id_list:
+            res["value"].update({"tax_id": code_id_list[0]})
+            domain = [('id', 'in', code_id_list)]
+            res["domain"]={'tax_id': domain}
+        
+        return res
+    
 account_withhold_line()
 
 class account_withhold(osv.osv):
