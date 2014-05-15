@@ -94,7 +94,7 @@ msgstr "Descripción de las lineas de la Retención"
 #. module: ecua_tax_withhold
 #: field:account.withhold.line,tax_base:0
 msgid "Tax Base"
-msgstr "Base de Impuesto"
+msgstr "Base imponible"
 
 #. module: ecua_tax_withhold
 #: view:account.invoice:0
