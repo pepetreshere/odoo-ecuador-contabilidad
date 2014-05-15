@@ -98,16 +98,8 @@ class account_withhold(osv.osv):
     _name = 'account.withhold'
     _rec_name='number'
 
-#    _inherit = ['mail.thread']
-#    _track = {
-#        'type': {
-#        },
-#        'state': {
-#            'account.mt_invoice_paid': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'paid' and obj['type'] in ('out_invoice', 'out_refund'),
-#            'account.mt_invoice_validated': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'open' and obj['type'] in ('out_invoice', 'out_refund'),
-#        },
-#    }
-    
+    _inherit = ['mail.thread']
+
     def _check_number(self, cr, uid, ids, context=None):
         cadena = '(\d{3})+\-(\d{3})+\-(\d{9})'
         for obj in self.browse(cr, uid, ids):
@@ -405,61 +397,61 @@ class account_withhold(osv.osv):
     
     _columns = {
         'number': fields.char('Number', size=17, required=False, 
-                              help="Number of Withhold"),
+                              help="Number of Withhold", track_visibility='onchange'),
         #'origin': fields.char('Origin Document', size=128, required=False),
         'creation_date': fields.date('Creation Date',states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]},
-                                     help="Date of creation of Withhold"),
+                                     help="Date of creation of Withhold", track_visibility='onchange'),
 
         #Campo utilizado para identificar el tipo de documento de origen y alterar su funcionamiento
         'transaction_type':fields.selection([
             ('purchase','Purchases'),
             ('sale','Sales'),
-            ],  'Transaction type', required=True, readonly=True),
+            ],  'Transaction type', required=True, readonly=True, track_visibility='onchange'),
 
         #TRESCLOUD - Removimos el "ondelete='cascade" del invoice_id, puede llevar a borrados inintencionales!
         'invoice_id': fields.many2one('account.invoice', 'Number of document', required=False, states={'approved':[('readonly',True)], 'canceled':[('readonly',True)]},
-                                      help="Invoice related with this withhold"),
+                                      help="Invoice related with this withhold", track_visibility='onchange'),
         'partner_id': fields.related('invoice_id','partner_id', type='many2one', relation='res.partner', string='Partner', store=True,
-                                     help="Partner related with this withhold"),
+                                     help="Partner related with this withhold", track_visibility='onchange'),
 
         #TRESCLOUD - Deberia guardarse el nombre del partner, su RUC, direccion, etc (ejemplo el año que viene el cliente cambia de direccion,
         # entonces el documento tributario del año 2012 no deberia verse afectado)  
         'company_id': fields.related('invoice_id','company_id', type='many2one', relation='res.company', string='Company', store=True, change_default=True,
-                                     help="Company related with this withhold (in multi-company environment)"),
+                                     help="Company related with this withhold (in multi-company environment)", track_visibility='onchange'),
         'state':fields.selection([
             ('draft','Draft'),
             ('approved','Approved'),
             ('canceled','Canceled'),
-            ],  'State', required=True, readonly=True),
+            ],  'State', required=True, readonly=True, track_visibility='onchange'),
         'account_voucher_ids': fields.one2many('account.move.line', 'withhold_id', 'Withhold',
-                                               help="List of account moves"),
-        'automatic': fields.boolean('Automatic?',),
+                                               help="List of account moves", track_visibility='onchange'),
+        'automatic': fields.boolean('Automatic?',track_visibility='onchange'),
         'period_id': fields.related('invoice_id','period_id', type='many2one', relation='account.period', string='Period', store=True,
-                                    help="Period related with this transaction"), 
+                                    help="Period related with this transaction", track_visibility='onchange'), 
         'shop_id': fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]},
-                                   help="Shop related with this transaction, only need in Purchase"),
+                                   help="Shop related with this transaction, only need in Purchase", track_visibility='onchange'),
         'printer_id': fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]},
-                                      help="Printer Point related with this transaction, only need in Purchase"),
+                                      help="Printer Point related with this transaction, only need in Purchase", track_visibility='onchange'),
         #P.R: Required the authorization asociated depending if is purchase or sale
         'authorization_sri': fields.char('Authorization', readonly=True, states={'draft':[('readonly',False)]}, size=32,
-                                         help="Number of authorization use by the withhold"),
+                                         help="Number of authorization use by the withhold", track_visibility='onchange'),
         #P.R: Required in this format to generate the account moves using this lines
         'withhold_line_ids': fields.one2many('account.withhold.line', 'withhold_id', 'Withhold lines',
                                              help="List of withholds"),
         #P.R: Required to show in the printed report
         'total': fields.function(_total, method=True, type='float', string='Total Withhold', store = True,
-                                 help="Total value of withhold"),
+                                 help="Total value of withhold", track_visibility='always'),
         #P.R: Required to show in the ats report
         'total_iva': fields.function(_total_iva, method=True, type='float', string='Total IVA', store = False,
-                                 help="Total IVA value of withhold"),   
+                                 help="Total IVA value of withhold", track_visibility='always'),   
         'total_renta': fields.function(_total_renta, method=True, type='float', string='Total RENTA', store = False,
-                                 help="Total renta value of withhold"),      
+                                 help="Total renta value of withhold", track_visibility='always'),      
         #P.R: Required to show in the tree view
         'total_base_iva': fields.function(_total_base_iva, method=True, type='float', string='Total Base IVA', store = False,
-                                 help="Total base IVA of withhold"),   
+                                 help="Total base IVA of withhold", track_visibility='always'),   
         'total_base_renta': fields.function(_total_base_renta, method=True, type='float', string='Total Base RENTA', store = False,
-                                 help="Total base renta of withhold"),      
-        'comment': fields.text('Additional Information'), 
+                                 help="Total base renta of withhold", track_visibility='always'),      
+        'comment': fields.text('Additional Information', track_visibility='onchange'), 
     }
 
 # Existe un default get, reemplaza al defaults       
