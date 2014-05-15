@@ -490,6 +490,11 @@ msgid "Complete data Sale Withhold"
 msgstr "Completar datos de retención de Venta"
 
 #. module: ecua_tax_withhold
+#: help:account.withhold,comment:0
+msgid "Text can be use to comment the withhold, if it's necesary"
+msgstr "Cuadro de texto que puede utilizarse para agregar comentarios sobre la retención de ser necesario"
+
+#. module: ecua_tax_withhold
 #: view:res.company:0
 msgid "Ecuadorian Accounting"
 msgstr "Contabilidad Ecuatoriana"

@@ -451,7 +451,8 @@ class account_withhold(osv.osv):
                                  help="Total base IVA of withhold", track_visibility='always'),   
         'total_base_renta': fields.function(_total_base_renta, method=True, type='float', string='Total Base RENTA', store = False,
                                  help="Total base renta of withhold", track_visibility='always'),      
-        'comment': fields.text('Additional Information', track_visibility='onchange'), 
+        'comment': fields.text('Additional Information', track_visibility='onchange',
+                               help="Text can be use to comment the withhold, if it's necesary"), 
     }
 
 # Existe un default get, reemplaza al defaults       
