@@ -1,0 +1,26 @@
+id,name,model_id/id,group_id/id,perm_create,perm_unlink,perm_write,perm_read
+account.access_account_tax_1,account.tax internal user,account.model_account_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_2,account.tax.code,account.model_account_tax_code,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_3,account.tax,account.model_account_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_4,account.tax.code.template,account.model_account_tax_code_template,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_5,account.tax.template,account.model_account_tax_template,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_6,account.invoice.tax,account.model_account_invoice_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_7,account.tax,account.model_account_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_8,account.fiscal.position.tax account.manager,account.model_account_fiscal_position_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_9,account.fiscal.position.tax all,account.model_account_fiscal_position_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_10,account.fiscal.position.tax.template,account.model_account_fiscal_position_tax_template,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_11,account.tax.code accountant,account.model_account_tax_code,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_12,account.invoice.tax accountant,account.model_account_invoice_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_13,account.tax sale manager,account.model_account_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_14,account.invoice.tax  sale manager,account.model_account_invoice_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_15,account_invoice_tax salesman,account.model_account_invoice_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_16,account.tax.user,account.model_account_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_17,account.invoice.tax,account.model_account_invoice_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_18,account.tax,account.model_account_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_19,account.invoice.tax stock user,account.model_account_invoice_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_20,account.tax,account.model_account_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_21,account.tax,account.model_account_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_22,account_invoice.tax purchase,account.model_account_invoice_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_23,account.invoice.tax.user,account.model_account_invoice_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_24,account.invoice.tax.hr.manager,account.model_account_invoice_tax,ecua_tax.group_account__tax_manager,True,True,True,True
+account.access_account_tax_25,sri.tax.support,ecua_invoice_type.model_sri_tax_support,ecua_tax.group_account__tax_manager,True,True,True,True
