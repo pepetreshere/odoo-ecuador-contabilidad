@@ -1,7 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_ats_user","sri.ats","model_sri_ats","base.group_user",1,1,1,1
-"access_ats_acc","sri.ats","model_sri_ats","account.group_account_user",1,1,1,1
-"access_ats_acc_man","sri.ats","model_sri_ats","account.group_account_manager",1,1,1,1
-"access_sri_voucher_type_user","sri.voucher.type","model_sri_voucher_type","base.group_user",1,0,0,0
-"access_sri_transaction_usage_user","sri.transaction.usage","model_sri_transaction_usage","base.group_user",1,0,0,0
-"access_sri_tax_support_user","sri.tax.support","model_sri_tax_support","base.group_user",1,0,0,0

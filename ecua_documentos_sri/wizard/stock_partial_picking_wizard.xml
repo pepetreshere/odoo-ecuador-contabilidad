@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-	<data>
-	
-	<!-- Heredar de las vistas de stock partial picking, y agregar contexto de generación de guías de remisión -->
-
-	</data>
-</openerp>
