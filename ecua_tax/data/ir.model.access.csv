@@ -1,0 +1,26 @@
+id,name,perm_create,perm_unlink,perm_write,perm_read
+account.access_account_tax_internal_user,account.tax internal user,False,False,False,True
+account.access_account_tax_code,account.tax.code,False,False,False,True
+account.access_account_tax,account.tax,False,False,False,True
+account.access_account_tax_code_template,account.tax.code.template,False,False,False,True
+account.access_account_tax_template,account.tax.template,False,False,False,True
+account.access_account_invoice_tax_uinvoice,account.invoice.tax,False,False,False,True
+account.access_account_tax_manager,account.tax,False,False,False,True
+account.access_account_fiscal_position_tax_product_manager,account.fiscal.position.tax account.manager,False,False,False,True
+account.access_account_fiscal_position_tax,account.fiscal.position.tax all,False,False,False,True
+account.access_account_fiscal_position_tax_template,account.fiscal.position.tax.template,False,False,False,True
+account.access_account_tax_code_accountant,account.tax.code accountant,False,False,False,True
+account.access_account_invoice_tax_accountant,account.invoice.tax accountant,False,False,False,True
+account.access_account_tax_sale_manager,account.tax sale manager,False,False,False,True
+account.access_account_invoice_tax_sale_manager,account.invoice.tax  sale manager,False,False,False,True
+sale.access_account_invoice_tax_salesman,account_invoice_tax salesman,False,False,False,True
+sale.access_account_tax_user,account.tax.user,False,False,False,True
+portal_sale.access_account_invoice_tax,account.invoice.tax,False,False,False,True
+portal_sale.access_account_tax,account.tax,False,False,False,True
+stock.access_account_invoice_tax_user,account.invoice.tax stock user,False,False,False,True
+purchase.access_account_tax_purchase_user,account.tax,False,False,False,True
+purchase.access_account_tax_purchase_user_manager,account.tax,False,False,False,True
+purchase.access_account_invoice_tax_purchase,account_invoice.tax purchase,False,False,False,True
+hr_expense.access_account_invoice_tax_user,account.invoice.tax.user,False,False,False,True
+hr_timesheet_invoice.access_account_invoice_tax_hr_manager,account.invoice.tax.hr.manager,False,False,False,True
+ecua_invoice_type.access_sri_tax_support_user,sri.tax.support,False,False,False,True
