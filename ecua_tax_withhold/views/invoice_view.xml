@@ -18,6 +18,8 @@
 								type="object" icon="terp-gtk-jump-to-ltr" 
 								attrs="{'invisible':['|',('state','=','draft'),('withhold_exist','=',True)]}"
 								context="{'transaction_type':'purchase'}" />
+                        <button name="action_view_withhold" string="View Withhold" type="object" class="oe_highlight"
+                            	attrs="{'invisible': [('withhold_exist', '=', False)]}"/>
 				</button>
                 <page string="Payments" position="after">
 	                <page string="Withholds"
@@ -50,6 +52,8 @@
 								type="action" icon="terp-gtk-jump-to-ltr" 
 								attrs="{'invisible':['|',('state','=','draft'),('withhold_exist','=',True)]}"
 								context="{'transaction_type':'sale'}"/>
+                        <button name="action_view_withhold" string="View Withhold" type="object" class="oe_highlight"
+                            	attrs="{'invisible': [('withhold_exist', '=', False)]}"/>
 				</button>
                 <page string="Payments" position="after">
 	                <page string="Withholds"

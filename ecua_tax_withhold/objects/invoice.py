@@ -131,6 +131,32 @@ class account_invoice(osv.osv):
                         return res
 
         return {}
+
+    def action_view_withhold(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing withhold of given invoice ids. 
+        It can either be a in a list or in a form view, if there is only one invoice to show.
+        '''
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+        invoice = self.browse(cr, uid, ids[0])
+
+        #Depending if is a sale o purchase withhold search for the corresponding action
+        action = ""
+        if invoice.type == 'in_invoice':
+            action = "action_account_withhold_purchase"
+        else:
+            action = "action_account_withhold_sale"
+
+        result = mod_obj.get_object_reference(cr, uid, 'ecua_tax_withhold', action)
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, [id], context=context)[0]
+        res = mod_obj.get_object_reference(cr, uid, 'ecua_tax_withhold', 'view_account_withhold_form')
+        result['views'] = [(res and res[1] or False, 'form')]
+        result['res_id'] = invoice.withhold_id and invoice.withhold_id.id or False
+            
+        return result
+
     
 account_invoice()
 
