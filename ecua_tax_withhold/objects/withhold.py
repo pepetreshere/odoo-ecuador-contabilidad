@@ -37,6 +37,20 @@ class account_withhold_line(osv.osv):
    
     _name = "account.withhold.line"
 
+    def _withhold_line_percentaje(self, cr, uid, description, tax_id):
+        percentage = 0.0
+        tax_code_brow = self.pool.get('account.tax.code').browse(cr, uid, tax_id)
+        tax_obj = self.pool.get('account.tax')
+        if tax_code_brow:
+            if description == 'iva':
+                tax = tax_obj.search(cr, uid, [('tax_code_id', '=', tax_code_brow.id), ('child_ids','=',False)])
+            elif description == 'renta':
+                tax = tax_obj.search(cr, uid, [('base_code_id', '=', tax_code_brow.id), ('child_ids','=',False)])
+            if tax:
+                percentage = (tax_obj.browse(cr, uid, tax[0])['amount'])*(-100)
+                
+        return percentage
+
     _columns = {
             'withhold_id': fields.many2one('account.withhold', 'Withhold',
                                            help="Number of related withhold"),
@@ -102,6 +116,28 @@ class account_withhold_line(osv.osv):
         
         return res
     
+    def onchange_tax_id(self, cr, uid, ids, description, tax_id, tax_base):
+        """ 
+        This function calculate the amount using the percentage of tax, also return this percentage
+        """
+    
+        res = {'value': {
+                         'tax_amount': 0.0,
+                         'withhold_percentage': 0.0,
+                         }
+               }
+        
+        if not description or not tax_id:
+            return res
+        
+        #check the tax and extract the percentage
+        withhold_percentage = self._withhold_line_percentaje(cr, uid, description, tax_id)
+        tax_amount = (withhold_percentage * tax_base) / 100
+        res['value']['withhold_percentage'] = withhold_percentage 
+        res['value']['tax_amount'] = tax_amount 
+        
+        return res
+    
 account_withhold_line()
 
 class account_withhold(osv.osv):
@@ -123,7 +159,7 @@ class account_withhold(osv.osv):
             else:
                 return True
     
-    def _withhold_percentaje(self, cr, uid,vals_ret_line, context=None):
+    def _withhold_percentaje(self, cr, uid, vals_ret_line, context=None):
         res = {}
         tax_code_id = self.pool.get('account.tax.code').search(cr, uid, [('id', '=', vals_ret_line['tax_id'])])
         tax_code = None
