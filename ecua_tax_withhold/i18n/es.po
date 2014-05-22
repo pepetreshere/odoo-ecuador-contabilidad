@@ -156,7 +156,7 @@ msgstr "Reabrir"
 #. module: ecua_tax_withhold
 #: view:account.withhold:0
 msgid "_Cancel"
-msgstr "_Cancelar"
+msgstr "_Anular"
 
 #. module: ecua_tax_withhold
 #: selection:account.withhold.line,description:0
@@ -301,7 +301,7 @@ msgstr "Retenciones"
 #: selection:account.withhold,state:0
 #: selection:account.withhold,transaction_type:0
 msgid "Canceled"
-msgstr "Cancelado"
+msgstr "Anulado"
 
 #. module: ecua_tax_withhold
 #: field:account.withhold,comment:0
@@ -435,7 +435,7 @@ msgstr "Retenciones en Venta"
 #. module: ecua_tax_withhold
 #: view:account.withhold:0
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "Anular"
 
 #. module: ecua_tax_withhold
 #: view:account.invoice:0
