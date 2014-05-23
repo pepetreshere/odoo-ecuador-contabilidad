@@ -37,6 +37,20 @@ class account_withhold_line(osv.osv):
    
     _name = "account.withhold.line"
 
+    def _withhold_line_percentaje(self, cr, uid, description, tax_id):
+        percentage = 0.0
+        tax_code_brow = self.pool.get('account.tax.code').browse(cr, uid, tax_id)
+        tax_obj = self.pool.get('account.tax')
+        if tax_code_brow:
+            if description == 'iva':
+                tax = tax_obj.search(cr, uid, [('tax_code_id', '=', tax_code_brow.id), ('child_ids','=',False)])
+            elif description == 'renta':
+                tax = tax_obj.search(cr, uid, [('base_code_id', '=', tax_code_brow.id), ('child_ids','=',False)])
+            if tax:
+                percentage = (tax_obj.browse(cr, uid, tax[0])['amount'])*(-100)
+                
+        return percentage
+
     _columns = {
             'withhold_id': fields.many2one('account.withhold', 'Withhold',
                                            help="Number of related withhold"),
@@ -58,21 +72,32 @@ class account_withhold_line(osv.osv):
 
             }
     
-    def onchange_description(self, cr, uid, ids, description, context=None):
+    def onchange_description(self, cr, uid, ids, description, invoice_amount_untaxed, invoice_vat_doce_subtotal):
         """ This function change the domain for tax_id using the description.
-        Only show taxes according they description
+        Only show taxes according they description. Also add the tax base according the value in invoice
         """
-        
+    
         res = {'domain':{},
                'value': {
-                         'tax_id':False,
-                         'tax_ac_id':False,
+                         'tax_id': False,
+                         'tax_ac_id': False,
+                         'tax_base': False,
                          }
                }
-
+        
         if not description:
             return res
-    
+
+        #check the description and select the tax base
+        tax_base = 0.0
+        if description == 'iva':
+            res['value']['tax_base'] = invoice_vat_doce_subtotal
+        elif description == 'renta':
+            res['value']['tax_base'] = invoice_amount_untaxed
+
+        #until check the filter using the type of tax
+        return res
+
         #search the tax like description need
         account_tax_obj = self.pool.get('account.tax')
         list_tax = account_tax_obj.search(cr, uid, [('type_ec', '=', description),
@@ -88,6 +113,28 @@ class account_withhold_line(osv.osv):
             res["value"].update({"tax_id": code_id_list[0]})
             domain = [('id', 'in', code_id_list)]
             res["domain"]={'tax_id': domain}
+        
+        return res
+    
+    def onchange_tax_id(self, cr, uid, ids, description, tax_id, tax_base):
+        """ 
+        This function calculate the amount using the percentage of tax, also return this percentage
+        """
+    
+        res = {'value': {
+                         'tax_amount': 0.0,
+                         'withhold_percentage': 0.0,
+                         }
+               }
+        
+        if not description or not tax_id:
+            return res
+        
+        #check the tax and extract the percentage
+        withhold_percentage = self._withhold_line_percentaje(cr, uid, description, tax_id)
+        tax_amount = (withhold_percentage * tax_base) / 100
+        res['value']['withhold_percentage'] = withhold_percentage 
+        res['value']['tax_amount'] = tax_amount 
         
         return res
     
@@ -112,7 +159,7 @@ class account_withhold(osv.osv):
             else:
                 return True
     
-    def _withhold_percentaje(self, cr, uid,vals_ret_line, context=None):
+    def _withhold_percentaje(self, cr, uid, vals_ret_line, context=None):
         res = {}
         tax_code_id = self.pool.get('account.tax.code').search(cr, uid, [('id', '=', vals_ret_line['tax_id'])])
         tax_code = None
@@ -226,7 +273,13 @@ class account_withhold(osv.osv):
             
             else:
                 values = context['value']
-                
+
+        # add defaults if context have this values
+        if context and 'amount_untaxed' in context:
+            values['invoice_amount_untaxed'] = context['amount_untaxed']
+        if context and 'amount_untaxed' in context:
+            values['invoice_vat_doce_subtotal'] = context['vat_doce_subtotal']
+            
         return values
     
     def _total(self, cr, uid, ids, field_name, arg, context=None):
@@ -452,7 +505,13 @@ class account_withhold(osv.osv):
         'total_base_renta': fields.function(_total_base_renta, method=True, type='float', string='Total Base RENTA', store = False,
                                  help="Total base renta of withhold", track_visibility='always'),      
         'comment': fields.text('Additional Information', track_visibility='onchange',
-                               help="Text can be use to comment the withhold, if it's necesary"), 
+                               help="Text can be use to comment the withhold, if it's necesary"),
+        # auxiliar fields to hold the amounts to use in base tax
+        'invoice_amount_untaxed': fields.float('Invoice amount untaxed', digits_compute=dp.get_precision('Account'),
+                                     help="Invoice amount untaxed used like base for the compute of tax"),  
+        'invoice_vat_doce_subtotal': fields.float('Invoice vat doce subtotal', digits_compute=dp.get_precision('Account'),
+                                     help="Invoice vat doce subtotal used like base for the compute of tax"),
+          
     }
 
 # Existe un default get, reemplaza al defaults       

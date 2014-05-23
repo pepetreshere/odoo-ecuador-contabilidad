@@ -51,7 +51,7 @@
 						<button name="%(action_withhold_wizard_sale)d" string="Withhold"
 								type="action" icon="terp-gtk-jump-to-ltr" 
 								attrs="{'invisible':['|',('state','=','draft'),('withhold_exist','=',True)]}"
-								context="{'transaction_type':'sale'}"/>
+								context="{'transaction_type':'sale', 'amount_untaxed':amount_untaxed, 'vat_doce_subtotal':vat_doce_subtotal}"/>
                         <button name="action_view_withhold" string="View Withhold" type="object" class="oe_highlight"
                             	attrs="{'invisible': [('withhold_exist', '=', False)]}"/>
 				</button>
