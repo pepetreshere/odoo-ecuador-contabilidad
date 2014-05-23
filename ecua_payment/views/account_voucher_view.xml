@@ -21,7 +21,7 @@
             <field name="inherit_id" ref="account_voucher.view_vendor_receipt_dialog_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//form/footer/button[@name='button_proforma_voucher']" position="before">
-					<button name="button_print_pay_voucher" string="Print & Pay" class="oe_highlight" type="object"/> or
+					<button name="button_print_pay_voucher" string="Print and Pay" class="oe_highlight" type="object"/>
             	</xpath>  
             	
             </field>

@@ -29,5 +29,11 @@ class account_voucher(osv.osv):
                                         _('Importe de la linea a Pagar debe ser menor o igual al Saldo inicial de la linea!'))                    
             else:
                 return super(account_voucher, self).proforma_voucher(cr, uid, id, default, context)
+
+    def button_print_pay_voucher(self, cr, uid, ids, context=None):
+        #self.print_document_type(cr, uid, ids, context=context)
+        self.button_proforma_voucher(cr, uid, ids, context=context)
+
+        return True;
                 
 account_voucher()
