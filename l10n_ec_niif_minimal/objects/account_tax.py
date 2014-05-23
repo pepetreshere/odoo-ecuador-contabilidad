@@ -36,10 +36,12 @@ class account_tax(osv.osv):
                     ('renta','Renta'),
                     ('ice','ICE'),
                     ('other','Otro'),
-                    ],    'Ecuadorian Type', select=True, ),
+                    ],    'Ecuadorian Type', select=True, help="Nombre de los tipos de impuestos ecuatorianos para esta cuenta" ),
                 'assets':fields.boolean('Assets', required=False),
                 'imports':fields.boolean('Imports', required=False),
                 'exports':fields.boolean('Exports', required=False),
+                'tax_system':fields.boolean('Tax system', required=False, help="impuestodel sistema facturadeuna.com, no se puede modifica"),
+                
                                     }
 
     def _unit_compute_inv(self, cr, uid, taxes, price_unit, product=None, partner=None):
