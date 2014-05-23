@@ -5,7 +5,9 @@
         "website" : "http://www.trescloud.com",
         "category" : "Vertical Modules/Parametrization",
         "description": """Payment """,
-        "depends" : ["base","account_voucher"],
+        "depends" : ["base","account_voucher",
+                     #"ecua_invoice_type"
+                     ],
         "init_xml" : [ ],
         #"data" : [ 'data/ir.model.access.csv',],
         "demo_xml" : [ ],

@@ -10,11 +10,22 @@
             <field name="arch" type="xml">
                 <xpath expr="//form/sheet/group/group/field[@name='journal_id']" position="after">
 					<field name="luck" attrs="{'readonly':[('state','!=','draft')]}"/>
-            	</xpath>            
-            
+            	</xpath>
             </field>
         </record>
-        
-        
+
+        <record model="ir.ui.view" id="view_vendor_receipt_dialog_form_inherit1">
+            <field name="name">account.voucher.receipt.dialog.form</field>
+            <field name="model">account.voucher</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_dialog_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/footer/button[@name='button_proforma_voucher']" position="before">
+					<button name="button_print_pay_voucher" string="Print & Pay" class="oe_highlight" type="object"/> or
+            	</xpath>  
+            	
+            </field>
+        </record>    
+                	                          
         </data>
     </openerp>
