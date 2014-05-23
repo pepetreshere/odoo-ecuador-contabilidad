@@ -58,6 +58,8 @@ class res_partner(osv.osv):
                }
 
     _defaults = {
+                 'customer':True,
+                 'supplier':True,
                  'user_id': lambda self, cr, uid, context: uid,
                  'comercial_name': "",
                  'section_id': _get_user_default_sales_team,
