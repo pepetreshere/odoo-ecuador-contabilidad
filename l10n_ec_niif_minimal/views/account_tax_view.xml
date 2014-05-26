@@ -9,13 +9,13 @@
 			<field name="arch" type="xml">
 				 <notebook position="inside">
 					<page string="Ecuadorian Settings">
-						<field name="type_ec" label="Type ecuadorian tax"/>
-						<newline/>
-						<group colspan="4" col="2">
+						<group colspan="2" col="4">
+							<field name="type_ec" string="Type ecuadorian tax" colspan="1"/>
+							<newline/>
 							<field name="assets"></field>
 							<field name="imports"></field>
 							<field name="exports"></field>
-							<!-- <field name="tax_system"></field> -->
+							<field name="tax_system"></field>
 						</group>
 					</page>
 				</notebook>
