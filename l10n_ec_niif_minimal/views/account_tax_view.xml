@@ -10,7 +10,7 @@
 				 <notebook position="inside">
 					<page string="Ecuadorian Settings">
 						<group colspan="2" col="4">
-							<field name="type_ec" string="Type ecuadorian tax" colspan="1"/>
+							<field name="type_ec" required="1" string="Type ecuadorian tax" colspan="1"/>
 							<newline/>
 							<field name="assets"></field>
 							<field name="imports"></field>
