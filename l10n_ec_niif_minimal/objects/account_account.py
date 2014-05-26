@@ -42,14 +42,12 @@ class account_account(osv.osv):
         """
         for account in self.browse(cr, uid, ids, context):  
             changes = []
-            if 'code' in vals and account.type != vals['code']:
-                #value = self.pool.get('account.account').browse(cr,uid,vals['type'],context=context).name
-                value =  self.pool.get('account.account').browse(cr,uid,vals['code'],context=context).name
+            if 'code' in vals and account.code != vals['code']:
+                value =  vals['code']
                 oldmodel = account.type or _('None')
                 changes.append(_("Code: from '%s'  '%s'") %(oldmodel, value))
             if 'name' in vals and account.name != vals['name']:
-                #value = self.pool.get('account.account').browse(cr,uid,vals['type'],context=context).name
-                value =  self.pool.get('account.account').browse(cr,uid,vals['name'],context=context).name
+                value =  vals['name']
                 oldmodel = account.name or _('None')
                 changes.append(_("Name: from '%s' '%s'") %(oldmodel, value))
             if 'parent_id' in vals and account.parent_id.id != vals['parent_id']:
@@ -58,34 +56,75 @@ class account_account(osv.osv):
                 oldmodel = account.parent_id.name or _('None')
                 changes.append(_("Type: from '%s' to '%s'") %(oldmodel, value))
             if 'type' in vals and account.type != vals['type']:
-                #value = self.pool.get('account.account').browse(cr,uid,vals['type'],context=context).name
-                value =  self.pool.get('account.account').browse(cr,uid,vals['type'],context=context).type
+                value =  vals['type']
                 oldmodel = account.type or _('None')
-                changes.append(_("Type: from '%s'  '%s'") %(oldmodel, value))
+                changes.append(_("Type: from '%s' to '%s'") %(oldmodel, value))
             if 'user_type' in vals and account.user_type != vals['user_type']:
                 #value = self.pool.get('account.account').browse(cr,uid,vals['type'],context=context).name
-                value =  self.pool.get('account.account').browse(cr,uid,vals['user_type'],context=context).name
+                value =  vals['user_type']
                 oldmodel = account.user_type.name or _('None')
-                changes.append(_("User type: from '%s'  '%s'") %(oldmodel, value))
+                changes.append(_("User type: from '%s' to '%s'") %(oldmodel, value))
 #             if 'active' in vals and account.active != vals['active']:
 #                 #value = self.pool.get('account.account').browse(cr,uid,vals['type'],context=context).name
 #                 value =  self.pool.get('account.account').browse(cr,uid,vals['active'],context=context)
 #                 oldmodel = account.active or _('None')
 #                 changes.append(_("Active: from '%s'  '%s'") %(oldmodel, value))
-                                
-            if 'tax_ids' in vals and account.tax_ids != vals['tax_ids']:
-                old_license_plate = account.tax_ids or _('None')
-                changes.append(_("tax_ids: from '%s' '%s'") %(old_license_plate, vals['tax_ids']))
+#             if not vals['tax_ids']
+#                 print ""
+#             print tax_ids
+            if 'tax_ids' in vals and account.tax_ids != vals['tax_ids'][0][2]:
+                list_tax = []
+                list_tax_old = sorted(vals['tax_ids'][0][2])
+                for a in account.tax_ids:
+                    #oldmodel = self.pool.get('account.tax').browse(cr,uid,a.id,context=context).name or _('None')
+                    #changes.append(_("Old Tax: '%s'") %(oldmodel))                
+                    list_tax.append(a.id)
+                i = 0
+                sorted(list_tax)
+                for a, t, in zip(list_tax,list_tax_old):
+                    if a == t: 
+                        del(list_tax_old[i])
+                        del(list_tax[i])
+                    else:
+                        for a, t, in zip(sorted(list_tax, reverse = True),sorted(list_tax_old, reverse = True)):
+                            k=len(list_tax_old)             
+                            j=len(list_tax)
+                            k=k-1
+                            j=j-1
+                            if a == t: 
+                                del(list_tax_old[k])
+                                del(list_tax[j])
+                            else:
+                                for a, t, in zip(sorted(list_tax),sorted(list_tax_old, reverse = True)):
+                                    k=len(list_tax_old)
+                                    k=k-1            
+                                    if a == t: 
+                                        del(list_tax_old[i])
+                                        del(list_tax[k])
+                                        list_tax_old
+                                        list_tax                   
+                        #i=i+1
+                for o in list_tax_old:
+                    oldmodel = self.pool.get('account.tax').browse(cr,uid,o,context=context).name or _('None')
+                    changes.append(_("New Tax: '%s'") %(oldmodel)) 
+                for p in list_tax:
+                    value = self.pool.get('account.tax').browse(cr,uid,p,context=context).name or _('None')
+                    changes.append(_("OldTax: '%s'") %(value))                     
+#                     print list
+#                 for t in vals['tax_ids'][0][2]:  
+#                     value = self.pool.get('account.tax').browse(cr,uid,t,context=context).name                        
+#                     #changes.append(_("Type: from '%s' to '%s' '-'") %(oldmodel, value))
+#                     changes.append(_("Tax: '%s'") %(value))
+
 #             if 'reconcile' in vals and account.reconcile != vals['reconcile']:
 #                 #value = self.pool.get('account.account').browse(cr,uid,vals['type'],context=context).name
 #                 value =  self.pool.get('account.account').browse(cr,uid,vals['reconcile'],context=context).name
 #                 oldmodel = account.reconcile or _('None')
 #                 changes.append(_("Type: from '%s'  '%s'") %(oldmodel, value))
             if 'note' in vals and account.type != vals['note']:
-                #value = self.pool.get('account.account').browse(cr,uid,vals['type'],context=context).name
-                value =  self.pool.get('account.account').browse(cr,uid,vals['note'],context=context).name
+                value =  vals['note']
                 oldmodel = account.name or _('None')
-                changes.append(_("Note: from '%s'  '%s'") %(oldmodel, value))
+                changes.append(_("Note: from '%s' to '%s'") %(oldmodel, value))
             
             if len(changes) > 0:
                 self.message_post(cr, uid, [account.id], body=", ".join(changes), context=context)
