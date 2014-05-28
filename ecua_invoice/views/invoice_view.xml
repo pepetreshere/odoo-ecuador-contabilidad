@@ -28,6 +28,9 @@
 				<xpath expr="/form/sheet/group/group/field[@name='supplier_invoice_number']" position="attributes">
 					<attribute name="invisible">True</attribute>
 				</xpath>
+				<xpath expr="/form/sheet/group/group/field[@name='date_invoice']" position="attributes">
+					<attribute name="on_change">onchange_date(date_invoice)</attribute>
+				</xpath>				
 				<xpath expr="/form/sheet/group/group/field[@name='fiscal_position']" position="after">
 					<field name="printer_id" string="My Printer Point" help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos" attrs="{'readonly':[('state','!=','draft')]}" required="0" />
 					<field name="internal_number" required="1" 

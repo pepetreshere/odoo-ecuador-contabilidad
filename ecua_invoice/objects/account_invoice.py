@@ -36,6 +36,7 @@ import decimal_precision as dp
 class account_invoice(osv.osv):
 
     _inherit = "account.invoice"
+    _name = "account.invoice"
 
   
     _columns = {
@@ -96,6 +97,23 @@ class account_invoice(osv.osv):
                             })
             
         return {'value': value}
+    
+    #DR cambia el valor automaticamente del periodo fiscal sgun la secha
+    def onchange_date(self, cr, uid, ids, date_invoice, context=None):
+        value = {}       
+        if not date_invoice:
+            return {}
+        obj_period = self.pool.get('account.period')
+        period_id = obj_period.search(cr,uid,[('date_start','<',date_invoice),('date_stop','>',date_invoice)])
+        period = obj_period.browse(cr, uid, period_id, context=context)
+                    
+        value = {
+            'value': {
+                'period_id': period[0].id              
+                    }
+                 }
+        
+        return value           
     
 
 account_invoice()
