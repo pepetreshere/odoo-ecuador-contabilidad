@@ -74,6 +74,19 @@
 			</field>
 		</record>
 
+        <record id="view_account_invoice__withhold_filter" model="ir.ui.view">
+            <field name="name">account.invoice.select</field>
+            <field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.view_account_invoice_filter" />            
+            <field name="arch" type="xml">
+				<xpath expr="//search/filter[@name='unpaid']" position="after">
+                    <filter name="withhold_id" string="With retention" domain="[('withhold_id','!=','')]" help="Withholds"/>				
+                    <filter name="withhold_id" string="Without retention" domain="[('withhold_id','=','')]" help="No Withholds"/>
+				</xpath>                
+                
+           </field>
+       </record>		
+		
 		
 	</data>
 </openerp>
