@@ -1168,20 +1168,45 @@ class account_withhold(osv.osv):
                 
         return {'type': 'ir.actions.act_window_close'}
 
+    def only_print_withhold(self, cr, uid, ids, context=None):
+
+        if ids:
+            withhold = self.browse(cr, uid, ids[0])
+            # check it's a purchase withhold
+            if withhold.transaction_type == 'purchase':
+
+                return {
+                     'type': 'ir.actions.report.xml',
+                     'report_name': 'withhold',    # the 'Service Name' from the report
+                     'datas' : {
+                             'model' : 'account.withhold',    # Report Model
+                             'res_ids' : ids
+                               }        
+                      }
+
+            elif withhold.transaction_type == 'sale':
+
+                return {
+                     'type': 'ir.actions.report.xml',
+                     'report_name': 'withhold_sale',    # the 'Service Name' from the report
+                     'datas' : {
+                             'model' : 'account.withhold',    # Report Model
+                             'res_ids' : ids
+                               }        
+                      }
+        
+        return {}
+    
     def print_withhold(self, cr, uid, ids, context=None):
         
         # First Aprove the withhold
         self.button_aprove(cr, uid, ids, context=None)
 
         # Second Generate the pdf
-        return {
-             'type': 'ir.actions.report.xml',
-             'report_name': 'withhold', 
-             'datas' : {
-                     'model' : 'account.withhold',
-                     'res_ids' : ids
-                       }        
-              }
+        res = self.only_print_withhold(cr, uid, ids, context=context)
+        
+        return res 
+
 
     # Buttons to operate the workflow to prevet troubles whit double workflow
     def button_aprove(self, cr, uid, ids, context=None):
