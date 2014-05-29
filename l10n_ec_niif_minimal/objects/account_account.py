@@ -32,6 +32,7 @@ class account_account(osv.osv):
     _name = 'account.account'
     _inherit = ["account.account", "mail.thread"]    
     _columns = {
+            'force_reconcile': fields.boolean('force_reconcile', help="Check this box if, this account amounts to reconcile differences in payments to customers and suppliers."),
                     }
 
     def write(self, cr, uid, ids, vals, context=None):
