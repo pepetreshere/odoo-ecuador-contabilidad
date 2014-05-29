@@ -10,9 +10,12 @@ class account_voucher(osv.osv):
 
     _columns = {
         'luck': fields.boolean('Luck amount'),
+        'responsible_id':fields.many2one('res.users', 'Responsible', change_default=1, help="responsible for payment (is the user who approves the payment)"),
+        
                 }
     _defaults = {  
-        'luck': True
+        'luck': True,
+        'responsible_id':lambda self, cr, uid, context: uid,
         }
          
     def proforma_voucher(self, cr, uid, ids, context=None):

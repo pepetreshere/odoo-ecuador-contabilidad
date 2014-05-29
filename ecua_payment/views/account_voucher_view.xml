@@ -11,6 +11,10 @@
                 <xpath expr="//form/sheet/group/group/field[@name='journal_id']" position="after">
 					<field name="luck" attrs="{'readonly':[('state','!=','draft')]}"/>
             	</xpath>
+                <xpath expr="//form/sheet/notebook/page/group/field[@name='number']" position="after">
+					<field name="responsible_id"/>
+            	</xpath>
+            	
             </field>
         </record>
 
