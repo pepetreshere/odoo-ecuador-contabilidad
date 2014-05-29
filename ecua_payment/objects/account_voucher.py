@@ -29,9 +29,11 @@ class account_voucher(osv.osv):
                     "comparar para lanzar excepcion"
                     if line.amount > line.amount_unreconciled: 
                         raise osv.except_osv(_('Warning!'),
-                                        _('Importe de la linea a Pagar debe ser menor o igual al Saldo inicial de la linea!'))                    
+                                        _('"Its unusual in online payment" amount "be a value larger than the" Initial Balance ", usually used to cross cents mismatch, in which case check uncheck" Block amount "do not forget to reconcile against the revenue account your accountant available (Example 2 cents to send the account 430500 - OTHER INCOME) "'))
+                    else:
+                        return super(account_voucher, self).proforma_voucher(cr, uid, ids, context=None)                    
             else:
-                return super(account_voucher, self).proforma_voucher(cr, uid, id, default, context)
+                return super(account_voucher, self).proforma_voucher(cr, uid, ids, context=None)
 
     def button_print_pay_voucher(self, cr, uid, ids, context=None):
         #self.print_document_type(cr, uid, ids, context=context)
