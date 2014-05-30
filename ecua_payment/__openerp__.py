@@ -1,5 +1,5 @@
 {
-        "name" : "Trescloud ecua payment",
+        "name" : "Trescloud payment",
         "version" : "1.0",
         "author" : "David Romero",
         "website" : "http://www.trescloud.com",
@@ -13,7 +13,7 @@
         "demo_xml" : [ ],
         "update_xml" : [
                         'views/account_voucher_view.xml',
-                        #'security/ir.model.access.csv',
+                        'security/ir.model.access.csv',
                         ],
         "installable": True
      

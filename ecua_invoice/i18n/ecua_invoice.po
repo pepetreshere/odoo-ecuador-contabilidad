@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20130930-231020\n"
+"Project-Id-Version: OpenERP Server 7.0-20140314-003129\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-29 22:12+0000\n"
-"PO-Revision-Date: 2013-10-29 22:12+0000\n"
+"POT-Creation-Date: 2014-05-30 17:32+0000\n"
+"PO-Revision-Date: 2014-05-30 17:32+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -173,6 +173,11 @@ msgstr ""
 #. module: ecua_invoice
 #: model:ir.model,name:ecua_invoice.model_account_invoice
 msgid "Invoice"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "onchange_date(date_invoice)"
 msgstr ""
 
 #. module: ecua_invoice

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20130930-231020\n"
+"Project-Id-Version: OpenERP Server 7.0-20140314-003129\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-29 22:02+0000\n"
-"PO-Revision-Date: 2013-10-29 17:10-0500\n"
+"POT-Creation-Date: 2014-05-30 17:08+0000\n"
+"PO-Revision-Date: 2014-05-30 12:12-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -92,7 +92,7 @@ msgstr "Dirección"
 #. module: ecua_invoice
 #: field:sale.shop,credit_note_sale_journal_id:0
 msgid "Credit Note Sales Journal"
-msgstr "Credit Note Sales Journal"
+msgstr "Diario Nota de Crédito Ventas"
 
 #. module: ecua_invoice
 #: view:account.invoice:0
@@ -117,7 +117,7 @@ msgstr "Nombre"
 #. module: ecua_invoice
 #: field:sale.shop,credit_note_purchase_journal_id:0
 msgid "Credit Note Purchases Journal"
-msgstr "Credit Note Purchases Journal"
+msgstr "Nota de Crédito Compras Diario"
 
 #. module: ecua_invoice
 #: view:sale.shop:0
@@ -137,7 +137,7 @@ msgstr "Diario de Ventas"
 #. module: ecua_invoice
 #: help:account.invoice,invoice_phone:0
 msgid "Invoice phone as in VAT document, saved in invoice only not in partner"
-msgstr "Invoice phone as in VAT document, saved in invoice only not in partner"
+msgstr "Factura de teléfono como en el documento de IVA, guarda en factura no sólo en los países socios"
 
 #. module: ecua_invoice
 #: field:sri.printer.point,shop_id:0
@@ -174,6 +174,11 @@ msgstr "Punto de Impresión por defecto"
 #: model:ir.model,name:ecua_invoice.model_account_invoice
 msgid "Invoice"
 msgstr "Factura"
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "onchange_date(date_invoice)"
+msgstr "onchange_date(date_invoice)"
 
 #. module: ecua_invoice
 #: model:ir.model,name:ecua_invoice.model_sale_order

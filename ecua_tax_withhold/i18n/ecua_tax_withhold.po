@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20140213-002146\n"
+"Project-Id-Version: OpenERP Server 7.0-20140314-003129\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-29 23:00+0000\n"
-"PO-Revision-Date: 2014-04-29 23:00+0000\n"
+"POT-Creation-Date: 2014-05-30 17:36+0000\n"
+"PO-Revision-Date: 2014-05-30 17:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -51,8 +51,18 @@ msgid "Group By..."
 msgstr ""
 
 #. module: ecua_tax_withhold
+#: view:account.invoice:0
+msgid "Without retention"
+msgstr ""
+
+#. module: ecua_tax_withhold
 #: help:account.invoice,withhold_exist:0
 msgid "Show internally if a withhold asociated exist"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: help:account.withhold,invoice_amount_untaxed:0
+msgid "Invoice amount untaxed used like base for the compute of tax"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -61,8 +71,8 @@ msgid "Document"
 msgstr ""
 
 #. module: ecua_tax_withhold
-#: field:account.withhold.line,withhold_percentage:0
-msgid "Percentaje Value (%)"
+#: field:account.withhold,message_unread:0
+msgid "Unread Messages"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -73,6 +83,11 @@ msgstr ""
 #. module: ecua_tax_withhold
 #: field:account.withhold,company_id:0
 msgid "Company"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: view:account.invoice:0
+msgid "View Withhold"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -92,8 +107,13 @@ msgid "Lines description of related withhold"
 msgstr ""
 
 #. module: ecua_tax_withhold
-#: field:account.withhold.line,tax_base:0
-msgid "Tax Base"
+#: help:account.withhold,invoice_vat_doce_subtotal:0
+msgid "Invoice vat doce subtotal used like base for the compute of tax"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: field:account.withhold,message_ids:0
+msgid "Messages"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -127,6 +147,11 @@ msgid "Amount of tax withhold"
 msgstr ""
 
 #. module: ecua_tax_withhold
+#: help:account.withhold,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr ""
+
+#. module: ecua_tax_withhold
 #: field:account.withhold,shop_id:0
 msgid "Shop"
 msgstr ""
@@ -142,10 +167,13 @@ msgid "Printer Point related with this transaction, only need in Purchase"
 msgstr ""
 
 #. module: ecua_tax_withhold
-#: field:account.withhold.line,description:0
-#: help:account.withhold.line,tax_ac_id:0
-#: help:account.withhold.line,tax_id:0
-msgid "Tax"
+#: help:account.invoice,address_invoice:0
+msgid "Address of invoice"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: help:account.withhold,message_summary:0
+msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -186,14 +214,20 @@ msgid "Invoice address"
 msgstr ""
 
 #. module: ecua_tax_withhold
-#: help:account.invoice,address_invoice:0
-msgid "Address of invoice"
+#: field:account.withhold.line,description:0
+#: help:account.withhold.line,tax_ac_id:0
+#: help:account.withhold.line,tax_id:0
+msgid "Tax"
 msgstr ""
 
 #. module: ecua_tax_withhold
 #: view:account.withhold:0
-#: field:account.withhold,period_id:0
-msgid "Period"
+msgid "Number of Withhold "
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: field:account.withhold,number:0
+msgid "Number"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -204,6 +238,11 @@ msgstr ""
 #. module: ecua_tax_withhold
 #: help:account.withhold,period_id:0
 msgid "Period related with this transaction"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: field:account.withhold,message_follower_ids:0
+msgid "Followers"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -247,13 +286,13 @@ msgid "Complete data Purchase Withhold "
 msgstr ""
 
 #. module: ecua_tax_withhold
-#: view:res.company:0
-msgid "Configuration"
+#: field:account.withhold,invoice_amount_untaxed:0
+msgid "Invoice amount untaxed"
 msgstr ""
 
 #. module: ecua_tax_withhold
-#: model:ir.model,name:ecua_tax_withhold.model_account_withhold
-msgid "account.withhold"
+#: view:res.company:0
+msgid "Configuration"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -268,7 +307,19 @@ msgstr ""
 
 #. module: ecua_tax_withhold
 #: view:account.invoice:0
+#: field:account.invoice,withhold_line_ids:0
+#: view:account.withhold:0
+msgid "Withhold Lines"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: view:account.invoice:0
 msgid "Withhold Number"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: field:account.withhold.line,withhold_percentage:0
+msgid "Percentaje Value (%)"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -299,7 +350,6 @@ msgstr ""
 
 #. module: ecua_tax_withhold
 #: selection:account.withhold,state:0
-#: selection:account.withhold,transaction_type:0
 msgid "Canceled"
 msgstr ""
 
@@ -355,6 +405,11 @@ msgid "Type of Tax (IVA/RENTA)"
 msgstr ""
 
 #. module: ecua_tax_withhold
+#: field:account.withhold,message_is_follower:0
+msgid "Is a Follower"
+msgstr ""
+
+#. module: ecua_tax_withhold
 #: help:account.withhold,invoice_id:0
 msgid "Invoice related with this withhold"
 msgstr ""
@@ -362,6 +417,11 @@ msgstr ""
 #. module: ecua_tax_withhold
 #: model:ir.model,name:ecua_tax_withhold.model_account_move_line
 msgid "Journal Items"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: field:account.withhold,invoice_vat_doce_subtotal:0
+msgid "Invoice vat doce subtotal"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -377,6 +437,11 @@ msgstr ""
 #. module: ecua_tax_withhold
 #: model:ir.model,name:ecua_tax_withhold.model_res_company
 msgid "Companies"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: field:account.withhold,message_summary:0
+msgid "Summary"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -411,8 +476,9 @@ msgid "Partner related with this withhold"
 msgstr ""
 
 #. module: ecua_tax_withhold
-#: selection:account.withhold,transaction_type:0
-msgid "Sales"
+#: view:account.withhold:0
+#: field:account.withhold,period_id:0
+msgid "Period"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -439,9 +505,12 @@ msgstr ""
 
 #. module: ecua_tax_withhold
 #: view:account.invoice:0
-#: field:account.invoice,withhold_line_ids:0
-#: view:account.withhold:0
-msgid "Withhold Lines"
+msgid "With retention"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: view:account.invoice:0
+msgid "No Withholds"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -452,6 +521,11 @@ msgstr ""
 #. module: ecua_tax_withhold
 #: view:account.withhold:0
 msgid "Print Withhold"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: field:account.withhold.line,tax_base:0
+msgid "Tax Base"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -470,8 +544,8 @@ msgid "List of account moves"
 msgstr ""
 
 #. module: ecua_tax_withhold
-#: field:account.withhold,number:0
-msgid "Number"
+#: selection:account.withhold,transaction_type:0
+msgid "Sales"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -530,8 +604,18 @@ msgid "Approve"
 msgstr ""
 
 #. module: ecua_tax_withhold
+#: help:account.withhold,message_ids:0
+msgid "Messages and communication history"
+msgstr ""
+
+#. module: ecua_tax_withhold
 #: view:account.withhold:0
 msgid "Withhold Wizard"
+msgstr ""
+
+#. module: ecua_tax_withhold
+#: model:ir.model,name:ecua_tax_withhold.model_account_withhold
+msgid "Email Thread"
 msgstr ""
 
 #. module: ecua_tax_withhold
@@ -544,151 +628,3 @@ msgstr ""
 msgid "Account voucher lines"
 msgstr ""
 
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:467
-#, python-format
-msgid "There is another Withhold generated with this number, please verify"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:533
-#, python-format
-msgid "Invalid action !"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:533
-#, python-format
-msgid "Cannot delete withhold(s) that are already assigned Number!"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:574
-#, python-format
-msgid "Please define a sequence on the journal !"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:646
-#, python-format
-msgid "The residual value of invoice is lower than total value of withholding"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:774
-#, python-format
-msgid "The withhold must be in the same period that the invoice.!"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:789
-#, python-format
-msgid "The withhold should be issued up to 5 days of invoice. Currently the system allows you to record this withhold at your own risk"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:810
-#, python-format
-msgid "Withhold for this invoice already exist!!"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:839
-#, python-format
-msgid "Iva Retention Journal doesn't have debit account assigned!, can't complete operation"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:842
-#, python-format
-msgid "IR Retention Journal doesn't have debit account assigned!, can't complete operation"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:867
-#, python-format
-msgid "Amount of withhold is bigger than residual value of invoice, please verify"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:869
-#, python-format
-msgid "The date of withhold can not be least than the date of invoice"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:874
-#, python-format
-msgid "Amount of withhold can't be zero, please verify"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:884
-#, python-format
-msgid "The invoice is not open, you cannot add a withhold"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:999
-#, python-format
-msgid "You can't aprove a withhold without withhold lines"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:1018
-#, python-format
-msgid "Number to be entered to approve the withhold"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:1020
-#, python-format
-msgid "Date to be entered to approve the withhold"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:1020
-#, python-format
-msgid "Date to be entered to approve the withhold"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:1022
-#, python-format
-msgid "must enter at least one tax to approve the withhold"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:1075
-#, python-format
-msgid "Date to be entered to approve the withhold"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/withhold.py:1079
-#, python-format
-msgid "number to be entered to approve the withhold"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/invoice.py:109
-#, python-format
-msgid "Warning"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/invoice.py:110
-#, python-format
-msgid "The total value of withhold is zero"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: code:addons/ecua_tax_withhold/objects/invoice.py:119
-#, python-format
-msgid "Complete data Purchase Withhold"
-msgstr ""
-
-#. module: ecua_tax_withhold
-#: view:account.withhold:0
-msgid "Number of Withhold "
-msgstr ""
