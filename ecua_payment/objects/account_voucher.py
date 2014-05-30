@@ -9,6 +9,8 @@ class account_voucher(osv.osv):
 
 
     _columns = {
+        'reference': fields.char('Ref #', size=64, readonly=True, states={'draft':[('readonly',False)]}, help="Is the number of document payment is file (eg footnote exit # 043)"),
+        'name':fields.char('Memo', size=256, readonly=True, states={'draft':[('readonly',False)]}, help="Provides an explanation of the payment."),
         'luck': fields.boolean('Luck amount'),
         'responsible_id':fields.many2one('res.users', 'Responsible', change_default=1, help="responsible for payment (is the user who approves the payment)"),
         

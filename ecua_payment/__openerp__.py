@@ -1,5 +1,5 @@
 {
-        "name" : "trescloud_ecua_payment",
+        "name" : "Trescloud ecua payment",
         "version" : "1.0",
         "author" : "David Romero",
         "website" : "http://www.trescloud.com",
