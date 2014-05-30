@@ -1,5 +1,5 @@
 {
-        "name" : "Trescloud payment",
+        "name" : "Ecuador payments",
         "version" : "1.0",
         "author" : "David Romero",
         "website" : "http://www.trescloud.com",
