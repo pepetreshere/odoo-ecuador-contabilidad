@@ -58,8 +58,7 @@
 	                </sheet>
                     <footer>
 						<button name="print_withhold" string="Print"
-							icon="gtk-apply" type="object" class="oe_highlight"
-							attrs="{'invisible':[('transaction_type','=','sale')]}"/>
+							icon="gtk-apply" type="object" class="oe_highlight"/>
 						<button name="button_aprove" string="Approve"
 							icon="gtk-apply" type="object"/>
 						<button name="approve_late" string="Save"

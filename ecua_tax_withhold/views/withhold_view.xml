@@ -16,9 +16,8 @@
 								groups="account.group_account_manager" icon="gtk-cancel" type="object" />
 							<button name="button_set_draft" states="canceled" string="Set to draft"
 								icon="terp-stock_effects-object-colorize" type="object" />
-							<button name="%(withhold_report)d" string="Print Withhold"
-								type="action" icon="gtk-print" states="approved" 
-								attrs="{'invisible':[('transaction_type','=','sale')]}"/>
+							<button name="only_print_withhold" string="Print Withhold"
+								type="object" icon="gtk-print" states="approved"/>
 						<field name="state" widget="statusbar" 
 						statusbar_visible="draft,approved,canceled" 
 						statusbar_colors='{"approved":"blue","canceled":"red"}' />
