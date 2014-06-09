@@ -73,18 +73,31 @@ class account_invoice(osv.osv):
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context)
     
-#    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
     def action_cancel(self, cr, uid, ids, *args):
-     #   ret_line_obj = self.pool.get('account.withhold.line')
-        context={}
-        wf_service = netsvc.LocalService("workflow")
-        invoices = self.pool.get('account.invoice')
-        invoice_obj=invoices.browse(cr, uid, ids, context)[0]
-        withhold=self.pool.get('account.withhold').search(cr,uid,[('invoice_id','=',invoice_obj.id)])
-        withhold_obj=self.pool.get('account.withhold').browse(cr,uid,withhold)
-        for lines in withhold_obj:
-            if lines.state == 'approved':
-                    wf_service.trg_validate(uid, 'account.withhold', lines.id, 'canceled_signal', cr)
+        """
+        Check if a withhold exist for a selct invoice, if it's true, don't let
+        the user cancel the invoice
+        """
+        if ids:
+            withhold_obj = self.pool.get('account.withhold')
+            withholds = withhold_obj.search(cr, uid, [('invoice_id','=',ids[0])])
+            if withholds:
+                warn = _("Warning")
+                message = _("Can't cancel a invoice with a associated withhold, please, delete the withhold first")
+                raise osv.except_osv(warn, message)
+
+        context={}               
+
+#     #   ret_line_obj = self.pool.get('account.withhold.line')
+#        context={}
+#        wf_service = netsvc.LocalService("workflow")
+#        invoices = self.pool.get('account.invoice')
+#        invoice_obj=invoices.browse(cr, uid, ids, context)[0]
+#        withhold=self.pool.get('account.withhold').search(cr,uid,[('invoice_id','=',invoice_obj.id)])
+#        withhold_obj=self.pool.get('account.withhold').browse(cr,uid,withhold)
+#        for lines in withhold_obj:
+#            if lines.state == 'approved':
+#                    wf_service.trg_validate(uid, 'account.withhold', lines.id, 'canceled_signal', cr)
         return super(account_invoice, self).action_cancel(cr, uid, ids, context)
 
     def copy(self, cr, uid, id, default=None, context=None):

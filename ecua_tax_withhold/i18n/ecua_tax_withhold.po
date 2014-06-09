@@ -628,3 +628,8 @@ msgstr ""
 msgid "Account voucher lines"
 msgstr ""
 
+#. module: ecua_tax_withhold
+#: code:addons/ecua_tax_withhold/object/invoice.py:86
+#, python-format
+msgid "Can't cancel a invoice with a associated withhold, please, delete the withhold first"
+msgstr ""
