@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Andres Calle, Patricio Rangles
+# @authors: Andres Calle, Patricio Rangles, Pablo Vizhnay
 # Copyright (C) 2013  TRESCLOUD Cia Ltda
 #
 #This program is free software: you can redistribute it and/or modify
@@ -49,12 +49,233 @@ class res_partner(osv.osv):
         if country_id:
             return country_id
         return    
+    
+    def _get_default_validation(self, cr, uid, context=None):
+        ir_values = self.pool.get('ir.values')
+        company_id = self.pool.get('res.users').browse(cr,uid,uid).company_id
+        is_validation=company_id.is_validation
+        return is_validation or False
+    
+    def _get_vat(self, cr, uid, ids, vat, arg, context):
+        res = {}
+        for record in self.browse(cr, uid, ids, context=context):
+            aux = record.vat
+            name = "OTROS"
+            if aux:
+                if len(aux) <= 2:
+                    name = "OTROS"
+                elif aux[0:2] == "EC":
+                    if len(aux[2:])== 10:
+                        name ="CEDULA"
+                    elif len(aux[2:])== 13:
+                        name ="RUC"
+                    else:
+                        name = 'OTROS'
+                else:
+                    name = 'PASAPORTE'
+            res[record.id] = name
+        return res
+    
+    
+    
+    def write(self, cr, uid, ids, vals, context=None):
+        if not context: context = {}
+        if vals.get('vat', False):
+            if vals['vat'] :
+                product_objs = self.pool.get('res.partner').search(cr, uid, [('vat', '=', vals['vat'])])
+                if len(product_objs) >= 1 :
+                    bandera=self._get_default_validation(cr, uid, context)
+                    if bandera==True:
+                            raise osv.except_osv(_("Warning"), _("Sorry, and another person / company exists with the RUC / CI. You can check the existing business either by number of RUC / CI, Company Name or Business Name"))
+        
+        for partner in self.browse(cr, uid, ids, context):
+            changes = []
+            if 'name' in vals and partner.name != vals['name']: # en el caso que sea un campo
+                oldmodel = partner.name or _('None')
+                newvalue = vals['name'] or _('None')
+                changes.append(_("Name: from '%s' to '%s'") %(oldmodel,newvalue ))
+            if 'comercial_name' in vals and partner.comercial_name != vals['comercial_name']: # en el caso que sea un campo
+                oldmodel = partner.comercial_name or _('None')
+                newvalue = vals['comercial_name'] or _('None')
+                changes.append(_("Comercial Name: from '%s' to '%s'") %(oldmodel,newvalue ))
+            if 'is_company' in vals and partner.is_company != vals['is_company']: # en el caso que sea un campo booleano
+               
+                if partner.is_company:
+                    oldmodel=_('True')
+                else:
+                    oldmodel=_('False')
+                if vals['is_company']:
+                    newvalue=_('rue')
+                else:
+                    newvalue=_('False')
+                changes.append(_("Is Company: from '%s' to '%s'") %(oldmodel,newvalue ))
+            
+            if 'category_id' in vals and partner.category_id != vals['category_id']: # en el caso que sea un objeto
+                oldmodel = partner.category_id.name or _('None')
+                if vals['category_id']:
+                    newvalue=self.pool.get('res.partner.category').browse(cr,uid,vals['category_id'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Tags: from '%s' to '%s'") %(oldmodel, newvalue))
+            
+            if 'street' in vals and partner.street != vals['street']: # en el caso que sea un campo
+                oldmodel = partner.street or _('None')
+                newvalue = vals['street'] or _('None')
+                changes.append(_("Street: from '%s' to '%s'") %(oldmodel,newvalue ))
+            if 'street2' in vals and partner.street2 != vals['street2']:
+                oldmodel = partner.street2 or _('None')
+                newvalue = vals['street2'] or _('None')
+                changes.append(_("Street 2: from '%s' to '%s'") %(oldmodel, newvalue))
+            if 'city' in vals and partner.city != vals['city']:
+                oldmodel = partner.city or _('None')
+                newvalue = vals['city'] or _('None')
+                changes.append(_("City: from '%s' to '%s'") %(oldmodel, newvalue))
+            if 'state_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
+                oldmodel = partner.state_id.name or _('None')
+                if vals['state_id']:
+                    newvalue=self.pool.get('res.country.state').browse(cr,uid,vals['state_id'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("State: from '%s' to '%s'") %(oldmodel, newvalue))
+            if 'zip' in vals and partner.zip != vals['zip']: # en el caso que sea un campo
+                oldmodel = partner.zip or _('None')
+                newvalue = vals['zip'] or _('None')
+                changes.append(_("ZIP: from '%s' to '%s'") %(oldmodel,newvalue ))
+            if 'country_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
+                oldmodel = partner.country_id.name or _('None')
+                if vals['country_id']:
+                    newvalue=self.pool.get('res.country').browse(cr,uid,vals['country_id'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Country: from '%s' to '%s'") %(oldmodel, newvalue))
+            if 'website' in vals and partner.website != vals['website']: # en el caso que sea un campo
+                oldmodel = partner.website or _('None')
+                newvalue = vals['website'] or _('None')
+                changes.append(_("Web Site: from '%s' to '%s'") %(oldmodel,newvalue ))
+            if 'phone' in vals and partner.phone != vals['phone']: # en el caso que sea un campo
+                oldmodel = partner.phone or _('None')
+                newvalue = vals['phone'] or _('None')
+                changes.append(_("Phone: from '%s' to '%s'") %(oldmodel,newvalue ))
+            if 'mobile' in vals and partner.mobile != vals['mobile']: # en el caso que sea un campo
+                oldmodel = partner.mobile or _('None')
+                newvalue = vals['mobile'] or _('None')
+                changes.append(_("Mobile: from '%s' to '%s'") %(oldmodel,newvalue ))
+            if 'fax' in vals and partner.fax != vals['fax']: # en el caso que sea un campo
+                oldmodel = partner.fax or _('None')
+                newvalue = vals['fax'] or _('None')
+                changes.append(_("Fax: from '%s' to '%s'") %(oldmodel,newvalue ))
+            if 'email' in vals and partner.email != vals['email']: # en el caso que sea un campo
+                oldmodel = partner.email or _('None')
+                newvalue = vals['email'] or _('None')
+                changes.append(_("Email: from '%s' to '%s'") %(oldmodel,newvalue ))
+            
+            if 'property_account_position' in vals and partner.property_account_position != vals['property_account_position']: # en el caso que sea un objeto
+                oldmodel = partner.property_account_position.name or _('None')
+                if vals['property_account_position']:
+                    newvalue=self.pool.get('account.fiscal.position').browse(cr,uid,vals['property_account_position'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Fiscal position: from '%s' to '%s'") %(oldmodel, newvalue))
+            
+            if 'vat' in vals and partner.vat != vals['vat']: # en el caso que sea un campo
+                oldmodel = partner.vat or _('None')
+                newvalue = vals['vat'] or _('None')
+                changes.append(_("NIF: from '%s' to '%s'") %(oldmodel,newvalue ))
+                
+            if 'property_account_receivable' in vals and partner.property_account_receivable != vals['property_account_receivable']: # en el caso que sea un objeto
+                oldmodel = partner.property_account_receivable.name or _('None')
+                if vals['property_account_receivable']:
+                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_receivable'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Account Receivable: from '%s' to '%s'") %(oldmodel, newvalue))
+            if 'property_account_payable' in vals and partner.property_account_payable != vals['property_account_payable']: # en el caso que sea un objeto
+                oldmodel = partner.property_account_payable.name or _('None')
+                if vals['property_account_payable']:
+                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_payable'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Account Payable: from '%s' to '%s'") %(oldmodel, newvalue))
+            
+            if 'property_account_payable' in vals and partner.property_account_payable != vals['property_account_payable']: # en el caso que sea un objeto
+                oldmodel = partner.property_account_payable.name or _('None')
+                if vals['property_account_payable']:
+                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_payable'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Account Payable: from '%s' to '%s'") %(oldmodel, newvalue))
+                
+                
+            if 'user_id' in vals and partner.user_id != vals['user_id']: # en el caso que sea un objeto
+                oldmodel = partner.user_id.name or _('None')
+                if vals['user_id']:
+                    newvalue=self.pool.get('res.users').browse(cr,uid,vals['user_id'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Sales Person: from '%s' to '%s'") %(oldmodel, newvalue))
+            if 'section_id' in vals and partner.section_id != vals['section_id']: # en el caso que sea un objeto
+                oldmodel = partner.section_id.name or _('None')
+                if vals['section_id']:
+                    newvalue=self.pool.get('crm.case.section').browse(cr,uid,vals['section_id'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Sales Team: from '%s' to '%s'") %(oldmodel, newvalue))
+            if 'property_product_pricelist' in vals and partner.property_product_pricelist != vals['property_product_pricelist']: # en el caso que sea un objeto
+                oldmodel = partner.property_product_pricelist.name or _('None')
+                if vals['property_product_pricelist']:
+                    newvalue=self.pool.get('product.pricelist').browse(cr,uid,vals['property_product_pricelist'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Sale Pricelist: from '%s' to '%s'") %(oldmodel, newvalue))   
+            if 'payment_responsible_id' in vals and partner.payment_responsible_id != vals['payment_responsible_id']: # en el caso que sea un objeto
+                oldmodel = partner.payment_responsible_id.name or _('None')
+                if vals['payment_responsible_id']:
+                    newvalue=self.pool.get('res.users').browse(cr,uid,vals['payment_responsible_id'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("Follow-up Responsible: from '%s' to '%s'") %(oldmodel, newvalue))   
+           
+            
+            if len(changes) > 0:
+                self.message_post(cr, uid, [partner.id], body=", ".join(changes), context=context)
+        
+        
+        
+        result = super(res_partner, self).write(cr, uid, ids, vals, context=context)
+        return result
+
+    def create(self, cr, uid, values, context=None):
+        if not context: context = {}
+        if values.get('vat', False):
+            if values['vat'] :
+                product_objs = self.pool.get('res.partner').search(cr, uid, [('vat', '=', values['vat'])])
+                if len(product_objs) >= 1 :
+                    bandera=self._get_default_validation(cr, uid, context)
+                    if bandera==True:
+                            raise osv.except_osv(_("Warning"), _("Lo sentimos, ya existe otra persona/empresa con este RUC. Puede buscar la empresa existente ya sea por su numero de RUC, Razón Social, o Nombre Comercial"))
+        res = super(res_partner, self).create(cr, uid, values, context)
+        return res
  
+    
+    def onchange_type(self, cr, uid, ids, is_company, context=None):
+
+        return self.pool.get('res.partner').onchange_type(cr, uid, partner_ids, is_company, context=context)
+
+    def onchange_type(self, cr, uid, ids, is_company, context=None):
+        res=super(res_partner,self).onchange_type(cr, uid, ids,is_company, context)
+       
+        if is_company==False:
+            res['value']['comercial_name'] = ""
+        return res
+    
+    
     _columns = {
                 'comercial_name': fields.char('Comercial Name', size=256),
-#                'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
-#                'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
-#                'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
+                'type_vat': fields.function(_get_vat, type="char", string='Name', store=True),
+            #    'is_validation':fields.boolean('is Validation', required=False,change_default=True, select=True), 
+              #  'type_vat': fields.function(_get_vat, method=True, type='char', string='Type Vat', store=True), 
+                
+
                }
 
     _defaults = {
@@ -64,7 +285,8 @@ class res_partner(osv.osv):
                  'comercial_name': "",
                  'section_id': _get_user_default_sales_team,
                  'country_id': _get_user_country_id,
-                 'date': fields.date.context_today
+                 'date': fields.date.context_today,
+                 
                  # TODO - Evaluar los modulos account_fiscal_position_rule, account_fiscal_position_country, y account_fiscal_position_country_sale
                  #'property_account_position': _get_default_fiscal_position_id,
                  }

@@ -1,0 +1,280 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_partner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0-20140408-231240\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-10 15:45+0000\n"
+"PO-Revision-Date: 2014-06-10 10:52-0500\n"
+"Last-Translator: Pablo <pablo.vizhnay@hotmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:198
+#: code:addons/ecua_partner/objects/res_partner.py:206
+#, python-format
+msgid "Account Payable: from '%s' to '%s'"
+msgstr "Account Payable: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:215
+#, python-format
+msgid "Sales Person: from '%s' to '%s'"
+msgstr "Sales Person: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:139
+#, python-format
+msgid "State: from '%s' to '%s'"
+msgstr "State: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:222
+#, python-format
+msgid "Sales Team: from '%s' to '%s'"
+msgstr "Sales Team: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:183
+#, python-format
+msgid "NIF: from '%s' to '%s'"
+msgstr "NIF: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:154
+#, python-format
+msgid "Web Site: from '%s' to '%s'"
+msgstr "Web Site: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:89
+#, python-format
+msgid "Sorry, and another person / company exists with the RUC / CI. You can check the existing business either by number of RUC / CI, Company Name or Business Name"
+msgstr "Lo sentimos, ya existe otra persona/empresa con este RUC/CI. Puede buscar la empresa existente ya sea por su numero de RUC, Razón Social, o Nombre Comercial"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:178
+#, python-format
+msgid "Fiscal position: from '%s' to '%s'"
+msgstr "Fiscal position: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: view:res.partner:0
+msgid "Nombre Comercial..."
+msgstr "Nombre Comercial..."
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:166
+#, python-format
+msgid "Fax: from '%s' to '%s'"
+msgstr "Fax: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:236
+#, python-format
+msgid "Follow-up Responsible: from '%s' to '%s'"
+msgstr "Follow-up Responsible: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:143
+#, python-format
+msgid "ZIP: from '%s' to '%s'"
+msgstr "ZIP: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:191
+#, python-format
+msgid "Account Receivable: from '%s' to '%s'"
+msgstr "Account Receivable: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:170
+#, python-format
+msgid "Email: from '%s' to '%s'"
+msgstr "Email: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:100
+#, python-format
+msgid "Comercial Name: from '%s' to '%s'"
+msgstr "Comercial Name: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:124
+#, python-format
+msgid "Street: from '%s' to '%s'"
+msgstr "Street: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: field:res.partner,comercial_name:0
+msgid "Comercial Name"
+msgstr "Nombre Comercial"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:94
+#: code:addons/ecua_partner/objects/res_partner.py:95
+#: code:addons/ecua_partner/objects/res_partner.py:98
+#: code:addons/ecua_partner/objects/res_partner.py:99
+#: code:addons/ecua_partner/objects/res_partner.py:114
+#: code:addons/ecua_partner/objects/res_partner.py:118
+#: code:addons/ecua_partner/objects/res_partner.py:122
+#: code:addons/ecua_partner/objects/res_partner.py:123
+#: code:addons/ecua_partner/objects/res_partner.py:126
+#: code:addons/ecua_partner/objects/res_partner.py:127
+#: code:addons/ecua_partner/objects/res_partner.py:130
+#: code:addons/ecua_partner/objects/res_partner.py:131
+#: code:addons/ecua_partner/objects/res_partner.py:134
+#: code:addons/ecua_partner/objects/res_partner.py:138
+#: code:addons/ecua_partner/objects/res_partner.py:141
+#: code:addons/ecua_partner/objects/res_partner.py:142
+#: code:addons/ecua_partner/objects/res_partner.py:145
+#: code:addons/ecua_partner/objects/res_partner.py:149
+#: code:addons/ecua_partner/objects/res_partner.py:152
+#: code:addons/ecua_partner/objects/res_partner.py:153
+#: code:addons/ecua_partner/objects/res_partner.py:156
+#: code:addons/ecua_partner/objects/res_partner.py:157
+#: code:addons/ecua_partner/objects/res_partner.py:160
+#: code:addons/ecua_partner/objects/res_partner.py:161
+#: code:addons/ecua_partner/objects/res_partner.py:164
+#: code:addons/ecua_partner/objects/res_partner.py:165
+#: code:addons/ecua_partner/objects/res_partner.py:168
+#: code:addons/ecua_partner/objects/res_partner.py:169
+#: code:addons/ecua_partner/objects/res_partner.py:173
+#: code:addons/ecua_partner/objects/res_partner.py:177
+#: code:addons/ecua_partner/objects/res_partner.py:181
+#: code:addons/ecua_partner/objects/res_partner.py:182
+#: code:addons/ecua_partner/objects/res_partner.py:186
+#: code:addons/ecua_partner/objects/res_partner.py:190
+#: code:addons/ecua_partner/objects/res_partner.py:193
+#: code:addons/ecua_partner/objects/res_partner.py:197
+#: code:addons/ecua_partner/objects/res_partner.py:201
+#: code:addons/ecua_partner/objects/res_partner.py:205
+#: code:addons/ecua_partner/objects/res_partner.py:210
+#: code:addons/ecua_partner/objects/res_partner.py:214
+#: code:addons/ecua_partner/objects/res_partner.py:217
+#: code:addons/ecua_partner/objects/res_partner.py:221
+#: code:addons/ecua_partner/objects/res_partner.py:224
+#: code:addons/ecua_partner/objects/res_partner.py:228
+#: code:addons/ecua_partner/objects/res_partner.py:231
+#: code:addons/ecua_partner/objects/res_partner.py:235
+#, python-format
+msgid "None"
+msgstr "None"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:162
+#, python-format
+msgid "Mobile: from '%s' to '%s'"
+msgstr "Mobile: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: field:res.partner,type_vat:0
+msgid "Name"
+msgstr "Name"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:150
+#, python-format
+msgid "Country: from '%s' to '%s'"
+msgstr "Country: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: view:res.partner:0
+msgid "{'default_vat_subjected': 1}"
+msgstr "{'default_vat_subjected': 1}"
+
+#. module: ecua_partner
+#: model:ir.model,name:ecua_partner.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:108
+#, python-format
+msgid "rue"
+msgstr "rue"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:229
+#, python-format
+msgid "Sale Pricelist: from '%s' to '%s'"
+msgstr "Sale Pricelist: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:119
+#, python-format
+msgid "Tags: from '%s' to '%s'"
+msgstr "Tags: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:255
+#, python-format
+msgid "Lo sentimos, ya existe otra persona/empresa con este RUC. Puede buscar la empresa existente ya sea por su numero de RUC, Razón Social, o Nombre Comercial"
+msgstr "Lo sentimos, ya existe otra persona/empresa con este RUC/CI. Puede buscar la empresa existente ya sea por su numero de RUC, Razón Social, o Nombre Comercial"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:158
+#, python-format
+msgid "Phone: from '%s' to '%s'"
+msgstr "Phone: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: field:res.company,is_validation:0
+msgid "Validate partner duplicate"
+msgstr "Validate partner duplicate"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:128
+#, python-format
+msgid "Street 2: from '%s' to '%s'"
+msgstr "Street 2: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:106
+#: code:addons/ecua_partner/objects/res_partner.py:110
+#, python-format
+msgid "False"
+msgstr "False"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:132
+#, python-format
+msgid "City: from '%s' to '%s'"
+msgstr "City: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:104
+#, python-format
+msgid "True"
+msgstr "True"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:89
+#: code:addons/ecua_partner/objects/res_partner.py:255
+#, python-format
+msgid "Warning"
+msgstr "Warning"
+
+#. module: ecua_partner
+#: model:ir.model,name:ecua_partner.model_res_partner
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:96
+#, python-format
+msgid "Name: from '%s' to '%s'"
+msgstr "Name: from '%s' to '%s'"
+
+#. module: ecua_partner
+#: code:addons/ecua_partner/objects/res_partner.py:111
+#, python-format
+msgid "Is Company: from '%s' to '%s'"
+msgstr "Is Company: from '%s' to '%s'"
+
