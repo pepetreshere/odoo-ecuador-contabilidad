@@ -105,6 +105,8 @@ class account_invoice(osv.osv):
             return {}
         obj_period = self.pool.get('account.period')
         period_id = obj_period.search(cr,uid,[('date_start','<=',date_invoice),('date_stop','>=',date_invoice)])
+        if not period_id:
+            raise osv.except_osv(_("Warning"), _("There is no date for this accounting period.")) 
         period = obj_period.browse(cr, uid, period_id, context=context)
                     
         value = {
@@ -112,7 +114,6 @@ class account_invoice(osv.osv):
                 'period_id': period.pop().id              
                     }
                  }
-        
         return value           
     
 
