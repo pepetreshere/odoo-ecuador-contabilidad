@@ -73,8 +73,8 @@
                 </page>
 			</field>
 		</record>
-
-        <record id="view_account_invoice__withhold_filter" model="ir.ui.view">
+<!-- probar cuando exista integridad de modulos liberados  -->
+<!--         <record id="view_account_invoice__withhold_filter" model="ir.ui.view">
             <field name="name">account.invoice.select</field>
             <field name="model">account.invoice</field>
 			<field name="inherit_id" ref="account.view_account_invoice_filter" />            
@@ -85,7 +85,7 @@
 				</xpath>                
                 
            </field>
-       </record>		
+       </record>	 -->	
 		
 		
 	</data>

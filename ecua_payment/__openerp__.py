@@ -3,8 +3,8 @@
         "version" : "1.0",
         "author" : "David Romero",
         "website" : "http://www.trescloud.com",
-        "category" : "Vertical Modules/Parametrization",
-        "description": """Payment """,
+        "category" : "Ecuadorian Regulations",
+        "description": """ Module of payments has several changes in the base module vaucher """,
         "depends" : ["base","account_voucher",
                      #"ecua_invoice_type"
                      ],

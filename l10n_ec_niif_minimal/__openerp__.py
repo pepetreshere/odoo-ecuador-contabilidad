@@ -40,6 +40,8 @@
                 'views/l10n_chart_ec_niif_minimal_wizard.xml',
                 'views/account_tax_view.xml',
                 'views/account_account_view.xml',
+                #'views/account_config_view.xml',
+                
                 
                    ],
     'demo_xml': [],

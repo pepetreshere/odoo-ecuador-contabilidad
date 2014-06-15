@@ -32,7 +32,7 @@ class account_account(osv.osv):
     _name = 'account.account'
     _inherit = ["account.account", "mail.thread"]    
     _columns = {
-            'force_reconcile': fields.boolean('force_reconcile', help="Check this box if, this account amounts to reconcile differences in payments to customers and suppliers."),
+            'force_reconcile': fields.boolean('Force feconcile', help="Check this box if, this account amounts to reconcile differences in payments to customers and suppliers."),
                     }
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -131,6 +131,17 @@ class account_account(osv.osv):
 
         account_id = super(account_account,self).write(cr, uid, ids, vals, context)
         return True
+    
+    def _check_allow_code_change(self, cr, uid, ids, context=None):
+        for account in self.browse(cr, uid, ids, context):
+            if not account.restrictions:
+                line_obj = self.pool.get('account.move.line')
+                for account in self.browse(cr, uid, ids, context=context):
+                    account_ids = self.search(cr, uid, [('id', 'child_of', [account.id])], context=context)
+                    if line_obj.search(cr, uid, [('account_id', 'in', account_ids)], context=context):
+                        raise osv.except_osv(_('Warning !'), _("You cannot change the code of account which contains journal items!"))
+        return True
+        
 #     def _construct_constraint_msg(self, cr, uid, ids, context=None):
 #         res = super(account_account, self)._construct_constraint_msg(cr, uid, ids, context=context)
 #         return res
