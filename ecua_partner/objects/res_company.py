@@ -31,5 +31,8 @@ class res_company(osv.Model):
     _columns = {
         'is_validation':fields.boolean('Validate partner duplicate', required=False),
     }
+    _defaults = {
+    'is_validation': True, 
+}
 res_company()        
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

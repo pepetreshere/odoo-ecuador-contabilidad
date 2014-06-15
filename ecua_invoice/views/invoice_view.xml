@@ -65,5 +65,32 @@
 				</xpath>
 			</field>			
 		</record>
+
+	<record model="ir.ui.view" id="account_invoice_inherit2_tree_view">
+		<field name="name">accpunt.inovice.tree</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_tree" />
+		<field name="arch" type="xml">
+			<field name="number"  position="attributes">
+   			 <attribute name="invisible">True</attribute>
+			</field>
+			<field name="number"  position="before">
+   			 <field name="internal_number"/>
+			</field>
+		</field>
+	</record>
+	
+	
+			 <record model="ir.ui.view" id="account_invoice_search_inherit2_view">
+                <field name="name">account.invoice.search2</field>
+                <field name="model">account.invoice</field>
+                <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+                <field name="arch" type="xml">
+					<filter name="unpaid" position="after">
+						<filter name="Anulados" string="Anuladas" domain="[('state','=','cancel')]" help="Cancel Invoices"/>
+					</filter>
+				</field>
+            </record>
+	
 	</data>
 </openerp>
