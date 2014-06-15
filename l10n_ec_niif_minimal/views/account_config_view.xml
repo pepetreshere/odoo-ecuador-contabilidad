@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_config" model="ir.ui.view">
+            <field name="name">account settings</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group/div[@name='account_config']" position="inside">
+	                <div>
+	                    <field name="restrictions" class="oe_inline"/>
+	                    <label for="restrictions"/>
+	                </div>
+                </xpath>  
+            </field>
+        </record>        
+
+            
+   	</data>
+</openerp>

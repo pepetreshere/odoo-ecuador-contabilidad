@@ -33,7 +33,7 @@ class account_account(osv.osv):
     _inherit = ["account.account", "mail.thread"]    
     _columns = {
             'force_reconcile': fields.boolean('Force feconcile', help="Check this box if, this account amounts to reconcile differences in payments to customers and suppliers."),
-                    }
+                }
 
     def write(self, cr, uid, ids, vals, context=None):
         """
@@ -133,8 +133,10 @@ class account_account(osv.osv):
         return True
     
     def _check_allow_code_change(self, cr, uid, ids, context=None):
+        ir_values = self.pool.get('ir.values')
+        restrictions  = ir_values.get_default(cr, uid, 'account.account', 'restrictions')
         for account in self.browse(cr, uid, ids, context):
-            if not account.restrictions:
+            if not restrictions:
                 line_obj = self.pool.get('account.move.line')
                 for account in self.browse(cr, uid, ids, context=context):
                     account_ids = self.search(cr, uid, [('id', 'child_of', [account.id])], context=context)

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20140314-003129\n"
+"Project-Id-Version: OpenERP Server 7.0-20140612-231211\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-30 17:32+0000\n"
-"PO-Revision-Date: 2014-05-30 17:32+0000\n"
+"POT-Creation-Date: 2014-06-15 21:55+0000\n"
+"PO-Revision-Date: 2014-06-15 21:55+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,14 +26,14 @@ msgid "My Printer Point"
 msgstr ""
 
 #. module: ecua_invoice
-#: view:sale.shop:0
-#: field:sale.shop,number:0
-msgid "SRI Number"
+#: field:sale.shop,invoice_lines:0
+msgid "Número de Líneas x Factura"
 msgstr ""
 
 #. module: ecua_invoice
-#: field:sale.shop,invoice_lines:0
-msgid "Número de Líneas x Factura"
+#: view:sale.shop:0
+#: field:sale.shop,number:0
+msgid "SRI Number"
 msgstr ""
 
 #. module: ecua_invoice
@@ -44,6 +44,11 @@ msgstr ""
 #. module: ecua_invoice
 #: help:account.invoice,invoice_address:0
 msgid "Invoice address as in VAT document, saved in invoice only not in partner"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Anuladas"
 msgstr ""
 
 #. module: ecua_invoice
@@ -147,6 +152,11 @@ msgstr ""
 #. module: ecua_invoice
 #: view:sale.order:0
 msgid "{'partner_id': partner_id}"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Cancel Invoices"
 msgstr ""
 
 #. module: ecua_invoice

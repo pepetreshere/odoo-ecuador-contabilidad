@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20140314-003129\n"
+"Project-Id-Version: OpenERP Server 7.0-20140612-231211\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-30 17:10+0000\n"
-"PO-Revision-Date: 2014-05-30 12:27-0500\n"
+"POT-Creation-Date: 2014-06-15 21:36+0000\n"
+"PO-Revision-Date: 2014-06-15 16:41-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,11 @@ msgstr ""
 #: selection:account.tax.template,type_ec:0
 msgid "Otro"
 msgstr "Otro"
+
+#. module: l10n_ec_niif_minimal
+#: model:ir.model,name:l10n_ec_niif_minimal.model_account_config_settings
+msgid "account.config.settings"
+msgstr "Parámetros de configuración contable"
 
 #. module: l10n_ec_niif_minimal
 #: constraint:account.account:0
@@ -82,9 +87,9 @@ msgid "Check this box if, this account amounts to reconcile differences in payme
 msgstr "Marque esta casilla si, esta cuenta asciende a conciliar las diferencias en los pagos a clientes y proveedores. "
 
 #. module: l10n_ec_niif_minimal
-#: help:account.account,message_unread:0
-msgid "If checked new messages require your attention."
-msgstr "Si hay mensajes nuevos controladas requieren su atención. "
+#: help:account.account,message_ids:0
+msgid "Messages and communication history"
+msgstr "Los mensajes y la historia de la comunicación"
 
 #. module: l10n_ec_niif_minimal
 #: help:account.tax,type_ec:0
@@ -161,14 +166,14 @@ msgid "Ecuadorian Type"
 msgstr "Tipo de Ecuador "
 
 #. module: l10n_ec_niif_minimal
-#: field:account.account,force_reconcile:0
-msgid "force_reconcile"
-msgstr "Forzar una reconciliación"
+#: field:account.config.settings,restrictions:0
+msgid "No restrictions"
+msgstr "No restrictions"
 
 #. module: l10n_ec_niif_minimal
-#: help:account.account,message_ids:0
-msgid "Messages and communication history"
-msgstr "Los mensajes y la historia de la comunicación"
+#: help:account.account,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "Si hay mensajes nuevos controladas requieren su atención. "
 
 #. module: l10n_ec_niif_minimal
 #: model:ir.model,name:l10n_ec_niif_minimal.model_account_invoice_tax
@@ -210,6 +215,11 @@ msgid "Holds the Chatter summary (number of messages, ...). This summary is dire
 msgstr "Contiene el resumen Chatter (número de mensajes, ...). Este resumen es directamente en formato HTML con el fin de insertarse en las vistas de kanban."
 
 #. module: l10n_ec_niif_minimal
+#: help:account.config.settings,restrictions:0
+msgid "By checking this field, some restrictions are included by default in the system is removed."
+msgstr "Al marcar este campo se quita algunas restricciones que existen por defecto en el sistema."
+
+#. module: l10n_ec_niif_minimal
 #: constraint:account.account:0
 msgid ""
 "Error!\n"
@@ -217,4 +227,9 @@ msgid ""
 msgstr ""
 "¡Error!\n"
 "No puede crear cuentas recursivas."
+
+#. module: l10n_ec_niif_minimal
+#: field:account.account,force_reconcile:0
+msgid "Force feconcile"
+msgstr "Force feconcile"
 
