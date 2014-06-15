@@ -104,12 +104,12 @@ class account_invoice(osv.osv):
         if not date_invoice:
             return {}
         obj_period = self.pool.get('account.period')
-        period_id = obj_period.search(cr,uid,[('date_start','<',date_invoice),('date_stop','>',date_invoice)])
+        period_id = obj_period.search(cr,uid,[('date_start','<=',date_invoice),('date_stop','>=',date_invoice)])
         period = obj_period.browse(cr, uid, period_id, context=context)
                     
         value = {
             'value': {
-                'period_id': period[0].id              
+                'period_id': period.pop().id              
                     }
                  }
         
