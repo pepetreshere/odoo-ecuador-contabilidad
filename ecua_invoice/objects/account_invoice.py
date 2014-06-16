@@ -100,21 +100,23 @@ class account_invoice(osv.osv):
     
     #DR cambia el valor automaticamente del periodo fiscal sgun la secha
     def onchange_date(self, cr, uid, ids, date_invoice, context=None):
-        value = {}       
+        res = {}  
+        warning = {}
+        periodo = ""
         if not date_invoice:
             return {}
         obj_period = self.pool.get('account.period')
         period_id = obj_period.search(cr,uid,[('date_start','<=',date_invoice),('date_stop','>=',date_invoice)])
         if not period_id:
-            raise osv.except_osv(_("Warning"), _("No existe un período contable para esta fecha. There is no date for this accounting period.")) 
-        period = obj_period.browse(cr, uid, period_id, context=context)
-                    
-        value = {
-            'value': {
-                'period_id': period.pop().id              
-                    }
-                 }
-        return value           
+            warning = {
+                    'title': _('Warning!'),
+                    'message': _('No existe un período contable para esta fecha. There is no date for this accounting period.')
+                }
+        else:
+            period = obj_period.browse(cr, uid, period_id, context=context)
+            periodo = period.pop().id
+        res = {'value': {'period_id': periodo} ,'warning': warning }
+        return res     
     
 
 account_invoice()
