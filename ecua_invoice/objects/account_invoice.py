@@ -55,7 +55,7 @@ class account_invoice(osv.osv):
 
     def unlink(self, cr, uid, ids, context=None):
         """
-        ALlow delete a invoice in draft state
+        Allow delete a invoice in draft state
         """
         invoices = self.read(cr, uid, ids, ['state'], context=context)
         unlink_ids = []
@@ -117,6 +117,31 @@ class account_invoice(osv.osv):
             periodo = period.pop().id
         res = {'value': {'period_id': periodo} ,'warning': warning }
         return res     
-    
 
+    
+    def _default_printer_point(self, cr, uid, context=None):
+        '''
+        Si el usuario tiene configurado un printer point lo selecciona
+        Caso contrario intenta con el 001-001
+        '''
+    
+        printer_point_id = False
+        #intenta el printer_point del usuario
+        user_obj=self.pool.get('res.users')
+        printer = user_obj.browse(cr,uid,uid).printer_id
+        if printer:
+            printer_point_id = printer.id
+            return printer_point_id
+        
+        #intenta con el printer_point 001-001
+        printer_point_obj = self.pool.get('sri.printer.point')
+        printer_point_id = printer_point_obj.search(cr,uid,[('name','=','001'),('shop_id.number','=','001')])[0]
+        if printer_point_id:
+            return printer_point_id 
+
+        return printer_point_id
+
+    _defaults = {
+       'printer_id': _default_printer_point,
+    } 
 account_invoice()
