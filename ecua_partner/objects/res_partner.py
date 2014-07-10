@@ -110,18 +110,18 @@ class res_partner(osv.osv):
                     newvalue=_('False')
                 changes.append(_("Is Company: from '%s' to '%s'") %(oldmodel,newvalue ))
             
-            if 'category_id' in vals and partner.category_id != vals['category_id'][0][2]: # en el caso que sea un objeto
-                
-                oldmodel = partner.category_id[0].name or _('None')
-                newvalue = []
-                if vals['category_id']:
-                    newvalue=self.pool.get('res.partner.category').browse(cr,uid,vals['category_id'][0][2],context=context)
-                    if newvalue == []:
-                        newvalue=_('None')
-                       #newvalue.name 
-                else:
-                    newvalue=_('None')
-                changes.append(_("Tags: from '%s' to '%s'") %(oldmodel, newvalue))
+#             if 'category_id' in vals and partner.category_id != vals['category_id'][0][2]: # en el caso que sea un objeto
+#                 
+#                 oldmodel = partner.category_id[0].name or _('None')
+#                 newvalue = []
+#                 if vals['category_id']:
+#                     newvalue=self.pool.get('res.partner.category').browse(cr,uid,vals['category_id'][0][2],context=context)
+#                     if newvalue == []:
+#                         newvalue=_('None')
+#                        #newvalue.name 
+#                 else:
+#                     newvalue=_('None')
+#                 changes.append(_("Tags: from '%s' to '%s'") %(oldmodel, newvalue))
             
             if 'street' in vals and partner.street != vals['street']: # en el caso que sea un campo
                 oldmodel = partner.street or _('None')
@@ -244,9 +244,9 @@ class res_partner(osv.osv):
             if len(changes) > 0:
                 self.message_post(cr, uid, [partner.id], body=", ".join(changes), context=context)
         
+        result=[]
         
-        
-        result = super(res_partner, self).write(cr, uid, ids, vals, context=context)
+       # result = super(res_partner, self).write(cr, uid, ids, vals, context=context)
         return result
 
     def create(self, cr, uid, values, context=None):
