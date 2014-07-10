@@ -343,7 +343,7 @@ class res_partner(osv.osv):
                     (check_vat,_construct_constraint_msg, ["vat"]),
                     (
                      _check_unique_vat, 
-                     _('Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding'),
+                     'Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding',
                      ['vat']
                      ),
                     ]

@@ -55,8 +55,8 @@ msgstr "Web Site: from '%s' to '%s'"
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:89
 #, python-format
-msgid "Sorry, and another person / company exists with the RUC / CI. You can check the existing business either by number of RUC / CI, Company Name or Business Name"
-msgstr "Lo sentimos, ya existe otra persona/empresa con este RUC/CI. Puede buscar la empresa existente ya sea por su numero de RUC, Razón Social, o Nombre Comercial"
+msgid "Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding"
+msgstr "Error: El numero de RUC/Cedula debe ser unico, ya existe otra empresa/persona con dicho numero. Busque la empresa/persona repetida por numero de RUC/Cedula antes de continuar"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:178
