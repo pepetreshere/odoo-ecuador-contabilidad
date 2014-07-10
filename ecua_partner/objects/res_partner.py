@@ -244,9 +244,9 @@ class res_partner(osv.osv):
             if len(changes) > 0:
                 self.message_post(cr, uid, [partner.id], body=", ".join(changes), context=context)
         
-        result=[]
+        #result=[]
         
-       # result = super(res_partner, self).write(cr, uid, ids, vals, context=context)
+        result = super(res_partner, self).write(cr, uid, ids, vals, context=context)
         return result
 
     def create(self, cr, uid, values, context=None):
