@@ -272,12 +272,6 @@ class res_partner(osv.osv):
 
                }
     
-    _constraints = [(
-                     _check_unique_vat, 
-                     _('Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding'),
-                     ['vat']
-                     ),]
-    
     _defaults = {
                  'customer':True,
                  'supplier':True,
@@ -344,8 +338,15 @@ class res_partner(osv.osv):
     def _construct_constraint_msg(self, cr, uid, ids, context=None):
         res = super(res_partner, self)._construct_constraint_msg(cr, uid, ids, context=context)
         return res
-    _constraints = [(check_vat,_construct_constraint_msg, ["vat"])]
     
+    _constraints = [
+                    (check_vat,_construct_constraint_msg, ["vat"]),
+                    (
+                     _check_unique_vat, 
+                     _('Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding'),
+                     ['vat']
+                     ),
+                    ]
     
     # Ecuador VAT validation, contributed by TRESCLOUD (info@trescloud.com)
     # and based on https://launchpad.net/openerp-ecuador
