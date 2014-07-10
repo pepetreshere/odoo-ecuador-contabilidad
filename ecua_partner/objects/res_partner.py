@@ -76,17 +76,8 @@ class res_partner(osv.osv):
             res[record.id] = name
         return res
     
-    
-    
     def write(self, cr, uid, ids, vals, context=None):
         if not context: context = {}
-        if vals.get('vat', False):
-            if vals['vat'] :
-                product_objs = self.pool.get('res.partner').search(cr, uid, [('vat', '=', vals['vat'])])
-                if len(product_objs) >= 1 :
-                    bandera=self._get_default_validation(cr, uid, context)
-                    if bandera==True:
-                            raise osv.except_osv(_("Warning"), _("Sorry, and another person / company exists with the RUC / CI. You can check the existing business either by number of RUC / CI, Company Name or Business Name"))
         
         for partner in self.browse(cr, uid, ids, context):
             changes = []
@@ -246,13 +237,6 @@ class res_partner(osv.osv):
 
     def create(self, cr, uid, values, context=None):
         if not context: context = {}
-        if values.get('vat', False):
-            if values['vat'] :
-                product_objs = self.pool.get('res.partner').search(cr, uid, [('vat', '=', values['vat'])])
-                if len(product_objs) >= 1 :
-                    bandera=self._get_default_validation(cr, uid, context)
-                    if bandera==True:
-                            raise osv.except_osv(_("Warning"), _("Lo sentimos, ya existe otra persona/empresa con este RUC. Puede buscar la empresa existente ya sea por su numero de RUC, Razón Social, o Nombre Comercial"))
         res = super(res_partner, self).create(cr, uid, values, context)
         return res
  
@@ -267,7 +251,17 @@ class res_partner(osv.osv):
         if is_company==False:
             res['value']['comercial_name'] = ""
         return res
-    
+
+    def _check_unique_vat(self, cr, uid, ids, context=None):
+        '''
+        Valida que solo exista un RUC o cedula
+        '''
+        for partner in self.browse(cr, uid, ids, context=context):
+            if not partner.parent_id :
+                #vals = self.search(cr, uid, [('vat','=',partner.vat),('is_company','=',True)], context=context)
+                vals = self.search(cr, uid, [('vat','=',partner.vat),('parent_id','=',None)], context=context)
+                return not len(vals)>1
+        return True    
     
     _columns = {
                 'comercial_name': fields.char('Comercial Name', size=256),
@@ -277,7 +271,13 @@ class res_partner(osv.osv):
                 
 
                }
-
+    
+    _constraints = [(
+                     _check_unique_vat, 
+                     _('Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding'),
+                     ['vat']
+                     ),]
+    
     _defaults = {
                  'customer':True,
                  'supplier':True,
@@ -293,6 +293,37 @@ class res_partner(osv.osv):
     #    _sql_constraints = [
     #    ]
     #    _order = 'name asc'
+
+
+    def get_company_address(self, cr, uid, contact_id, printer_id=None, company_id=None, context=None):
+        '''
+        Retorna la direccion para facturacion, puede diferir de la direccion de contacto
+        Ej. Si como partner selecciono a Maria de la empresa Trescloud, la direccion sera la de Trescloud 
+        TODO: Integrarlo con modulos comunidad de multiples direcciones
+        TODO: Implementar printer_id (segun el punto de impresion puede cambiar la direccion)
+        '''
+        invoice_address = None
+        contact_obj=self.pool.get('res.partner')
+        contact = contact_obj.browse(cr,uid,[contact_id])[0]
+        invoice_address = contact.street
+        if contact.parent_id:
+            invoice_address = contact.parent_id.street
+        return invoice_address
+
+    def get_company_phone(self, cr, uid, contact_id, printer_id=None, company_id=None, context=None):
+        '''
+        Retorna el telefono para facturacion, puede diferir del telefono de contacto
+        Ej. Si como partner selecciono a Maria de la empresa Trescloud, el telefono sera la de Trescloud 
+        TODO: Integrarlo con modulos comunidad de multiples direcciones
+        TODO: Implementar printer_id (segun el punto de impresion puede cambiar la direccion)
+        '''
+        invoice_phone = None
+        contact_obj=self.pool.get('res.partner')
+        contact = contact_obj.browse(cr,uid,[contact_id])[0]
+        invoice_phone = contact.phone or contact.mobile
+        if contact.parent_id:
+            invoice_phone = contact.partner_id.phone or contact.partner_id.mobile
+        return invoice_phone
 
     def check_vat(self, cr, uid, ids, context=None):
         res = super(res_partner, self).check_vat(cr, uid, ids, context=context)
