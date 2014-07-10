@@ -110,10 +110,15 @@ class res_partner(osv.osv):
                     newvalue=_('False')
                 changes.append(_("Is Company: from '%s' to '%s'") %(oldmodel,newvalue ))
             
-            if 'category_id' in vals and partner.category_id != vals['category_id']: # en el caso que sea un objeto
-                oldmodel = partner.category_id.name or _('None')
+            if 'category_id' in vals and partner.category_id != vals['category_id'][0][2]: # en el caso que sea un objeto
+                
+                oldmodel = partner.category_id[0].name or _('None')
+                newvalue = []
                 if vals['category_id']:
-                    newvalue=self.pool.get('res.partner.category').browse(cr,uid,vals['category_id'],context=context).name
+                    newvalue=self.pool.get('res.partner.category').browse(cr,uid,vals['category_id'][0][2],context=context)
+                    if newvalue == []:
+                        newvalue=_('None')
+                       #newvalue.name 
                 else:
                     newvalue=_('None')
                 changes.append(_("Tags: from '%s' to '%s'") %(oldmodel, newvalue))
