@@ -24,4 +24,3 @@
 import account_invoice
 import shop
 import res_users
-import sale

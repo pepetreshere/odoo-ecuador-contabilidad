@@ -133,14 +133,23 @@ class account_invoice(osv.osv):
             printer_point_id = printer.id
             return printer_point_id
         
-        #intenta con el printer_point 001-001
+        #si no esta definido usamos el primero que exista, usuallmente sera el 001-001
         printer_point_obj = self.pool.get('sri.printer.point')
-        printer_point_id = printer_point_obj.search(cr,uid,[('name','=','001'),('shop_id.number','=','001')])[0]
+        printer_point_id = printer_point_obj.search(cr,uid,[])[0]
+
         if printer_point_id:
             return printer_point_id 
 
         return printer_point_id
-
+    
+    def _suggested_internal_number(self, cr, uid, printer_id, company_id=None, context=None):
+        '''Numero de factura sugerida para facturas de venta y compra, depende del punto de impresion
+           Puede ser redefinida posteriormente por ejemplo para numeracion automatica
+        '''
+        printer = self.pool.get('sri.printer.point').browse(cr, uid, printer_id, context=context)
+        number = printer.name + "-" + printer.shop_id.number + "-"
+        return number
+    
     _defaults = {
        'printer_id': _default_printer_point,
     } 
