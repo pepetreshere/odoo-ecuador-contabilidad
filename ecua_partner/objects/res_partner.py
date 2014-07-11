@@ -109,20 +109,32 @@ class res_partner(osv.osv):
                 else:
                     newvalue=_('False')
                 changes.append(_("Is Company: from '%s' to '%s'") %(oldmodel,newvalue ))
-            
-#             if 'category_id' in vals and partner.category_id != vals['category_id'][0][2]: # en el caso que sea un objeto
-#                 
-#                 oldmodel = partner.category_id[0].name or _('None')
-#                 newvalue = []
-#                 if vals['category_id']:
-#                     newvalue=self.pool.get('res.partner.category').browse(cr,uid,vals['category_id'][0][2],context=context)
-#                     if newvalue == []:
-#                         newvalue=_('None')
-#                        #newvalue.name 
-#                 else:
-#                     newvalue=_('None')
-#                 changes.append(_("Tags: from '%s' to '%s'") %(oldmodel, newvalue))
-            
+            # DR verifica cuando existe un campo m2m elimina repedidos y guarda los campos nuevos 
+            if 'category_id' in vals and partner.category_id != vals['category_id'][0][2]:
+                list_tag = []
+                list = []
+                "Guarda en las listas los campos removidor o agragados"
+                list_tag_new = sorted(vals['category_id'][0][2])
+                for a in partner.category_id:    
+                    list_tag.append(a.id)
+                sorted(list_tag)
+                sorted(list_tag_new)
+                "ve cuales son los camos q se mantienen"
+                for a in list_tag:
+                    for t in list_tag_new:
+                        if a == t: 
+                            list.append(a)
+                "elimina de las listas los campos repetidos"
+                for a in list:
+                    del(list_tag_new[list_tag_new.index(a)])
+                    del(list_tag[list_tag.index(a)])
+                "Guarda e imprime los campos no repetidos en msn"
+                for id in list_tag:
+                    value = self.pool.get('res.partner.category').browse(cr,uid,id,context=context).name or _('None')
+                    changes.append(_("Tag Removed: '%s'") %(value)) 
+                for id in list_tag_new:
+                    value = self.pool.get('res.partner.category').browse(cr,uid,id,context=context).name or _('None')
+                    changes.append(_("Added tag: '%s'") %(value))
             if 'street' in vals and partner.street != vals['street']: # en el caso que sea un campo
                 oldmodel = partner.street or _('None')
                 newvalue = vals['street'] or _('None')
@@ -135,20 +147,21 @@ class res_partner(osv.osv):
                 oldmodel = partner.city or _('None')
                 newvalue = vals['city'] or _('None')
                 changes.append(_("City: from '%s' to '%s'") %(oldmodel, newvalue))
-            if 'state_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
-                oldmodel = partner.state_id.name or _('None')
-                if vals['state_id']:
-                    newvalue=self.pool.get('res.country.state').browse(cr,uid,vals['state_id'],context=context).name
-                else:
-                    newvalue=_('None')
-                changes.append(_("State: from '%s' to '%s'") %(oldmodel, newvalue))
             if 'zip' in vals and partner.zip != vals['zip']: # en el caso que sea un campo
                 oldmodel = partner.zip or _('None')
                 newvalue = vals['zip'] or _('None')
                 changes.append(_("ZIP: from '%s' to '%s'") %(oldmodel,newvalue ))
             if 'country_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
                 oldmodel = partner.country_id.name or _('None')
+                #DR
                 if vals['country_id']:
+                    if 'state_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
+                        oldmodel = partner.state_id.name or _('None')
+                        if vals['state_id']:
+                            newvalue=self.pool.get('res.country.state').browse(cr,uid,vals['state_id'],context=context).name
+                        else:
+                            newvalue=_('None')
+                        changes.append(_("State: from '%s' to '%s'") %(oldmodel, newvalue))
                     newvalue=self.pool.get('res.country').browse(cr,uid,vals['country_id'],context=context).name
                 else:
                     newvalue=_('None')
@@ -243,8 +256,6 @@ class res_partner(osv.osv):
             
             if len(changes) > 0:
                 self.message_post(cr, uid, [partner.id], body=", ".join(changes), context=context)
-        
-        #result=[]
         
         result = super(res_partner, self).write(cr, uid, ids, vals, context=context)
         return result
