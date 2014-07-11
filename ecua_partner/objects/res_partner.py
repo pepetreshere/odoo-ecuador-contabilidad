@@ -150,18 +150,18 @@ class res_partner(osv.osv):
             if 'zip' in vals and partner.zip != vals['zip']: # en el caso que sea un campo
                 oldmodel = partner.zip or _('None')
                 newvalue = vals['zip'] or _('None')
-                changes.append(_("ZIP: from '%s' to '%s'") %(oldmodel,newvalue ))
-            if 'country_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
+                changes.append(_("ZIP: from '%s' to '%s'") %(oldmodel,newvalue ))      
+            if 'state_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
+                oldmodel = partner.state_id.name or _('None')
+                if vals['state_id']:
+                    newvalue=self.pool.get('res.country.state').browse(cr,uid,vals['state_id'],context=context).name
+                else:
+                    newvalue=_('None')
+                changes.append(_("State: from '%s' to '%s'") %(oldmodel, newvalue))                
+            if 'country_id' in vals and partner.country_id != vals['country_id']: # en el caso que sea un objeto
                 oldmodel = partner.country_id.name or _('None')
-                #DR
+
                 if vals['country_id']:
-                    if 'state_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
-                        oldmodel = partner.state_id.name or _('None')
-                        if vals['state_id']:
-                            newvalue=self.pool.get('res.country.state').browse(cr,uid,vals['state_id'],context=context).name
-                        else:
-                            newvalue=_('None')
-                        changes.append(_("State: from '%s' to '%s'") %(oldmodel, newvalue))
                     newvalue=self.pool.get('res.country').browse(cr,uid,vals['country_id'],context=context).name
                 else:
                     newvalue=_('None')
@@ -188,7 +188,7 @@ class res_partner(osv.osv):
                 changes.append(_("Email: from '%s' to '%s'") %(oldmodel,newvalue ))
             
             if 'property_account_position' in vals and partner.property_account_position != vals['property_account_position']: # en el caso que sea un objeto
-                oldmodel = partner.property_account_position.name or _('None')
+                oldmodel = partner.property_account_position.id or _('None')
                 if vals['property_account_position']:
                     newvalue=self.pool.get('account.fiscal.position').browse(cr,uid,vals['property_account_position'],context=context).name
                 else:
@@ -203,26 +203,18 @@ class res_partner(osv.osv):
             if 'property_account_receivable' in vals and partner.property_account_receivable != vals['property_account_receivable']: # en el caso que sea un objeto
                 oldmodel = partner.property_account_receivable.name or _('None')
                 if vals['property_account_receivable']:
-                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_receivable'],context=context).name
+                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_receivable'],context=context).name or _('None')
                 else:
                     newvalue=_('None')
                 changes.append(_("Account Receivable: from '%s' to '%s'") %(oldmodel, newvalue))
-            if 'property_account_payable' in vals and partner.property_account_payable != vals['property_account_payable']: # en el caso que sea un objeto
-                oldmodel = partner.property_account_payable.name or _('None')
-                if vals['property_account_payable']:
-                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_payable'],context=context).name
-                else:
-                    newvalue=_('None')
-                changes.append(_("Account Payable: from '%s' to '%s'") %(oldmodel, newvalue))
             
             if 'property_account_payable' in vals and partner.property_account_payable != vals['property_account_payable']: # en el caso que sea un objeto
                 oldmodel = partner.property_account_payable.name or _('None')
                 if vals['property_account_payable']:
-                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_payable'],context=context).name
+                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_payable'],context=context).name or _('None')
                 else:
                     newvalue=_('None')
                 changes.append(_("Account Payable: from '%s' to '%s'") %(oldmodel, newvalue))
-                
                 
             if 'user_id' in vals and partner.user_id != vals['user_id']: # en el caso que sea un objeto
                 oldmodel = partner.user_id.name or _('None')
