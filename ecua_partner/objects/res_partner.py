@@ -188,7 +188,7 @@ class res_partner(osv.osv):
                 changes.append(_("Email: from '%s' to '%s'") %(oldmodel,newvalue ))
             
             if 'property_account_position' in vals and partner.property_account_position != vals['property_account_position']: # en el caso que sea un objeto
-                oldmodel = partner.property_account_position.id or _('None')
+                oldmodel = partner.property_account_position.name or _('None')
                 if vals['property_account_position']:
                     newvalue=self.pool.get('account.fiscal.position').browse(cr,uid,vals['property_account_position'],context=context).name
                 else:
