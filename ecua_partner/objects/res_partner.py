@@ -316,7 +316,7 @@ class res_partner(osv.osv):
         contact = contact_obj.browse(cr,uid,[contact_id])[0]
         invoice_phone = contact.phone or contact.mobile
         if contact.parent_id:
-            invoice_phone = contact.partner_id.phone or contact.partner_id.mobile
+            invoice_phone = contact.parent_id.phone or contact.parent_id.mobile
         return invoice_phone
 
     def check_vat(self, cr, uid, ids, context=None):
