@@ -133,15 +133,58 @@ class account_invoice(osv.osv):
             printer_point_id = printer.id
             return printer_point_id
         
-        #intenta con el printer_point 001-001
+        #si no esta definido usamos el primero que exista, usuallmente sera el 001-001
         printer_point_obj = self.pool.get('sri.printer.point')
-        printer_point_id = printer_point_obj.search(cr,uid,[('name','=','001'),('shop_id.number','=','001')])[0]
+        printer_point_id = printer_point_obj.search(cr,uid,[])[0]
+
         if printer_point_id:
             return printer_point_id 
 
         return printer_point_id
-
+    
+    def _suggested_internal_number(self, cr, uid, printer_id, type, company_id=None, context=None):
+        '''Numero de factura sugerida para facturas de venta y compra, depende del punto de impresion
+           Puede ser redefinida posteriormente por ejemplo para numeracion automatica
+        '''
+        number = '001-001-'
+        
+        if type in ['out_invoice','in_refund']:
+            printer = self.pool.get('sri.printer.point').browse(cr, uid, printer_id, context=context)
+            number = printer.name + "-" + printer.shop_id.number + "-"
+        if type in ['in_invoice','out_refund']:
+            number = '001-001-'
+        return number
+    
     _defaults = {
        'printer_id': _default_printer_point,
     } 
+    
+    def _prepare_invoice_header(self, cr, uid, partner_id, type, inv_date=None, context=None):
+        """Retorna los valores ecuatorianos para el header de una factura
+           Puede ser usado en ordenes de compra
+           @partner_id es un objeto partner
+           @type es el tipo de factura, ej. out_invoice
+           @inv_date es la fecha prevista de la factura, si no se provee se asume hoy
+        """
+
+        if context is None:
+            context = {}
+        invoice_vals = {}
+        
+        partner_obj=self.pool.get('res.partner')
+        invoice_address = partner_obj.get_company_address(cr,uid,partner_id) 
+        invoice_phone = partner_obj.get_company_phone(cr,uid,partner_id)
+        
+        inv_obj=self.pool.get('account.invoice')
+        printer_id=inv_obj._default_printer_point(cr,uid,uid)
+        if printer_id:
+            internal_number = inv_obj._suggested_internal_number(cr, uid, printer_id, type, context)
+        
+        invoice_vals.update({
+                        'invoice_address': invoice_address or '',
+                        'invoice_phone': invoice_phone or '',
+                        'internal_number': internal_number or '',
+                        'printer_id': printer_id
+                        })
+        return invoice_vals
 account_invoice()
