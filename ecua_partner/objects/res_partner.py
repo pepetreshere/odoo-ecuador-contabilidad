@@ -26,6 +26,7 @@ from openerp.osv import fields
 from openerp.tools.translate import _
 from openerp.tools.misc import ustr
 import time
+import re #para busqueda por cedula
 
 class res_partner(osv.osv):
     _inherit = "res.partner"
@@ -328,6 +329,20 @@ class res_partner(osv.osv):
             invoice_phone = contact.parent_id.phone or contact.parent_id.mobile
         return invoice_phone
 
+    def _get_company_vat(self, cr, uid, context=None):
+        '''
+        Si es una empresa retorna un string con el  RUC/Cedula de la empresa
+        Si es un contacto retorna un string con el el RUC/Cedula del contacto
+        Podria obviarse la fucnion pero en el futuro se planea que el contacto pueda tener cedula distinta
+        '''
+        vat = ''
+        contact_obj=self.pool.get('res.partner')
+        contact = contact_obj.browse(cr,uid,[contact_id])[0]
+        vat = contact.vat
+        if contact.parent_id:
+            vat = contact.parent_id.vat
+        return vat
+    
     def check_vat(self, cr, uid, ids, context=None):
         res = super(res_partner, self).check_vat(cr, uid, ids, context=context)
         valid=0
@@ -356,7 +371,74 @@ class res_partner(osv.osv):
                      ['vat']
                      ),
                     ]
+
+    def name_get(self, cr, uid, ids, context=None):
+        '''
+        Agrega el numero de RUC/CEdula al final del nombre
+        '''
+        if context is None:
+            context = {}
+        if context.get('show_email'): #evitamos el escneario de formularios de email
+            return super(res_partner, self).name_get(cr, uid, ids, context=context)
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+
+
+    def name_get(self, cr, uid, ids, context=None):
+        '''
+        Agrega el numero de RUC/CEdula al final del nombre
+        '''
+        if context is None:
+            context = {}
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        res = super(res_partner,self).name_get(cr, uid, ids, context=context)
+        res2 = []
+        if not context.get('show_email'): #evitamos el escneario de formularios de email
+            for partner_id, name in res:
+                record = self.read(cr, uid, partner_id, ['ref','vat'], context=context)
+                new_name = (record['ref'] and '[' + record['ref'] + '] ' or '') + ((record['vat'] and '[' + record['vat'] + '] ' or '')) + name
+                res2.append((partner_id, new_name))
+            return res2
+        return res
     
+    def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
+        '''
+        Permite buscar ya sea por nombre o por codigo
+        hemos copiado la idea de product.product
+        No se llama a super porque name-search no estaba definida
+        '''
+        if not args:
+            args = []
+        if not context:
+            context = {}
+        ids = []
+        if name: #no ejecutamos si el usaurio no ha tipeado nada
+
+            #buscamos por codigo completo
+            ids = self.search(cr, user, ['|',('vat','=',name),('ref','=',name)]+ args, limit=limit, context=context)
+            if not ids: #buscamos por fraccion de palabra o fraccion de codigo
+                # Do not merge the 2 next lines into one single search, SQL search performance would be abysmal
+                # on a database with thousands of matching products, due to the huge merge+unique needed for the
+                # OR operator (and given the fact that the 'name' lookup results come from the ir.translation table
+                # Performing a quick memory merge of ids in Python will give much better performance
+                ids = set()
+                ids.update(self.search(cr, user, args + ['|',('vat',operator,name),('ref',operator,name)], limit=limit, context=context))
+                if not limit or len(ids) < limit:
+                    # we may underrun the limit because of dupes in the results, that's fine
+                    ids.update(self.search(cr, user, args + [('name',operator,name)], limit=(limit and (limit-len(ids)) or False) , context=context))
+                ids = list(ids)
+            if not ids:
+                ptrn = re.compile('(\[(.*?)\])')
+                res = ptrn.search(name)
+                if res:
+                    ids = self.search(cr, user, ['|',('vat','=', res.group(2)),('ref','=', res.group(2))] + args, limit=limit, context=context)
+
+        else: #cuando el usuario no ha escrito nada aun
+            ids = self.search(cr, user, args, limit=limit, context=context)
+        result = self.name_get(cr, user, ids, context=context)
+        return result
+        
     # Ecuador VAT validation, contributed by TRESCLOUD (info@trescloud.com)
     # and based on https://launchpad.net/openerp-ecuador
     # TRESCLOUD TODO - Incluir estas funciones en el espacio de nombres de check_vat_ec
