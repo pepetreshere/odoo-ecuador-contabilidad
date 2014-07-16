@@ -265,10 +265,11 @@ class res_partner(osv.osv):
         Valida que solo exista un RUC o cedula
         '''
         for partner in self.browse(cr, uid, ids, context=context):
-            if not partner.parent_id :
-                #vals = self.search(cr, uid, [('vat','=',partner.vat),('is_company','=',True)], context=context)
-                vals = self.search(cr, uid, [('vat','=',partner.vat),('parent_id','=',None)], context=context)
-                return not len(vals)>1
+            if partner.vat: #si tiene cedula la valida, caso contrario no hace nada
+                if not partner.parent_id :
+                    #vals = self.search(cr, uid, [('vat','=',partner.vat),('is_company','=',True)], context=context)
+                    vals = self.search(cr, uid, [('vat','=',partner.vat),('parent_id','=',None)], context=context)
+                    return not len(vals)>1
         return True    
     
     _columns = {
