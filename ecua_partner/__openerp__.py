@@ -35,6 +35,7 @@
                  'sale',
                  'account',
                  'base_vat',
+                 'crm',
                  ],
     "description": """
     This module improves partner view to include
@@ -47,7 +48,7 @@
     - Anade cliente CONSUMIDOR FINAL
     
     This module is part of a bigger framework of "ecua" modules developed by 
-    TRESCLOUD, EcuadorEnLinea y 4RSOFT.
+    TRESCLOUD.
     
     Author,
     

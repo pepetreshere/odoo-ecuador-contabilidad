@@ -26,6 +26,7 @@ from openerp.osv import fields
 from openerp.tools.translate import _
 from openerp.tools.misc import ustr
 import time
+import re #para busqueda por cedula
 
 class res_partner(osv.osv):
     _inherit = "res.partner"
@@ -76,17 +77,8 @@ class res_partner(osv.osv):
             res[record.id] = name
         return res
     
-    
-    
     def write(self, cr, uid, ids, vals, context=None):
         if not context: context = {}
-        if vals.get('vat', False):
-            if vals['vat'] :
-                product_objs = self.pool.get('res.partner').search(cr, uid, [('vat', '=', vals['vat'])])
-                if len(product_objs) >= 1 :
-                    bandera=self._get_default_validation(cr, uid, context)
-                    if bandera==True:
-                            raise osv.except_osv(_("Warning"), _("Sorry, and another person / company exists with the RUC / CI. You can check the existing business either by number of RUC / CI, Company Name or Business Name"))
         
         for partner in self.browse(cr, uid, ids, context):
             changes = []
@@ -109,15 +101,32 @@ class res_partner(osv.osv):
                 else:
                     newvalue=_('False')
                 changes.append(_("Is Company: from '%s' to '%s'") %(oldmodel,newvalue ))
-            
-            if 'category_id' in vals and partner.category_id != vals['category_id']: # en el caso que sea un objeto
-                oldmodel = partner.category_id.name or _('None')
-                if vals['category_id']:
-                    newvalue=self.pool.get('res.partner.category').browse(cr,uid,vals['category_id'],context=context).name
-                else:
-                    newvalue=_('None')
-                changes.append(_("Tags: from '%s' to '%s'") %(oldmodel, newvalue))
-            
+            # DR verifica cuando existe un campo m2m elimina repedidos y guarda los campos nuevos 
+            if 'category_id' in vals and partner.category_id != vals['category_id'][0][2]:
+                list_tag = []
+                list = []
+                "Guarda en las listas los campos removidor o agragados"
+                list_tag_new = sorted(vals['category_id'][0][2])
+                for a in partner.category_id:    
+                    list_tag.append(a.id)
+                sorted(list_tag)
+                sorted(list_tag_new)
+                "ve cuales son los camos q se mantienen"
+                for a in list_tag:
+                    for t in list_tag_new:
+                        if a == t: 
+                            list.append(a)
+                "elimina de las listas los campos repetidos"
+                for a in list:
+                    del(list_tag_new[list_tag_new.index(a)])
+                    del(list_tag[list_tag.index(a)])
+                "Guarda e imprime los campos no repetidos en msn"
+                for id in list_tag:
+                    value = self.pool.get('res.partner.category').browse(cr,uid,id,context=context).name or _('None')
+                    changes.append(_("Tag Removed: '%s'") %(value)) 
+                for id in list_tag_new:
+                    value = self.pool.get('res.partner.category').browse(cr,uid,id,context=context).name or _('None')
+                    changes.append(_("Added tag: '%s'") %(value))
             if 'street' in vals and partner.street != vals['street']: # en el caso que sea un campo
                 oldmodel = partner.street or _('None')
                 newvalue = vals['street'] or _('None')
@@ -130,19 +139,20 @@ class res_partner(osv.osv):
                 oldmodel = partner.city or _('None')
                 newvalue = vals['city'] or _('None')
                 changes.append(_("City: from '%s' to '%s'") %(oldmodel, newvalue))
+            if 'zip' in vals and partner.zip != vals['zip']: # en el caso que sea un campo
+                oldmodel = partner.zip or _('None')
+                newvalue = vals['zip'] or _('None')
+                changes.append(_("ZIP: from '%s' to '%s'") %(oldmodel,newvalue ))      
             if 'state_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
                 oldmodel = partner.state_id.name or _('None')
                 if vals['state_id']:
                     newvalue=self.pool.get('res.country.state').browse(cr,uid,vals['state_id'],context=context).name
                 else:
                     newvalue=_('None')
-                changes.append(_("State: from '%s' to '%s'") %(oldmodel, newvalue))
-            if 'zip' in vals and partner.zip != vals['zip']: # en el caso que sea un campo
-                oldmodel = partner.zip or _('None')
-                newvalue = vals['zip'] or _('None')
-                changes.append(_("ZIP: from '%s' to '%s'") %(oldmodel,newvalue ))
-            if 'country_id' in vals and partner.state_id != vals['state_id']: # en el caso que sea un objeto
+                changes.append(_("State: from '%s' to '%s'") %(oldmodel, newvalue))                
+            if 'country_id' in vals and partner.country_id != vals['country_id']: # en el caso que sea un objeto
                 oldmodel = partner.country_id.name or _('None')
+
                 if vals['country_id']:
                     newvalue=self.pool.get('res.country').browse(cr,uid,vals['country_id'],context=context).name
                 else:
@@ -185,26 +195,18 @@ class res_partner(osv.osv):
             if 'property_account_receivable' in vals and partner.property_account_receivable != vals['property_account_receivable']: # en el caso que sea un objeto
                 oldmodel = partner.property_account_receivable.name or _('None')
                 if vals['property_account_receivable']:
-                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_receivable'],context=context).name
+                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_receivable'],context=context).name or _('None')
                 else:
                     newvalue=_('None')
                 changes.append(_("Account Receivable: from '%s' to '%s'") %(oldmodel, newvalue))
-            if 'property_account_payable' in vals and partner.property_account_payable != vals['property_account_payable']: # en el caso que sea un objeto
-                oldmodel = partner.property_account_payable.name or _('None')
-                if vals['property_account_payable']:
-                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_payable'],context=context).name
-                else:
-                    newvalue=_('None')
-                changes.append(_("Account Payable: from '%s' to '%s'") %(oldmodel, newvalue))
             
             if 'property_account_payable' in vals and partner.property_account_payable != vals['property_account_payable']: # en el caso que sea un objeto
                 oldmodel = partner.property_account_payable.name or _('None')
                 if vals['property_account_payable']:
-                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_payable'],context=context).name
+                    newvalue=self.pool.get('account.account').browse(cr,uid,vals['property_account_payable'],context=context).name or _('None')
                 else:
                     newvalue=_('None')
                 changes.append(_("Account Payable: from '%s' to '%s'") %(oldmodel, newvalue))
-                
                 
             if 'user_id' in vals and partner.user_id != vals['user_id']: # en el caso que sea un objeto
                 oldmodel = partner.user_id.name or _('None')
@@ -239,20 +241,11 @@ class res_partner(osv.osv):
             if len(changes) > 0:
                 self.message_post(cr, uid, [partner.id], body=", ".join(changes), context=context)
         
-        
-        
         result = super(res_partner, self).write(cr, uid, ids, vals, context=context)
         return result
 
     def create(self, cr, uid, values, context=None):
         if not context: context = {}
-        if values.get('vat', False):
-            if values['vat'] :
-                product_objs = self.pool.get('res.partner').search(cr, uid, [('vat', '=', values['vat'])])
-                if len(product_objs) >= 1 :
-                    bandera=self._get_default_validation(cr, uid, context)
-                    if bandera==True:
-                            raise osv.except_osv(_("Warning"), _("Lo sentimos, ya existe otra persona/empresa con este RUC. Puede buscar la empresa existente ya sea por su numero de RUC, Razón Social, o Nombre Comercial"))
         res = super(res_partner, self).create(cr, uid, values, context)
         return res
  
@@ -267,7 +260,18 @@ class res_partner(osv.osv):
         if is_company==False:
             res['value']['comercial_name'] = ""
         return res
-    
+
+    def _check_unique_vat(self, cr, uid, ids, context=None):
+        '''
+        Valida que solo exista un RUC o cedula
+        '''
+        for partner in self.browse(cr, uid, ids, context=context):
+            if partner.vat: #si tiene cedula la valida, caso contrario no hace nada
+                if not partner.parent_id :
+                    #vals = self.search(cr, uid, [('vat','=',partner.vat),('is_company','=',True)], context=context)
+                    vals = self.search(cr, uid, [('vat','=',partner.vat),('parent_id','=',None)], context=context)
+                    return not len(vals)>1
+        return True    
     
     _columns = {
                 'comercial_name': fields.char('Comercial Name', size=256),
@@ -277,7 +281,7 @@ class res_partner(osv.osv):
                 
 
                }
-
+    
     _defaults = {
                  'customer':True,
                  'supplier':True,
@@ -294,6 +298,51 @@ class res_partner(osv.osv):
     #    ]
     #    _order = 'name asc'
 
+
+    def get_company_address(self, cr, uid, contact_id, printer_id=None, company_id=None, context=None):
+        '''
+        Retorna la direccion para facturacion, puede diferir de la direccion de contacto
+        Ej. Si como partner selecciono a Maria de la empresa Trescloud, la direccion sera la de Trescloud 
+        TODO: Integrarlo con modulos comunidad de multiples direcciones
+        TODO: Implementar printer_id (segun el punto de impresion puede cambiar la direccion)
+        '''
+        invoice_address = None
+        contact_obj=self.pool.get('res.partner')
+        contact = contact_obj.browse(cr,uid,[contact_id])[0]
+        invoice_address = contact.street
+        if contact.parent_id:
+            invoice_address = contact.parent_id.street
+        return invoice_address
+
+    def get_company_phone(self, cr, uid, contact_id, printer_id=None, company_id=None, context=None):
+        '''
+        Retorna el telefono para facturacion, puede diferir del telefono de contacto
+        Ej. Si como partner selecciono a Maria de la empresa Trescloud, el telefono sera la de Trescloud 
+        TODO: Integrarlo con modulos comunidad de multiples direcciones
+        TODO: Implementar printer_id (segun el punto de impresion puede cambiar la direccion)
+        '''
+        invoice_phone = None
+        contact_obj=self.pool.get('res.partner')
+        contact = contact_obj.browse(cr,uid,[contact_id])[0]
+        invoice_phone = contact.phone or contact.mobile
+        if contact.parent_id:
+            invoice_phone = contact.parent_id.phone or contact.parent_id.mobile
+        return invoice_phone
+
+    def _get_company_vat(self, cr, uid, context=None):
+        '''
+        Si es una empresa retorna un string con el  RUC/Cedula de la empresa
+        Si es un contacto retorna un string con el el RUC/Cedula del contacto
+        Podria obviarse la fucnion pero en el futuro se planea que el contacto pueda tener cedula distinta
+        '''
+        vat = ''
+        contact_obj=self.pool.get('res.partner')
+        contact = contact_obj.browse(cr,uid,[contact_id])[0]
+        vat = contact.vat
+        if contact.parent_id:
+            vat = contact.parent_id.vat
+        return vat
+    
     def check_vat(self, cr, uid, ids, context=None):
         res = super(res_partner, self).check_vat(cr, uid, ids, context=context)
         valid=0
@@ -313,9 +362,83 @@ class res_partner(osv.osv):
     def _construct_constraint_msg(self, cr, uid, ids, context=None):
         res = super(res_partner, self)._construct_constraint_msg(cr, uid, ids, context=context)
         return res
-    _constraints = [(check_vat,_construct_constraint_msg, ["vat"])]
     
+    _constraints = [
+                    (check_vat,_construct_constraint_msg, ["vat"]),
+                    (
+                     _check_unique_vat, 
+                     'Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding',
+                     ['vat']
+                     ),
+                    ]
+
+    def name_get(self, cr, uid, ids, context=None):
+        '''
+        Agrega el numero de RUC/CEdula al final del nombre
+        '''
+        if context is None:
+            context = {}
+        if context.get('show_email'): #evitamos el escneario de formularios de email
+            return super(res_partner, self).name_get(cr, uid, ids, context=context)
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+
+
+    def name_get(self, cr, uid, ids, context=None):
+        '''
+        Agrega el numero de RUC/CEdula al final del nombre
+        '''
+        if context is None:
+            context = {}
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        res = super(res_partner,self).name_get(cr, uid, ids, context=context)
+        res2 = []
+        if not context.get('show_email'): #evitamos el escneario de formularios de email
+            for partner_id, name in res:
+                record = self.read(cr, uid, partner_id, ['ref','vat'], context=context)
+                new_name = (record['ref'] and '[' + record['ref'] + '] ' or '') + ((record['vat'] and '[' + record['vat'] + '] ' or '')) + name
+                res2.append((partner_id, new_name))
+            return res2
+        return res
     
+    def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
+        '''
+        Permite buscar ya sea por nombre o por codigo
+        hemos copiado la idea de product.product
+        No se llama a super porque name-search no estaba definida
+        '''
+        if not args:
+            args = []
+        if not context:
+            context = {}
+        ids = []
+        if name: #no ejecutamos si el usaurio no ha tipeado nada
+
+            #buscamos por codigo completo
+            ids = self.search(cr, user, ['|',('vat','=',name),('ref','=',name)]+ args, limit=limit, context=context)
+            if not ids: #buscamos por fraccion de palabra o fraccion de codigo
+                # Do not merge the 2 next lines into one single search, SQL search performance would be abysmal
+                # on a database with thousands of matching products, due to the huge merge+unique needed for the
+                # OR operator (and given the fact that the 'name' lookup results come from the ir.translation table
+                # Performing a quick memory merge of ids in Python will give much better performance
+                ids = set()
+                ids.update(self.search(cr, user, args + ['|',('vat',operator,name),('ref',operator,name)], limit=limit, context=context))
+                if not limit or len(ids) < limit:
+                    # we may underrun the limit because of dupes in the results, that's fine
+                    ids.update(self.search(cr, user, args + [('name',operator,name)], limit=(limit and (limit-len(ids)) or False) , context=context))
+                ids = list(ids)
+            if not ids:
+                ptrn = re.compile('(\[(.*?)\])')
+                res = ptrn.search(name)
+                if res:
+                    ids = self.search(cr, user, ['|',('vat','=', res.group(2)),('ref','=', res.group(2))] + args, limit=limit, context=context)
+
+        else: #cuando el usuario no ha escrito nada aun
+            ids = self.search(cr, user, args, limit=limit, context=context)
+        result = self.name_get(cr, user, ids, context=context)
+        return result
+        
     # Ecuador VAT validation, contributed by TRESCLOUD (info@trescloud.com)
     # and based on https://launchpad.net/openerp-ecuador
     # TRESCLOUD TODO - Incluir estas funciones en el espacio de nombres de check_vat_ec

@@ -21,7 +21,6 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
-import account_invoice
 import shop
 import res_users
-import sale
+import account_invoice
