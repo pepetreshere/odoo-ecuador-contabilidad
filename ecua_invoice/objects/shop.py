@@ -75,6 +75,9 @@ class sri_printer_point(osv.osv):
     _columns = {
                     'name':fields.char('Name', size=3, required=True,help='This number is assigned by the SRI'), 
                     'shop_id':fields.many2one('sale.shop', 'Shop'),
+                    'invoice_sequence_id' : fields.many2one('ir.sequence', 'Invoice IDs Sequence', readonly=True,
+                        help="This sequence is automatically created by Odoo but you can change it "\
+                            "to customize the generated invoice numbers of your orders."),
                     }
     
     def name_get(self,cr,uid,ids, context=None):
@@ -93,6 +96,33 @@ class sri_printer_point(osv.osv):
                     name_shop+="-"+name
                 res.append((r['id'], name_shop))
         return res
+
+
+    def copy(self, cr, uid, id, default=None, context=None):
+        if not default:
+            default = {}
+        d = {
+            'invoice_sequence_id' : False,
+        }
+        d.update(default)
+        return super(sri_printer_point, self).copy(cr, uid, id, d, context=context)
+    
+    def create(self, cr, uid, values, context=None):
+        proxy = self.pool.get('ir.sequence')
+        sequence_values = dict(
+            name='Secuencial Facturas de %s' % values['name'],
+            padding=9,
+            prefix="%s-"  % values['name'],
+        )
+        invoice_sequence_id = proxy.create(cr, uid, sequence_values, context=context)
+        values['invoice_sequence_id'] = invoice_sequence_id
+        return super(sri_printer_point, self).create(cr, uid, values, context=context)
+    
+    def unlink(self, cr, uid, ids, context=None):
+        for obj in self.browse(cr, uid, ids, context=context):
+            if obj.invoice_sequence_id:
+                obj.invoice_sequence_id.unlink()
+        return super(sri_printer_point, self).unlink(cr, uid, ids, context=context)
     
 sri_printer_point()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

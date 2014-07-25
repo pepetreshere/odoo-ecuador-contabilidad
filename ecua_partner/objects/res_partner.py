@@ -378,18 +378,6 @@ class res_partner(osv.osv):
         '''
         if context is None:
             context = {}
-        if context.get('show_email'): #evitamos el escneario de formularios de email
-            return super(res_partner, self).name_get(cr, uid, ids, context=context)
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-
-
-    def name_get(self, cr, uid, ids, context=None):
-        '''
-        Agrega el numero de RUC/CEdula al final del nombre
-        '''
-        if context is None:
-            context = {}
         if isinstance(ids, (int, long)):
             ids = [ids]
         res = super(res_partner,self).name_get(cr, uid, ids, context=context)
