@@ -73,12 +73,9 @@ class sri_printer_point(osv.osv):
     _name = 'sri.printer.point'
     
     _columns = {
-                    'name':fields.char('Name', size=3, required=True,help='This number is assigned by the SRI'), 
-                    'shop_id':fields.many2one('sale.shop', 'Shop'),
-                    'invoice_sequence_id' : fields.many2one('ir.sequence', 'Invoice IDs Sequence', readonly=True,
-                        help="This sequence is automatically created by Odoo but you can change it "\
-                            "to customize the generated invoice numbers of your orders."),
-                    }
+                'name':fields.char('Name', size=3, required=True,help='This number is assigned by the SRI'), 
+                'shop_id':fields.many2one('sale.shop', 'Shop'),
+                }
     
     def name_get(self,cr,uid,ids, context=None):
         if not context:
