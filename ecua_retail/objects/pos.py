@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Andres Calle, Patricio Rangles, Pablo Vizhnay
+# @authors: Andres Calle
 # Copyright (C) 2013  TRESCLOUD Cia Ltda
 #
 #This program is free software: you can redistribute it and/or modify
@@ -29,12 +29,17 @@ class pos_config(osv.osv):
     _inherit = 'pos.config'
 
     _columns = {
-                'invoice_sequence_id' : fields.many2one('ir.sequence', 'Invoice IDs Sequence', readonly=True,
-                                                        help="This sequence is automatically created by Odoo but you can change it "\
-                                                        "to customize the generated invoice numbers of your orders."),
-                'sri_printer_point' : fields.one2many('sri.printer.point', 'printer_point_id', 'SRI Printer Point', help='The related Tax Authority authorized printer point'),
-                }    
+                'sri_printer_point_id': fields.many2one('sri.printer.point', 'SRI Printer Point',
+                                                        help="SRI Authorized Printer Point"),
+                'invoice_sequence_id': fields.related(
+                                            'sri_printer_point_id',
+                                            'invoice_sequence_id',
+                                            type="many2one",
+                                            relation="sri.printer.point",
+                                            string="Invoice IDs Sequence",
+                                            store=False),
+                }
         
-res_partner()
+pos_config()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

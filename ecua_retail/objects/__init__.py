@@ -21,4 +21,5 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
-import res_partner, res_company
+import pos 
+import shop

@@ -32,9 +32,20 @@ class sri_printer_point(osv.osv):
                 'invoice_sequence_id' : fields.many2one('ir.sequence', 'Invoice IDs Sequence', readonly=True,
                                                         help="This sequence is automatically created by Odoo but you can change it "\
                                                         "to customize the generated invoice numbers of your orders."),
-                'pos_config_ids' : fields.many2one('pos.config', 'Retail Point of Sale Terminals', readonly=True,
+                'pos_config_ids' : fields.many2one('pos.config', 'sri_printer_point_id', 'Retail Point of Sale Terminals',
                                                         help="From the point of sale terminal you can issue automatically numbered documents"),
+
                 }
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if not default:
+            default = {}
+        d = {
+            'invoice_sequence_id' : False,
+            'pos_config_ids' : False,
+        }
+        d.update(default)
+        return super(sri_printer_point, self).copy(cr, uid, id, d, context=context)
         
 sri_printer_point()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
