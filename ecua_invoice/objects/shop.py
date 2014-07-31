@@ -93,27 +93,6 @@ class sri_printer_point(osv.osv):
                     name_shop+="-"+name
                 res.append((r['id'], name_shop))
         return res
-
-
-    def copy(self, cr, uid, id, default=None, context=None):
-        if not default:
-            default = {}
-        d = {
-            'invoice_sequence_id' : False,
-        }
-        d.update(default)
-        return super(sri_printer_point, self).copy(cr, uid, id, d, context=context)
-    
-    def create(self, cr, uid, values, context=None):
-        proxy = self.pool.get('ir.sequence')
-        sequence_values = dict(
-            name='Secuencial Facturas de %s' % values['name'],
-            padding=9,
-            prefix="%s-"  % values['name'],
-        )
-        invoice_sequence_id = proxy.create(cr, uid, sequence_values, context=context)
-        values['invoice_sequence_id'] = invoice_sequence_id
-        return super(sri_printer_point, self).create(cr, uid, values, context=context)
     
     def unlink(self, cr, uid, ids, context=None):
         for obj in self.browse(cr, uid, ids, context=context):
