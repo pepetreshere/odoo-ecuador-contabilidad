@@ -37,7 +37,6 @@ class sri_printer_point(osv.osv):
         if not default:
             default = {}
         d = {
-            'invoice_sequence_id' : False,
             'pos_config_ids' : False,
         }
         d.update(default)
