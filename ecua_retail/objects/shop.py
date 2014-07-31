@@ -29,12 +29,8 @@ class sri_printer_point(osv.osv):
     _inherit = "sri.printer.point"
     
     _columns = {
-                'invoice_sequence_id' : fields.many2one('ir.sequence', 'Invoice IDs Sequence', readonly=True,
-                                                        help="This sequence is automatically created by Odoo but you can change it "\
-                                                        "to customize the generated invoice numbers of your orders."),
-                'pos_config_ids' : fields.many2one('pos.config', 'sri_printer_point_id', 'Retail Point of Sale Terminals',
-                                                        help="From the point of sale terminal you can issue automatically numbered documents"),
-
+                'pos_config_ids' : fields.one2many('pos.config', 'sri_printer_point_id', 'Retail Point of Sale Terminals',
+                                        help="From the point of sale terminal you can issue automatically numbered documents"),
                 }
     
     def copy(self, cr, uid, id, default=None, context=None):

@@ -31,13 +31,6 @@ class pos_config(osv.osv):
     _columns = {
                 'sri_printer_point_id': fields.many2one('sri.printer.point', 'SRI Printer Point',
                                                         help="SRI Authorized Printer Point"),
-                'invoice_sequence_id': fields.related(
-                                            'sri_printer_point_id',
-                                            'invoice_sequence_id',
-                                            type="many2one",
-                                            relation="sri.printer.point",
-                                            string="Invoice IDs Sequence",
-                                            store=False),
                 }
         
 pos_config()
