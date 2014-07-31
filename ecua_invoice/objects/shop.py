@@ -73,9 +73,9 @@ class sri_printer_point(osv.osv):
     _name = 'sri.printer.point'
     
     _columns = {
-                    'name':fields.char('Name', size=3, required=True,help='This number is assigned by the SRI'), 
-                    'shop_id':fields.many2one('sale.shop', 'Shop'),
-                    }
+                'name':fields.char('Name', size=3, required=True,help='This number is assigned by the SRI'), 
+                'shop_id':fields.many2one('sale.shop', 'Shop'),
+                }
     
     def name_get(self,cr,uid,ids, context=None):
         if not context:
@@ -93,6 +93,12 @@ class sri_printer_point(osv.osv):
                     name_shop+="-"+name
                 res.append((r['id'], name_shop))
         return res
+    
+    def unlink(self, cr, uid, ids, context=None):
+        for obj in self.browse(cr, uid, ids, context=context):
+            if obj.invoice_sequence_id:
+                obj.invoice_sequence_id.unlink()
+        return super(sri_printer_point, self).unlink(cr, uid, ids, context=context)
     
 sri_printer_point()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
