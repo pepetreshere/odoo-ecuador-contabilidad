@@ -29,10 +29,10 @@ from openerp.tools.translate import _
 class res_company(osv.Model):
     _inherit = 'res.company'
     _columns = {
-        'is_validation':fields.boolean('Validate partner duplicate', required=False),
+        'avoid_duplicated_vat':fields.boolean('Avoid duplicated vat numbers', required=False, help='Evita la creación de contactos con el número de Cédula/RUC/Pasaporte duplicado'),
     }
     _defaults = {
-    'is_validation': True, 
+    'avoid_duplicated_vat': True, 
 }
 res_company()        
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
