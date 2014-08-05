@@ -90,7 +90,7 @@ class res_partner(osv.osv):
             if not 'message' in res['warning']:
                 res['warning']['message'] = ''
             oldwarning = res['warning']['message']
-            newwarning = oldwarning + "\n" + 'Al asociar el contacto a una empresa, en el contacto se perderan los datos contables tales como cedula/RUC, cuenta contable por defecto, y otras de la ficha contable.'
+            newwarning = oldwarning + "\n" + _('When associating a contact to a company, the accounting data from the conctact is lost (ie vat number, RUC number, etc)')
             res['warning']['message'] = newwarning
         return res
         
@@ -412,10 +412,21 @@ class res_partner(osv.osv):
                     (check_vat,_construct_constraint_msg, ["vat"]),
                     (
                      _avoid_duplicated_vat, 
-                     'Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding',
+                     _('Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding'),
                      ['vat']
                      ),
                     ]
+
+    def _display_name_compute(self, cr, uid, ids, name, args, context=None):
+        '''
+        El modulo account_report_company agrega un tratamiento especial a res.partner
+        Se debe por tanto cambiar la funcion name_get cuando se utiliza para guardar
+        el display_name de una empresa.
+        Se agrega un flag al context para que el metodo name_get no altere el resultado anterior
+        '''
+        context = dict(context or {})
+        context.update({'display_name_compute': True})
+        return super(res_partner,self)._display_name_compute(cr, uid, ids, name, args, context)
 
     def name_get(self, cr, uid, ids, context=None):
         '''
@@ -425,6 +436,10 @@ class res_partner(osv.osv):
             context = {}
         if isinstance(ids, (int, long)):
             ids = [ids]
+        if 'display_name_compute' in context:
+            if context['display_name_compute']:
+                return super(res_partner,self).name_get(cr, uid, ids, context=context)
+            
         res = super(res_partner,self).name_get(cr, uid, ids, context=context)
         res2 = []
         if not context.get('show_email'): #evitamos el escneario de formularios de email
@@ -447,7 +462,7 @@ class res_partner(osv.osv):
             context = {}
         ids = []
         if name: #no ejecutamos si el usaurio no ha tipeado nada
-
+ 
             #buscamos por codigo completo
             ids = self.search(cr, user, ['|',('vat','=',name),('ref','=',name)]+ args, limit=limit, context=context)
             if not ids: #buscamos por fraccion de palabra o fraccion de codigo
@@ -466,7 +481,7 @@ class res_partner(osv.osv):
                 res = ptrn.search(name)
                 if res:
                     ids = self.search(cr, user, ['|','|',('vat','=', res.group(2)),('ref','=', res.group(2)),('comercial_name','=', res.group(2))] + args, limit=limit, context=context)
-
+ 
         else: #cuando el usuario no ha escrito nada aun
             ids = self.search(cr, user, args, limit=limit, context=context)
         result = self.name_get(cr, user, ids, context=context)
