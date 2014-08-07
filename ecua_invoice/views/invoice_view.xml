@@ -37,6 +37,9 @@
 					attrs="{'readonly': [('state','!=','draft')]}"
 					on_change="onchange_internal_number(internal_number)"/>
 				</xpath>
+				<xpath expr="//field[@name='date_invoice']" position="attributes">
+					<attribute name="required">True</attribute>
+				</xpath>
 			</field>			
 		</record>
 		
@@ -62,6 +65,9 @@
 					<field name="internal_number" required="1" 
 					attrs="{'readonly':[('state','!=','draft')]}"
 					on_change="onchange_internal_number(internal_number)"/>
+				</xpath>
+				<xpath expr="//field[@name='date_invoice']" position="attributes">
+					<attribute name="required">True</attribute>
 				</xpath>
 			</field>			
 		</record>

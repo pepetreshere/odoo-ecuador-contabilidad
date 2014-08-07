@@ -77,11 +77,50 @@ class res_partner(osv.osv):
             res[record.id] = name
         return res
     
+    def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
+        """
+        Se alerta sobre la sobreescritura de datos contables 
+        """
+        res = super(res_partner, self).onchange_address(cr, uid, ids, use_parent_address, parent_id, context)
+
+        if parent_id is not False: #la advertencia solo al asignar una empresa padre, al removerla no hace falta
+            if not 'warning' in res:
+                res['warning'] = {}
+            
+            if not 'message' in res['warning']:
+                res['warning']['message'] = ''
+            oldwarning = res['warning']['message']
+            newwarning = oldwarning + "\n" + _('When associating a contact to a company, the accounting data from the conctact is lost (ie vat number, RUC number, etc)')
+            res['warning']['message'] = newwarning
+        return res
+        
+    def copy(self, cr, uid, id, default=None, context=None):
+        '''
+        No se copia la cedula pues el sistema no permite cedulas repetidas
+        '''
+        if not default:
+            default = {}
+        d = {
+            'vat' : '',
+        }
+        d.update(default)
+        return super(res_partner, self).copy(cr, uid, id, d, context=context)
+    
     def write(self, cr, uid, ids, vals, context=None):
         if not context: context = {}
         
         for partner in self.browse(cr, uid, ids, context):
             changes = []
+            
+            #El RUC de un contacto era siempre igual al RUC de la empresa padre
+            #por compatibilidad se permite remover el contacto de la empresa padre
+            #eliminando el valor del RUC del contacto (el sistema no permite RUCs duplicados)
+            #esta funcionalidad del modulo base esta en el metodo _commercial_fields
+            if partner.parent_id:
+                if partner.parent_id.vat == partner.vat:
+                    vals['vat'] = ''
+            
+            #Agregamos log de cambios
             if 'name' in vals and partner.name != vals['name']: # en el caso que sea un campo
                 oldmodel = partner.name or _('None')
                 newvalue = vals['name'] or _('None')
@@ -261,10 +300,16 @@ class res_partner(osv.osv):
             res['value']['comercial_name'] = ""
         return res
 
-    def _check_unique_vat(self, cr, uid, ids, context=None):
+    def _avoid_duplicated_vat(self, cr, uid, ids, context=None):
         '''
         Valida que solo exista un RUC o cedula
         '''
+        #verificamos si la opcion de evitar duplicidad esta activa  
+        company_obj = self.pool.get('res.users').browse(cr,uid,uid).company_id
+        avoid_duplicated_vat=company_obj.avoid_duplicated_vat
+        if not avoid_duplicated_vat:
+            return True
+
         for partner in self.browse(cr, uid, ids, context=context):
             if partner.vat: #si tiene cedula la valida, caso contrario no hace nada
                 if not partner.parent_id :
@@ -366,11 +411,22 @@ class res_partner(osv.osv):
     _constraints = [
                     (check_vat,_construct_constraint_msg, ["vat"]),
                     (
-                     _check_unique_vat, 
-                     'Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding',
+                     _avoid_duplicated_vat, 
+                     _('Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding'),
                      ['vat']
                      ),
                     ]
+
+    def _display_name_compute(self, cr, uid, ids, name, args, context=None):
+        '''
+        El modulo account_report_company agrega un tratamiento especial a res.partner
+        Se debe por tanto cambiar la funcion name_get cuando se utiliza para guardar
+        el display_name de una empresa.
+        Se agrega un flag al context para que el metodo name_get no altere el resultado anterior
+        '''
+        context = dict(context or {})
+        context.update({'display_name_compute': True})
+        return super(res_partner,self)._display_name_compute(cr, uid, ids, name, args, context)
 
     def name_get(self, cr, uid, ids, context=None):
         '''
@@ -380,6 +436,10 @@ class res_partner(osv.osv):
             context = {}
         if isinstance(ids, (int, long)):
             ids = [ids]
+        if 'display_name_compute' in context:
+            if context['display_name_compute']:
+                return super(res_partner,self).name_get(cr, uid, ids, context=context)
+            
         res = super(res_partner,self).name_get(cr, uid, ids, context=context)
         res2 = []
         if not context.get('show_email'): #evitamos el escneario de formularios de email
@@ -392,7 +452,7 @@ class res_partner(osv.osv):
     
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         '''
-        Permite buscar ya sea por nombre o por codigo
+        Permite buscar ya sea por nombre, por codigo o por nombre comercial
         hemos copiado la idea de product.product
         No se llama a super porque name-search no estaba definida
         '''
@@ -402,7 +462,7 @@ class res_partner(osv.osv):
             context = {}
         ids = []
         if name: #no ejecutamos si el usaurio no ha tipeado nada
-
+ 
             #buscamos por codigo completo
             ids = self.search(cr, user, ['|',('vat','=',name),('ref','=',name)]+ args, limit=limit, context=context)
             if not ids: #buscamos por fraccion de palabra o fraccion de codigo
@@ -411,7 +471,7 @@ class res_partner(osv.osv):
                 # OR operator (and given the fact that the 'name' lookup results come from the ir.translation table
                 # Performing a quick memory merge of ids in Python will give much better performance
                 ids = set()
-                ids.update(self.search(cr, user, args + ['|',('vat',operator,name),('ref',operator,name)], limit=limit, context=context))
+                ids.update(self.search(cr, user, args + ['|','|',('vat',operator,name),('ref',operator,name),('comercial_name',operator,name)], limit=limit, context=context))
                 if not limit or len(ids) < limit:
                     # we may underrun the limit because of dupes in the results, that's fine
                     ids.update(self.search(cr, user, args + [('name',operator,name)], limit=(limit and (limit-len(ids)) or False) , context=context))
@@ -420,8 +480,8 @@ class res_partner(osv.osv):
                 ptrn = re.compile('(\[(.*?)\])')
                 res = ptrn.search(name)
                 if res:
-                    ids = self.search(cr, user, ['|',('vat','=', res.group(2)),('ref','=', res.group(2))] + args, limit=limit, context=context)
-
+                    ids = self.search(cr, user, ['|','|',('vat','=', res.group(2)),('ref','=', res.group(2)),('comercial_name','=', res.group(2))] + args, limit=limit, context=context)
+ 
         else: #cuando el usuario no ha escrito nada aun
             ids = self.search(cr, user, args, limit=limit, context=context)
         result = self.name_get(cr, user, ids, context=context)
