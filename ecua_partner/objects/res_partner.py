@@ -374,7 +374,7 @@ class res_partner(osv.osv):
             invoice_phone = contact.parent_id.phone or contact.parent_id.mobile
         return invoice_phone
 
-    def _get_company_vat(self, cr, uid, context=None):
+    def _get_company_vat(self, cr, uid, contact_id, printer_id=None, company_id=None, context=None):
         '''
         Si es una empresa retorna un string con el  RUC/Cedula de la empresa
         Si es un contacto retorna un string con el el RUC/Cedula del contacto
