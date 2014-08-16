@@ -159,7 +159,7 @@ class account_invoice(osv.osv):
 
         if type in ['out_invoice','in_refund']:
             printer = self.pool.get('sri.printer.point').browse(cr, uid, printer_id, context=context)
-            number = printer.name + "-" + printer.shop_id.number + "-"
+            number = printer.shop_id.number + "-" + printer.name + "-"
         if type in ['in_invoice','out_refund']:
             number = '001-001-'
         return number
