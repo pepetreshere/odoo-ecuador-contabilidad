@@ -590,14 +590,57 @@ class account_withhold(osv.osv):
             
         return {'value': value}
     
-    def onchange_creation_date(self, cr, uid, ids, creation_date, invoice_id, context=None):    
-        
-        value = {}
+    #def onchange_creation_date(self, cr, uid, ids, creation_date, invoice_id, context=None):
+    def onchange_creation_date(self, cr, uid, ids, transaction_type, printer_id, partner_id, creation_date, invoice_id, context=None):    
+        '''
+        Valida fecha de retencion vs fecha de autorizacion
+        '''
+        res = {'value': {},'warning':{},'domain':{}}
         if not creation_date or not invoice_id:
-            return {'value': value}
+            return res
 
-        return self._validate_period_date(cr, uid, creation_date, invoice_id, context=context)
+        res2 = self._validate_period_date(cr, uid, creation_date, invoice_id, context=context)
+        if "value" in res2:
+            res["value"].update(res2["value"])
+        if "domain" in res2:
+            res["domain"].update(res2["domain"])
+        if "warning" in res2:
+            res["warning"].update(res2["warning"])
+        return res
     
+
+    def onchange_printer_id(self, cr, uid, ids, transaction_type, printer_id, partner_id, creation_date, context=None):
+        '''
+        Actualiza el numero de retencion con el prefijo del punto de impresion y la tienda
+        Este metodo se redefine con el modulo autorizaciones para cargar el numero de autorizacion
+        '''
+        
+        res = {'value': {},'warning':{},'domain':{}}
+
+        if transaction_type == 'purchase': #solo para retenciones emitidas
+            if printer_id and partner_id and creation_date:
+                printer = self.pool.get('sri.printer.point').browse(cr, uid, printer_id, context=context)
+                number = printer.shop_id.number + "-" + printer.name + "-"                
+                res['value'].update({
+                            'shop_id': printer.shop_id.id,
+                            'number': number,
+                            })
+            else:
+                res['value'].update({
+                            'shop_id': False,
+                            'number': False,
+                            })   
+        return res
+
+    def _prepare_withhold_header(self, cr, uid, partner_id, type, date=None, context=None):
+        """Retorna los valores ecuatorianos para el header de una retencion
+           @partner_id es un objeto partner
+           @type es el tipo de retencion, ej. purchase o sale
+           @date es la fecha prevista de la retencion, si no se provee se asume hoy
+        """
+        #para hacerlo DRY utilizamos funciones ya definidas en account.invoice
+        #TODO: De ser necesario desarrollar este metodo, inspirarse en account.invoice
+        return True
     
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
     def unlink(self, cr, uid, ids, context=None):
@@ -843,6 +886,9 @@ class account_withhold(osv.osv):
         return True
 
     def _validate_period_date(self, cr, uid, creation_date, invoice_id, raise_error=False, context=None):
+        '''
+        Valida que la retencion sea recibida 5 dias despues de la factura y dentro del mismo periodo
+        '''
         
         value = {}
         
