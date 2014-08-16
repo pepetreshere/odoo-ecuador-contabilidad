@@ -590,7 +590,6 @@ class account_withhold(osv.osv):
             
         return {'value': value}
     
-    #def onchange_creation_date(self, cr, uid, ids, creation_date, invoice_id, context=None):
     def onchange_creation_date(self, cr, uid, ids, transaction_type, printer_id, partner_id, creation_date, invoice_id, context=None):    
         '''
         Valida fecha de retencion vs fecha de autorizacion
@@ -605,7 +604,7 @@ class account_withhold(osv.osv):
         if "domain" in res2:
             res["domain"].update(res2["domain"])
         if "warning" in res2:
-            res["warning"].update(res2["warning"])
+            res["warning"]["message"] = res2.get('warning') and res2.get('warning').get('message')
         return res
     
 

@@ -19,10 +19,12 @@
 								<group>
 									<field name="creation_date" 
 										attrs="{'required':True}"
-										on_change="onchange_creation_date(creation_date,invoice_id)"/>
+										on_change="onchange_creation_date(transaction_type, printer_id, partner_id, creation_date, invoice_id)"/>										
 									<field name="printer_id"
 										attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
-										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"/>
+										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"
+										options="{'no_open': True}"
+										/>
 									<field name="number" 
 										attrs="{'required':True}"
 										on_change="onchange_number(number)"/>
