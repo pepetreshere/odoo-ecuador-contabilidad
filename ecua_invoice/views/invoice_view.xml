@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-			<!-- 
-				FACTURA DE COMPRA
-				En ambos casos se debe agregar la direccion y telefono
-			-->
 		<!-- SUPPLIER INVOICE -->			
 		<record model="ir.ui.view" id="account_invoice_supplier_view_ecua">
 			<field name="name">account.invoice.supplier.view.ecuaform</field>
@@ -12,33 +8,64 @@
 			<field name="type">form</field>
 			<field name="inherit_id" ref="account.invoice_supplier_form" />
 			<field name="arch" type="xml">
-				<xpath expr="//field[@name='account_id']" position="after">
+				<!-- <xpath expr="//field[@name='fiscal_position']" position="replace"></xpath> -->
+				<xpath expr="//field[@name='date_due']" position="before">
 					<label for="street" string="Address"/>
-                            <div>
-                                <div class="address_format">
-					<field name="invoice_address" style="width: 40%%" attrs="{'readonly':[('state','!=','draft')]}"/> 
-					<label string="Phone"/>
-					<field name="invoice_phone" style="width: 35%%"  attrs="{'readonly':[('state','!=','draft')]}"/>	
-					</div>
-					</div>
+						<div class="address_format">
+							<field name="invoice_address" style="width: 40%%" attrs="{'readonly':[('state','!=','draft')]}"/> 
+							<label string="Phone"/>
+							<field name="invoice_phone" style="width: 35%%"  attrs="{'readonly':[('state','!=','draft')]}"/>
+							<!-- colocar aqui el RUC cuando este guardado en la factura -->
+							<!-- <field name="fiscal_position" widget="selection"/> -->
+						</div>
 				</xpath>
-				<xpath expr="/form/sheet/group/group/field[@name='origin']" position="attributes">
-					<attribute name="invisible">True</attribute>
+
+				<!-- reubicamos campos a la pestana other info -->
+				<!-- <xpath expr="//field[@name='origin']" position="replace"></xpath> -->
+				<xpath expr="//field[@name='journal_id']" position="replace"></xpath>
+				<xpath expr="//field[@name='account_id']" position="replace"></xpath>
+				<xpath expr="//field[@name='period_id']" position="after">
+					<!-- <field name="origin" groups="base.group_user"/> -->
+					<field name="supplier_invoice_number"/>
+               		<field name="journal_id" groups="account.group_account_user"
+                    	on_change="onchange_journal_id(journal_id, context)" widget="selection"/>
+                   	<field domain="[('company_id', '=', company_id), ('type', '=', 'payable')]"
+                   		name="account_id" groups="account.group_account_user"/>
 				</xpath>
+
+				<!-- ocultamos campos innecesarios 
 				<xpath expr="/form/sheet/group/group/field[@name='supplier_invoice_number']" position="attributes">
 					<attribute name="invisible">True</attribute>
+				</xpath> -->
+				<xpath expr="/form/sheet/group/group/div/field[@name='reference_type']" position="attributes">
+					<attribute name="invisible">1</attribute>
+					<attribute name="nolabel">1</attribute>
 				</xpath>
-				<xpath expr="/form/sheet/group/group/field[@name='date_invoice']" position="attributes">
-					<attribute name="on_change">onchange_date(date_invoice)</attribute>
-				</xpath>				
-				<xpath expr="/form/sheet/group/group/field[@name='fiscal_position']" position="after">
-					<field name="printer_id" string="My Printer Point" help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos" attrs="{'readonly':[('state','!=','draft')]}" required="0" />
+				<xpath expr="/form/sheet/group/group/label[@for='reference_type']" position="attributes">
+					<attribute name="string">  </attribute>
+				</xpath>
+				<xpath expr="/form/sheet/group/group/div/field[@name='reference']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				
+				<!-- reubicamos la fecha -->
+				<xpath expr="/form/sheet/group/group/field[@name='date_invoice']" position="replace"></xpath>
+				<xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="before">
+					<field name="date_invoice" required="1" 
+						attrs="{'readonly': [('state','!=','draft')]}"
+						on_change="onchange_date_invoice(date_invoice)"/>
+				</xpath>
+							
+				<xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
+					<field name="printer_id" 
+						string="My Printer Point" 
+						help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos" 
+						attrs="{'readonly':[('state','!=','draft')]}" 
+						required="0"
+						/>
 					<field name="internal_number" required="1" 
-					attrs="{'readonly': [('state','!=','draft')]}"
-					on_change="onchange_internal_number(internal_number)"/>
-				</xpath>
-				<xpath expr="//field[@name='date_invoice']" position="attributes">
-					<attribute name="required">True</attribute>
+						attrs="{'readonly': [('state','!=','draft')]}"
+						on_change="onchange_internal_number(internal_number)"/>
 				</xpath>
 			</field>			
 		</record>

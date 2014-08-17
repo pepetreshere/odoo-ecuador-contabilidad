@@ -98,8 +98,10 @@ class account_invoice(osv.osv):
             
         return {'value': value}
     
-    #DR cambia el valor automaticamente del periodo fiscal sgun la secha
-    def onchange_date(self, cr, uid, ids, date_invoice, context=None):
+    def onchange_date_invoice(self, cr, uid, ids, date_invoice, context=None):
+        '''
+        Asigna un periodo fiscal acorde a la fecha
+        '''
         res = {}  
         warning = {}
         periodo = ""
@@ -115,7 +117,9 @@ class account_invoice(osv.osv):
         else:
             period = obj_period.browse(cr, uid, period_id, context=context)
             periodo = period.pop().id
-        res = {'value': {'period_id': periodo} ,'warning': warning }
+        res = {'value': {'period_id': periodo} ,
+               'warning': warning, 
+               'domain': {} }
         return res     
 
     
