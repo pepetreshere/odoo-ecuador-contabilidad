@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
+		<!-- Eliminamos ids de las vistas viejas -->
+		<!-- Se puede remover este codigo luego de actualizar los servers -->
+		<delete id="account_invoice_supplier_view_ecua" model="ir.ui.view"/>
+		
 		<!-- SUPPLIER INVOICE -->			
-		<record model="ir.ui.view" id="account_invoice_supplier_view_ecua">
-			<field name="name">account.invoice.supplier.view.ecuaform</field>
+		<record model="ir.ui.view" id="invoice_supplier_form_ecua">
+			<field name="name">invoice.supplier.form.ecua</field>
 			<field name="model">account.invoice</field>
 			<field name="type">form</field>
 			<field name="inherit_id" ref="account.invoice_supplier_form" />
 			<field name="arch" type="xml">
-				<!-- <xpath expr="//field[@name='fiscal_position']" position="replace"></xpath> -->
+				<xpath expr="//field[@name='fiscal_position']" position="replace"></xpath>
 				<xpath expr="//field[@name='date_due']" position="before">
-					<label for="street" string="Address"/>
-						<div class="address_format">
-							<field name="invoice_address" style="width: 40%%" attrs="{'readonly':[('state','!=','draft')]}"/> 
-							<label string="Phone"/>
-							<field name="invoice_phone" style="width: 35%%"  attrs="{'readonly':[('state','!=','draft')]}"/>
-							<!-- colocar aqui el RUC cuando este guardado en la factura -->
-							<!-- <field name="fiscal_position" widget="selection"/> -->
-						</div>
+					<field name="invoice_address" 
+						attrs="{'readonly':[('state','!=','draft')]}"
+						placeholder="Street and building number"
+						/>
+					<field name="invoice_phone" 
+						attrs="{'readonly':[('state','!=','draft')]}"
+						placeholder="Phone Number"
+						/>
+					<field name="fiscal_position" 
+						widget="selection"
+						required="1" 
+						/>
 				</xpath>
 
 				<!-- reubicamos campos a la pestana other info -->
-				<!-- <xpath expr="//field[@name='origin']" position="replace"></xpath> -->
+				<xpath expr="//field[@name='origin']" position="replace"></xpath>
 				<xpath expr="//field[@name='journal_id']" position="replace"></xpath>
 				<xpath expr="//field[@name='account_id']" position="replace"></xpath>
 				<xpath expr="//field[@name='period_id']" position="after">
-					<!-- <field name="origin" groups="base.group_user"/> -->
-					<field name="supplier_invoice_number"/>
+					<field name="origin" groups="base.group_user"/>
                		<field name="journal_id" groups="account.group_account_user"
                     	on_change="onchange_journal_id(journal_id, context)" widget="selection"/>
                    	<field domain="[('company_id', '=', company_id), ('type', '=', 'payable')]"
                    		name="account_id" groups="account.group_account_user"/>
 				</xpath>
 
-				<!-- ocultamos campos innecesarios 
+				<!-- ocultamos campos innecesarios -->
 				<xpath expr="/form/sheet/group/group/field[@name='supplier_invoice_number']" position="attributes">
 					<attribute name="invisible">True</attribute>
-				</xpath> -->
+				</xpath> 
 				<xpath expr="/form/sheet/group/group/div/field[@name='reference_type']" position="attributes">
 					<attribute name="invisible">1</attribute>
 					<attribute name="nolabel">1</attribute>
@@ -62,10 +69,14 @@
 						help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos" 
 						attrs="{'readonly':[('state','!=','draft')]}" 
 						required="0"
+						placeholder="Your printer were you receive the document, not your suppliers one"
+						options="{'no_open': True}"
 						/>
 					<field name="internal_number" required="1" 
 						attrs="{'readonly': [('state','!=','draft')]}"
-						on_change="onchange_internal_number(internal_number)"/>
+						on_change="onchange_internal_number(internal_number)"
+						placeholder="The number is suggested by the other fields"
+						/>
 				</xpath>
 			</field>			
 		</record>

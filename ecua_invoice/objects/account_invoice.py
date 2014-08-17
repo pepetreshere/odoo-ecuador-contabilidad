@@ -194,10 +194,17 @@ class account_invoice(osv.osv):
         
         return number
 
+    def _default_date_invoice(self, cr, uid, context=None):
+        '''Fecha por defecto es hoy
+        '''
+        #TODO: Incluir el calculo de zona horaria
+        #TODO: Colocar esta funcion en el default
+        return str(lambda *a: time.strftime('%Y-%m-%d'),)
     
     _defaults = {
        'printer_id': _default_printer_point,
        'internal_number': _default_internal_number,
+       'date_invoice': lambda *a: time.strftime('%Y-%m-%d'),
     } 
     
     def _prepare_invoice_header(self, cr, uid, partner_id, type, inv_date=None, context=None):
