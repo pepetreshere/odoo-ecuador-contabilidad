@@ -29,7 +29,11 @@
 	                        attrs="{'readonly':[('state','!=','draft')]}" />
 	                    </h1>
 	                	<div>
-	                		<!-- cabecera de retencion - columna uno editable - columna dos no editable -->
+                			<!-- 
+	                			Cabecera de retencion:
+	                			En la columna uno se ha colocado los campos editables
+	                			En la columna dos se ha colocado los campos no editables
+                			-->
 	                		<group col="2">
 								<group>
 									<field name="creation_date" 
