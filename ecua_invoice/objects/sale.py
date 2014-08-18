@@ -41,6 +41,8 @@ class sale_order(osv.osv):
         shop_id = user.printer_id.shop_id.id
         if shop_id:
             return shop_id
+        else:
+            return super(sale_order, self)._get_default_shop(cr, uid, context)
         return super(sale_order, self)._get_default_shop(cr, uid, context)
 
     _defaults = {
