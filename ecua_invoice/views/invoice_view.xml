@@ -86,55 +86,89 @@
 			<field name="name">account.invoice.customer.view.ecuaform</field>
 			<field name="model">account.invoice</field>
 			<field name="type">form</field>
-     	   <field name="inherit_id" ref="account.invoice_form" />
+			<field name="inherit_id" ref="account.invoice_form" />
 			<field name="arch" type="xml">
-				<xpath expr="//field[@name='account_id']" position="after">
-					<label for="street" string="Address"/>
-                            <div>
-                                <div class="address_format">
-					<field name="invoice_address" style="width: 40%%" attrs="{'readonly':[('state','!=','draft')]}"/> 
-					<label string="Phone"/>
-					<field name="invoice_phone" style="width: 35%%"  attrs="{'readonly':[('state','!=','draft')]}"/>	
-					</div>
-					</div>
+
+				<!-- Reemplazamos la fecha por los datos del cliente, luego colocamos la fecha en otro campo -->
+				<xpath expr="//field[@name='date_invoice']" position="replace">
+					<field name="invoice_address" 
+						attrs="{'readonly':[('state','!=','draft')]}"
+						placeholder="Street and building number"
+						/>
+					<field name="invoice_phone" 
+						attrs="{'readonly':[('state','!=','draft')]}"
+						placeholder="Phone Number"
+						/>
 				</xpath>
-				<xpath expr="/form/sheet/group/group/field[@name='fiscal_position']" position="after">
-					<field name="printer_id" attrs="{'readonly':[('state','!=','draft')]}" required="1" />
+
+				<!-- reubicamos la fecha -->
+				<xpath expr="//field[@name='partner_id']" position="before">
+					<field name="date_invoice" 
+						required="1" 
+						attrs="{'readonly': [('state','!=','draft')]}"
+						on_change="onchange_date_invoice(date_invoice)"
+						/>
+				</xpath>
+						
+				<!-- reubicamos campos a la pestana other info -->
+				<xpath expr="//field[@name='fiscal_position']" position="replace"></xpath>
+				<xpath expr="//field[@name='journal_id']" position="replace"></xpath>
+				<xpath expr="//field[@name='account_id']" position="replace"></xpath>
+				<xpath expr="//field[@name='move_id']" position="after">
+					<field name="fiscal_position" 
+						widget="selection"
+						required="1" 
+						/>
+               		<field name="journal_id" groups="account.group_account_user"
+                    	on_change="onchange_journal_id(journal_id, context)" widget="selection"/>
+                   	<field domain="[('company_id', '=', company_id), ('type', '=', 'receivable')]"
+                   		name="account_id" groups="account.group_account_user"/>
+				</xpath>
+
+				<!-- colocamos campos nuevos -->
+				<xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
+					<field name="printer_id" 
+						string="My Printer Point" 
+						help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos" 
+						attrs="{'readonly':[('state','!=','draft')]}" 
+						required="0"
+						placeholder="Your printer were you receive the document, not your suppliers one"
+						options="{'no_open': True}"
+						/>
 					<field name="internal_number" required="1" 
-					attrs="{'readonly':[('state','!=','draft')]}"
-					on_change="onchange_internal_number(internal_number)"/>
+						attrs="{'readonly': [('state','!=','draft')]}"
+						on_change="onchange_internal_number(internal_number)"
+						placeholder="The number is suggested by the other fields"
+						/>
 				</xpath>
-				<xpath expr="//field[@name='date_invoice']" position="attributes">
-					<attribute name="required">True</attribute>
-				</xpath>
+
 			</field>			
 		</record>
 
-	<record model="ir.ui.view" id="account_invoice_inherit2_tree_view">
-		<field name="name">accpunt.inovice.tree</field>
-		<field name="model">account.invoice</field>
-		<field name="inherit_id" ref="account.invoice_tree" />
-		<field name="arch" type="xml">
-			<field name="number"  position="attributes">
-   			 <attribute name="invisible">True</attribute>
-			</field>
-			<field name="number"  position="before">
-   			 <field name="internal_number"/>
-			</field>
-		</field>
-	</record>
-	
-	
-			 <record model="ir.ui.view" id="account_invoice_search_inherit2_view">
-                <field name="name">account.invoice.search2</field>
-                <field name="model">account.invoice</field>
-                <field name="inherit_id" ref="account.view_account_invoice_filter"/>
-                <field name="arch" type="xml">
-					<filter name="unpaid" position="after">
-						<filter name="Anulados" string="Anuladas" domain="[('state','=','cancel')]" help="Cancel Invoices"/>
-					</filter>
+		<record model="ir.ui.view" id="account_invoice_inherit2_tree_view">
+			<field name="name">accpunt.inovice.tree</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_tree" />
+			<field name="arch" type="xml">
+				<field name="number"  position="attributes">
+	   			 <attribute name="invisible">True</attribute>
 				</field>
-            </record>
+				<field name="number"  position="before">
+	   			 <field name="internal_number"/>
+				</field>
+			</field>
+		</record>
+	
+		<record model="ir.ui.view" id="account_invoice_search_inherit2_view">
+			<field name="name">account.invoice.search2</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.view_account_invoice_filter"/>
+			<field name="arch" type="xml">
+				<filter name="unpaid" position="after">
+					<filter name="Anulados" string="Anuladas" domain="[('state','=','cancel')]" help="Cancel Invoices"/>
+				</filter>
+			</field>
+		</record>
 	
 	</data>
 </openerp>
