@@ -38,7 +38,7 @@ class sale_order(osv.osv):
         '''
         user_obj = self.pool.get('res.users')
         user = user_obj.browse(cr, uid, uid, context)
-        if user.printer.id:
+        if user.printer_id:
             if user.printer_id.shop_id:
                 return user.printer_id.shop_id.id
         return super(sale_order, self)._get_default_shop(cr, uid, context)
