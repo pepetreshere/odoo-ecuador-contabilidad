@@ -29,22 +29,34 @@
 	                        attrs="{'readonly':[('state','!=','draft')]}" />
 	                    </h1>
 	                	<div>
-							<group col="4">
-								<field name="partner_id" readonly="1"/>
-								<field name="invoice_id" readonly="1"/>
-								<field name="transaction_type" invisible="1" />
-								<field name="shop_id" invisible="1" /> 
-								<field name="company_id" invisible="1" />
-								<field name="invoice_amount_untaxed" invisible="1"/>
-								<field name="invoice_vat_doce_subtotal" invisible="1"/>
+                			<!-- 
+	                			Cabecera de retencion:
+	                			En la columna uno se ha colocado los campos editables
+	                			En la columna dos se ha colocado los campos no editables
+                			-->
+	                		<group col="2">
+								<group>
+									<field name="creation_date" 
+										attrs="{'required':True}" 
+										on_change="onchange_creation_date(transaction_type, printer_id, partner_id, creation_date, invoice_id)"/>
+									<field name="printer_id"
+										attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
+										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"
+										options="{'no_open': True}"
+										/>
+								</group>
+								<group>
+									<field name="partner_id" readonly="1"/>
+									<field name="invoice_id" readonly="1"/>
+									<field name="state" invisible="1" />
+									<field name="transaction_type" invisible="1" />
+									<field name="shop_id" invisible="1" /> 
+									<field name="company_id" invisible="1" />
+									<field name="invoice_amount_untaxed" invisible="1"/>
+									<field name="invoice_vat_doce_subtotal" invisible="1"/>
+								</group>
 							</group>
-							<group col="4">
-								<field name="printer_id"
-								attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"/>
-								<field name="creation_date" 
-								attrs="{'required':True}" 
-								on_change="onchange_creation_date(creation_date,invoice_id)"/>								
-							</group>
+
 							<!-- <group col="4">
 								<field name="number" 
 								attrs="{'readonly':[('state','!=','draft')], 'required':True }"/>

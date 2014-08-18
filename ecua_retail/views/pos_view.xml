@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- AGREGAMOS PARAMETROS ECUATORIANOS AL FORMULARIO -->
+        
+        <record id="pos_config_invoice_sequence_form" model="ir.ui.view">
+            <field name="name">pos.config.form</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+            <field name="type">form</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="sri_printer_point_id" readonly="0" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
