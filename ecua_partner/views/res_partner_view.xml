@@ -5,7 +5,8 @@
         <delete id="view_partner_property_form_move_property" model="ir.ui.view"/>
         <delete id="view_partner_form_move_vat" model="ir.ui.view"/>
 		<delete id="view_partner_button_edit_form" model="ir.ui.view"/>
-
+<!-- Combinamos FDU-494 con lo que estaba antes, se mueve fiscal position y TIN bajo website en la vista de 
+cliente -->
 		<record id="res_partner_inherit_comercial_name" model="ir.ui.view">
 			<field name="name">res.partner.inherit.comercial.name</field>
 			<field name="model">res.partner</field>
