@@ -24,7 +24,7 @@
 						/>
 					<field name="fiscal_position" 
 						widget="selection"
-						required="1" 
+						required="0" 
 						/>
 				</xpath>
 
@@ -117,7 +117,7 @@
 				<xpath expr="//field[@name='move_id']" position="after">
 					<field name="fiscal_position" 
 						widget="selection"
-						required="1" 
+						required="0" 
 						/>
                		<field name="journal_id" groups="account.group_account_user"
                     	on_change="onchange_journal_id(journal_id, context)" widget="selection"/>
