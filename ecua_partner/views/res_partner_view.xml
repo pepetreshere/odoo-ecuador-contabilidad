@@ -20,14 +20,16 @@ cliente -->
             	
             	<xpath expr="//field[@name='property_account_position']" position="replace"/>
             	<xpath expr="//field[@name='website']" position="after">
-            		<field name="property_account_position" widget="selection"/>
+            		<field name="property_account_position" widget="selection"
+            		attrs="{'invisible': [('parent_id', '!=', False)]}"/>
             	</xpath>
             	<xpath expr="//label[@for='vat']" position="replace"/>
             	<xpath expr="//div[@name='vat_info']" position="replace"/>
             	
             	<xpath expr="//field[@name='property_account_position']" position="after">
-                    <label for="vat"/>
-                    <div name="vat_info">
+                    <label for="vat" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+                    <div name="vat_info" attrs="{'invisible': [('parent_id', '!=', False)]}">
+                    
                         <field name="vat" on_change="vat_change(vat)" placeholder="e.g. BE0477472701" class="oe_inline"/>
                      	<field name="type_vat"/>
    		                <button colspan="2" 
