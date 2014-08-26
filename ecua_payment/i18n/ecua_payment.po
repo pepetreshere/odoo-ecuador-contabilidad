@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20140314-003129\n"
+"Project-Id-Version: OpenERP Server 7.0-20140630-231039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-30 17:35+0000\n"
-"PO-Revision-Date: 2014-05-30 17:35+0000\n"
+"POT-Creation-Date: 2014-08-26 04:14+0000\n"
+"PO-Revision-Date: 2014-08-26 04:14+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,22 +17,12 @@ msgstr ""
 
 #. module: ecua_payment
 #: view:account.voucher:0
-msgid "Print and Pay"
+msgid "Razon pago"
 msgstr ""
 
 #. module: ecua_payment
 #: field:account.voucher,responsible_id:0
 msgid "Responsible"
-msgstr ""
-
-#. module: ecua_payment
-#: model:ir.model,name:ecua_payment.model_account_invoice
-msgid "Invoice"
-msgstr ""
-
-#. module: ecua_payment
-#: view:account.voucher:0
-msgid "Razon pago"
 msgstr ""
 
 #. module: ecua_payment
@@ -42,31 +32,31 @@ msgstr ""
 
 #. module: ecua_payment
 #: view:account.voucher:0
-msgid "e.g. 003/10"
+msgid "Ejemplo: Pago de la factura #43"
 msgstr ""
 
 #. module: ecua_payment
-#: field:account.voucher,luck:0
-msgid "Luck amount"
+#: model:ir.model,name:ecua_payment.model_account_voucher_line
+msgid "Voucher Lines"
+msgstr ""
+
+#. module: ecua_payment
+#: view:account.voucher:0
+msgid "Ejemplo: Pago #053"
+msgstr ""
+
+#. module: ecua_payment
+#: view:account.voucher:0
+msgid "['|',('force_reconcile','=', True),('type','=','other')]"
+msgstr ""
+
+#. module: ecua_payment
+#: help:account.voucher,responsible_id:0
+msgid "Responsible for payment (the user who approves the payment)"
 msgstr ""
 
 #. module: ecua_payment
 #: view:account.voucher:0
 msgid "Identificador de Pago"
-msgstr ""
-
-#. module: ecua_payment
-#: help:account.voucher,responsible_id:0
-msgid "responsible for payment (is the user who approves the payment)"
-msgstr ""
-
-#. module: ecua_payment
-#: view:account.voucher:0
-msgid "[('force_reconcile','=', True)]"
-msgstr ""
-
-#. module: ecua_payment
-#: view:account.voucher:0
-msgid "Pago de la factura #43"
 msgstr ""
 

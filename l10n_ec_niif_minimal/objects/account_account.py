@@ -32,7 +32,7 @@ class account_account(osv.osv):
     _name = 'account.account'
     _inherit = ["account.account", "mail.thread"]    
     _columns = {
-            'force_reconcile': fields.boolean('Force feconcile', help="Check this box if, this account amounts to reconcile differences in payments to customers and suppliers."),
+            'force_reconcile': fields.boolean('Force as write-off account', help="Check to force this account as a write-off account in customer and supplier payments"),
                 }
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -44,12 +44,12 @@ class account_account(osv.osv):
             changes = []
             if 'code' in vals and account.code != vals['code']:
                 value =  vals['code']
-                oldmodel = account.type or _('None')
-                changes.append(_("Code: from '%s'  '%s'") %(oldmodel, value))
+                oldmodel = account.code or _('None')
+                changes.append(_("Code: from '%s' to '%s'") %(oldmodel, value))
             if 'name' in vals and account.name != vals['name']:
                 value =  vals['name']
                 oldmodel = account.name or _('None')
-                changes.append(_("Name: from '%s' '%s'") %(oldmodel, value))
+                changes.append(_("Name: from '%s' to '%s'") %(oldmodel, value))
             if 'parent_id' in vals and account.parent_id.id != vals['parent_id']:
                 value =  self.pool.get('account.account').browse(cr,uid,vals['parent_id'],context=context).name
                 oldmodel = account.parent_id.name or _('None')
@@ -91,10 +91,10 @@ class account_account(osv.osv):
                 for id in list_tax_new:
                     value = self.pool.get('account.tax').browse(cr,uid,id,context=context).name or _('None')
                     changes.append(_("Added tax: '%s'") %(value))                
-            if 'reconcile' in vals and account.active != vals['reconcile']:
+            if 'reconcile' in vals and account.reconcile != vals['reconcile']:
                 value =  vals['reconcile']
-                oldmodel = account.active or _('None')
-                changes.append(_("Active: from '%s' to '%s'") %(oldmodel, value))
+                oldmodel = account.reconcile or _('None')
+                changes.append(_("Reconcile: from '%s' to '%s'") %(oldmodel, value))
                 
             if 'child_consol_ids' in vals and account.child_consol_ids != vals['child_consol_ids'][0][2]:
                 list_consol = []
@@ -121,11 +121,14 @@ class account_account(osv.osv):
                 for id in list_consol_new:
                     value = self.pool.get('account.account').browse(cr,uid,id,context=context).name or _('None')
                     changes.append(_("Added Consolidation: '%s'") %(value))
-            if 'note' in vals and account.type != vals['note']:
+            if 'force_reconcile' in vals and account.force_reconcile != vals['force_reconcile']:
+                value =  vals['force_reconcile']
+                oldmodel = account.force_reconcile or _('None')
+                changes.append(_("Force as write-off account: from '%s' to '%s'") %(oldmodel, value))
+            if 'note' in vals and account.note != vals['note']:
                 value =  vals['note']
-                oldmodel = account.name or _('None')
+                oldmodel = account.note or _('None')
                 changes.append(_("Note: from '%s' to '%s'") %(oldmodel, value))
-            
             if len(changes) > 0:
                 self.message_post(cr, uid, [account.id], body=", ".join(changes), context=context)
 
@@ -133,20 +136,9 @@ class account_account(osv.osv):
         return True
     
     def _check_allow_code_change(self, cr, uid, ids, context=None):
-        ir_values = self.pool.get('ir.values')
-        restrictions  = ir_values.get_default(cr, uid, 'account.account', 'restrictions')
-        for account in self.browse(cr, uid, ids, context):
-            if not restrictions:
-                line_obj = self.pool.get('account.move.line')
-                for account in self.browse(cr, uid, ids, context=context):
-                    account_ids = self.search(cr, uid, [('id', 'child_of', [account.id])], context=context)
-                    if line_obj.search(cr, uid, [('account_id', 'in', account_ids)], context=context):
-                        raise osv.except_osv(_('Warning !'), _("You cannot change the code of account which contains journal items!"))
+        '''
+        Se anula toda validacion del modulo base
+        '''
         return True
         
-#     def _construct_constraint_msg(self, cr, uid, ids, context=None):
-#         res = super(account_account, self)._construct_constraint_msg(cr, uid, ids, context=context)
-#         return res
-#     _constraints = [(check_vat,_construct_constraint_msg, ["vat"])]
-
 account_account()
