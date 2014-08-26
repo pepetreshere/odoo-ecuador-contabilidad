@@ -164,9 +164,13 @@
 			<field name="model">account.invoice</field>
 			<field name="inherit_id" ref="account.view_account_invoice_filter"/>
 			<field name="arch" type="xml">
-				<filter name="unpaid" position="after">
-					<filter name="Anulados" string="Anuladas" domain="[('state','=','cancel')]" help="Cancel Invoices"/>
+				<filter name="invoices" position="after">
+					<filter name="Anulados" string="Facturas Anuladas" domain="[('state','=','cancel')]" help="Cancel Invoices"/>
 				</filter>
+				
+				<field name="number" position="replace">
+                    <field name="internal_number" string="Invoice" filter_domain="['|','|','|',('internal_number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+				</field>
 			</field>
 		</record>
 	
