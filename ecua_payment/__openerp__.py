@@ -11,6 +11,10 @@
         -Boton 2en1 "Imprimir y Pagar"
         -Facilidades para conciliar saldo de pago a otras cuentas mediante el visto bueno "Forzar Saldo de la Diferencia"
         -Mejoras a los grupos de seguridad
+        
+        Autores
+        
+        David Romero, Andres Calle
         """,
         "depends" : ["base","account_voucher",
                      ],

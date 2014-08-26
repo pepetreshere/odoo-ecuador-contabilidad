@@ -40,20 +40,20 @@ class account_voucher(osv.osv):
 account_voucher()
 
 
-class account_voucher_line(osv.osv):
-    _inherit = 'account.voucher.line'
-    _name = 'account.voucher.line'
-    
-    def onchange_amount(self, cr, uid, ids, amount, amount_unreconciled, context=None):
-        '''
-        Lanzamos advertencias para guiar al usuario en el correcto uso del sistema
-        '''
-        res = super(account_voucher_line, self).onchange_amount(cr, uid, ids, amount, amount_unreconciled, context=None)
-        return res
-        res['warning'] = {}
-        if amount > amount_unreconciled: 
-            res['warning'] = {'title': _('Warning!'), 
-                              'message': _("Are you sure? In this payment line the Amount is bigger than the Open Amount, this is unusual unless for example you are forgiving some cents missmatch in which case dont forget to make a write-off for the difference in the bottom of the form (Example to sent 2 cents to the account 430500 OTHER INCOMES)")}
-        return res
-    
-account_voucher_line()
+# class account_voucher_line(osv.osv):
+#     _inherit = 'account.voucher.line'
+#     _name = 'account.voucher.line'
+#     
+#     def onchange_amount(self, cr, uid, ids, amount, amount_unreconciled, context=None):
+#         '''
+#         Lanzamos advertencias para guiar al usuario en el correcto uso del sistema
+#         '''
+#         res = super(account_voucher_line, self).onchange_amount(cr, uid, ids, amount, amount_unreconciled, context=None)
+#         return res
+#         res['warning'] = {}
+#         if amount > amount_unreconciled: 
+#             res['warning'] = {'title': _('Warning!'), 
+#                               'message': _("Are you sure? In this payment line the Amount is bigger than the Open Amount, this is unusual unless for example you are forgiving some cents missmatch in which case dont forget to make a write-off for the difference in the bottom of the form (Example to sent 2 cents to the account 430500 OTHER INCOMES)")}
+#         return res
+#     
+# account_voucher_line()
