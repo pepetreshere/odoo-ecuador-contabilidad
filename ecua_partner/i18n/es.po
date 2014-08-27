@@ -20,37 +20,37 @@ msgstr ""
 #: code:addons/ecua_partner/objects/res_partner.py:206
 #, python-format
 msgid "Account Payable: from '%s' to '%s'"
-msgstr "Account Payable: from '%s' to '%s'"
+msgstr "Cuenta por pagar: de '%s' a '%s'"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:215
 #, python-format
 msgid "Sales Person: from '%s' to '%s'"
-msgstr "Sales Person: from '%s' to '%s'"
+msgstr "Gerente de Ventas: de '%s' a '%s'"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:139
 #, python-format
 msgid "State: from '%s' to '%s'"
-msgstr "State: from '%s' to '%s'"
+msgstr "Estado: de '%s' a '%s'"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:222
 #, python-format
 msgid "Sales Team: from '%s' to '%s'"
-msgstr "Sales Team: from '%s' to '%s'"
+msgstr "Equipo de Ventas: de '%s' a '%s'"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:183
 #, python-format
 msgid "NIF: from '%s' to '%s'"
-msgstr "NIF: from '%s' to '%s'"
+msgstr "RUC/CED/PSPT: de '%s' a '%s'"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:154
 #, python-format
 msgid "Web Site: from '%s' to '%s'"
-msgstr "Web Site: from '%s' to '%s'"
+msgstr "Pagina web: de '%s' a '%s'"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:89
@@ -62,7 +62,7 @@ msgstr "Error: El numero de RUC/Cedula debe ser unico, ya existe otra empresa/pe
 #: code:addons/ecua_partner/objects/res_partner.py:178
 #, python-format
 msgid "Fiscal position: from '%s' to '%s'"
-msgstr "Fiscal position: from '%s' to '%s'"
+msgstr "Posicion Fiscal: de '%s' a '%s'"
 
 #. module: ecua_partner
 #: view:res.partner:0
@@ -73,13 +73,13 @@ msgstr "Nombre Comercial..."
 #: code:addons/ecua_partner/objects/res_partner.py:166
 #, python-format
 msgid "Fax: from '%s' to '%s'"
-msgstr "Fax: from '%s' to '%s'"
+msgstr "Fax: de '%s' a '%s'"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:236
 #, python-format
 msgid "Follow-up Responsible: from '%s' to '%s'"
-msgstr "Follow-up Responsible: from '%s' to '%s'"
+msgstr "Responsable de pagos: de '%s' a '%s'"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:143
@@ -165,7 +165,7 @@ msgstr "Nombre Comercial"
 #: code:addons/ecua_partner/objects/res_partner.py:235
 #, python-format
 msgid "None"
-msgstr "None"
+msgstr "Ninguno"
 
 #. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:162
@@ -278,3 +278,17 @@ msgstr "Name: from '%s' to '%s'"
 msgid "Is Company: from '%s' to '%s'"
 msgstr "Is Company: from '%s' to '%s'"
 
+#. module: ecua_partner
+#: field:res.company,avoid_duplicated_vat:0
+msgid "Avoid duplicated vat numbers"
+msgstr "Evitar RUC repetidos"
+
+#. module: ecua_partner
+#: field:res.partner,type_vat:0
+msgid "Name"
+msgstr "Tipo de Identificacion Fiscal"
+
+#. module: ecua_partner
+#: constraint:res.partner:0
+msgid "Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding"
+msgstr "Error: El numero de RUC/Cedula debe ser unico, ya existe otra empresa/persona con dicho numero. Busque la empresa/persona repetida por numero de RUC/Cedula antes de continuar"
