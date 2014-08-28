@@ -20,6 +20,8 @@ from osv import fields,osv
 class res_company(osv.osv):
     _inherit = 'res.company'
     _columns = {
+                'tax_wi_id': fields.many2one('account.tax', 'Default withhold tax',help="This withhold tax will be assigned by default on new products."),
+
                 'journal_iva_id':fields.many2one('account.journal', 'IVA Journal',
                                                  help="Journal for IVA Movements"), 
                 'journal_ir_id':fields.many2one('account.journal', 'IR Journal',

@@ -71,6 +71,7 @@
                     'wizard/withhold_wizard_view.xml',
                     'views/company_view.xml',
                     'views/withhold_view.xml',
+                    'views/withhold_config_view.xml',
                     'views/invoice_view.xml',
     ],
     "installable": True,

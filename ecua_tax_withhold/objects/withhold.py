@@ -68,6 +68,8 @@ class account_withhold_line(osv.osv):
             #                             store={'account.withhold.line': (lambda self, cr, uid, ids, c={}: ids, ['tax_id',], 1)},),
             #'withhold_percentage': fields.function(_percentaje_retained, method=True, type='float', string='Percentaje Value'),
             'tax_id':fields.many2one('account.tax.code', 'Tax Code', help="Tax"),
+            'tax_wi_id':fields.many2one('account.tax', 'Tax', help="Tax for withhold"),
+
             'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code', help="Tax"),
 
             }
@@ -189,10 +191,43 @@ class account_withhold(osv.osv):
             
             transaction_type = context.get('transaction_type')
             obj = self.pool.get('account.invoice').browse(cr, uid, context['active_id'])
-            
             if 'value' not in context.keys():
                 if transaction_type == 'sale':
 
+                    #tax_wi_id = res_company.get_default(cr, uid, 'res.company', 'tax_wi_id') 
+                    if user.printer_id:
+                        printer_id = user.printer_id.id
+                        if user.printer_id.shop_id:
+                            shop_id = user.printer_id.shop_id.id
+                            
+                    fiscalyear_id = None
+                    res_company = self.pool.get('res.company')
+                    tax = self.pool.get('account.tax')
+                    if not obj['period_id']:
+                        period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')),])
+                        if period_ids:
+                            fiscalyear_id= self.pool.get('account.period').browse(cr, uid, [period_ids[0]], context)[0]['fiscalyear_id']['id']
+                    else:
+                        fiscalyear_id = obj['period_id']['fiscalyear_id']['id']
+                    tax_wi_id =""
+                    tax_p =""
+                    
+                    tax_wi_id = res_company.browse(cr, uid, obj.company_id.id, context).tax_wi_id.id 
+                    tax_p = tax.browse(cr, uid, tax_wi_id, context).amount
+                    base_code_id =tax.browse(cr, uid, tax_wi_id, context).base_code_id.id                
+                    vals_ret_line = {
+                                     'fiscalyear_id':fiscalyear_id,  
+                                     #'description': tax_line['type_ec'],
+                                     'tax_id': base_code_id,
+                                     'tax_wi_id':tax_wi_id,
+                                     'tax_base': context['amount_untaxed'],
+                                     'tax_amount': context['amount_untaxed']*tax_p,
+                                    # 'withhold_percentage':0
+                                     }  
+                    
+                  #  vals_ret_line['withhold_percentage'] = self._withhold_percentaje(cr, uid, vals_ret_line, context)
+                    res.append(vals_ret_line) 
+                    
                     values = {
                          'shop_id': shop_id,
                          'printer_id': printer_id,
@@ -201,6 +236,7 @@ class account_withhold(osv.osv):
                          'creation_date': obj.date_invoice,
                          'transaction_type': transaction_type,
                          'company_id': obj.company_id.id,
+                         'withhold_line_ids': res,
                             }
                     
                 if transaction_type == 'purchase':
@@ -225,7 +261,6 @@ class account_withhold(osv.osv):
                             
                             porcentaje= (float(tax_line['tax_amount']/tax_line['base']))*(-100)
                             tax_id = tax_line['tax_code_id']['id']
-                            tax_ac_id=tax_id
                         
                             if tax_line['type_ec'] == 'renta':
                                 tax_id = tax_line['base_code_id']['id']                           
@@ -234,7 +269,6 @@ class account_withhold(osv.osv):
                                              'fiscalyear_id':fiscalyear_id,  
                                              'description': tax_line['type_ec'],
                                              'tax_id': tax_id,
-                                             'tax_ac_id':tax_ac_id,
                                              'tax_base': tax_line['base'],
                                              'tax_amount': abs(tax_line['amount']),
                                              'withhold_percentage':0
@@ -268,6 +302,7 @@ class account_withhold(osv.osv):
                          'company_id':obj.company_id.id,
                          'withhold_line_ids': res,
                                 }
+                    
                 #Initial state 
                 values['state'] = 'draft'
             
