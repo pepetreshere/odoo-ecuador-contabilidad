@@ -48,6 +48,7 @@
 			<field name="inherit_id" ref="account.invoice_form" />
 			<field name="arch" type="xml">
 				<button string='Re-Open' position="after">
+						<!-- TODO: Cambior de tipo accion a tipo object para mayor flexibilidad -->
 						<button name="%(action_withhold_wizard_sale)d" string="Withhold"
 								type="action" icon="terp-gtk-jump-to-ltr" 
 								attrs="{'invisible':['|',('state','=','draft'),('withhold_exist','=',True)]}"

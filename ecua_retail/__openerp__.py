@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Andres Calle, Andrea García
+# @authors: Andres Calle
 # Copyright (C) 2013  TRESCLOUD CÍA LTDA
 #
 #This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 ########################################################################
 
 {
-    "name" : "Ecuador Invoices / Facturas Ecuatorianas",
+    "name" : "Ecuador Retail Industry",
     "version" : "1.0",
    # 'sequence': 4,
     'complexity': "easy",
@@ -33,35 +33,23 @@
     "depends" : [
                  'base',
                  'sale',
-                 'stock',
                  'account',
-                 'account_accountant',
-                 'base_optional_quick_create'
+                 'ecua_invoice',
+                 'sale_order_for_retail',        
                  ],
     "description": """
-    In Ecuador additional rules applies to invoices:
-    - it is needed to store the "current" name, address, VAT and phone.
-    - it is needed to store the invoice number
-    - voiding invoices allowed only to account managers
-    
-    This module is part of a bigger framework of "ecua" modules developed by 
-    TRESCLOUD, EcuadorEnLinea y 4RSOFT.
+    Adds retail features to sale order for ecuadorian localization
+    Anade funcionalidades de venta al detalle a la localizacion ecuatoriana    
     
     Author,
     
     Andres Calle,
-    Andrea García,
-    Patricio Rangles
     TRESCLOUD Cía Ltda.
     """,
     "init_xml": [],
     "update_xml": [ 
-                    'security/ir.model.access.csv',
-                    'views/invoice_view.xml',
-                    'views/shop_view.xml',
-                    'views/res_users_view.xml',
-                    'views/sale_create_invoice_view.xml',
-    ],
+                   'views/pos_view.xml',
+                   ],
     "installable": True,
     "auto_install": False,
     "application": False,

@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Christopher Ormaza
-# Copyright (C) 2013  Ecuadorenlinea.net
+# @authors: Andres Calle
+# Copyright (C) 2014 TRESCLOUD Cia Ltda
 #
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
+import pos 
 import shop
-import res_users
-import account_invoice
 import sale
