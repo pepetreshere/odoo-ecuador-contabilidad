@@ -52,7 +52,7 @@
 								attrs="{'readonly':[('transaction_type','!=','sale')], 'required':[('transaction_type','=','sale')]}">
 									<tree string="Withhold Lines" editable="bottom">
 										<!--field name="fiscalyear_id" widget="selection" /-->
-										<field name="description" required="0" invisible="1"
+										<field name="description" required="1" invisible="0"
 										on_change="onchange_description(description, parent.invoice_amount_untaxed, parent.invoice_vat_doce_subtotal)"/>
 										<field name="tax_id" required="0" invisible="1"
 										on_change="onchange_tax_id(description, tax_id, tax_base)"/>

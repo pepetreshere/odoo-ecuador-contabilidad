@@ -209,20 +209,17 @@ class account_withhold(osv.osv):
                             fiscalyear_id= self.pool.get('account.period').browse(cr, uid, [period_ids[0]], context)[0]['fiscalyear_id']['id']
                     else:
                         fiscalyear_id = obj['period_id']['fiscalyear_id']['id']
-                    tax_wi_id =""
-                    tax_p =""
-                    
+                    tax_wi_id =''
                     tax_wi_id = res_company.browse(cr, uid, obj.company_id.id, context).tax_wi_id.id 
-                    tax_p = tax.browse(cr, uid, tax_wi_id, context).amount
-                    base_code_id =tax.browse(cr, uid, tax_wi_id, context).base_code_id.id                
+                    bw_tax =tax.browse(cr, uid, tax_wi_id, context)
                     vals_ret_line = {
                                      'fiscalyear_id':fiscalyear_id,  
-                                     #'description': tax_line['type_ec'],
-                                     'tax_id': base_code_id,
+                                     'description': bw_tax.type_ec,
+                                     'tax_id': bw_tax.base_code_id.id  ,
                                      'tax_wi_id':tax_wi_id,
                                      'tax_base': context['amount_untaxed'],
-                                     'tax_amount': context['amount_untaxed']*tax_p,
-                                    # 'withhold_percentage':0
+                                     'tax_amount': context['amount_untaxed']*bw_tax.amount,
+                                     'withhold_percentage':bw_tax.amount
                                      }  
                     
                   #  vals_ret_line['withhold_percentage'] = self._withhold_percentaje(cr, uid, vals_ret_line, context)
