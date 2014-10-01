@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+    
+    	<!-- intentamos eliminar vista agregada accidentalmente por infraestructura -->
+    	<delete model="ir.ui.view" id="view_vendor_payment_form_inherit1"/>
 
 		<!-- Formulario de pagos a CLIENTES ecuatorianizado -->
 		<record model="ir.ui.view" id="view_vendor_receipt_form_ecua">
