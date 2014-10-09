@@ -43,6 +43,7 @@
 										attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
 										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"
 										options="{'no_open': True}"
+										widget="selection"
 										/>
 								</group>
 								<group>
