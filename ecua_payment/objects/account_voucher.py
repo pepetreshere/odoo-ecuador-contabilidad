@@ -25,8 +25,9 @@ class account_voucher(osv.osv):
                 line = obj_voucher_line.browse(cr, uid, so_ids)
                 "comparar para lanzar excepcion"
                 
-                if line.amount > line.amount_unreconciled: 
-                    raise osv.except_osv(_('Error!'),
+                if o.type in ['payment','receipt']:
+                    if line.amount > line.amount_unreconciled: 
+                        raise osv.except_osv(_('Error!'),
                                          _("$ %s > $ %s \n In the payment lines it is not possible to pay a value bigger the open balance, please correct the values") %(str(line.amount),str(line.amount_unreconciled)))
         return super(account_voucher, self).proforma_voucher(cr, uid, ids, context=None)                    
             
