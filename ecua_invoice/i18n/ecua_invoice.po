@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20140612-231211\n"
+"Project-Id-Version: OpenERP Server 7.0-20140713-231411\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-15 21:55+0000\n"
-"PO-Revision-Date: 2014-06-15 21:55+0000\n"
+"POT-Creation-Date: 2014-10-22 21:38+0000\n"
+"PO-Revision-Date: 2014-10-22 21:38+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,11 @@ msgstr ""
 
 #. module: ecua_invoice
 #: view:account.invoice:0
+msgid "Facturas Anuladas"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
 msgid "My Printer Point"
 msgstr ""
 
@@ -31,24 +36,24 @@ msgid "Número de Líneas x Factura"
 msgstr ""
 
 #. module: ecua_invoice
+#: help:sale.shop,establishment_address:0
+msgid "The address of the property, used for tax purposes as generating electronic documents"
+msgstr ""
+
+#. module: ecua_invoice
 #: view:sale.shop:0
 #: field:sale.shop,number:0
 msgid "SRI Number"
 msgstr ""
 
 #. module: ecua_invoice
-#: view:sale.shop:0
-msgid "Users Asigned"
+#: field:sale.shop,sales_journal_id:0
+msgid "Sales Journal"
 msgstr ""
 
 #. module: ecua_invoice
 #: help:account.invoice,invoice_address:0
 msgid "Invoice address as in VAT document, saved in invoice only not in partner"
-msgstr ""
-
-#. module: ecua_invoice
-#: view:account.invoice:0
-msgid "Anuladas"
 msgstr ""
 
 #. module: ecua_invoice
@@ -64,9 +69,9 @@ msgid "Defaults Journals"
 msgstr ""
 
 #. module: ecua_invoice
-#: model:ir.model,name:ecua_invoice.model_res_users
-#: field:sale.shop,user_ids:0
-msgid "Users"
+#: code:addons/ecua_invoice/objects/account_invoice.py:115
+#, python-format
+msgid "No existe un período contable para esta fecha. There is no date for this accounting period."
 msgstr ""
 
 #. module: ecua_invoice
@@ -80,18 +85,18 @@ msgid "Invoice phone"
 msgstr ""
 
 #. module: ecua_invoice
-#: view:account.invoice:0
-msgid "Phone"
-msgstr ""
-
-#. module: ecua_invoice
 #: model:ir.model,name:ecua_invoice.model_sale_shop
 msgid "Sales Shop"
 msgstr ""
 
 #. module: ecua_invoice
-#: view:account.invoice:0
-msgid "Address"
+#: help:res.users,printer_id:0
+msgid "Punto de Impresion asignado al usuario, por ejemplo 001-001"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:sale.shop:0
+msgid "Users Asigned"
 msgstr ""
 
 #. module: ecua_invoice
@@ -125,6 +130,17 @@ msgid "Credit Note Purchases Journal"
 msgstr ""
 
 #. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Phone Number"
+msgstr ""
+
+#. module: ecua_invoice
+#: code:addons/ecua_invoice/objects/account_invoice.py:69
+#, python-format
+msgid "Invalid action!"
+msgstr ""
+
+#. module: ecua_invoice
 #: view:sale.shop:0
 msgid "Print Points"
 msgstr ""
@@ -135,13 +151,19 @@ msgid "SRI Configuration"
 msgstr ""
 
 #. module: ecua_invoice
-#: field:sale.shop,sales_journal_id:0
-msgid "Sales Journal"
+#: field:sale.shop,establishment_address:0
+msgid "Establishment Address"
 msgstr ""
 
 #. module: ecua_invoice
 #: help:account.invoice,invoice_phone:0
 msgid "Invoice phone as in VAT document, saved in invoice only not in partner"
+msgstr ""
+
+#. module: ecua_invoice
+#: model:ir.model,name:ecua_invoice.model_res_users
+#: field:sale.shop,user_ids:0
+msgid "Users"
 msgstr ""
 
 #. module: ecua_invoice
@@ -152,6 +174,12 @@ msgstr ""
 #. module: ecua_invoice
 #: view:sale.order:0
 msgid "{'partner_id': partner_id}"
+msgstr ""
+
+#. module: ecua_invoice
+#: code:addons/ecua_invoice/objects/account_invoice.py:69
+#, python-format
+msgid "You can delete Invoice in state Draft"
 msgstr ""
 
 #. module: ecua_invoice
@@ -181,17 +209,34 @@ msgid "Default Printer Point"
 msgstr ""
 
 #. module: ecua_invoice
+#: code:addons/ecua_invoice/objects/account_invoice.py:114
+#, python-format
+msgid "Warning!"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
 #: model:ir.model,name:ecua_invoice.model_account_invoice
 msgid "Invoice"
 msgstr ""
 
 #. module: ecua_invoice
 #: view:account.invoice:0
-msgid "onchange_date(date_invoice)"
+msgid "Street and building number"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "The number is suggested by the other fields"
 msgstr ""
 
 #. module: ecua_invoice
 #: model:ir.model,name:ecua_invoice.model_sale_order
 msgid "Sales Order"
+msgstr ""
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Your printer were you receive the document, not your suppliers one"
 msgstr ""
 
