@@ -21,3 +21,4 @@ import account_account
 import account_tax
 import account_invoice_tax
 import account_config
+import res_company
