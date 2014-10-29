@@ -210,17 +210,38 @@ class account_withhold(osv.osv):
                     else:
                         fiscalyear_id = obj['period_id']['fiscalyear_id']['id']
                     tax_wi_id =''
-                    tax_wi_id = res_company.browse(cr, uid, obj.company_id.id, context).tax_wi_id.id 
+                    obj_company = res_company.browse(cr, uid, obj.company_id.id, context)
+                    tax_wi_id = obj_company.tax_wi_id.id
+                    if not tax_wi_id :
+                       raise osv.except_osv(_('Invalid action !'), _('Condigurar en la comania la cuenta de las retenciones.!'))  
                     bw_tax =tax.browse(cr, uid, tax_wi_id, context)
+                    vals_ret_line = {}
+                    #TODO: debe calcular solamnete cuando el impuesto sea igual al del producto 
+                    #las lineas q no tengan impuesto no derian generan impuesto
+                    #for o in obj.invoice_line:
+                    #    o.invoice_line_tax_id.id
+                    #if context['invoice_line']['invoice_line_tax_id']  == tax_wi_id:
                     vals_ret_line = {
                                      'fiscalyear_id':fiscalyear_id,  
                                      'description': bw_tax.type_ec,
                                      'tax_id': bw_tax.base_code_id.id  ,
-                                     'tax_wi_id':tax_wi_id,
+                                     'tax_wi_id':obj_company.tax_wi_id.id,
                                      'tax_base': context['amount_untaxed'],
-                                     'tax_amount': context['amount_untaxed']*bw_tax.amount,
-                                     'withhold_percentage':bw_tax.amount
-                                     }  
+                                     'tax_amount': context['amount_untaxed']*obj_company.tax_wi_id.amount, #0 ,#
+                                     'withhold_percentage':obj_company.tax_wi_id.amount
+                                     }
+                    #===========================================================
+                    # else:
+                    #      vals_ret_line = {
+                    #                      'fiscalyear_id':fiscalyear_id,  
+                    #                      'description': bw_tax.type_ec,
+                    #                      'tax_id': bw_tax.base_code_id.id  ,
+                    #                      'tax_wi_id':context['invoice_line'],
+                    #                      'tax_base': context['amount_untaxed'],
+                    #                      'tax_amount': context['amount_untaxed']*bw_tax.amount,
+                    #                      'withhold_percentage':bw_tax.amount
+                    #                      }
+                    #===========================================================
                     
                   #  vals_ret_line['withhold_percentage'] = self._withhold_percentaje(cr, uid, vals_ret_line, context)
                     res.append(vals_ret_line) 

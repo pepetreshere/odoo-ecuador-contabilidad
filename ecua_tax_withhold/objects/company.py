@@ -27,4 +27,7 @@ class res_company(osv.osv):
                 'journal_ir_id':fields.many2one('account.journal', 'IR Journal',
                                                 help="Journal for IR Movements"), 
                 }
+    _defaults = {  
+       # 'tax_wi_id': lambda *a: time.strftime('%Y-%m-%d'),  
+        }
 res_company()

@@ -55,6 +55,9 @@
     and reuses mainly code based on work by Christopher Ormaza and 
     improvements from TRESCLOUD and 4RSOFT.
     
+    Config:
+    In the company configuration the taxes 
+    
     Authors,
     
     Andres Calle,
@@ -64,7 +67,7 @@
     """,
     "init_xml": [],
     "update_xml": [ 
-                    'data/sequence_data.xml',
+                    
                     'security/ir.model.access.csv',
                     'report/withhold_report.xml',
                     'workflow/withhold_workflow.xml',
@@ -73,6 +76,7 @@
                     'views/withhold_view.xml',
                     'views/withhold_config_view.xml',
                     'views/invoice_view.xml',
+                    'data/sequence_data.xml',
     ],
     "installable": True,
     "auto_install": False,
