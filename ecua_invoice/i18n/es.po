@@ -29,7 +29,7 @@ msgstr "Mi Punto de Impresión"
 #: view:sale.shop:0
 #: field:sale.shop,number:0
 msgid "SRI Number"
-msgstr "SRI Number"
+msgstr "Numero SRI"
 
 #. module: ecua_invoice
 #: field:sale.shop,invoice_lines:0
@@ -44,7 +44,7 @@ msgstr "Usuarios Asignados"
 #. module: ecua_invoice
 #: help:account.invoice,invoice_address:0
 msgid "Invoice address as in VAT document, saved in invoice only not in partner"
-msgstr "Dirección de facturación como en el documento VAT, guardando en la factura no sólo en el cliente"
+msgstr "Direccion de facturacion, es guardado solamente en la factura y puede diferir de la direccion de la empresa"
 
 #. module: ecua_invoice
 #: view:sale.shop:0
@@ -82,7 +82,7 @@ msgstr "Telefono"
 #. module: ecua_invoice
 #: model:ir.model,name:ecua_invoice.model_sale_shop
 msgid "Sales Shop"
-msgstr "Tienda ventas"
+msgstr "Tiendas"
 
 #. module: ecua_invoice
 #: view:account.invoice:0
@@ -92,12 +92,12 @@ msgstr "Dirección"
 #. module: ecua_invoice
 #: field:sale.shop,credit_note_sale_journal_id:0
 msgid "Credit Note Sales Journal"
-msgstr "Nota de Crédito del Diario de ventas"
+msgstr "Diaro de Notas de Credito en Ventas"
 
 #. module: ecua_invoice
 #: view:account.invoice:0
 msgid "True"
-msgstr "Verdad"
+msgstr "Verdadero"
 
 #. module: ecua_invoice
 #: field:account.invoice,printer_id:0
@@ -117,7 +117,7 @@ msgstr "Nombre"
 #. module: ecua_invoice
 #: field:sale.shop,credit_note_purchase_journal_id:0
 msgid "Credit Note Purchases Journal"
-msgstr "Nota de Crédito del Diario de Compras "
+msgstr "Diaro de Notas de Credito en Compras"
 
 #. module: ecua_invoice
 #: view:sale.shop:0
@@ -127,7 +127,7 @@ msgstr "Puntos de Impresión"
 #. module: ecua_invoice
 #: view:sale.shop:0
 msgid "SRI Configuration"
-msgstr "SRI Configuración"
+msgstr "Configuración SRI"
 
 #. module: ecua_invoice
 #: field:sale.shop,sales_journal_id:0
@@ -137,7 +137,7 @@ msgstr "Diario de Ventas"
 #. module: ecua_invoice
 #: help:account.invoice,invoice_phone:0
 msgid "Invoice phone as in VAT document, saved in invoice only not in partner"
-msgstr "Factura de teléfono como en el documento de IVA, guarda en factura no sólo en los países socios"
+msgstr "Numero telefonico de la factura, es guardado solamente en la factura y puede diferir del telefono de la empresa"
 
 #. module: ecua_invoice
 #: field:sri.printer.point,shop_id:0
@@ -185,3 +185,27 @@ msgstr "onchange_date(date_invoice)"
 msgid "Sales Order"
 msgstr "Pedido de venta"
 
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Phone Number"
+msgstr "Telefono"
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Cancel Invoices"
+msgstr "Anular Facturas"
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Street and building number"
+msgstr "Direccion y numero"
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "The number is suggested by the other fields"
+msgstr "El numero es sugerido por los otros campos"
+
+#. module: ecua_invoice
+#: view:account.invoice:0
+msgid "Your printer were you receive the document, not your suppliers one"
+msgstr "Su punto de impresion donde recibe documentos tributarios. No tiene relacion con el punto de impresion de sus clientes o proveedores"

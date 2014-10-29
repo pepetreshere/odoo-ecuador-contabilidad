@@ -159,9 +159,10 @@ class account_invoice(osv.osv):
         if not printer_id:
             printer_id = _default_printer_point(cr, uid, context)
         
-        number = '001-001-'
+        number = False #por ejemplo para facturas de tipo hr_advance
 
         if type in ['out_invoice','in_refund']:
+            number = '001-001-'
             printer = self.pool.get('sri.printer.point').browse(cr, uid, printer_id, context=context)
             number = printer.shop_id.number + "-" + printer.name + "-"
         if type in ['in_invoice','out_refund']:
@@ -184,7 +185,7 @@ class account_invoice(osv.osv):
             type = context['type']
             
         if context.has_key('printer_id'):
-            type = context['printer_id']
+            printer_id = context['printer_id']
         
         if not printer_id:
             printer_id = self._default_printer_point(cr, uid, context)

@@ -1,34 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+    
+    	<!-- intentamos eliminar vista agregada accidentalmente por infraestructura -->
+    	<delete model="ir.ui.view" id="view_vendor_payment_form_inherit1"/>
 
-		<record model="ir.ui.view" id="view_vendor_payment_form_inherit1">
-            <field name="name">account.voucher.purchase.form</field>
+		<!-- Formulario de pagos a CLIENTES ecuatorianizado -->
+		<record model="ir.ui.view" id="view_vendor_receipt_form_ecua">
+            <field name="name">view.vendor.receipt.form.ecua</field>
+            <field name="model">account.voucher</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reference']" position="attributes">
+					<attribute name="placeholder">Ejemplo: Pago #053</attribute>
+					<attribute name="string">Identificador de Pago</attribute>
+            	</xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+					<attribute name="placeholder">Ejemplo: Pago de la factura #43</attribute>
+					<attribute name="string">Razon pago</attribute>
+            	</xpath>            	
+                <xpath expr="//field[@name='number']" position="after">
+					<field name="responsible_id"/>
+            	</xpath>
+                <xpath expr="//field[@name='writeoff_acc_id']" position="attributes">
+					<attribute name="domain">['|',('force_reconcile','=', True),('type','=','other')]</attribute>
+            	</xpath>            	
+            </field>
+        </record>
+
+		
+		<!-- Formulario de pagos a proveedores ecuatorianizado -->
+		<record model="ir.ui.view" id="view_vendor_payment_form_ecua">
+            <field name="name">view.vendor.payment.form.ecua</field>
             <field name="model">account.voucher</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//form/sheet/group/group/field[@name='reference']" position="attributes">
-					<attribute name="placeholder">e.g. 003/10</attribute>
+					<attribute name="placeholder">Ejemplo: Pago #053</attribute>
 					<attribute name="string">Identificador de Pago</attribute>
             	</xpath>
                 <xpath expr="//form/sheet/group/group/field[@name='name']" position="attributes">
-					<attribute name="placeholder">Pago de la factura #43</attribute>
+					<attribute name="placeholder">Ejemplo: Pago de la factura #43</attribute>
 					<attribute name="string">Razon pago</attribute>
-            	</xpath>            	
-                <xpath expr="//form/sheet/group/group/field[@name='journal_id']" position="after">
-					<field name="luck" attrs="{'readonly':[('state','!=','draft')]}"/>
             	</xpath>            	
                 <xpath expr="//form/sheet/notebook/page/group/field[@name='number']" position="after">
 					<field name="responsible_id"/>
             	</xpath>
-
                 <xpath expr="//form/sheet/notebook/page/group/group/group/field[@name='writeoff_acc_id']" position="attributes">
-					<attribute name="domain">[('force_reconcile','=', True)]</attribute>
-            	</xpath>
+					<attribute name="domain">['|',('force_reconcile','=', True),('type','=','other')]</attribute>
+            	</xpath>            	
             </field>
         </record>
 
+        <delete model="ir.ui.view" id="view_vendor_receipt_dialog_form_inherit1"/>
+        <!-- #TODO: Ocultado hasta que el boton retorne el reporte impreso y hasta hacerlo para todas las vistas de account voucher
         <record model="ir.ui.view" id="view_vendor_receipt_dialog_form_inherit1">
             <field name="name">account.voucher.receipt.dialog.form</field>
             <field name="model">account.voucher</field>
@@ -38,9 +65,9 @@
                 <xpath expr="//form/footer/button[@name='button_proforma_voucher']" position="before">
 					<button name="button_print_pay_voucher" string="Print and Pay" class="oe_highlight" type="object"/>
             	</xpath>  
-            	
             </field>
-        </record>    
+        </record>
+        -->    
                 	                          
         </data>
     </openerp>

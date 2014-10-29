@@ -64,6 +64,10 @@
 								</field>
 							</group>
 						</div>
+						  <div class="oe_clear">
+                                <label for="comment"/>
+                            </div>
+                            <field name="comment" class="oe_inline" placeholder="Additional notes..."/>
 	                </sheet>
                     <footer>
 						<button name="print_withhold" string="Print"
