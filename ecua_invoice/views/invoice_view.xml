@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-		<!-- Eliminamos ids de las vistas viejas -->
-		<!-- Se puede remover este codigo luego de actualizar los servers -->
-		<delete id="account_invoice_supplier_view_ecua" model="ir.ui.view"/>
-		
 		<!-- SUPPLIER INVOICE -->			
 		<record model="ir.ui.view" id="invoice_supplier_form_ecua">
 			<field name="name">invoice.supplier.form.ecua</field>
