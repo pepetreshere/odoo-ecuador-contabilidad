@@ -67,6 +67,7 @@
 						required="0"
 						placeholder="Your printer were you receive the document, not your suppliers one"
 						options="{'no_open': True}"
+						widget="selection"
 						/>
 					<field name="internal_number" required="1" 
 						attrs="{'readonly': [('state','!=','draft')]}"
@@ -130,6 +131,7 @@
 						required="0"
 						placeholder="Your printer were you receive the document, not your suppliers one"
 						options="{'no_open': True}"
+						widget="selection"
 						/>
 					<field name="internal_number" required="1" 
 						attrs="{'readonly': [('state','!=','draft')]}"
