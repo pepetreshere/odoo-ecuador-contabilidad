@@ -163,9 +163,9 @@ msgid "Ecuadorian Settings"
 msgstr "Ajustes ecuatorianos "
 
 #. module: l10n_ec_niif_minimal
-#: help:res.company,contri_especial:0
-msgid "Resolution Special contributor"
-msgstr "Resolution Special contributor"
+#: help:res.company,special_tax_contributor_number:0
+msgid "Special Contributors are designed by the Ecuadorian Tax Authority, the number is used in tax reporting"
+msgstr "Los Contribuyentes Especiales son desigandos como tales por el SRI, este numero es utilizado en reportes financieros"
 
 #. module: l10n_ec_niif_minimal
 #: selection:account.invoice.tax,type_ec:0
@@ -293,9 +293,9 @@ msgid "Tax"
 msgstr "Impuesto"
 
 #. module: l10n_ec_niif_minimal
-#: field:res.company,contri_especial:0
-msgid "Special contributor"
-msgstr "Nr.Contribuidor Especial"
+#: field:res.company,special_tax_contributor_number:0
+msgid "Special Contributor Number"
+msgstr "Numero de Contribuyente Especial"
 
 #. module: l10n_ec_niif_minimal
 #: help:account.account,message_summary:0
