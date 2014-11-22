@@ -37,6 +37,7 @@
                  'purchase',
                  'sale',
                  'stock',
+                 'sale_stock',
                  'report_aeroo',
                  'report_aeroo_ooo',
                  'l10n_ec_niif_minimal',
