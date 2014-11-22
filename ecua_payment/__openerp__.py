@@ -23,6 +23,7 @@
         "demo_xml" : [ ],
         "update_xml" : [
                         'views/account_voucher_view.xml',
+                        'views/account_journal_view.xml',
                         'security/ir.model.access.csv',
                         ],
         "installable": True

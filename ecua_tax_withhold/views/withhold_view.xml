@@ -140,6 +140,39 @@
 			</field>
 		</record>
 
+<record id="withhold_wizard_min_form_inherit" model="ir.ui.view">
+			<field name="name">withhold.wizard.form</field>
+			<field name="model">account.withhold</field>
+			<field name="inherit_id" ref="ecua_tax_withhold.withhold_wizard_form" />
+			<field name="type">form</field>
+			<field name="priority" eval="32" />
+			<field name="arch" type="xml">
+	            <form string="Withhold Wizard" version="7.0">
+	                <header>
+	                </header>
+	                <sheet string="Withhold Wizard">
+	                	
+						<div>
+							<group>
+								<field name="withhold_line_ids" nolabel="1" height="150"
+								attrs="{'readonly':[('transaction_type','!=','sale')], 'required':[('transaction_type','=','sale')]}">
+									<tree string="Withhold Lines" editable="bottom">
+										<!--field name="fiscalyear_id" widget="selection" /-->
+										<field name="description" required="1"
+										on_change="onchange_description(description, parent.invoice_amount_untaxed, parent.invoice_vat_doce_subtotal)"/>
+										<field name="tax_id" required="1"
+										on_change="onchange_tax_id(description, tax_id, tax_base)"/>
+										<field name="tax_base" required="1"/>
+										<field name="tax_amount" required="1"/>
+										<field name="withhold_percentage" required="1"/>
+									</tree>
+								</field>
+							</group>
+						</div>
+	                </sheet>
+				</form>
+			</field>
+		</record>
         <record id="view_account_withhold_filter" model="ir.ui.view">
             <field name="name">account.withhold.select</field>
             <field name="model">account.withhold</field>
