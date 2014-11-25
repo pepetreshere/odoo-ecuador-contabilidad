@@ -56,7 +56,7 @@ class res_partner(osv.osv):
         company_id = self.pool.get('res.users').browse(cr,uid,uid).company_id
         is_validation=company_id.is_validation
         return is_validation or False
-    
+     #FUNCION QUE NOS VALIDA  EL TIPO DE iDENTIFICACIÓN DE LOS CLIENTES Y PROVEEDORES
     def _get_vat(self, cr, uid, ids, vat, arg, context):
         res = {}
         for record in self.browse(cr, uid, ids, context=context):
@@ -76,7 +76,7 @@ class res_partner(osv.osv):
                     name = 'PASAPORTE'
                 res[record.id] = name           
         return res
-    
+    #FUNCION QUE NOS MUESTRA  LOS TIPOS DE RUC DE ACUERDO  AL TIPO DE CONTRIBUYENTE
     def _get_type_vat(self, cr, uid, ids, vat, arg, context):
         res = {}
         for record in self.browse(cr, uid, ids, context=context):
@@ -339,6 +339,7 @@ class res_partner(osv.osv):
     _columns = {
                 'comercial_name': fields.char('Comercial Name', size=256),
                 'type_vat': fields.function(_get_vat, type="char", string='Name', store=True),
+                # SE CREA UN NUEVO CAMPO PARA PODER REGISTRAR EL TIPO DE CONTRIBUYENTE DE LOS CLIENTES PERSONAS NATURALES  Y JURIDICAS 
                 'type_vat_type': fields.function(_get_type_vat, type="char", string='Name', store=True),
             #    'is_validation':fields.boolean('is Validation', required=False,change_default=True, select=True), 
               #  'type_vat': fields.function(_get_vat, method=True, type='char', string='Type Vat', store=True), 

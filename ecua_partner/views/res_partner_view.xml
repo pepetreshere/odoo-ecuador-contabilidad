@@ -33,6 +33,7 @@ cliente -->
                     
                         <field name="vat" on_change="vat_change(vat)" placeholder="e.g. BE0477472701" class="oe_inline"/>
                      	<field name="type_vat"/>
+                     	<!-- NUEVO CAMPO PARA MOSTRAR LOS TIPOS DE RUC SEGUN EL TIPO DE CONTRIBUYENTE HG -->
                      	<field name="type_vat_type"/>
    		                <button colspan="2" 
                         	name="button_check_vat" 
