@@ -74,9 +74,27 @@ class res_partner(osv.osv):
                         name = 'OTROS'
                 else:
                     name = 'PASAPORTE'
-            res[record.id] = name
+                res[record.id] = name           
         return res
     
+    def _get_type_vat(self, cr, uid, ids, vat, arg, context):
+        res = {}
+        for record in self.browse(cr, uid, ids, context=context):
+            aux = record.vat
+            contar =str(aux)
+            if contar:
+                 type=int(contar[4])
+                 if  type==9:
+                    name= 'RUC JURIDICO Y EXTRANJEROS SIN CEDULA'
+                 elif type==6:
+                    name= 'RUC PUBLICOS'
+                 elif type<6 and type>=0 :
+                     name= 'RUC PERSONA NATURAL'
+                 elif type==7 or type==8 :
+                     name= 'Error en el Ingreso de los datos'
+                 res[record.id] = name           
+        return res
+
     def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
         """
         Se alerta sobre la sobreescritura de datos contables 
@@ -321,6 +339,7 @@ class res_partner(osv.osv):
     _columns = {
                 'comercial_name': fields.char('Comercial Name', size=256),
                 'type_vat': fields.function(_get_vat, type="char", string='Name', store=True),
+                'type_vat_type': fields.function(_get_type_vat, type="char", string='Name', store=True),
             #    'is_validation':fields.boolean('is Validation', required=False,change_default=True, select=True), 
               #  'type_vat': fields.function(_get_vat, method=True, type='char', string='Type Vat', store=True), 
                 
