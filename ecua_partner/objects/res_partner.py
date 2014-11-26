@@ -85,11 +85,11 @@ class res_partner(osv.osv):
             if contar:
                  type=int(contar[4])
                  if  type==9:
-                    name= 'RUC JURIDICO Y EXTRANJEROS SIN CEDULA'
+                    name= 'JURIDICO Y EXTRANJEROS SIN CEDULA'
                  elif type==6:
-                    name= 'RUC PUBLICOS'
+                    name= 'PUBLICOS'
                  elif type<6 and type>=0 :
-                     name= 'RUC PERSONA NATURAL'
+                     name= 'PERSONA NATURAL'
                  elif type==7 or type==8 :
                      name= 'Error en el Ingreso de los datos'
                  res[record.id] = name           
@@ -340,7 +340,7 @@ class res_partner(osv.osv):
                 'comercial_name': fields.char('Comercial Name', size=256),
                 'type_vat': fields.function(_get_vat, type="char", string='Name', store=True),
                 # SE CREA UN NUEVO CAMPO PARA PODER REGISTRAR EL TIPO DE CONTRIBUYENTE DE LOS CLIENTES PERSONAS NATURALES  Y JURIDICAS 
-                #'type_vat_type': fields.function(_get_type_vat, type="char", string='Name', store=True),
+                'type_vat_type': fields.function(_get_type_vat, type="char", string='Name', store=True),
             #    'is_validation':fields.boolean('is Validation', required=False,change_default=True, select=True), 
               #  'type_vat': fields.function(_get_vat, method=True, type='char', string='Type Vat', store=True), 
                 
