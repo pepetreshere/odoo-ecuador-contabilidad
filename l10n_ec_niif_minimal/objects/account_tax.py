@@ -28,7 +28,14 @@ from osv import fields, osv
 from tools import config
 from tools.translate import _
 
+
 class account_tax(osv.osv):
+    
+    def _is_account_editor(self, cr, uid, ids, field_name, arg, context):
+        groups = self.pool.get('res.users').read(cr, uid, uid)['groups_id']
+        group = self.pool.get('ir.model.data').get_object(cr, uid, 'l10n_ec_niif_minimal', 'ecua_group_account_editor', context=context).id
+        return {id: (group in groups) for id in ids if id}
+            
     _inherit = "account.tax"
     _columns = {
                 'type_ec':fields.selection([
@@ -40,9 +47,9 @@ class account_tax(osv.osv):
                 'assets':fields.boolean('Assets', required=False),
                 'imports':fields.boolean('Imports', required=False),
                 'exports':fields.boolean('Exports', required=False),
-                'tax_system':fields.boolean('Tax system', required=False, help="Tax system facturadeuna.com, you can not change"),
-                
-                                    }
+                'tax_system':fields.boolean('Tax system', required=False, help="Tax system facturadeuna.com, you can not change", write=['l10n_ec_niif_minimal.ecua_group_account_editor']),
+                'is_account_editor':fields.function(_is_account_editor, type='boolean', method=True, string='Is Account Editor')
+    }
 
     def _unit_compute_inv(self, cr, uid, taxes, price_unit, product=None, partner=None):
         res = super(account_tax, self)._unit_compute_inv(cr, uid, taxes, price_unit, product, partner)
