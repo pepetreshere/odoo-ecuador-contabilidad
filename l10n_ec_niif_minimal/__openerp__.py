@@ -31,7 +31,9 @@
                 'base_iban',
                 'account_chart',
                 ],
-    'init_xml': [],
+    'init_xml': [
+                 'security/security_groups.xml'
+    ],
     'update_xml': [
                 'data/account_tax_code.xml',
                 'data/account_chart.xml',
@@ -41,9 +43,7 @@
                 'views/account_tax_view.xml',
                 'views/account_account_view.xml',
                 'views/account_config_view.xml',
-                
-                
-                   ],
+    ],
     'demo_xml': [],
     'installable': True,
 }

@@ -79,7 +79,7 @@ msgstr "Exportaciones "
 #. module: l10n_ec_niif_minimal
 #: field:account.tax,tax_system:0
 msgid "Tax system"
-msgstr "Sistema tributario "
+msgstr "Impuesto de Sistema"
 
 #. module: l10n_ec_niif_minimal
 #: help:account.account,force_reconcile:0
