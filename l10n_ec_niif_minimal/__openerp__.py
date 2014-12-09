@@ -32,7 +32,6 @@
                 'account_chart',
                 ],
     'init_xml': [
-                 'security/security_groups.xml'
     ],
     'update_xml': [
                 'data/account_tax_code.xml',
@@ -43,6 +42,7 @@
                 'views/account_tax_view.xml',
                 'views/account_account_view.xml',
                 'views/account_config_view.xml',
+                'security/security_groups.xml'
     ],
     'demo_xml': [],
     'installable': True,
