@@ -41,8 +41,9 @@ class account_tax(osv.osv):
                 'imports':fields.boolean('Imports', required=False),
                 'exports':fields.boolean('Exports', required=False),
                 'tax_system':fields.boolean('Tax system', required=False, help="Tax system facturadeuna.com, you can not change"),
-                
+
                                     }
+    _order = "description"
 
     def _unit_compute_inv(self, cr, uid, taxes, price_unit, product=None, partner=None):
         res = super(account_tax, self)._unit_compute_inv(cr, uid, taxes, price_unit, product, partner)
