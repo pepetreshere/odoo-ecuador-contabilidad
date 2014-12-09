@@ -114,8 +114,8 @@ msgstr "Tipos impuestos ecuatoriana"
 
 #. module: l10n_ec_niif_minimal
 #: help:account.tax,tax_system:0
-msgid "Tax system facturadeuna.com, you can not change"
-msgstr "Facturadeuna.com sistema de impuestos, no se puede cambiar "
+msgid "Systems tax, this tax is used by the internal system setup, you should not change. Ask your accountant for support."
+msgstr "Impuesto de sistema. Este impuesto es usado por la configuración interna del sistema, y no debería ser cambiado. Solicita ayuda a tu contador ante cualquier duda."
 
 #. module: l10n_ec_niif_minimal
 #: model:ir.model,name:l10n_ec_niif_minimal.model_account_account
