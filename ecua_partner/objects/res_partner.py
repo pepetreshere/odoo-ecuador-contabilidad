@@ -332,7 +332,15 @@ class res_partner(osv.osv):
             if partner.vat: #si tiene cedula la valida, caso contrario no hace nada
                 if not partner.parent_id :
                     #vals = self.search(cr, uid, [('vat','=',partner.vat),('is_company','=',True)], context=context)
-                    vals = self.search(cr, uid, [('vat','=',partner.vat),('parent_id','=',None)], context=context)
+                    vat = partner.vat
+                    if (len(vat) == 12 or len(vat) == 15) and vat[0:2].lower() == 'ec':
+                        vat = vat[0:12]
+                        #es un RUC o una cedula, validamos que no exista uno que haga ilike positivo con EC0987654321
+                        #(siendo ese valor solamente de referencia).
+                        criterion = ('vat', '=ilike', vat + '%')
+                    else:
+                        criterion = ('vat', '=', partner.vat)
+                    vals = self.search(cr, uid, [criterion,('parent_id','=',None)], context=context)
                     return not len(vals)>1
         return True    
     
