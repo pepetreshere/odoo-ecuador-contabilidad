@@ -78,9 +78,10 @@ class res_partner(osv.osv):
         return res
     #FUNCION QUE NOS MUESTRA  LOS TIPOS DE RUC DE ACUERDO  AL TIPO DE CONTRIBUYENTE
     def _get_type_vat(self, cr, uid, ids, vat, arg, context):
-        res = {}
+        res, contar, aux = {}, '', ''
         for record in self.browse(cr, uid, ids, context=context):
-            aux = record.vat
+            if record.vat:
+                aux = record.vat
             contar =str(aux)
             if contar:
                  type=int(contar[4])
