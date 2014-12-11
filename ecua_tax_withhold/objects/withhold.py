@@ -612,9 +612,11 @@ class account_withhold(osv.osv):
     
     # Need to eliminate the old constrain, rewrite with this one
     # TODO: Could be Erase the next time we update the server  
-    _sql_constraints = [
-            ('withhold_number_transaction_uniq','1',''),
-                        ]
+    #===========================================================================
+    # _sql_constraints = [
+    #         ('withhold_number_transaction_uniq','1',''),
+    #                     ]
+    #===========================================================================
     
     def onchange_number(self, cr, uid, ids, number, context=None):
         
