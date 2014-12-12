@@ -49,6 +49,40 @@ class account_invoice(osv.osv):
                 'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
                }
 
+    def __init__(self, pool, cr):
+        """
+        Durante la inicialización del modelo correremos un SQL para borrar una
+        constraint de SQL que de alguna manera nunca fue borrada, y no tenemos
+        en este OpenERP un mecanismo que gestione migraciones, por lo que este
+        proceso deberíamos hacerlo manualmente.
+
+        Cuando el módulo se inicializa (se construye) toma dos valores: el pool
+        para poder obtener otros objetos, y el cr para ejecutar consultas de
+        postgresql. Tomando ese cursor ejecutamos -LUEGO de llamar al super-
+        una sentencia SQL de borrado de constraint:
+
+        ALTER TABLE account_invoice DROP CONSTRAINT IF EXISTS account_invoice_number_uniq
+
+        (http://www.postgresql.org/docs/9.1/static/sql-altertable.html).
+
+        El nombre de la tabla está dado a falta de un nombre preconfigurado para
+        la tabla en este modelo, por el nombre de la propia clase (account_invoice).
+
+        El nombre de la constraint viene dado por lo reportado en FDU-636.
+
+        Se envuelve todo en un try ... finally ya que, si no existen las tablas al momento
+        de crear este modulo, entonces no deberia importarnos el hecho de que esta consulta
+        sql falle por una tabla que no exista.
+        :param pool:
+        :param cr:
+        :return:
+        """
+        super(account_invoice, self).__init__(pool, cr)
+        try:
+            cr.execute('ALTER TABLE account_invoice DROP CONSTRAINT IF EXISTS account_invoice_number_uniq')
+            pass
+        finally:
+            pass #ignoramos cualquier error.
 
     def _check_number_invoice(self,cr,uid,ids, context=None):
             res = True
