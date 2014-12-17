@@ -10,6 +10,9 @@
 					<field name="vat" position="after">
 						<field name="special_tax_contributor_number"/>
 					</field>
+		            <field name="partner_id" position="after">
+		            	<field name="comercial_name"/>
+		            </field>
 				</field>
 		</record>
 	</data>
