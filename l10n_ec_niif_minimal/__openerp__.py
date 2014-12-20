@@ -30,6 +30,7 @@
                 'base_vat',
                 'base_iban',
                 'account_chart',
+                'mail',
                 ],
     'init_xml': [],
     'update_xml': [
