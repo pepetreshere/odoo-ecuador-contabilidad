@@ -48,6 +48,8 @@ class account_invoice(osv.osv):
                 'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
                 'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
                }
+    
+    RE_PREFIXED_INVOICE = re.compile('^\d+-\d+-\d+$')
 
     def __init__(self, pool, cr):
         """
@@ -104,6 +106,23 @@ class account_invoice(osv.osv):
             
         return super(account_invoice, self).unlink(cr, uid, unlink_ids, context)
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        """
+        Copia una factura pero le pone el prefijo en lugar
+        de copiar tambien el numero interno. si el numero
+        interno no tiene forma de xxx-xxx-xxxxxx entonces
+        no copia prefijo, pone una cadena vacia
+        """
+        obj = self.browse(cr, uid, id)
+        default = default or {}
+        
+        internal_number = obj.internal_number
+        if (self.RE_PREFIXED_INVOICE.match(internal_number)):
+            default['internal_number'] = '-'.join(internal_number.split('-')[0:2] + [''])
+        else:
+            default['internal_number'] = ''
+        
+        return super(account_invoice, self).copy(cr, uid, id, default, context)
 
     def onchange_internal_number(self, cr, uid, ids, internal_number, context=None):
         
