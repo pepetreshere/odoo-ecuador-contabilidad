@@ -292,3 +292,8 @@ msgstr "Tipo de Identificacion Fiscal"
 #: constraint:res.partner:0
 msgid "Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding"
 msgstr "Error: El numero de RUC/Cedula debe ser unico, ya existe otra empresa/persona con dicho numero. Busque la empresa/persona repetida por numero de RUC/Cedula antes de continuar"
+
+#. module: ecua_partner
+#: constraint:res.partner:1
+msgid "Error: Natural person partner name must consist only in letters. Company names can also have numbers and special characters."
+msgstr "Error: El nombre de contacto de una persona natural debe consistir únicamente en letras. Los nombres para contactos que sean empresa pueden tener números y caracteres especiales."
