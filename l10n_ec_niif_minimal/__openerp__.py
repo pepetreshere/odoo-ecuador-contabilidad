@@ -30,6 +30,7 @@
                 'base_vat',
                 'base_iban',
                 'account_chart',
+                'ecua_partner'
                 ],
     'init_xml': [],
     'update_xml': [
