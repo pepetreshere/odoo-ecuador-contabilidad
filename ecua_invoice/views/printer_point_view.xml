@@ -16,7 +16,7 @@
 		</record>
 		
 		<!-- VISTA FORM DE PRINTER POINT -->	
-<!-- 		<record model="ir.ui.view" id="printer_point_form_view">
+		<record model="ir.ui.view" id="printer_point_form_view">
 			<field name="name">sri.printer.point</field>
 			<field name="model">sri.printer.point</field>
 			<field name="type">form</field>
@@ -28,10 +28,10 @@
 					</group>
 				</form>
 			</field>
-		</record> -->
+		</record>
 		
 		<!-- ACCION PARA EL MENU DE PRINTER POINT -->
-<!-- 		<record model="ir.actions.act_window" id="action_printer_point_view">
+		<record model="ir.actions.act_window" id="action_printer_point_view">
 			<field name="name">Printer Point</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">sri.printer.point</field>
@@ -40,12 +40,14 @@
 			<field name="view_id" ref="printer_point_tree_view" />
 		</record>
 		
-		MENU DE PRINTER POINT
+		<!--  MENU DE PRINTER POINT-->
 		<menuitem id="printer_point_menu" 
 					name="Printer Point" 
-					parent="ecua_invoice_type.menu_sri" 
+					parent="base.menu_base_config" 
 					action="action_printer_point_view" 
-					sequence="1"/> -->
+					sequence="35"
+					groups="stock.group_locations"
+					/>
 		
 	</data>
 </openerp>
