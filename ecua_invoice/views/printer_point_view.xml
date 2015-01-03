@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!-- VISTA TREE DE PRINTER POINT-->
+		<record model="ir.ui.view" id="printer_point_tree_view">
+			<field name="name">sri.printer.point</field>
+			<field name="model">sri.printer.point</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Printer Point">
+				    <field name="name"/>
+					
+				</tree>
+			</field>
+		</record>
+		
+		<!-- VISTA FORM DE PRINTER POINT -->	
+<!-- 		<record model="ir.ui.view" id="printer_point_form_view">
+			<field name="name">sri.printer.point</field>
+			<field name="model">sri.printer.point</field>
+			<field name="type">form</field>
+			<field name="priority">16</field>
+			<field name="arch" type="xml">
+				<form string="Printer Point" version="7.0">
+                 <group string="Printer Point" col="2">
+					    <field name="name"/>
+					</group>
+				</form>
+			</field>
+		</record> -->
+		
+		<!-- ACCION PARA EL MENU DE PRINTER POINT -->
+<!-- 		<record model="ir.actions.act_window" id="action_printer_point_view">
+			<field name="name">Printer Point</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sri.printer.point</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="printer_point_tree_view" />
+		</record>
+		
+		MENU DE PRINTER POINT
+		<menuitem id="printer_point_menu" 
+					name="Printer Point" 
+					parent="ecua_invoice_type.menu_sri" 
+					action="action_printer_point_view" 
+					sequence="1"/> -->
+		
+	</data>
+</openerp>
