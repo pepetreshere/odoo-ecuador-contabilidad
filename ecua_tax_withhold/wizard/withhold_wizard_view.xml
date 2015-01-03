@@ -19,6 +19,7 @@
 	                			En la columna uno se ha colocado los campos editables
 	                			En la columna dos se ha colocado los campos no editables
                 			-->
+                			<field name="transaction_type" invisible="1" />
 	                		<group col="2">
 								<group>
 									<field name="creation_date" 
@@ -36,8 +37,6 @@
 								<group>
 									<field name="partner_id" readonly="1"/>
 									<field name="invoice_id" readonly="1"/>
-									<field name="state" invisible="1" />
-									<field name="transaction_type" invisible="1" />
 									<field name="shop_id" invisible="1" /> 
 									<field name="company_id" invisible="1" />
 									<field name="invoice_amount_untaxed" invisible="1"/>
