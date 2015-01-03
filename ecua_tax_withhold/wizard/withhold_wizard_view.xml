@@ -20,6 +20,7 @@
 	                			En la columna dos se ha colocado los campos no editables
                 			-->
                 			<field name="transaction_type" invisible="1" />
+                			<field name="state" invisible="1" />
 	                		<group col="2">
 								<group>
 									<field name="creation_date" 
