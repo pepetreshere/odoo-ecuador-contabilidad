@@ -2,6 +2,17 @@
 <openerp>
 	<data>
 
+	<record id="view_account_list_inherit" model="ir.ui.view">
+		<field name="name">account.account.list</field>
+		<field name="model">account.account</field>
+		<field name="inherit_id" ref="account.view_account_list"/>
+		<field name="arch" type="xml">
+			<xpath expr="//tree/field[@name='balance']" position="after">
+				<field name="level"/>
+			</xpath>
+		</field>
+	</record>
+
     <record id="view_account_form_inherit" model="ir.ui.view">
         <field name="name">account.account.form.inherit</field>
         <field name="model">account.account</field>
@@ -11,6 +22,9 @@
 	        <xpath expr="//field[@name='reconcile']" position="after">
 	            <field name="force_reconcile"/>
 			</xpath>
+			<xpath expr="//field[@name='balance']" position="after">
+				<field name="level"/>
+			</xpath>
 			<xpath expr="//form/field[@name='note']" position="after">
 				<div class="oe_chatter">
 		            <field name="message_follower_ids" widget="mail_followers"/>
@@ -19,6 +33,6 @@
 			</xpath>
 		</field>
 	</record>
-	
+
 	</data>
 </openerp>

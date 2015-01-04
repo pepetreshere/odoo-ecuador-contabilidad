@@ -17,17 +17,10 @@
 #########################################################################
 from osv import fields,osv
 
-class res_company(osv.osv):
-    _inherit = 'res.company'
+class account_journal(osv.osv):
+    _inherit = 'account.journal'
     _columns = {
-                'tax_wi_id': fields.many2one('account.tax', 'Default withhold tax',help="This withhold tax will be assigned by default on new products."),
-
-                'journal_iva_id':fields.many2one('account.journal', 'IVA Journal',
-                                                 help="Journal for IVA Movements"), 
-                'journal_ir_id':fields.many2one('account.journal', 'IR Journal',
-                                                help="Journal for IR Movements"), 
+                'default_imbalance_account_id':fields.many2one('account.journal', 'Imbalance Journal Default',
+                                                help="Default Journal for Imbalance Movements"), 
                 }
-    _defaults = {  
-       # 'tax_wi_id': lambda *a: time.strftime('%Y-%m-%d'),  
-        }
-res_company()
+account_journal()

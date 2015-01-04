@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Christopher Ormaza, TRESCloud Cia Ltda.
+# @authors: Andres Calle, TRESCloud Cia Ltda.
 # Copyright (C) 2013  Ecuadorenlinea.net
 #
 #This program is free software: you can redistribute it and/or modify
@@ -42,6 +42,7 @@ class sale_shop(osv.osv):
                 'credit_note_sale_journal_id':fields.many2one('account.journal', 'Credit Note Sales Journal', domain=[('type','=','sale_refund')]),
                 #'address_id':fields.many2one('res.partner.address', 'Address', ),
                 'invoice_lines': fields.integer('Número de Líneas x Factura'),
+                'establishment_address':fields.related('warehouse_id','partner_id',type='many2one',relation='res.partner',string='Establishment Address',help='The address of the property, used for tax purposes as generating electronic documents')  
                     }
     
     _defaults = {
