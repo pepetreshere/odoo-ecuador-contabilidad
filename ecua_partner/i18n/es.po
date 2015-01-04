@@ -292,3 +292,8 @@ msgstr "Tipo de Identificacion Fiscal"
 #: constraint:res.partner:0
 msgid "Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding"
 msgstr "Error: El numero de RUC/Cedula debe ser unico, ya existe otra empresa/persona con dicho numero. Busque la empresa/persona repetida por numero de RUC/Cedula antes de continuar"
+
+#. module: ecua_partner
+#: constraint:res.partner:1
+msgid "Error: The specified e-mail address is invalid"
+msgstr "Error: La dirección de correo electrónico especificada es inválida"
