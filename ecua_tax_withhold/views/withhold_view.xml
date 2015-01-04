@@ -29,6 +29,7 @@
 	                        attrs="{'readonly':[('state','!=','draft')]}" />
 	                    </h1>
 	                	<div>
+							<field name="transaction_type" invisible="1" />
                 			<!-- 
 	                			Cabecera de retencion:
 	                			En la columna uno se ha colocado los campos editables
@@ -49,8 +50,6 @@
 								<group>
 									<field name="partner_id" readonly="1"/>
 									<field name="invoice_id" readonly="1"/>
-									<field name="state" invisible="1" />
-									<field name="transaction_type" invisible="1" />
 									<field name="shop_id" invisible="1" /> 
 									<field name="company_id" invisible="1" />
 									<field name="invoice_amount_untaxed" invisible="1"/>
@@ -125,6 +124,7 @@
 			<field name="model">account.withhold</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
+				<!-- los colores son redefinidos en modulos subsiguientes -->
 				<tree string="Withhold" colors="blue:state in ('draft');black:state in ('approved');gray:state in ('canceled')">
 					<field name="number"/>
 					<field name="invoice_id" string="Document" />
@@ -140,7 +140,7 @@
 			</field>
 		</record>
 
-<record id="withhold_wizard_min_form_inherit" model="ir.ui.view">
+<!-- <record id="withhold_wizard_min_form_inherit" model="ir.ui.view">
 			<field name="name">withhold.wizard.form</field>
 			<field name="model">account.withhold</field>
 			<field name="inherit_id" ref="ecua_tax_withhold.withhold_wizard_form" />
@@ -151,13 +151,15 @@
 	                <header>
 	                </header>
 	                <sheet string="Withhold Wizard">
+	                <field name="state" invisible="1"/>
+	                <field name="transaction_type" invisible="1"/>
 	                	
 						<div>
 							<group>
 								<field name="withhold_line_ids" nolabel="1" height="150"
 								attrs="{'readonly':[('transaction_type','!=','sale')], 'required':[('transaction_type','=','sale')]}">
 									<tree string="Withhold Lines" editable="bottom">
-										<!--field name="fiscalyear_id" widget="selection" /-->
+										field name="fiscalyear_id" widget="selection" /
 										<field name="description" required="1"
 										on_change="onchange_description(description, parent.invoice_amount_untaxed, parent.invoice_vat_doce_subtotal)"/>
 										<field name="tax_id" required="1"
@@ -172,7 +174,8 @@
 	                </sheet>
 				</form>
 			</field>
-		</record>
+		</record> -->
+		
         <record id="view_account_withhold_filter" model="ir.ui.view">
             <field name="name">account.withhold.select</field>
             <field name="model">account.withhold</field>

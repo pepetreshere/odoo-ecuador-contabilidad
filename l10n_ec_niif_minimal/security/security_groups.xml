@@ -5,12 +5,7 @@
 			<field name="name">Accounting Super User</field>
 			<field name="category_id" ref="base.module_category_accounting_and_finance"/>
 			<field name="users" eval="[(4, ref('base.user_root'))]"/>
-			<field name="comment">
-				Este grupo puede reconfigurar todo el sistema contable.
-				Por ejemplo puede crear nuevos impuestos, nuevos sustentos tributarios, etc.
-				Se programara un scheduler para que remueva usuarios de este grupo cada dia
-				pues no deben quedarse alli.
-			</field>
-		</record>    
+			<field name="comment">Este grupo puede reconfigurar todo el sistema contable. Por ejemplo puede crear nuevos impuestos, nuevos sustentos tributarios, etc. Se programara un scheduler para que remueva usuarios de este grupo cada dia pues no deben quedarse alli.</field>
+		</record>
 	</data>
 </openerp>

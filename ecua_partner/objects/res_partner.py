@@ -37,6 +37,17 @@ class res_partner(osv.osv):
     _ref_vat = {
                 'ec': 'EC1234567891001',
                 }
+    
+    RE_EMAIL = re.compile("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
+    
+    def is_valid_email_address(self, email):
+        """
+        Returns whether a specific email address is valid or
+            not. It is intended to be used by other objects,
+            so this should work:
+                pool.get('res.partner').is_valid_email_address("foo@bar.com")
+        """
+        return bool(self.RE_EMAIL.match(email.strip()))
         
     def _get_user_default_sales_team(self, cr, uid, ids, context={}):
         user= self.pool.get('res.users').browse(cr,uid,uid)
@@ -234,6 +245,7 @@ class res_partner(osv.osv):
                 changes.append(_("Fax: from '%s' to '%s'") %(oldmodel,newvalue ))
             if 'email' in vals and partner.email != vals['email']: # en el caso que sea un campo
                 oldmodel = partner.email or _('None')
+                vals['email'] = vals['email'].strip()
                 newvalue = vals['email'] or _('None')
                 changes.append(_("Email: from '%s' to '%s'") %(oldmodel,newvalue ))
             
@@ -304,6 +316,8 @@ class res_partner(osv.osv):
 
     def create(self, cr, uid, values, context=None):
         if not context: context = {}
+        if 'email' in values:
+            values['email'] = values['email'].strip()
         res = super(res_partner, self).create(cr, uid, values, context)
         return res
  
@@ -437,6 +451,17 @@ class res_partner(osv.osv):
         res = super(res_partner, self)._construct_constraint_msg(cr, uid, ids, context=context)
         return res
     
+    def _valid_email(self, cr, uid, ids, context=None):
+        """
+        Validates an email address by calling
+            is_valid_email_address.
+        """
+        res = True
+        for partner in self.browse(cr, uid, ids, context=context):
+            if not self.is_valid_email_address(partner.email):
+                res = False
+        return res
+    
     _constraints = [
                     (check_vat,_construct_constraint_msg, ["vat"]),
                     (
@@ -444,6 +469,11 @@ class res_partner(osv.osv):
                      _('Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding'),
                      ['vat']
                      ),
+                    (
+                     _valid_email,
+                     _('Error: The specified e-mail address is invalid'),
+                     ['email']
+                    )
                     ]
 
     def _display_name_compute(self, cr, uid, ids, name, args, context=None):

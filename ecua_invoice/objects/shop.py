@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #
-# @authors: Christopher Ormaza, TRESCloud Cia Ltda.
+# @authors: Andres Calle, TRESCloud Cia Ltda.
 # Copyright (C) 2013  Ecuadorenlinea.net
 #
 #This program is free software: you can redistribute it and/or modify
