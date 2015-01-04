@@ -15,7 +15,8 @@
 							<field name="assets"></field>
 							<field name="imports"></field>
 							<field name="exports"></field>
-							<field name="tax_system"></field>
+							<field name="tax_system" attrs="{'readonly':[('is_account_editor','=',False)]}"></field>
+							<field name="is_account_editor" invisible="1"></field>
 						</group>
 					</page>
 				</notebook>

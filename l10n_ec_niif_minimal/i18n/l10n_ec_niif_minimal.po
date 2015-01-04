@@ -172,7 +172,7 @@ msgstr ""
 
 #. module: l10n_ec_niif_minimal
 #: help:account.tax,tax_system:0
-msgid "Tax system facturadeuna.com, you can not change"
+msgid "Systems tax, this tax is used by the internal system setup, you should not change. Ask your accountant for support."
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
