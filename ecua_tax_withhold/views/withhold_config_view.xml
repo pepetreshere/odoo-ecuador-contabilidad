@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+      
+        <record id="view_account_withhold_config" model="ir.ui.view">
+            <field name="name">account settings</field>
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="priority" eval="26"/>
+            <field name="arch" type="xml">
+            
+                <xpath expr="//group[@name='analytic_account_purchase']/div" position="after">
+               
+                        <group>
+                        <label for="id" string="Withhold"/>
+	                        <div>
+	                            <field name="tax_wi_id"
+	                                domain="[('type_tax_use','!=','sale'), ('company_id','=',company_id)]"
+	                                class="oe_inline"/>
+	                        </div>
+                        </group>
+                   
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

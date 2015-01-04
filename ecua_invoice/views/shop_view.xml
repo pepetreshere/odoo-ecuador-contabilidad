@@ -7,6 +7,9 @@
 				<field name="type">form</field>
 				<field name="inherit_id" ref="sale.view_shop_form" />
 				<field name="arch" type="xml">
+				<field name="payment_default_id" position="before">
+					<field name="establishment_address"/>
+				</field>
 					<xpath expr="/form/group[@name='shop']" position="after">
 						<notebook colspan="4">
 							<page string="SRI Configuration">

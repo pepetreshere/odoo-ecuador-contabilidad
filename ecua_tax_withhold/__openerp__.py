@@ -37,6 +37,7 @@
                  'purchase',
                  'sale',
                  'stock',
+                 'sale_stock',
                  'report_aeroo',
                  'report_aeroo_ooo',
                  'l10n_ec_niif_minimal',
@@ -55,6 +56,9 @@
     and reuses mainly code based on work by Christopher Ormaza and 
     improvements from TRESCLOUD and 4RSOFT.
     
+    Config:
+    In the company configuration the taxes 
+    
     Authors,
     
     Andres Calle,
@@ -64,14 +68,16 @@
     """,
     "init_xml": [],
     "update_xml": [ 
-                    'data/sequence_data.xml',
+                    
                     'security/ir.model.access.csv',
                     'report/withhold_report.xml',
                     'workflow/withhold_workflow.xml',
                     'wizard/withhold_wizard_view.xml',
                     'views/company_view.xml',
                     'views/withhold_view.xml',
+                    'views/withhold_config_view.xml',
                     'views/invoice_view.xml',
+                    'data/sequence_data.xml',
     ],
     "installable": True,
     "auto_install": False,

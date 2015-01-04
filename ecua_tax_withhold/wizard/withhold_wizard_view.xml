@@ -19,6 +19,8 @@
 	                			En la columna uno se ha colocado los campos editables
 	                			En la columna dos se ha colocado los campos no editables
                 			-->
+                			<field name="transaction_type" invisible="1" />
+                			<field name="state" invisible="1" />
 	                		<group col="2">
 								<group>
 									<field name="creation_date" 
@@ -36,8 +38,6 @@
 								<group>
 									<field name="partner_id" readonly="1"/>
 									<field name="invoice_id" readonly="1"/>
-									<field name="state" invisible="1" />
-									<field name="transaction_type" invisible="1" />
 									<field name="shop_id" invisible="1" /> 
 									<field name="company_id" invisible="1" />
 									<field name="invoice_amount_untaxed" invisible="1"/>
@@ -52,17 +52,22 @@
 								attrs="{'readonly':[('transaction_type','!=','sale')], 'required':[('transaction_type','=','sale')]}">
 									<tree string="Withhold Lines" editable="bottom">
 										<!--field name="fiscalyear_id" widget="selection" /-->
-										<field name="description" required="1"
+										<field name="description" required="1" invisible="0"
 										on_change="onchange_description(description, parent.invoice_amount_untaxed, parent.invoice_vat_doce_subtotal)"/>
-										<field name="tax_id" required="1"
+										<field name="tax_id" required="0" invisible="1"
 										on_change="onchange_tax_id(description, tax_id, tax_base)"/>
+										<field name="tax_wi_id" required="1" domain="[('type_ec','=',description)]"/>
 										<field name="tax_base" required="1"/>
 										<field name="tax_amount" required="1"/>
-										<field name="withhold_percentage" required="1"/>
+										<field name="withhold_percentage" required="0" invisible="0"/>
 									</tree>
 								</field>
 							</group>
 						</div>
+						  <div class="oe_clear">
+                                <label for="comment"/>
+                            </div>
+                            <field name="comment" class="oe_inline" placeholder="Additional notes..."/>
 	                </sheet>
                     <footer>
 						<button name="print_withhold" string="Print"

@@ -56,7 +56,7 @@ class res_partner(osv.osv):
         company_id = self.pool.get('res.users').browse(cr,uid,uid).company_id
         is_validation=company_id.is_validation
         return is_validation or False
-    
+     #FUNCION QUE NOS VALIDA  EL TIPO DE iDENTIFICACIÓN DE LOS CLIENTES Y PROVEEDORES
     def _get_vat(self, cr, uid, ids, vat, arg, context):
         res = {}
         for record in self.browse(cr, uid, ids, context=context):
@@ -74,9 +74,28 @@ class res_partner(osv.osv):
                         name = 'OTROS'
                 else:
                     name = 'PASAPORTE'
-            res[record.id] = name
+                res[record.id] = name           
         return res
-    
+    #FUNCION QUE NOS MUESTRA  LOS TIPOS DE RUC DE ACUERDO  AL TIPO DE CONTRIBUYENTE
+    def _get_type_vat(self, cr, uid, ids, vat, arg, context):
+        res, contar, aux = {}, '', ''
+        for record in self.browse(cr, uid, ids, context=context):
+            if record.vat:
+                aux = record.vat
+            contar =str(aux)
+            if contar:
+                 type=int(contar[4])
+                 if  type==9:
+                    name= 'JURIDICO Y EXTRANJEROS SIN CEDULA'
+                 elif type==6:
+                    name= 'PUBLICOS'
+                 elif type<6 and type>=0 :
+                     name= 'PERSONA NATURAL'
+                 elif type==7 or type==8 :
+                     name= 'Error en el Ingreso de los datos'
+                 res[record.id] = name           
+        return res
+
     def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
         """
         Se alerta sobre la sobreescritura de datos contables 
@@ -314,13 +333,23 @@ class res_partner(osv.osv):
             if partner.vat: #si tiene cedula la valida, caso contrario no hace nada
                 if not partner.parent_id :
                     #vals = self.search(cr, uid, [('vat','=',partner.vat),('is_company','=',True)], context=context)
-                    vals = self.search(cr, uid, [('vat','=',partner.vat),('parent_id','=',None)], context=context)
+                    vat = partner.vat
+                    if (len(vat) == 12 or len(vat) == 15) and vat[0:2].lower() == 'ec':
+                        vat = vat[0:12]
+                        #es un RUC o una cedula, validamos que no exista uno que haga ilike positivo con EC0987654321
+                        #(siendo ese valor solamente de referencia).
+                        criterion = ('vat', '=ilike', vat + '%')
+                    else:
+                        criterion = ('vat', '=', partner.vat)
+                    vals = self.search(cr, uid, [criterion,('parent_id','=',None)], context=context)
                     return not len(vals)>1
         return True    
     
     _columns = {
                 'comercial_name': fields.char('Comercial Name', size=256),
                 'type_vat': fields.function(_get_vat, type="char", string='Name', store=True),
+                # SE CREA UN NUEVO CAMPO PARA PODER REGISTRAR EL TIPO DE CONTRIBUYENTE DE LOS CLIENTES PERSONAS NATURALES  Y JURIDICAS 
+                'type_vat_type': fields.function(_get_type_vat, type="char", string='Name', store=True),
             #    'is_validation':fields.boolean('is Validation', required=False,change_default=True, select=True), 
               #  'type_vat': fields.function(_get_vat, method=True, type='char', string='Type Vat', store=True), 
                 

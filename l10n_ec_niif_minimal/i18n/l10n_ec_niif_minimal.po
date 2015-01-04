@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20140314-003129\n"
+"Project-Id-Version: OpenERP Server 7.0-20140713-231411\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-30 17:36+0000\n"
-"PO-Revision-Date: 2014-05-30 17:36+0000\n"
+"POT-Creation-Date: 2014-10-22 03:16+0000\n"
+"PO-Revision-Date: 2014-10-22 03:16+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,14 +23,48 @@ msgid "Otro"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
+#: help:account.account,force_reconcile:0
+msgid "Check to force this account as a write-off account in customer and supplier payments"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: model:ir.model,name:l10n_ec_niif_minimal.model_account_config_settings
+msgid "account.config.settings"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
 #: constraint:account.account:0
 msgid "Error!\n"
 "You cannot create an account which has parent account of different company."
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:64
+#, python-format
+msgid "User type: from '%s' to '%s'"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
 #: sql_constraint:account.account:0
 msgid "The code of the account must be unique per company !"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:47
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:51
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:55
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:59
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:63
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:67
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:89
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:92
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:96
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:119
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:122
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:126
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:130
+#, python-format
+msgid "None"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
@@ -56,10 +90,28 @@ msgid "Configuration Error!\n"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:56
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:60
+#, python-format
+msgid "Type: from '%s' to '%s'"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
 #: field:account.invoice.tax,exports:0
 #: field:account.tax,exports:0
 #: field:account.tax.template,exports:0
 msgid "Exports"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: field:account.account,force_reconcile:0
+msgid "Force as write-off account"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:93
+#, python-format
+msgid "Added tax: '%s'"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
@@ -68,13 +120,14 @@ msgid "Tax system"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
-#: help:account.account,force_reconcile:0
-msgid "Check this box if, this account amounts to reconcile differences in payments to customers and suppliers."
+#: constraint:account.account:0
+msgid "Error!\n"
+"You cannot create recursive accounts."
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
-#: help:account.account,message_unread:0
-msgid "If checked new messages require your attention."
+#: help:account.account,message_ids:0
+msgid "Messages and communication history"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
@@ -83,8 +136,20 @@ msgid "Name the types of Ecuadorian taxes"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:131
+#, python-format
+msgid "Note: from '%s' to '%s'"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
 #: field:account.account,message_is_follower:0
 msgid "Is a Follower"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:48
+#, python-format
+msgid "Code: from '%s' to '%s'"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
@@ -94,8 +159,15 @@ msgid "Ecuadorian Settings"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
-#: view:account.tax:0
-msgid "Type ecuadorian tax"
+#: help:res.company,special_tax_contributor_number:0
+msgid "Special Contributors are designed by the Ecuadorian Tax Authority, the number is used in tax reporting"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: selection:account.invoice.tax,type_ec:0
+#: selection:account.tax,type_ec:0
+#: selection:account.tax.template,type_ec:0
+msgid "Renta"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
@@ -121,15 +193,36 @@ msgid "Assets"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
-#: selection:account.invoice.tax,type_ec:0
-#: selection:account.tax,type_ec:0
-#: selection:account.tax.template,type_ec:0
-msgid "Renta"
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:127
+#, python-format
+msgid "Force as write-off account: from '%s' to '%s'"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: view:account.tax:0
+msgid "Type ecuadorian tax"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
 #: field:account.account,message_ids:0
 msgid "Messages"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:90
+#, python-format
+msgid "Tax Removed: '%s'"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:97
+#, python-format
+msgid "Reconcile: from '%s' to '%s'"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: model:ir.model,name:l10n_ec_niif_minimal.model_res_company
+msgid "Companies"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
@@ -145,6 +238,11 @@ msgid "Summary"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
+#: field:account.account,message_unread:0
+msgid "Unread Messages"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
 #: field:account.invoice.tax,type_ec:0
 #: field:account.tax,type_ec:0
 #: field:account.tax.template,type_ec:0
@@ -152,13 +250,13 @@ msgid "Ecuadorian Type"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
-#: field:account.account,force_reconcile:0
-msgid "force_reconcile"
+#: field:account.config.settings,restrictions:0
+msgid "No restrictions"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
-#: help:account.account,message_ids:0
-msgid "Messages and communication history"
+#: help:account.account,message_unread:0
+msgid "If checked new messages require your attention."
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
@@ -191,8 +289,8 @@ msgid "Tax"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
-#: field:account.account,message_unread:0
-msgid "Unread Messages"
+#: field:res.company,special_tax_contributor_number:0
+msgid "Special Contributor Number"
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
@@ -201,8 +299,31 @@ msgid "Holds the Chatter summary (number of messages, ...). This summary is dire
 msgstr ""
 
 #. module: l10n_ec_niif_minimal
-#: constraint:account.account:0
-msgid "Error!\n"
-"You cannot create recursive accounts."
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:123
+#, python-format
+msgid "Added Consolidation: '%s'"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: help:account.config.settings,restrictions:0
+msgid "By checking this field, some restrictions are included by default in the system is removed."
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:120
+#, python-format
+msgid "Consolidation Removed: '%s'"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:68
+#, python-format
+msgid "Active: from '%s' to '%s'"
+msgstr ""
+
+#. module: l10n_ec_niif_minimal
+#: code:addons/l10n_ec_niif_minimal/objects/account_account.py:52
+#, python-format
+msgid "Name: from '%s' to '%s'"
 msgstr ""
 
