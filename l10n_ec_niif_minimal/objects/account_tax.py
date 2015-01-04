@@ -61,6 +61,9 @@ class account_tax(osv.osv):
                 'tax_system':fields.boolean('System Tax', required=False, help="Systems tax, this tax is used by the internal system setup, you should not change. Ask your accountant for support.", write=['l10n_ec_niif_minimal.ecua_group_account_editor']),
                 'is_account_editor':fields.function(_is_account_editor, type='boolean', method=True, string='Is Account Editor')
                 }
+    
+    _order = "description"
+
 
     def _unit_compute_inv(self, cr, uid, taxes, price_unit, product=None, partner=None):
         res = super(account_tax, self)._unit_compute_inv(cr, uid, taxes, price_unit, product, partner)
