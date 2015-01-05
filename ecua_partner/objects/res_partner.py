@@ -471,7 +471,7 @@ class res_partner(osv.osv):
                      ),
                     (
                      _valid_email,
-                     _('Error: The specified e-mail address is invalid'),
+                     _(u'Error: La dirección de correo electrónico es inválida'),
                      ['email']
                     )
                     ]
