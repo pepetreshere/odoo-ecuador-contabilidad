@@ -112,11 +112,6 @@ msgid "Street: from '%s' to '%s'"
 msgstr "Street: from '%s' to '%s'"
 
 #. module: ecua_partner
-#: field:res.partner,comercial_name:0
-msgid "Comercial Name"
-msgstr "Nombre Comercial"
-
-#. module: ecua_partner
 #: code:addons/ecua_partner/objects/res_partner.py:94
 #: code:addons/ecua_partner/objects/res_partner.py:95
 #: code:addons/ecua_partner/objects/res_partner.py:98

@@ -331,3 +331,7 @@ msgstr "Active: from '%s' to '%s'"
 msgid "Name: from '%s' to '%s'"
 msgstr "Name: from '%s' to '%s'"
 
+#. module: l10n_ec_niif_minimal
+#: field:res.partner,comercial_name:0
+msgid "Comercial Name"
+msgstr "Nombre Comercial"
