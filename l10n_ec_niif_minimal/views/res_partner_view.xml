@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+		<delete id="res_partner_inherit" model="ir.ui.view"/>
+
+		<record id="res_partner_inherit" model="ir.ui.view">
+			<field name="name">res.partner.inherit.comercial.name</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="ecua_partner.res_partner_inherit"/>
+			
+			<field name="arch" type="xml">
+ 				<xpath expr="//field[@name='name']" position="after">
+					<field name="comercial_name" placeholder="Nombre Comercial..." attrs="{'invisible':[('is_company','=',False)]}"/>
+				</xpath>
+            </field>
+		</record>
+   </data>
+</openerp>

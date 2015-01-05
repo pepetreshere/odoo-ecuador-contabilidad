@@ -30,7 +30,6 @@
                 'base_vat',
                 'base_iban',
                 'account_chart',
-                'ecua_partner'
                 ],
     'init_xml': [],
     'update_xml': [
@@ -43,7 +42,7 @@
                 'views/account_account_view.xml',
                 'views/account_config_view.xml',
                 'views/res_company_view.xml',
-                
+                'views/res_partner_view.xml'
                    ],
     'demo_xml': [],
     'installable': True,
