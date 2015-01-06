@@ -26,6 +26,7 @@
     """,
     'author': 'Christopher Ormaza, Ecuadorenlinea.net',
     'depends': [
+                'base',
                 'account',
                 'base_vat',
                 'base_iban',
