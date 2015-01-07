@@ -516,7 +516,7 @@ class res_partner(osv.osv):
                     ),
                     (
                      _check_valid_name,
-                     _('Error: Natural person partner name must consist only in letters. Company names can also have numbers and special characters.'),
+                     _('Error: El nombre de un contacto que sea persona natural debe contener solamente letras. Los nombres de las empresas pueden tener adicionalmente números y otros caracteres.'),
                      ['name']
                     )
                    ]
