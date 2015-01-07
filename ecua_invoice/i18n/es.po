@@ -240,3 +240,27 @@ msgstr "Pedido de venta"
 msgid "Your printer were you receive the document, not your suppliers one"
 msgstr "Su punto de impresion donde recibe documentos tributarios. No tiene relacion con el punto de impresion de sus clientes o proveedores"
 
+#. module: ecua_invoice
+#: field:sri.printer.point,invoice_sequence:0
+msgid "Customer Invoices sequential"
+msgstr "Secuencial para facturas"
+
+#. module: ecua_invoice
+#: field:sri.printer.point,refund_sequence:0
+msgid "Customer Refunds sequential"
+msgstr "Secuencial para notas de crédito"
+
+#. module: ecua_invoice
+#: field:sri.printer.point,debit_note_sequence:0
+msgid "Debit Notes sequential"
+msgstr "Secuencial para notas de débito"
+
+#. module: ecua_invoice
+#: field:sri.printer.point,withhold_sequence:0
+msgid "Withholds sequential"
+msgstr "Secuencial para retenciones"
+
+#. module: ecua_invoice
+#: field:sri.printer.point,waybill_sequence:0
+msgid "Waybills sequential"
+msgstr "Secuencial para guías de remisión"
