@@ -63,11 +63,11 @@
                     <tree string="Printer Points">
                         <field name="name"/>
 						<field name="shop_id"/>
-						<field name="invoice_sequence" />
-						<field name="refund_sequence" />
-						<field name="debit_note_sequence" />
-						<field name="withhold_sequence" />
-						<field name="waybill_sequence" />
+						<field name="invoice_sequence_id" />
+						<field name="refund_sequence_id" />
+						<field name="debit_note_sequence_id" />
+						<field name="withhold_sequence_id" />
+						<field name="waybill_sequence_id" />
                      </tree>
                 </field>
             </record>
