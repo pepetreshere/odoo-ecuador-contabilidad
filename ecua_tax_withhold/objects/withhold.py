@@ -198,10 +198,10 @@ class account_withhold(osv.osv):
                 if transaction_type == 'sale':
 
                     #tax_wi_id = res_company.get_default(cr, uid, 'res.company', 'tax_wi_id') 
-                    if user.printer_id:
-                        printer_id = user.printer_id.id
-                        if user.printer_id.shop_id:
-                            shop_id = user.printer_id.shop_id.id
+                    invoice_obj=self.pool.get('account.invoice')
+                    printer_id = invoice_obj._default_printer_point(cr, uid, context)
+                    shop=self.pool.get('sri.printer.point').browse(cr, uid, [printer_id], context)[0]
+                    shop_id = shop.id
                             
                     fiscalyear_id = None
                     
