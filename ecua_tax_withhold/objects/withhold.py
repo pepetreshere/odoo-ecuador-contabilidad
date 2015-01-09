@@ -188,7 +188,7 @@ class account_withhold(osv.osv):
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         
         if context.get('transaction_type') and context.get('active_id'):
-            
+            res_company = self.pool.get('res.company')
             transaction_type = context.get('transaction_type')
             obj = self.pool.get('account.invoice').browse(cr, uid, context['active_id'])
             if 'value' not in context.keys():
@@ -201,7 +201,7 @@ class account_withhold(osv.osv):
                             shop_id = user.printer_id.shop_id.id
                             
                     fiscalyear_id = None
-                    res_company = self.pool.get('res.company')
+                    
                     tax = self.pool.get('account.tax')
                     if not obj['period_id']:
                         period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')),])
@@ -213,7 +213,7 @@ class account_withhold(osv.osv):
                     obj_company = res_company.browse(cr, uid, obj.company_id.id, context)
                     tax_wi_id = obj_company.tax_wi_id.id
                     if not tax_wi_id :
-                       raise osv.except_osv(_('Invalid action !'), _('Condigurar en la comania la cuenta de las retenciones.!'))  
+                       raise osv.except_osv(_('Invalid action !'), _('Configurar en la compania la cuenta de las retenciones.!'))  
                     bw_tax =tax.browse(cr, uid, tax_wi_id, context)
                     vals_ret_line = {}
                     #TODO: debe calcular solamnete cuando el impuesto sea igual al del producto 
@@ -263,6 +263,12 @@ class account_withhold(osv.osv):
                         printer_id = user.printer_id.id
                         if user.printer_id.shop_id:
                             shop_id = user.printer_id.shop_id.id
+                    
+                    tax_wi_id =''
+                    obj_company = res_company.browse(cr, uid, obj.company_id.id, context)
+                    tax_wi_id = obj_company.tax_wi_id.id
+                    if not tax_wi_id :
+                       raise osv.except_osv(_('Invalid action !'), _('Configurar en la compania la cuenta de las retenciones.!'))
 
                     for tax_line in obj.tax_line:
                         
@@ -287,6 +293,7 @@ class account_withhold(osv.osv):
                                              'fiscalyear_id':fiscalyear_id,  
                                              'description': tax_line['type_ec'],
                                              'tax_id': tax_id,
+                                             'tax_wi_id': tax_wi_id,
                                              'tax_base': tax_line['base'],
                                              'tax_amount': abs(tax_line['amount']),
                                              'withhold_percentage':0
@@ -306,6 +313,7 @@ class account_withhold(osv.osv):
                                              'invoice_without_withhold_id': obj.id,
                                              'description': tax_line.type_ec,
                                              'tax_id': tax_line.base_code_id.id,
+                                             'tax_wi_id': tax_wi_id,
                                              'tax_ac_id':tax_ac_id,
                                              'creation_date_invoice': obj.date_invoice,
                                              }
