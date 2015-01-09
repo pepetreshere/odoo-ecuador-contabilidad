@@ -10,7 +10,11 @@
 			<field name="arch" type="xml">
 				<tree string="Printer Point">
 				    <field name="name"/>
-					
+					<field name="invoice_sequence_id" />
+					<field name="refund_sequence_id" />
+					<field name="debit_note_sequence_id" />
+					<field name="withhold_sequence_id" />
+					<field name="waybill_sequence_id" />
 				</tree>
 			</field>
 		</record>
@@ -22,9 +26,22 @@
 			<field name="type">form</field>
 			<field name="priority">16</field>
 			<field name="arch" type="xml">
-				<form string="Printer Point" version="7.0">
-                 <group string="Printer Point" col="2">
-					    <field name="name"/>
+	            <form string="Printer Point" version="7.0">
+					<group col="4">
+						<group string="Printer Point" col="2" colspan="2">
+							<field name="name" label="Printer Point" />
+							<field name="shop_id" attrs="{'readonly': 1}" />
+							<field name="invoice_sequence_id"
+								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+							<field name="refund_sequence_id"
+								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+							<field name="debit_note_sequence_id"
+								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+							<field name="withhold_sequence_id"
+								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+							<field name="waybill_sequence_id"
+								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+						</group>
 					</group>
 				</form>
 			</field>

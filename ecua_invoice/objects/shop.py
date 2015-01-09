@@ -73,25 +73,30 @@ sale_shop()
 class sri_printer_point(osv.osv):
     
     _name = 'sri.printer.point'
-    
+
     _columns = {
-                'name': fields.char('Name', size=3, required=True,help='This number is assigned by the SRI'),
-                'shop_id': fields.many2one('sale.shop', 'Shop'),
-                'invoice_sequence': fields.many2one('ir.sequence', string='Customer Invoices sequential', required=False,
-                                                    help='If specified, will be used by the printer point to specify '
-                                                         'the next number for the invoices'),
-                'refund_sequence': fields.many2one('ir.sequence', string='Customer Refunds sequential', required=False,
-                                                   help='If specified, will be used by the printer point to specify '
-                                                        'the next number for the credit notes'),
-                'debit_note_sequence': fields.many2one('ir.sequence', string='Debit Notes sequential', required=False,
-                                                       help='If specified, will be used by the printer point to specify'
-                                                            ' the next number for the debit notes'),
-                'withhold_sequence': fields.many2one('ir.sequence', string='Withholds sequential', required=False,
-                                                     help='If specified, will be used by the printer point to specify '
-                                                          'the next number for the withholds'),
-                'waybill_sequence': fields.many2one('ir.sequence', string='Waybills sequential', required=False,
-                                                    help='If specified, will be used by the printer point to specify '
-                                                         'the next number for the waybills'),
+        'name': fields.char('Printer Point', size=3, required=True, help='This number is assigned by the SRI'),
+        'shop_id': fields.many2one('sale.shop', 'Shop'),
+        'invoice_sequence_id': fields.many2one('ir.sequence', string='Customer Invoices sequential', required=False,
+                                               help='If specified, will be used by the printer point to specify '
+                                                    'the next number for the invoices',
+                                               domain=[('code', '=', 'sri.printer.point')]),
+        'refund_sequence_id': fields.many2one('ir.sequence', string='Customer Refunds sequential', required=False,
+                                              help='If specified, will be used by the printer point to specify '
+                                                   'the next number for the credit notes',
+                                              domain=[('code', '=', 'sri.printer.point')]),
+        'debit_note_sequence_id': fields.many2one('ir.sequence', string='Debit Notes sequential', required=False,
+                                                  help='If specified, will be used by the printer point to specify'
+                                                       ' the next number for the debit notes',
+                                                  domain=[('code', '=', 'sri.printer.point')]),
+        'withhold_sequence_id': fields.many2one('ir.sequence', string='Withholds sequential', required=False,
+                                                help='If specified, will be used by the printer point to specify '
+                                                     'the next number for the withholds',
+                                                domain=[('code', '=', 'sri.printer.point')]),
+        'waybill_sequence_id': fields.many2one('ir.sequence', string='Waybills sequential', required=False,
+                                               help='If specified, will be used by the printer point to specify '
+                                                    'the next number for the waybills',
+                                               domain=[('code', '=', 'sri.printer.point')]),
     }
 
     def _verify_repeated_sequences(self, cr, uid, ids, context=None):
@@ -111,11 +116,11 @@ class sri_printer_point(osv.osv):
 
         for instance in self.browse(cr, uid, ids, context=None):
             values = [p and p.id for p in [
-                instance.invoice_sequence,
-                instance.refund_sequence,
-                instance.debit_note_sequence,
-                instance.withhold_sequence,
-                instance.waybill_sequence
+                instance.invoice_sequence_id,
+                instance.refund_sequence_id,
+                instance.debit_note_sequence_id,
+                instance.withhold_sequence_id,
+                instance.waybill_sequence_id
             ] if p]
 
             if values:
@@ -129,11 +134,11 @@ class sri_printer_point(osv.osv):
                     #We must get pissed off if that's the case.
                     return False
                 found = self.search(cr, uid, ['&', ('id', '!=', instance.id),
-                                              '|', ('invoice_sequence', 'in', values),
-                                              '|', ('refund_sequence', 'in', values),
-                                              '|', ('debit_note_sequence', 'in', values),
-                                              '|', ('withhold_sequence', 'in', values),
-                                                   ('waybill_sequence', 'in', values)], context=None)
+                                              '|', ('invoice_sequence_id', 'in', values),
+                                              '|', ('refund_sequence_id', 'in', values),
+                                              '|', ('debit_note_sequence_id', 'in', values),
+                                              '|', ('withhold_sequence_id', 'in', values),
+                                                   ('waybill_sequence_id', 'in', values)], context=None)
                 if found:
                     #We found an ID which is distinct to the current instance's ID AND
                     #also it has at least one sequence field with value among the values of
@@ -169,7 +174,7 @@ class sri_printer_point(osv.osv):
     _constraints = (
         (_verify_repeated_sequences,
          'Error: Al menos uno de los secuenciales está repetido o en uso dentro de otro Punto de Impresión',
-         ['invoice_sequence', 'refund_sequence', 'debit_note_sequence', 'withhold_sequence', 'waybill_sequence']),
+         ['invoice_sequence_id', 'refund_sequence_id', 'debit_note_sequence_id', 'withhold_sequence_id', 'waybill_sequence_id']),
     )
     
 sri_printer_point()

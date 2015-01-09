@@ -25,3 +25,4 @@ import shop
 import res_users
 import account_invoice
 import sale
+import ir_sequence
