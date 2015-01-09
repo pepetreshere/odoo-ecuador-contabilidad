@@ -18,7 +18,7 @@
                                 <group name="account_grp2" string="Accounting">
                                     <field name="journal_iva_id" domain="[('code','=','DRIVA'),]"/>
                                     <field name="journal_ir_id" domain="[('code','=','DRIR'),]"/>
-                                    <field name="tax_wi_id" domain="[('type_tax_use','!=','sale'),]"/>
+                                    <field name="tax_wi_id" domain="[('type_tax_use','!=','sale'),('amount','lt;',0.0)]"/>
                                 </group>
                             </group>
 						</page>

@@ -71,7 +71,10 @@ class account_withhold_line(osv.osv):
             'tax_wi_id':fields.many2one('account.tax', 'Tax', help="Tax for withhold"),
 
             'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code', help="Tax"),
-
+            'transaction_type_line': fields.selection([
+            ('purchase','Purchases'),
+            ('sale','Sales'),
+            ],'Transaction type', required=True, readonly=True, track_visibility='onchange'),
             }
     
     def onchange_description(self, cr, uid, ids, description, invoice_amount_untaxed, invoice_vat_doce_subtotal):
@@ -228,7 +231,8 @@ class account_withhold(osv.osv):
                                      'tax_wi_id':obj_company.tax_wi_id.id,
                                      'tax_base': context['amount_untaxed'],
                                      'tax_amount': context['amount_untaxed']*obj_company.tax_wi_id.amount, #0 ,#
-                                     'withhold_percentage':obj_company.tax_wi_id.amount
+                                     'withhold_percentage':obj_company.tax_wi_id.amount,
+                                     'transaction_type_line': transaction_type
                                      }
                     #===========================================================
                     # else:
@@ -296,7 +300,8 @@ class account_withhold(osv.osv):
                                              'tax_wi_id': tax_wi_id,
                                              'tax_base': tax_line['base'],
                                              'tax_amount': abs(tax_line['amount']),
-                                             'withhold_percentage':0
+                                             'withhold_percentage':0,
+                                             'transaction_type_line': transaction_type
                                              }  
                             
                             vals_ret_line['withhold_percentage'] = self._withhold_percentaje(cr, uid, vals_ret_line, context)
@@ -316,6 +321,7 @@ class account_withhold(osv.osv):
                                              'tax_wi_id': tax_wi_id,
                                              'tax_ac_id':tax_ac_id,
                                              'creation_date_invoice': obj.date_invoice,
+                                             'transaction_type_line': transaction_type
                                              }
                     values = {
                          'shop_id': shop_id,
