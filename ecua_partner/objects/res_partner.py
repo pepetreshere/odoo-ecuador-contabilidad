@@ -316,7 +316,7 @@ class res_partner(osv.osv):
 
     def create(self, cr, uid, values, context=None):
         if not context: context = {}
-        if 'email' in values:
+        if 'email' in values and values['email']:
             values['email'] = values['email'].strip()
         res = super(res_partner, self).create(cr, uid, values, context)
         return res
