@@ -57,6 +57,7 @@
     "init_xml": [],
     "update_xml": [ 
                     'security/ir.model.access.csv',
+                    'security/sale_security.xml',
                     'views/invoice_view.xml',
                     'views/shop_view.xml',
                     'views/res_users_view.xml',
