@@ -49,23 +49,30 @@
 						<div>
 							<group>
 								<field name="withhold_line_ids" nolabel="1" height="150"
-								attrs="{'required':[('transaction_type','=','sale')]}">
+									attrs="{'readonly':[('transaction_type','!=','sale')], 
+											'required':[('transaction_type','=','sale')]}">
 									<tree string="Withhold Lines" editable="bottom">
 										<!--field name="fiscalyear_id" widget="selection" /-->
-										<field name="transaction_type_line" invisible="0"/>
-										<field name="description" required="1" invisible="0"
-										on_change="onchange_description(description, parent.invoice_amount_untaxed, parent.invoice_vat_doce_subtotal)"/>
+										<field name="transaction_type_line" 
+											invisible="0"/>
+										<field name="description" 
+											required="1" 
+											invisible="0"
+											on_change="onchange_description(description, parent.invoice_amount_untaxed, parent.invoice_vat_doce_subtotal)"/>
 										<field name="tax_id"
-										attrs="{'invisible':[('transaction_type_line','!=','sale')],'required':[('transaction_type_line','=','sale')]}"
-										on_change="onchange_tax_id(description, tax_id, tax_base)"/>
+											on_change="onchange_tax_id(description, tax_id, tax_base)"/>
 										<field name="tax_wi_id"
-										attrs="{'invisible':[('transaction_type_line','=','sale')],'required':[('transaction_type_line','!=','sale')]}"
-										domain="[('type_ec','=',description)]"
-										on_change="onchange_tax_id(description, tax_wi_id, tax_base)"/>
+											attrs="{'invisible':[('transaction_type_line','!=','sale')],
+													'required':[('transaction_type_line','=','sale')]}"
+											domain="[('type_ec','=',description)]"
+											on_change="onchange_tax_id(description, tax_wi_id, tax_base)"/>
 										<field name="tax_base" required="1"
-										on_change="onchange_tax_id(description, tax_wi_id, tax_base)"/>
+											on_change="onchange_tax_id(description, tax_wi_id, tax_base)"/>
 										<field name="tax_amount" required="1"/>
-										<field name="withhold_percentage" required="0" invisible="1"/>
+										<field name="withhold_percentage"
+											attrs="{'invisible':[('transaction_type_line','=','sale')],
+													'required':[('transaction_type_line','=','purchase')]}"/>
+										
 									</tree>
 								</field>
 							</group>
