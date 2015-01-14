@@ -217,9 +217,13 @@ class account_invoice(osv.osv):
             pprec_first = pprecs_limit1[0] if pprecs_limit1 else False
             printer_id = ppobj.browse(cr, uid, pprec_first) if pprec_first else False
 
+        #if no invoice is found, we return the number as-is
         if not printer_id:
             return number
 
+        #we get the document type to fetch from the printer.
+        #if the invoice has a wrong type, the passed type is
+        #  None, which will cause the number to be returned.
         document_type = {
             'out_invoice': 'invoice',
             'out_refund': 'refund'
