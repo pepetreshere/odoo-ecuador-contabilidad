@@ -159,7 +159,6 @@
 											required="1"/>
 										<field name="tax_wi_id"
 											invisible="1"
-											required="1"
 											domain="[('type_ec','=',description)]"
 											on_change="onchange_tax_id(description, tax_wi_id, tax_base)"/>
 										<field name="tax_base" required="1"
