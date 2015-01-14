@@ -48,7 +48,6 @@ class account_invoice(osv.osv):
         
         return value
 
-
     _columns = {
                 'withhold_id': fields.many2one('account.withhold', 'Withhold', states={'paid':[('readonly',True)]},
                                                help="number of related withhold"),      
@@ -124,7 +123,7 @@ class account_invoice(osv.osv):
                     raise osv.except_osv(warn, message)
                 else:
                     data_obj = self.pool.get('ir.model.data')
-                    view = data_obj.get_object_reference(cr, uid, 'ecua_tax_withhold', 'withhold_wizard_form')
+                    view = data_obj.get_object_reference(cr, uid, 'ecua_tax_withhold', 'withhold_wizard_form_purchase')
                     view_id = view and view[1] or False
                     
                     if view_id:
