@@ -679,7 +679,7 @@ class account_withhold(osv.osv):
         if "warning" in res2:
             res["warning"]["message"] = res2.get('warning') and res2.get('warning').get('message')
         return res
-    
+
 
     def onchange_printer_id(self, cr, uid, ids, transaction_type, printer_id, partner_id, creation_date, context=None):
         '''
@@ -1001,18 +1001,23 @@ class account_withhold(osv.osv):
             
         return {'value':value}
 
+    def action_approve_validate(self, cr, uid, withhold_obj, withhold, context):
+
+        # verify if exist a withhold approve for the invoice related
+        if withhold_obj.search(cr, uid, [('invoice_id', '=', withhold.invoice_id.id),
+                                         ('state', '=', 'approved')], context):
+            raise osv.except_osv('Warning!', _("Withhold for this invoice already exist!!"))
+
+        self._validate_period_date(cr, uid, withhold.creation_date, withhold.invoice_id.id, raise_error=True, context=context)
+
     def action_aprove(self, cr, uid, ids, context=None):
         
         #depending the origin approve in diferent way
         withhold_obj = self.pool.get('account.withhold')
         
         for withhold in withhold_obj.browse(cr, uid, ids, context):
-        
-            # verify if exist a withhold approve for the invoice related
-            if withhold_obj.search(cr, uid, [('invoice_id','=',withhold.invoice_id.id),('state','=','approved')], context):
-                raise osv.except_osv('Warning!', _("Withhold for this invoice already exist!!"))
-           
-            self._validate_period_date(cr, uid, withhold.creation_date, withhold.invoice_id.id, raise_error=True, context=context)
+
+            self.action_approve_validate(cr, uid, withhold_obj, withhold, context)
                         
             if withhold.transaction_type == 'sale':
                 self.action_approve_sale(cr, uid, ids, context=context)
@@ -1203,37 +1208,42 @@ class account_withhold(osv.osv):
                 raise osv.except_osv('Error!', _("You can't aprove a withhold without withhold lines"))
             
         return True
+
+    def _action_approve_purchase_validate(self, withhold):
+        """
+        Executes validation over a withhold (for purchase).
+        """
+        if not withhold.number:
+            raise osv.except_osv(_('Error!'), _('Number to be entered to approve the withhold'))
+        if not withhold.creation_date:
+            raise osv.except_osv(_('Error!'), _('Date to be entered to approve the withhold'))
+        if not withhold.withhold_line_ids:
+            raise osv.except_osv(_('Error!'), _('must enter at least one tax to approve the withhold'))
+
+    def _action_approve_purchase_update(self, cr, uid, withhold, move_line_obj, context=None):
+        """
+        Executes update over a withhold (for purchase).
+        """
+        self.write(cr, uid, withhold.id, {'state': 'approved'})
+
+        for line in withhold.withhold_line_ids:
+            move_id = withhold.invoice_id.move_id.id
+            move_line_ids = move_line_obj.search(cr, uid, [('move_id', '=', move_id),
+                                                           ('tax_code_id', '=', line.tax_ac_id.id),
+                                                           ('state', '=', 'valid')], context=context)
+            move_line_obj.write(cr, uid, move_line_ids, {'withhold_id': withhold.id})
     
     def action_approve_purchase(self, cr, uid, ids, context=None):
         
         if not context:
             context = {}
-        
-        #account_voucher_obj = self.pool.get('account.voucher')
-        #acc_vou_line_obj = self.pool.get('account.voucher.line')
+
         move_line_pool = self.pool.get('account.move.line')
-        #res_company=self.pool.get('res.company')
-        #move_pool = self.pool.get('account.move')
-        #vouchers = []
-        #res=[]
 
         for withhold in self.browse(cr, uid, ids, context):
-            if not withhold.number:
-                raise osv.except_osv(_('Error!'), _('Number to be entered to approve the withhold'))
-            if not withhold.creation_date:
-                raise osv.except_osv(_('Error!'), _('Date to be entered to approve the withhold'))
-            if not withhold.withhold_line_ids:
-                raise osv.except_osv(_('Error!'), _('must enter at least one tax to approve the withhold'))
-            
-            self.write(cr, uid, withhold.id, {'state':'approved'})
-            
-            for line in withhold.withhold_line_ids:
-                move_id = withhold.invoice_id.move_id.id
-                move_line_ids = move_line_pool.search(cr, uid, [('move_id', '=', move_id),
-                                                                ('tax_code_id','=',line.tax_ac_id.id),
-                                                                ('state','=','valid')], context=context)              
-                move_line_pool.write(cr, uid, move_line_ids, {'withhold_id': withhold.id})
-            
+            self._action_approve_purchase_validate(withhold)
+            self._action_approve_purchase_update(cr, uid, withhold, move_line_pool, context)
+
         return True
     
     def action_cancel(self,cr,uid,ids,context=None):
