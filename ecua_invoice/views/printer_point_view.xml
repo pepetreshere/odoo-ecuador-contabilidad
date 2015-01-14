@@ -31,16 +31,58 @@
 						<group string="Printer Point" col="2" colspan="2">
 							<field name="name" label="Printer Point" />
 							<field name="shop_id" attrs="{'readonly': 1}" />
+							<field name="company_id" attrs="{'readonly': 1, 'invisible': 1}" />
+							<field name="prefix" attrs="{'readonly': 1}" />
 							<field name="invoice_sequence_id"
-								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
+                                             'fix_name': True, 'default_name': prefix + 'factura',
+										     'fix_company_id': True, 'default_company_id': company_id,
+                                             'fix_active': True, 'default_active': True,
+                                             'fix_prefix': True, 'default_prefix': prefix,
+                                             'fix_suffix': True, 'default_suffix': '',
+                                             'fix_padding': True, 'default_padding': 9,
+										     'fix_number_increment': True, 'default_number_increment': 1,
+                                             'fix_implementation': True, 'default_implementation': 'no_gap'}" />
 							<field name="refund_sequence_id"
-								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
+                                             'fix_name': True, 'default_name': prefix + 'notacredito',
+										     'fix_company_id': True, 'default_company_id': company_id,
+                                             'fix_active': True, 'default_active': True,
+                                             'fix_prefix': True, 'default_prefix': prefix,
+                                             'fix_suffix': True, 'default_suffix': '',
+                                             'fix_padding': True, 'default_padding': 9,
+										     'fix_number_increment': True, 'default_number_increment': 1,
+                                             'fix_implementation': True, 'default_implementation': 'no_gap'}" />
 							<field name="debit_note_sequence_id"
-								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
+                                             'fix_name': True, 'default_name': prefix + 'notadebito',
+										     'fix_company_id': True, 'default_company_id': company_id,
+                                             'fix_active': True, 'default_active': True,
+                                             'fix_prefix': True, 'default_prefix': prefix,
+                                             'fix_suffix': True, 'default_suffix': '',
+                                             'fix_padding': True, 'default_padding': 9,
+										     'fix_number_increment': True, 'default_number_increment': 1,
+                                             'fix_implementation': True, 'default_implementation': 'no_gap'}" />
 							<field name="withhold_sequence_id"
-								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
+                                             'fix_name': True, 'default_name': prefix + 'retencion',
+										     'fix_company_id': True, 'default_company_id': company_id,
+                                             'fix_active': True, 'default_active': True,
+                                             'fix_prefix': True, 'default_prefix': prefix,
+                                             'fix_suffix': True, 'default_suffix': '',
+                                             'fix_padding': True, 'default_padding': 9,
+										     'fix_number_increment': True, 'default_number_increment': 1,
+                                             'fix_implementation': True, 'default_implementation': 'no_gap'}" />
 							<field name="waybill_sequence_id"
-								   context="{'fixed_sequence_type': True, 'default_code': 'sri.printer.point'}" />
+								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
+                                             'fix_name': True, 'default_name': prefix + 'guiaremision',
+										     'fix_company_id': True, 'default_company_id': company_id,
+                                             'fix_active': True, 'default_active': True,
+                                             'fix_prefix': True, 'default_prefix': prefix,
+                                             'fix_suffix': True, 'default_suffix': '',
+                                             'fix_padding': True, 'default_padding': 9,
+										     'fix_number_increment': True, 'default_number_increment': 1,
+                                             'fix_implementation': True, 'default_implementation': 'no_gap'}" />
 						</group>
 					</group>
 				</form>

@@ -220,33 +220,12 @@ class account_invoice(osv.osv):
         if not printer_id:
             return number
 
-        #the generated number will start with this prefix
-        printer_prefix = printer_id.shop_id.number + "-" + printer_id.name + "-"
-        number = printer_prefix
+        document_type = {
+            'out_invoice': 'invoice',
+            'out_refund': 'refund'
+        }.get(invtype)
 
-        #if the invoice type is not an usual out- type (which means that
-        #the invoice is created by us), we should return the number as is.
-        #
-        #additionally, if the sequence is not set for the current document
-        #type, re should return the number as is.
-        sequence_id = False
-        if invtype == 'out_invoice' and printer_id.invoice_sequence_id:
-            sequence_id = printer_id.invoice_sequence_id.id
-        if invtype == 'out_refund' and printer_id.refund_sequence_id:
-            sequence_id = printer_id.refund_sequence_id.id
-
-        if not sequence_id:
-            return number
-
-        #if the number has a proper format for the current printer_id, we
-        #should respect such number.
-        if re.match('^\d{3}-\d{3}-\d{9}$', number) and number.startswith(printer_prefix):
-            return number
-
-        #now we have the sequence to query the values from. we should try to
-        #generate the number
-        next_val = self.pool.get('ir.sequence').next_by_id(cr, uid, sequence_id, context)
-        return printer_prefix + str(int(next_val)).zfill(9)
+        return self.pool.get('sri.printer.point').get_next_sequence_number(cr, uid, printer_id, document_type, number, context)
 
     def action_number(self, cr, uid, ids, context=None):
         """

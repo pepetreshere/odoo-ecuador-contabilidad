@@ -21,6 +21,7 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
+import re
 import time
 import netsvc
 from datetime import date, datetime, timedelta
@@ -74,6 +75,13 @@ class sri_printer_point(osv.osv):
     
     _name = 'sri.printer.point'
 
+    def _get_prefix(self, cr, uid, ids, name, arg, context=None):
+        """
+        generates the appropiate printer point prefix
+        """
+        return {obj.id: "%s-%s-" % (obj.shop_id.number, obj.name) if obj.shop_id else ""
+                for obj in self.browse(cr, uid, ids, context)}
+
     _columns = {
         'name': fields.char('Printer Point', size=3, required=True, help='This number is assigned by the SRI'),
         'shop_id': fields.many2one('sale.shop', 'Shop'),
@@ -97,7 +105,51 @@ class sri_printer_point(osv.osv):
                                                help='If specified, will be used by the printer point to specify '
                                                     'the next number for the waybills',
                                                domain=[('code', '=', 'sri.printer.point')]),
+        'prefix': fields.function(_get_prefix, method=True, store=False, string="Printer Prefix", type="char", size=8),
+        'company_id': fields.related('shop_id', 'company_id', type="many2one", relation="res.company", string="Company",
+                                     store=False)
     }
+
+    def get_next_sequence_number(self, cr, uid, printer_id, document_type, number, context=None):
+        """
+        For a specific type of document, the current printer tries to get
+          the next number from the sequence. if no sequence exists, we must
+          return the same input number or current printer's prefix. If the
+          number is well-formatted and for the current printer point, we must
+          return such number - respecting it.
+        """
+
+        #we must normalize the number. perhaps it is valid except for spaces
+        number = (number or '').strip()
+
+        #we must get the actual printer, and check whether the current number
+        #is valid for that printer. by failing in either of them, we return
+        #the (normalized) number.
+        if isinstance(printer_id, (int, long)):
+            printer_id = self.browse(cr, uid, printer_id, context=None)
+
+        if not printer_id or re.match('^\d{3}-\d{3}-\d{9}$', number) and number.startswith(printer_id.prefix):
+            return number
+
+        #we get the sequence (its id). If there's no sequence for the given
+        #document type, then we must return either the original number (which
+        #was normalized) or the printer prefix.
+        sequence_id = {
+            'invoice': printer_id.invoice_sequence_id,
+            'refund': printer_id.refund_sequence_id,
+            'debit': printer_id.debit_note_sequence_id,
+            'withhold': printer_id.withhold_sequence_id,
+            'waybill': printer_id.waybill_sequence_id,
+        }.get(document_type, False)
+
+        sequence_id = sequence_id.id if sequence_id else False
+
+        if not sequence_id:
+            return number or printer_id.prefix
+
+        #now we have the sequence to query the values from. we should try to
+        #generate the number
+        return self.pool.get('ir.sequence').next_by_id(cr, uid, sequence_id, context)
 
     def _verify_repeated_sequences(self, cr, uid, ids, context=None):
         """
