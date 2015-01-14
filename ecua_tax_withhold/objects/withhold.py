@@ -71,7 +71,10 @@ class account_withhold_line(osv.osv):
             'tax_wi_id':fields.many2one('account.tax', 'Tax', help="Tax for withhold"),
 
             'tax_ac_id':fields.many2one('account.tax.code', 'Tax Code', help="Tax"),
-
+            'transaction_type_line': fields.selection([
+            ('purchase','Purchases'),
+            ('sale','Sales'),
+            ],'Transaction type', required=True, readonly=True, track_visibility='onchange'),
             }
     
     def onchange_description(self, cr, uid, ids, description, invoice_amount_untaxed, invoice_vat_doce_subtotal):
@@ -188,20 +191,20 @@ class account_withhold(osv.osv):
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         
         if context.get('transaction_type') and context.get('active_id'):
-            
+            res_company = self.pool.get('res.company')
             transaction_type = context.get('transaction_type')
             obj = self.pool.get('account.invoice').browse(cr, uid, context['active_id'])
             if 'value' not in context.keys():
                 if transaction_type == 'sale':
 
                     #tax_wi_id = res_company.get_default(cr, uid, 'res.company', 'tax_wi_id') 
-                    if user.printer_id:
-                        printer_id = user.printer_id.id
-                        if user.printer_id.shop_id:
-                            shop_id = user.printer_id.shop_id.id
+                    invoice_obj=self.pool.get('account.invoice')
+                    printer_id = invoice_obj._default_printer_point(cr, uid, context)
+                    shop=self.pool.get('sri.printer.point').browse(cr, uid, [printer_id], context)[0]
+                    shop_id = shop.id
                             
                     fiscalyear_id = None
-                    res_company = self.pool.get('res.company')
+                    
                     tax = self.pool.get('account.tax')
                     if not obj['period_id']:
                         period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')),])
@@ -213,7 +216,7 @@ class account_withhold(osv.osv):
                     obj_company = res_company.browse(cr, uid, obj.company_id.id, context)
                     tax_wi_id = obj_company.tax_wi_id.id
                     if not tax_wi_id :
-                       raise osv.except_osv(_('Invalid action !'), _('Condigurar en la comania la cuenta de las retenciones.!'))  
+                       raise osv.except_osv(_('Invalid action !'), _('Configurar en la compania la cuenta de las retenciones.!'))  
                     bw_tax =tax.browse(cr, uid, tax_wi_id, context)
                     vals_ret_line = {}
                     #TODO: debe calcular solamnete cuando el impuesto sea igual al del producto 
@@ -228,7 +231,8 @@ class account_withhold(osv.osv):
                                      'tax_wi_id':obj_company.tax_wi_id.id,
                                      'tax_base': context['amount_untaxed'],
                                      'tax_amount': context['amount_untaxed']*obj_company.tax_wi_id.amount, #0 ,#
-                                     'withhold_percentage':obj_company.tax_wi_id.amount
+                                     'withhold_percentage':obj_company.tax_wi_id.amount,
+                                     'transaction_type_line': transaction_type
                                      }
                     #===========================================================
                     # else:
@@ -263,6 +267,12 @@ class account_withhold(osv.osv):
                         printer_id = user.printer_id.id
                         if user.printer_id.shop_id:
                             shop_id = user.printer_id.shop_id.id
+                    
+                    tax_wi_id =''
+                    obj_company = res_company.browse(cr, uid, obj.company_id.id, context)
+                    tax_wi_id = obj_company.tax_wi_id.id
+                    if not tax_wi_id :
+                       raise osv.except_osv(_('Invalid action !'), _('Configurar en la compania la cuenta de las retenciones.!'))
 
                     for tax_line in obj.tax_line:
                         
@@ -287,9 +297,11 @@ class account_withhold(osv.osv):
                                              'fiscalyear_id':fiscalyear_id,  
                                              'description': tax_line['type_ec'],
                                              'tax_id': tax_id,
+                                             'tax_wi_id': tax_wi_id,
                                              'tax_base': tax_line['base'],
                                              'tax_amount': abs(tax_line['amount']),
-                                             'withhold_percentage':0
+                                             'withhold_percentage':0,
+                                             'transaction_type_line': transaction_type
                                              }  
                             
                             vals_ret_line['withhold_percentage'] = self._withhold_percentaje(cr, uid, vals_ret_line, context)
@@ -306,8 +318,10 @@ class account_withhold(osv.osv):
                                              'invoice_without_withhold_id': obj.id,
                                              'description': tax_line.type_ec,
                                              'tax_id': tax_line.base_code_id.id,
+                                             'tax_wi_id': tax_wi_id,
                                              'tax_ac_id':tax_ac_id,
                                              'creation_date_invoice': obj.date_invoice,
+                                             'transaction_type_line': transaction_type
                                              }
                     values = {
                          'shop_id': shop_id,
