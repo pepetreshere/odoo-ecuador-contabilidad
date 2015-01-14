@@ -38,7 +38,41 @@ class account_invoice(osv.osv):
     _inherit = "account.invoice"
     _name = "account.invoice"
 
-  
+    def _amount_all_3(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        amount_untaxed = 0
+        
+        for invoice in self.browse(cr, uid, ids, context=context):
+            res[invoice.id] = {
+                'base_doce_iva': 0.00,
+                'base_cero_iva': 0.00,
+                'vat_doce_subtotal': 0.00,
+                'vat_cero_subtotal': 0.00,
+                'total_iva': 0.00,
+                'total_with_vat': 0.00,
+                'total_to_withhold':0.00,
+            }
+            
+        for line in invoice.invoice_line:
+            amount_untaxed += line.price_subtotal
+
+        for line in invoice.tax_line:               
+            if line.amount > 0:
+                if line.type_ec == 'iva' and line.amount > 0:
+                    res[invoice.id]['base_doce_iva'] += line.base
+                    res[invoice.id]['vat_doce_subtotal'] += line.amount
+                if line.type_ec == 'iva':
+                    res[invoice.id]['total_iva'] += line.amount          
+            else:
+                if line.type_ec == 'iva' and line.amount == 0:
+                    res[invoice.id]['base_cero_iva'] += line.base
+                    res[invoice.id]['vat_cero_subtotal'] += line.amount
+                res[invoice.id]['total_to_withhold'] += line.amount
+
+        res[invoice.id]['total_with_vat'] = amount_untaxed + res[invoice.id]['vat_cero_subtotal'] + res[invoice.id]['vat_doce_subtotal']
+        
+        return res
+    
     _columns = {
                 #TODO hacer obligatorio el campo name que almacenara el numero de la factura
                 'internal_number': fields.char('Invoice Number', size=17, readonly=False, help="Unique number of the invoice, computed automatically when the invoice is created."),
@@ -47,6 +81,27 @@ class account_invoice(osv.osv):
                 'printer_id':fields.many2one('sri.printer.point', 'Printer Point', required=False),
                 'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
                 'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
+                'base_doce_iva': fields.function(_amount_all_3, digits_compute=dp.get_precision('Account'), string='IVA 12 Base',
+                            store=True,
+                            multi='all1'),
+                'base_cero_iva': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='IVA 0 Base',
+                            store=True,
+                            multi='all1'),        
+                'vat_doce_subtotal': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='IVA 12 %',
+                            store=True, 
+                            multi='all1'),
+                'vat_cero_subtotal': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='IVA 0 %',
+                            store=True,
+                            multi='all1'),
+                'total_iva': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total IVA',
+                            store=True,
+                            multi='all1'),
+                'total_with_vat': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total with taxes',
+                            store=True,
+                            multi='all1'),
+                'total_to_withhold': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total to withhold',
+                            store=True,
+                            multi='all1'),
                }
 
     def __init__(self, pool, cr):
