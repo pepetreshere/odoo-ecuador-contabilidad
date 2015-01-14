@@ -458,7 +458,7 @@ class res_partner(osv.osv):
         """
         res = True
         for partner in self.browse(cr, uid, ids, context=context):
-            if not self.is_valid_email_address(partner.email):
+            if partner.email and not self.is_valid_email_address(partner.email):
                 res = False
         return res
     
