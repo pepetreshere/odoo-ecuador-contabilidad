@@ -26,6 +26,7 @@ from tools.translate import _
 import time
 import netsvc
 import re
+import math
 
 from mx import DateTime
 from datetime import datetime,timedelta
@@ -76,6 +77,29 @@ class account_withhold_line(osv.osv):
             ('sale','Sales'),
             ],'Transaction type', required=True, readonly=True, track_visibility='onchange'),
             }
+
+
+    def default_get(self, cr, uid, fields, context=None):
+
+        if context is None:
+            context = {}
+        
+        values = {}
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        
+        if context.get('transaction_type') and context.get('transaction_type') == 'sale':
+            transaction_type = context.get('transaction_type')
+            
+
+            if transaction_type == 'sale':
+                values = {
+                         'transaction_type_line': transaction_type,
+                         'description': 'renta', #un valor por defecto, pudo haber sido iva sin problema
+                         }
+            
+        return values
+
+
     
     def onchange_description(self, cr, uid, ids, description, invoice_amount_untaxed, invoice_vat_doce_subtotal):
         """ This function change the domain for tax_id using the description.
@@ -136,11 +160,12 @@ class account_withhold_line(osv.osv):
             return res
         
         #check the tax and extract the percentage
-        withhold_percentage = self._withhold_line_percentaje(cr, uid, description, tax_id)
-        tax_amount = (withhold_percentage * tax_base) / 100
+        tax = self.pool.get('account.tax').browse(cr, uid, tax_id)     
+        withhold_percentage = abs(tax.amount) #TODO: Considerar los impuestos hijos en el caso del 332 por ejemplo
+        tax_amount = (withhold_percentage * tax_base)
         res['value']['withhold_percentage'] = withhold_percentage 
-        res['value']['tax_amount'] = tax_amount 
-        
+        res['value']['tax_amount'] = tax_amount
+        res['value']['tax_id'] = tax.base_code_id.id
         return res
     
 account_withhold_line()
@@ -213,9 +238,9 @@ class account_withhold(osv.osv):
                             fiscalyear_id= self.pool.get('account.period').browse(cr, uid, [period_ids[0]], context)[0]['fiscalyear_id']['id']
                     else:
                         fiscalyear_id = obj['period_id']['fiscalyear_id']['id']
-                    tax_wi_id =''
-                    obj_company = res_company.browse(cr, uid, obj.company_id.id, context)
-                    tax_wi_id = obj_company.tax_wi_id.id
+                    
+                    tax_wi_id = obj.company_id.tax_wi_id.id
+                    
                     if not tax_wi_id :
                        raise osv.except_osv(_('Invalid action !'), _('Configurar en la compania la cuenta de las retenciones.!'))  
                     bw_tax =tax.browse(cr, uid, tax_wi_id, context)
@@ -225,10 +250,10 @@ class account_withhold(osv.osv):
                                      'fiscalyear_id':fiscalyear_id,  
                                      'description': bw_tax.type_ec,
                                      'tax_id': bw_tax.base_code_id.id  ,
-                                     'tax_wi_id':obj_company.tax_wi_id.id,
+                                     'tax_wi_id':tax_wi_id,
                                      'tax_base': context['amount_untaxed'],
-                                     'tax_amount': context['amount_untaxed']*obj_company.tax_wi_id.amount, #0 ,#
-                                     'withhold_percentage':obj_company.tax_wi_id.amount,
+                                     'tax_amount': context['amount_untaxed']*abs(obj.company_id.tax_wi_id.amount), #0 ,#
+                                     'withhold_percentage':obj.company_id.tax_wi_id.amount,
                                      'transaction_type_line': transaction_type
                                      }
                     

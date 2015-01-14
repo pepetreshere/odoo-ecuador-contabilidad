@@ -48,6 +48,41 @@ class account_invoice(osv.osv):
         
         return value
 
+    def _amount_all_3(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        amount_untaxed = 0
+        
+        for invoice in self.browse(cr, uid, ids, context=context):
+            res[invoice.id] = {
+                'base_doce_iva': 0.00,
+                'base_cero_iva': 0.00,
+                'vat_doce_subtotal': 0.00,
+                'vat_cero_subtotal': 0.00,
+                'total_iva': 0.00,
+                'total_with_vat': 0.00,
+                'total_to_withhold':0.00,
+            }
+            
+        for line in invoice.invoice_line:
+            amount_untaxed += line.price_subtotal
+
+        for line in invoice.tax_line:               
+            if line.amount > 0:
+                if line.type_ec == 'iva' and line.amount > 0:
+                    res[invoice.id]['base_doce_iva'] += line.base
+                    res[invoice.id]['vat_doce_subtotal'] += line.amount
+                if line.type_ec == 'iva':
+                    res[invoice.id]['total_iva'] += line.amount          
+            else:
+                if line.type_ec == 'iva' and line.amount == 0:
+                    res[invoice.id]['base_cero_iva'] += line.base
+                    res[invoice.id]['vat_cero_subtotal'] += line.amount
+                res[invoice.id]['total_to_withhold'] += line.amount
+
+        res[invoice.id]['total_with_vat'] = amount_untaxed + res[invoice.id]['vat_cero_subtotal'] + res[invoice.id]['vat_doce_subtotal']
+        
+        return res  
+
 
     _columns = {
                 'withhold_id': fields.many2one('account.withhold', 'Withhold', states={'paid':[('readonly',True)]},
@@ -61,6 +96,27 @@ class account_invoice(osv.osv):
                                                help="Address of invoice"),
                 'withhold_exist': fields.function(_withhold_exist, type='boolean', method=True, store=False,
                                                   help="Show internally if a withhold asociated exist"),
+                'base_doce_iva': fields.function(_amount_all_3, digits_compute=dp.get_precision('Account'), string='IVA 12 Base',
+                            store=True,
+                            multi='all1'),
+                'base_cero_iva': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='IVA 0 Base',
+                            store=True,
+                            multi='all1'),        
+                'vat_doce_subtotal': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='IVA 12 %',
+                            store=True, 
+                            multi='all1'),
+                'vat_cero_subtotal': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='IVA 0 %',
+                            store=True,
+                            multi='all1'),
+                'total_iva': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total IVA',
+                            store=True,
+                            multi='all1'),
+                'total_with_vat': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total with taxes',
+                            store=True,
+                            multi='all1'),
+                'total_to_withhold': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total to withhold',
+                            store=True,
+                            multi='all1'),
                }
 
 #    TRESCLOUD - En este sprint no necesitamos esta funcionalidad, solo lo basico
