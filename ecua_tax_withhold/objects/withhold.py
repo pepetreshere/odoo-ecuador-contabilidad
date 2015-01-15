@@ -226,8 +226,8 @@ class account_withhold(osv.osv):
                     #tax_wi_id = res_company.get_default(cr, uid, 'res.company', 'tax_wi_id') 
                     invoice_obj=self.pool.get('account.invoice')
                     printer_id = invoice_obj._default_printer_point(cr, uid, context)
-                    shop=self.pool.get('sri.printer.point').browse(cr, uid, [printer_id], context)[0]
-                    shop_id = shop.id
+                    printer=self.pool.get('sri.printer.point').browse(cr, uid, [printer_id], context)[0]
+                    shop_id = printer.shop_id.id
                             
                     fiscalyear_id = None
                     
