@@ -620,7 +620,8 @@ class account_withhold(osv.osv):
                 return True
             
     # General check of number of withhold
-    _constraints = [(check_withhold_number_uniq, _('There is another Withhold generated with this number, please verify'),['number']),]
+    #ELIMINAMOS ESTE CONSTRAINT (dejo el metodo por las dudas)
+    #_constraints = [(check_withhold_number_uniq, _('There is another Withhold generated with this number, please verify'),['number']),]
     
     # Constrain Removed, only verify the number, don't check the case if a diferent customer have the same
     # withhold number
@@ -1209,22 +1210,23 @@ class account_withhold(osv.osv):
             
         return True
 
-    def _action_approve_purchase_validate(self, withhold):
+    def _action_approve_purchase_validate(self, cr, uid, withhold, number, context):
         """
         Executes validation over a withhold (for purchase).
         """
-        if not withhold.number:
-            raise osv.except_osv(_('Error!'), _('Number to be entered to approve the withhold'))
+        if self.search(cr, uid, [('id', '!=', withhold.id), ('number', '=', number)], context):
+            raise osv.except_osv(_('Error!'), _('Number %d is occupied. Please choose another number or change the'
+                                                'withhold sequence\'s number for the chosen printer point'))
         if not withhold.creation_date:
             raise osv.except_osv(_('Error!'), _('Date to be entered to approve the withhold'))
         if not withhold.withhold_line_ids:
             raise osv.except_osv(_('Error!'), _('must enter at least one tax to approve the withhold'))
 
-    def _action_approve_purchase_update(self, cr, uid, withhold, move_line_obj, context=None):
+    def _action_approve_purchase_update(self, cr, uid, withhold, move_line_obj, number, context=None):
         """
         Executes update over a withhold (for purchase).
         """
-        self.write(cr, uid, withhold.id, {'state': 'approved'})
+        self.write(cr, uid, withhold.id, {'state': 'approved', 'number': number})
 
         for line in withhold.withhold_line_ids:
             move_id = withhold.invoice_id.move_id.id
@@ -1232,17 +1234,30 @@ class account_withhold(osv.osv):
                                                            ('tax_code_id', '=', line.tax_ac_id.id),
                                                            ('state', '=', 'valid')], context=context)
             move_line_obj.write(cr, uid, move_line_ids, {'withhold_id': withhold.id})
-    
+
+    def _action_approve_purchase_number(self, cr, uid, withhold, printer_point_obj, context):
+        """
+        Sets a number, based on the printer point, for the current purchase withhold document.
+        """
+        #if no invoice is found, we return the number as-is
+        if withhold.printer_id:
+            return printer_point_obj.get_next_sequence_number(cr, uid, withhold.printer_id,
+                                                              'withhold', withhold.number, context)
+        else:
+            return withhold.number
+
     def action_approve_purchase(self, cr, uid, ids, context=None):
         
         if not context:
             context = {}
 
         move_line_pool = self.pool.get('account.move.line')
+        printer_point_obj = self.pool.get('sri.printer.point')
 
         for withhold in self.browse(cr, uid, ids, context):
-            self._action_approve_purchase_validate(withhold)
-            self._action_approve_purchase_update(cr, uid, withhold, move_line_pool, context)
+            number = self._action_approve_purchase_number(cr, uid, withhold, printer_point_obj, context)
+            self._action_approve_purchase_validate(cr, uid, withhold, number, context)
+            self._action_approve_purchase_update(cr, uid, withhold, move_line_pool, number, context)
 
         return True
     
