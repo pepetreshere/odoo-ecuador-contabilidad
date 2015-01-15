@@ -154,16 +154,18 @@ class account_invoice(osv.osv):
         invoice = self.browse(cr, uid, ids[0])
 
         #Depending if is a sale o purchase withhold search for the corresponding action
-        action = ""
+        action,view = "",""
         if invoice.type == 'in_invoice':
             action = "action_account_withhold_purchase"
+            view = "view_account_withhold_form_purchase"
         else:
             action = "action_account_withhold_sale"
-
+            view = "view_account_withhold_form_sale"
+            
         result = mod_obj.get_object_reference(cr, uid, 'ecua_tax_withhold', action)
         id = result and result[1] or False
         result = act_obj.read(cr, uid, [id], context=context)[0]
-        res = mod_obj.get_object_reference(cr, uid, 'ecua_tax_withhold', 'view_account_withhold_form')
+        res = mod_obj.get_object_reference(cr, uid, 'ecua_tax_withhold', view)
         result['views'] = [(res and res[1] or False, 'form')]
         result['res_id'] = invoice.withhold_id and invoice.withhold_id.id or False
             
