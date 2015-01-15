@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
-
+		<delete model="ir.ui.view" id="view_account_withhold_form"/>
 		<record model="ir.ui.view" id="view_account_withhold_form_sale">
 			<field name="name">account.withhold.form.sale</field>
 			<field name="model">account.withhold</field>
