@@ -22,6 +22,7 @@
 ########################################################################
 
 from osv import fields, osv
+import time
 from tools import config
 from tools.translate import _
 
@@ -42,6 +43,16 @@ class sale_order(osv.osv):
             if user.printer_id.shop_id:
                 return user.printer_id.shop_id.id
         return super(sale_order, self)._get_default_shop(cr, uid, context)
+
+    def _prepare_invoice(self, cr, uid, order, lines, context=None):
+        """
+        Prepares the invoice, but ensures the current date as default.
+        """
+        context = context or {}
+        context.update({
+            'date_invoice': time.strftime('%Y-%m-%d')
+        })
+        return super(sale_order, self)._prepare_invoice(cr, uid, order, lines, context)
 
     _defaults = {
         'shop_id': _get_default_shop,
