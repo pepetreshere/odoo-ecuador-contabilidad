@@ -1009,7 +1009,7 @@ class account_withhold(osv.osv):
         for withhold in withhold_obj.browse(cr, uid, ids, context):
         
             # verify if exist a withhold approve for the invoice related
-            if withhold_obj.search(cr, uid, [('invoice_id','=',withhold.invoice_id.id),('state','=','approved')], context):
+            if withhold_obj.search(cr, uid, [('invoice_id','=',withhold.invoice_id.id),('state','=','approved')], context=context):
                 raise osv.except_osv('Warning!', _("Withhold for this invoice already exist!!"))
            
             self._validate_period_date(cr, uid, withhold.creation_date, withhold.invoice_id.id, raise_error=True, context=context)
