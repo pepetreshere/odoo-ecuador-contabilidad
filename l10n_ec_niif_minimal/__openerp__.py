@@ -26,6 +26,7 @@
     """,
     'author': 'Christopher Ormaza, Ecuadorenlinea.net',
     'depends': [
+                'base',
                 'account',
                 'base_vat',
                 'base_iban',
@@ -33,8 +34,7 @@
                 'mail',
                 'ecua_partner'
                 ],
-    'init_xml': [
-    ],
+    'init_xml': [],
     'update_xml': [
                 'data/account_tax_code.xml',
                 'data/account_chart.xml',
@@ -46,7 +46,8 @@
                 'views/account_account_view.xml',
                 'views/account_config_view.xml',
                 'views/res_company_view.xml',
-    ],
+                'views/res_partner_view.xml'
+                   ],
     'demo_xml': [],
     'installable': True,
 }

@@ -22,3 +22,4 @@ import account_tax
 import account_invoice_tax
 import account_config
 import res_company
+import res_partner
