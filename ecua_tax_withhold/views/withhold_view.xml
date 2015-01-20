@@ -2,6 +2,8 @@
 <openerp>
 	<data>
 		<delete model="ir.ui.view" id="view_account_withhold_form"/>
+
+		<!-- FORMULARIO RETENCIONES RECIBIDAS EN VENTAS -->
 		<record model="ir.ui.view" id="view_account_withhold_form_sale">
 			<field name="name">account.withhold.form.sale</field>
 			<field name="model">account.withhold</field>
@@ -41,11 +43,14 @@
 										attrs="{'required':True}" 
 										on_change="onchange_creation_date(transaction_type, printer_id, partner_id, creation_date, invoice_id)"/>
 									<field name="printer_id"
+										string="My Printer Point"
+										help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos"
 										attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
+										placeholder="Your printer were you receive the document, not your suppliers one"
 										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"
-										options="{'no_open': True}"
-										widget="selection"
+										options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 										/>
+
 								</group>
 								<group>
 									<field name="partner_id" readonly="1"/>
@@ -127,6 +132,7 @@
             </field>
         </record>
         
+        <!-- FORMULARIO DE RETENCIONES EMITIDAS EN COMPRAS -->
         <record model="ir.ui.view" id="view_account_withhold_form_purchase">
 			<field name="name">account.withhold.form.purchase</field>
 			<field name="model">account.withhold</field>
@@ -166,10 +172,12 @@
 										attrs="{'required':True}" 
 										on_change="onchange_creation_date(transaction_type, printer_id, partner_id, creation_date, invoice_id)"/>
 									<field name="printer_id"
+										string="My Printer Point"
+										help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos"
 										attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
+										placeholder="Your printer were you receive the document, not your suppliers one"
 										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"
-										options="{'no_open': True}"
-										widget="selection"
+										options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 										/>
 								</group>
 								<group>
