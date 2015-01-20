@@ -27,6 +27,10 @@ from openerp.tools.translate import _
 from openerp.tools.misc import ustr
 import time
 import re #para busqueda por cedula
+import unicodedata
+
+
+
 
 class res_partner(osv.osv):
     _inherit = "res.partner"
@@ -153,12 +157,9 @@ class res_partner(osv.osv):
             #Agregamos log de cambios
             if 'name' in vals and partner.name != vals['name']: # en el caso que sea un campo
                 oldmodel = partner.name or _('None')
-                newvalue = vals['name'] or _('None')
+                vals['name'] = self._with_single_spaces(vals['name'])
+                newvalue = self._with_single_spaces(vals['name'])  or _('None')
                 changes.append(_("Name: from '%s' to '%s'") %(oldmodel,newvalue ))
-            if 'comercial_name' in vals and partner.comercial_name != vals['comercial_name']: # en el caso que sea un campo
-                oldmodel = partner.comercial_name or _('None')
-                newvalue = vals['comercial_name'] or _('None')
-                changes.append(_("Comercial Name: from '%s' to '%s'") %(oldmodel,newvalue ))
             if 'is_company' in vals and partner.is_company != vals['is_company']: # en el caso que sea un campo booleano
                
                 if partner.is_company:
@@ -259,8 +260,8 @@ class res_partner(osv.osv):
             
             if 'vat' in vals and partner.vat != vals['vat']: # en el caso que sea un campo
                 oldmodel = partner.vat or _('None')
-                newvalue = vals['vat'] or _('None')
-                changes.append(_("NIF: from '%s' to '%s'") %(oldmodel,newvalue ))
+                newvalue = vals['vat'].upper() or _('None')
+                changes.append(_("NIF: from '%s' to '%s'") %(oldmodel, newvalue ))
                 
             if 'property_account_receivable' in vals and partner.property_account_receivable != vals['property_account_receivable']: # en el caso que sea un objeto
                 oldmodel = partner.property_account_receivable.name or _('None')
@@ -316,21 +317,15 @@ class res_partner(osv.osv):
 
     def create(self, cr, uid, values, context=None):
         if not context: context = {}
+        if 'name' in values:
+            values['name'] = self._with_single_spaces(values['name'])
         if 'email' in values and values['email']:
             values['email'] = values['email'].strip()
+        if 'vat' in values:
+            values['vat'] = values['vat'].upper()
+        else:
+            values['vat'] = _('None')
         res = super(res_partner, self).create(cr, uid, values, context)
-        return res
- 
-    
-    def onchange_type(self, cr, uid, ids, is_company, context=None):
-
-        return self.pool.get('res.partner').onchange_type(cr, uid, partner_ids, is_company, context=context)
-
-    def onchange_type(self, cr, uid, ids, is_company, context=None):
-        res=super(res_partner,self).onchange_type(cr, uid, ids,is_company, context)
-       
-        if is_company==False:
-            res['value']['comercial_name'] = ""
         return res
 
     def _avoid_duplicated_vat(self, cr, uid, ids, context=None):
@@ -360,7 +355,6 @@ class res_partner(osv.osv):
         return True    
     
     _columns = {
-                'comercial_name': fields.char('Comercial Name', size=256),
                 'type_vat': fields.function(_get_vat, type="char", string='Name', store=True),
                 # SE CREA UN NUEVO CAMPO PARA PODER REGISTRAR EL TIPO DE CONTRIBUYENTE DE LOS CLIENTES PERSONAS NATURALES  Y JURIDICAS 
                 'type_vat_type': fields.function(_get_type_vat, type="char", string='Name', store=True),
@@ -374,7 +368,6 @@ class res_partner(osv.osv):
                  'customer':True,
                  'supplier':True,
                  'user_id': lambda self, cr, uid, context: uid,
-                 'comercial_name': "",
                  'section_id': _get_user_default_sales_team,
                  'country_id': _get_user_country_id,
                  'date': fields.date.context_today,
@@ -447,6 +440,71 @@ class res_partner(osv.osv):
                 res=True
         return res
     
+    def _with_single_spaces(self, s):
+        """
+        Ensure a text value does not hold multiple
+        spaces, by converting it to a single-spaced value.
+        
+        It also strips the leading and trailing spaces
+        from the given value.
+        
+        Example:
+           << self._with_single_spaces("  lorem  ipsum  dolor  ")
+           >> "lorem ipsum dolor"
+        """
+        return re.sub('\s+', ' ', s.strip())
+    
+    def _strip_accents(self, s):
+        """
+        Strips accents from a string. This is used only to validate
+        the string as a name, and NOT to alter the name string in the
+        database.
+        
+        Examples:
+            << self._strip_accents("José Miguel Rivero")
+            >> "Jose Miguel Rivero"
+            << self._strip_accents("Nestor Carlos Kirchner")
+            >> "Nestor Carlos Kirchner"
+            << self._strip_accents("Carlos Argüello")
+            >> "Carlos Arguello"
+            << self._strip_accents("María Fernanda Bonanni")
+            >> "Maria Fernanda Bonanni"
+        """
+        return ''.join(c for c in unicodedata.normalize('NFD', s)
+                       if unicodedata.category(c) != 'Mn')
+
+    def _check_valid_name(self, cr, uid, ids, context=None):
+        """
+        Checks whether the company name is valid, by
+        sub-checking whether it is a company or a natural person
+        and disallowing, for the latter, the chance to have a
+        name with stuff other than letters. Note that accented
+        letters ARE allowed and they do not count as special
+        characters, but numbers, dots, commas, dashes, slashes,
+        etc. count as special characters.
+        
+        Example for natural person names:
+            José Miguel Rivero
+            Nestor Carlos Kirchner
+            Carlos Argüello
+            María Fernanda Bonanni
+        
+        Examples for company names:
+            1, 2, 3 Shop
+            99¢ Shop
+            C&A
+            Dunkin' & Donuts
+        """
+        res = True
+        natural_check = re.compile("^[a-zA-Z\' ]+$")
+        company_check = re.compile("^[a-zA-Z0-9\' .,&/-]+$")
+        for partner in self.browse(cr, uid, ids, context=context):
+            unaccented_name = self._strip_accents(partner.name)
+            match = natural_check.match(unaccented_name) if not partner.is_company else company_check.match(unaccented_name)
+            if not match:
+                res = False
+        return res
+    
     def _construct_constraint_msg(self, cr, uid, ids, context=None):
         res = super(res_partner, self)._construct_constraint_msg(cr, uid, ids, context=context)
         return res
@@ -468,13 +526,18 @@ class res_partner(osv.osv):
                      _avoid_duplicated_vat, 
                      _('Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding'),
                      ['vat']
+                    ),
+                    (
+                     _check_valid_name,
+                     _('Error: El nombre de un contacto que sea persona natural debe contener solamente letras. Los nombres de las empresas pueden tener adicionalmente números y otros caracteres.'),
+                     ['name']
                      ),
                     (
                      _valid_email,
-                     _('Error: The specified e-mail address is invalid'),
+                     _(u'Error: La dirección de correo electrónico es inválida'),
                      ['email']
                     )
-                    ]
+                   ]
 
     def _display_name_compute(self, cr, uid, ids, name, args, context=None):
         '''
@@ -508,6 +571,15 @@ class res_partner(osv.osv):
                 res2.append((partner_id, new_name))
             return res2
         return res
+
+    def __init__(self, pool, cr):
+        """
+        TODO eliminar este script luego de una vez de uso!!
+        :param pool:
+        :param cr:
+        :return:
+        """
+        cr.execute('update res_partner set vat=upper(vat)')
     
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         '''
@@ -530,7 +602,7 @@ class res_partner(osv.osv):
                 # OR operator (and given the fact that the 'name' lookup results come from the ir.translation table
                 # Performing a quick memory merge of ids in Python will give much better performance
                 ids = set()
-                ids.update(self.search(cr, user, args + ['|','|',('vat',operator,name),('ref',operator,name),('comercial_name',operator,name)], limit=limit, context=context))
+                ids.update(self.search(cr, user, args + ['|','|',('vat',operator,name),('ref',operator,name)], limit=limit, context=context))
                 if not limit or len(ids) < limit:
                     # we may underrun the limit because of dupes in the results, that's fine
                     ids.update(self.search(cr, user, args + [('name',operator,name)], limit=(limit and (limit-len(ids)) or False) , context=context))
@@ -539,7 +611,7 @@ class res_partner(osv.osv):
                 ptrn = re.compile('(\[(.*?)\])')
                 res = ptrn.search(name)
                 if res:
-                    ids = self.search(cr, user, ['|','|',('vat','=', res.group(2)),('ref','=', res.group(2)),('comercial_name','=', res.group(2))] + args, limit=limit, context=context)
+                    ids = self.search(cr, user, ['|','|',('vat','=', res.group(2)),('ref','=', res.group(2))] + args, limit=limit, context=context)
  
         else: #cuando el usuario no ha escrito nada aun
             ids = self.search(cr, user, args, limit=limit, context=context)

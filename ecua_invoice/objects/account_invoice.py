@@ -103,6 +103,8 @@ class account_invoice(osv.osv):
                             store=True,
                             multi='all1'),
                }
+    
+    RE_PREFIXED_INVOICE = re.compile('^\d+-\d+-\d+$')
 
     def __init__(self, pool, cr):
         """
@@ -159,6 +161,23 @@ class account_invoice(osv.osv):
             
         return super(account_invoice, self).unlink(cr, uid, unlink_ids, context)
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        """
+        Copia una factura pero le pone el prefijo en lugar
+        de copiar tambien el numero interno. si el numero
+        interno no tiene forma de xxx-xxx-xxxxxx entonces
+        no copia prefijo, pone una cadena vacia
+        """
+        obj = self.browse(cr, uid, id)
+        default = default or {}
+        
+        internal_number = obj.internal_number
+        if (self.RE_PREFIXED_INVOICE.match(internal_number)):
+            default['internal_number'] = '-'.join(internal_number.split('-')[0:2] + [''])
+        else:
+            default['internal_number'] = ''
+        
+        return super(account_invoice, self).copy(cr, uid, id, default, context)
 
     def onchange_internal_number(self, cr, uid, ids, internal_number, context=None):
         
@@ -354,6 +373,7 @@ class account_invoice(osv.osv):
         
         inv_obj=self.pool.get('account.invoice')
         printer_id=inv_obj._default_printer_point(cr,uid,uid)
+        internal_number = ''
         if printer_id:
             internal_number = inv_obj._suggested_internal_number(cr, uid, printer_id, type, context)
         
@@ -361,7 +381,8 @@ class account_invoice(osv.osv):
                         'invoice_address': invoice_address or '',
                         'invoice_phone': invoice_phone or '',
                         'internal_number': internal_number or '',
-                        'printer_id': printer_id
+                        'printer_id': printer_id,
+                        'date_invoice': time.strftime('%Y-%m-%d')
                         })
         return invoice_vals
 account_invoice()

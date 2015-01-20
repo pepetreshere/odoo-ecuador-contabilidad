@@ -332,6 +332,11 @@ msgid "Name: from '%s' to '%s'"
 msgstr "Name: from '%s' to '%s'"
 
 #. module: l10n_ec_niif_minimal
+#: field:res.partner,comercial_name:0
+msgid "Comercial Name"
+msgstr "Nombre Comercial"
+
+#. module: l10n_ec_niif_minimal
 #: code:addons/l10n_ec_niif_minimal/objects/res_company.py:13
 #, python-format
 msgid "Forced to maintain accounting books"
