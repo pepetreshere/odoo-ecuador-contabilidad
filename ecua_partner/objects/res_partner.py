@@ -262,10 +262,6 @@ class res_partner(osv.osv):
                 oldmodel = partner.vat or _('None')
                 newvalue = vals['vat'].upper() or _('None')
                 changes.append(_("NIF: from '%s' to '%s'") %(oldmodel, newvalue ))
-            else:
-                #en caso de que el vat no esté dentro de lo ya editado
-                #simplemente lo convertimos a mayusculas, por las dudas.
-                vals['vat'] = partner.vat.upper() if partner.vat else _('None')
                 
             if 'property_account_receivable' in vals and partner.property_account_receivable != vals['property_account_receivable']: # en el caso que sea un objeto
                 oldmodel = partner.property_account_receivable.name or _('None')
@@ -517,6 +513,15 @@ class res_partner(osv.osv):
                 res2.append((partner_id, new_name))
             return res2
         return res
+
+    def __init__(self, pool, cr):
+        """
+        TODO eliminar este script luego de una vez de uso!!
+        :param pool:
+        :param cr:
+        :return:
+        """
+        cr.execute('update res_partner set vat=upper(vat)')
     
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         '''
