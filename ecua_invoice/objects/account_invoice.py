@@ -290,19 +290,8 @@ class account_invoice(osv.osv):
     def action_number(self, cr, uid, ids, context=None):
         """
         This method allows the usage of custom sequentials for the printer point.
-
-        The code was rewritten completely instead of calling super for one reason:
-          This method executes a write, and we need to execute another write because
-          we cannot intercept the write part or the invoice number between the lines:
-          * number = obj_inv.number
-          and
-          * self.write(cr, uid, ids, {'internal_number': number})
-
-        So, to avoid making TWO calls to database (which is proven to be painful if you
-        run the workflow for 100.000 invoices), I've chosen to completely edit this method
-        (notes: it is basically the same, except that I replace the write call with a write call
-        for a transformed value: the number is transformed into an auto-generated number, or respected
-        if the number comes "good").
+        It stores the internal_number from the number field, passed to an internal
+          check from the current printer point
         """
         super(account_invoice, self).action_number(cr, uid, ids, context)
         for obj_inv in self.browse(cr, uid, ids, context=context):
