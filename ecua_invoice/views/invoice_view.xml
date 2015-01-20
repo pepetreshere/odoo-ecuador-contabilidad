@@ -77,9 +77,9 @@
 						attrs="{'readonly':[('state','!=','draft')]}" 
 						required="0"
 						placeholder="Your printer were you receive the document, not your suppliers one"
-						options="{'no_open': True}"
-						widget="selection"
+						options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 						/>
+														
 					<field name="internal_number" required="1" 
 						attrs="{'readonly': [('state','!=','draft')]}"
 						on_change="onchange_internal_number(internal_number)"
@@ -153,8 +153,7 @@
 						attrs="{'readonly':[('state','!=','draft')]}" 
 						required="0"
 						placeholder="Your printer were you receive the document, not your suppliers one"
-						options="{'no_open': True}"
-						widget="selection"
+						options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 						/>
 					<field name="internal_number" required="1" 
 						attrs="{'readonly': [('state','!=','draft')]}"

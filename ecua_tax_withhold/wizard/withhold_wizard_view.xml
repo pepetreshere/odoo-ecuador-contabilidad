@@ -27,12 +27,16 @@
 								<group>
 									<field name="creation_date" 
 										attrs="{'required':True}"
-										on_change="onchange_creation_date(transaction_type, printer_id, partner_id, creation_date, invoice_id)"/>										
+										on_change="onchange_creation_date(transaction_type, printer_id, partner_id, creation_date, invoice_id)"/>
 									<field name="printer_id"
+										string="My Printer Point"
+										help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos"
 										attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
+										placeholder="Your printer were you receive the document, not your suppliers one"
 										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"
-										options="{'no_open': True}"
+										options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 										/>
+										
 									<field name="number" 
 										attrs="{'required':True}"
 										on_change="onchange_number(number)"/>
@@ -126,10 +130,14 @@
 										attrs="{'required':True}"
 										on_change="onchange_creation_date(transaction_type, printer_id, partner_id, creation_date, invoice_id)"/>										
 									<field name="printer_id"
+										string="My Printer Point"
+										help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos"
 										attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
+										placeholder="Your printer were you receive the document, not your suppliers one"
 										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"
-										options="{'no_open': True}"
+										options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 										/>
+
 									<field name="number" 
 										attrs="{'required':True}"
 										on_change="onchange_number(number)"/>

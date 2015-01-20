@@ -681,7 +681,7 @@ class account_withhold(osv.osv):
         return res
     
 
-    def onchange_printer_id(self, cr, uid, ids, transaction_type, printer_id, partner_id, creation_date, context=None):
+    def onchange_printer_id(self, cr, uid, ids, transaction_type, printer_id, partner_id, creation_date, number, context=None):
         '''
         Actualiza el numero de retencion con el prefijo del punto de impresion y la tienda
         Este metodo se redefine con el modulo autorizaciones para cargar el numero de autorizacion
@@ -692,7 +692,7 @@ class account_withhold(osv.osv):
         if transaction_type == 'purchase': #solo para retenciones emitidas
             if printer_id and partner_id and creation_date:
                 printer = self.pool.get('sri.printer.point').browse(cr, uid, printer_id, context=context)
-                number = printer.shop_id.number + "-" + printer.name + "-"                
+                number = printer.shop_id.number + "-" + printer.name + "-"
                 res['value'].update({
                             'shop_id': printer.shop_id.id,
                             'number': number,
