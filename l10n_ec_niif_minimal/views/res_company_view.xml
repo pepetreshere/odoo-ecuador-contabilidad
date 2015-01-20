@@ -2,18 +2,25 @@
 <openerp>
     <data>  
 		<record model="ir.ui.view" id="res_company_form_view_add_contribution">
-                <field name="name">res.company.form.view.add.contribution</field>
-                <field name="model">res.company</field>
-                <field name="type">form</field>
-                <field name="inherit_id" ref="base.view_company_form"/>
-                <field name="arch" type="xml">
-					<field name="vat" position="after">
-						<field name="special_tax_contributor_number"/>
-					</field>
-		            <field name="partner_id" position="after">
-		            	<field name="comercial_name"/>
-		            </field>
+			<field name="name">res.company.form.view.add.contribution</field>
+			<field name="model">res.company</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_company_form"/>
+			<field name="arch" type="xml">
+				<field name="vat" position="after">
+					<field name="special_tax_contributor_number"/>
+					<field name="forced_accounting"/>
 				</field>
+	            <field name="partner_id" position="after">
+	            	<field name="comercial_name"/>
+	            </field>
+	            <xpath expr="//form/sheet" position="after">
+		            <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>     
+	            </xpath>
+			</field>
 		</record>
 	</data>
 </openerp>

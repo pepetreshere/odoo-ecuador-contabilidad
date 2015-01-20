@@ -30,20 +30,23 @@
                 'base_vat',
                 'base_iban',
                 'account_chart',
+                'mail',
+                'ecua_partner'
                 ],
-    'init_xml': [],
+    'init_xml': [
+    ],
     'update_xml': [
                 'data/account_tax_code.xml',
                 'data/account_chart.xml',
                 'data/account_tax_104.xml',
                 'data/account_tax_103.xml',
+                'security/security_groups.xml',
                 'views/l10n_chart_ec_niif_minimal_wizard.xml',
                 'views/account_tax_view.xml',
                 'views/account_account_view.xml',
                 'views/account_config_view.xml',
                 'views/res_company_view.xml',
-                
-                   ],
+    ],
     'demo_xml': [],
     'installable': True,
 }
