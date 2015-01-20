@@ -15,6 +15,8 @@ cliente -->
 			<field name="type">form</field>
 			<field name="inherit_id" ref="base_vat.view_partner_form"/>
 			<field name="arch" type="xml">
+			<!-- Se aniade el atributo invisible para cuando un customer tenga una empresa asociada
+-            	los campos se oculte  -->
             	<xpath expr="//field[@name='property_account_position']" position="replace"/>
             	<xpath expr="//field[@name='website']" position="after">
             		<field name="property_account_position" widget="selection"
