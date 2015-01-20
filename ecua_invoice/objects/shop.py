@@ -21,6 +21,7 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
+import re
 import time
 import netsvc
 from datetime import date, datetime, timedelta
@@ -28,6 +29,7 @@ from datetime import date, datetime, timedelta
 from osv import fields, osv
 from tools import config
 from tools.translate import _
+
 
 class sale_shop(osv.osv):
     _inherit = 'sale.shop'
@@ -68,15 +70,135 @@ class sale_shop(osv.osv):
     
 sale_shop()
 
-    
+
 class sri_printer_point(osv.osv):
     
     _name = 'sri.printer.point'
-    
+
+    def _get_prefix(self, cr, uid, ids, name, arg, context=None):
+        """
+        generates the appropiate printer point prefix
+        """
+        return {obj.id: "%s-%s-" % (obj.shop_id.number, obj.name) if obj.shop_id else ""
+                for obj in self.browse(cr, uid, ids, context)}
+
     _columns = {
-                'name':fields.char('Name', size=3, required=True,help='This number is assigned by the SRI'), 
-                'shop_id':fields.many2one('sale.shop', 'Shop'),
-                }
+        'name': fields.char('Printer Point', size=3, required=True, help='This number is assigned by the SRI'),
+        'shop_id': fields.many2one('sale.shop', 'Shop'),
+        'invoice_sequence_id': fields.many2one('ir.sequence', string='Customer Invoices sequential', required=False,
+                                               help='If specified, will be used by the printer point to specify '
+                                                    'the next number for the invoices',
+                                               domain=[('code', '=', 'sri.printer.point')]),
+        'refund_sequence_id': fields.many2one('ir.sequence', string='Customer Refunds sequential', required=False,
+                                              help='If specified, will be used by the printer point to specify '
+                                                   'the next number for the credit notes',
+                                              domain=[('code', '=', 'sri.printer.point')]),
+        'debit_note_sequence_id': fields.many2one('ir.sequence', string='Debit Notes sequential', required=False,
+                                                  help='If specified, will be used by the printer point to specify'
+                                                       ' the next number for the debit notes',
+                                                  domain=[('code', '=', 'sri.printer.point')]),
+        'withhold_sequence_id': fields.many2one('ir.sequence', string='Withholds sequential', required=False,
+                                                help='If specified, will be used by the printer point to specify '
+                                                     'the next number for the withholds',
+                                                domain=[('code', '=', 'sri.printer.point')]),
+        'waybill_sequence_id': fields.many2one('ir.sequence', string='Waybills sequential', required=False,
+                                               help='If specified, will be used by the printer point to specify '
+                                                    'the next number for the waybills',
+                                               domain=[('code', '=', 'sri.printer.point')]),
+        'prefix': fields.function(_get_prefix, method=True, store=False, string="Printer Prefix", type="char", size=8),
+        'company_id': fields.related('shop_id', 'company_id', type="many2one", relation="res.company", string="Company",
+                                     store=False)
+    }
+
+    def get_next_sequence_number(self, cr, uid, printer_id, document_type, number, context=None):
+        """
+        For a specific type of document, the current printer tries to get
+          the next number from the sequence. if no sequence exists, we must
+          return the same input number or current printer's prefix. If the
+          number is well-formatted and for the current printer point, we must
+          return such number - respecting it.
+        """
+
+        #we must normalize the number. perhaps it is valid except for spaces
+        number = (number or '').strip()
+
+        #we must get the actual printer, and check whether the current number
+        #is valid for that printer. by failing in either of them, we return
+        #the (normalized) number.
+        if isinstance(printer_id, (int, long)):
+            printer_id = self.browse(cr, uid, printer_id, context=None)
+
+        if not printer_id or re.match('^\d{3}-\d{3}-\d{9}$', number) and number.startswith(printer_id.prefix):
+            return number
+
+        #we get the sequence (its id). If there's no sequence for the given
+        #document type, then we must return either the original number (which
+        #was normalized) or the printer prefix.
+        sequence_id = {
+            'invoice': printer_id.invoice_sequence_id,
+            'refund': printer_id.refund_sequence_id,
+            'debit': printer_id.debit_note_sequence_id,
+            'withhold': printer_id.withhold_sequence_id,
+            'waybill': printer_id.waybill_sequence_id,
+        }.get(document_type, False)
+
+        sequence_id = sequence_id.id if sequence_id else False
+
+        if not sequence_id:
+            return number or printer_id.prefix
+
+        #now we have the sequence to query the values from. we should try to
+        #generate the number
+        return self.pool.get('ir.sequence').next_by_id(cr, uid, sequence_id, context)
+
+    def _verify_repeated_sequences(self, cr, uid, ids, context=None):
+        """
+        This constraint checks whether the specified sequences are in use by other printer points.
+
+        The logic comes as follows:
+            * We collect the assigned sequences, and check whether values are not repeated.
+              * It is an error to have repeated values among the sequence fields in the same object.
+            * We check that the specified sequence values are not used in any other object. For
+              that, we check for each object whether any of its sequence fields has a sequence IN the
+              generated list from the current sequence, and has a distinct id (i.e. we're not including
+              the current instance in the same criteria).
+              * It is an error to find another object which shares either of the sequences in either of
+                the fields.
+        """
+
+        for instance in self.browse(cr, uid, ids, context=None):
+            values = [p and p.id for p in [
+                instance.invoice_sequence_id,
+                instance.refund_sequence_id,
+                instance.debit_note_sequence_id,
+                instance.withhold_sequence_id,
+                instance.waybill_sequence_id
+            ] if p]
+
+            if values:
+                #We evaluate this because we set at least one of
+                #such fields to an existent ir.sequence reference.
+
+                if len(values) != len(set(values)):
+                    #If the length of the list is not the same as the length of a set
+                    #with the same elements, it means that the list has REPEATED elements.
+                    #
+                    #We must get pissed off if that's the case.
+                    return False
+                found = self.search(cr, uid, ['&', ('id', '!=', instance.id),
+                                              '|', ('invoice_sequence_id', 'in', values),
+                                              '|', ('refund_sequence_id', 'in', values),
+                                              '|', ('debit_note_sequence_id', 'in', values),
+                                              '|', ('withhold_sequence_id', 'in', values),
+                                                   ('waybill_sequence_id', 'in', values)], context=None)
+                if found:
+                    #We found an ID which is distinct to the current instance's ID AND
+                    #also it has at least one sequence field with value among the values of
+                    #the same fields in the current instance.
+                    #
+                    #We must get pissed off if that's the case.
+                    return False
+        return True
     
     def name_get(self,cr,uid,ids, context=None):
         if not context:
@@ -100,6 +222,12 @@ class sri_printer_point(osv.osv):
             if obj.invoice_sequence_id:
                 obj.invoice_sequence_id.unlink()
         return super(sri_printer_point, self).unlink(cr, uid, ids, context=context)
+
+    _constraints = (
+        (_verify_repeated_sequences,
+         'Error: Al menos uno de los secuenciales está repetido o en uso dentro de otro Punto de Impresión',
+         ['invoice_sequence_id', 'refund_sequence_id', 'debit_note_sequence_id', 'withhold_sequence_id', 'waybill_sequence_id']),
+    )
     
 sri_printer_point()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

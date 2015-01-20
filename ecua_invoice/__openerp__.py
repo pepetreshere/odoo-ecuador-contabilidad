@@ -22,22 +22,21 @@
 ########################################################################
 
 {
-    "name" : "Ecuador Invoices / Facturas Ecuatorianas",
-    "version" : "1.0",
+    "name": "Ecuador Invoices / Facturas Ecuatorianas",
+    "version": "1.0",
    # 'sequence': 4,
     'complexity': "easy",
-    "author" : "TRESCLOUD CÍA LTDA",
-    "website" : "http://www.trescloud.com/",
-    "category" : "Ecuadorian Regulations",
+    "author": "TRESCLOUD CÍA LTDA",
+    "website": "http://www.trescloud.com/",
+    "category": "Ecuadorian Regulations",
     # TODO agregar dependencia a aeroo
-    "depends" : [
-                 'base',
-                 'sale',
-                 'stock',
-                 'account',
-                 'account_accountant',
-                 'base_optional_quick_create'
-                 ],
+    "depends": ['base',
+                'sale',
+                'stock',
+                'account',
+                'account_accountant',
+                'base_optional_quick_create',
+                'l10n_ec_niif_minimal'],
     "description": """
     In Ecuador additional rules applies to invoices:
     - it is needed to store the "current" name, address, VAT and phone.
@@ -63,6 +62,7 @@
                     'views/res_users_view.xml',
                     'views/sale_create_invoice_view.xml',
                     'views/printer_point_view.xml',
+                    'views/sequence_view.xml',
     ],
     "installable": True,
     "auto_install": False,
