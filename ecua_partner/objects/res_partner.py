@@ -28,6 +28,7 @@ from openerp.tools.misc import ustr
 import time
 import re #para busqueda por cedula
 
+
 class res_partner(osv.osv):
     _inherit = "res.partner"
     _name = "res.partner"
@@ -259,8 +260,12 @@ class res_partner(osv.osv):
             
             if 'vat' in vals and partner.vat != vals['vat']: # en el caso que sea un campo
                 oldmodel = partner.vat or _('None')
-                newvalue = vals['vat'] or _('None')
-                changes.append(_("NIF: from '%s' to '%s'") %(oldmodel,newvalue ))
+                newvalue = vals['vat'].upper() or _('None')
+                changes.append(_("NIF: from '%s' to '%s'") %(oldmodel, newvalue ))
+            else:
+                #en caso de que el vat no esté dentro de lo ya editado
+                #simplemente lo convertimos a mayusculas, por las dudas.
+                vals['vat'] = partner.vat.upper() if partner.vat else _('None')
                 
             if 'property_account_receivable' in vals and partner.property_account_receivable != vals['property_account_receivable']: # en el caso que sea un objeto
                 oldmodel = partner.property_account_receivable.name or _('None')
@@ -318,6 +323,10 @@ class res_partner(osv.osv):
         if not context: context = {}
         if 'email' in values and values['email']:
             values['email'] = values['email'].strip()
+        if 'vat' in values:
+            values['vat'] = values['vat'].upper()
+        else:
+            values['vat'] = _('None')
         res = super(res_partner, self).create(cr, uid, values, context)
         return res
  
