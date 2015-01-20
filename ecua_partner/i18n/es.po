@@ -295,5 +295,10 @@ msgstr "Error: El numero de RUC/Cedula debe ser unico, ya existe otra empresa/pe
 
 #. module: ecua_partner
 #: constraint:res.partner:1
+msgid "Error: Natural person partner name must consist only in letters. Company names can also have numbers and special characters."
+msgstr "Error: El nombre de contacto de una persona natural debe consistir únicamente en letras. Los nombres para contactos que sean empresa pueden tener números y caracteres especiales."
+
+#. module: ecua_partner
+#: constraint:res.partner:2
 msgid "Error: The specified e-mail address is invalid"
 msgstr "Error: La dirección de correo electrónico especificada es inválida"
