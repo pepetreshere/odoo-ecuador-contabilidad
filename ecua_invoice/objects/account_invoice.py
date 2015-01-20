@@ -315,6 +315,7 @@ class account_invoice(osv.osv):
         
         inv_obj=self.pool.get('account.invoice')
         printer_id=inv_obj._default_printer_point(cr,uid,uid)
+        internal_number = ''
         if printer_id:
             internal_number = inv_obj._suggested_internal_number(cr, uid, printer_id, type, context)
         
@@ -322,7 +323,8 @@ class account_invoice(osv.osv):
                         'invoice_address': invoice_address or '',
                         'invoice_phone': invoice_phone or '',
                         'internal_number': internal_number or '',
-                        'printer_id': printer_id
+                        'printer_id': printer_id,
+                        'date_invoice': time.strftime('%Y-%m-%d')
                         })
         return invoice_vals
 account_invoice()
