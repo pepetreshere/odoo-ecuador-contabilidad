@@ -33,8 +33,8 @@
     "depends" : [
                  'base',
                  'sale',
-                 'account',
                  'base_vat',
+                 'account',
                  'crm',
                  'mail',
                  ],
