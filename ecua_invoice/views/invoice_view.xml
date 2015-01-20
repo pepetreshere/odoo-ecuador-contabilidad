@@ -24,6 +24,17 @@
 						/>
 				</xpath>
 
+				<!-- colocamos los subtotales -->
+				<xpath expr="/form/sheet/notebook/page/group/field[@name='amount_untaxed']" position="after">
+				    <field name="base_cero_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+					<field name="base_doce_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>				
+					<field name="vat_doce_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>				
+					<field name="vat_cero_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>				
+					<field name="total_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>				
+					<field name="total_with_vat" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>				
+					<field name="total_to_withhold" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+				</xpath>
+
 				<!-- reubicamos campos a la pestana other info -->
 				<xpath expr="//field[@name='origin']" position="replace"></xpath>
 				<xpath expr="//field[@name='journal_id']" position="replace"></xpath>
@@ -120,6 +131,18 @@
                     	on_change="onchange_journal_id(journal_id, context)" widget="selection"/>
                    	<field domain="[('company_id', '=', company_id), ('type', '=', 'receivable')]"
                    		name="account_id" groups="account.group_account_user"/>
+				</xpath>
+
+				<!-- colocamos los subtotales -->
+				<xpath expr="/form/sheet/notebook/page/group/field[@name='amount_untaxed']" position="after">
+					<field name="base_cero_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" />
+					<field name="base_doce_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" />				
+					<field name="vat_doce_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+					<field name="vat_cero_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>					
+					<field name="total_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>				
+					<field name="total_with_vat" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>				
+					<field name="total_to_withhold" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+									
 				</xpath>
 
 				<!-- colocamos campos nuevos -->

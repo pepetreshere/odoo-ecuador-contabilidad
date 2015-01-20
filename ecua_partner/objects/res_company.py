@@ -27,9 +27,12 @@ from openerp.tools.translate import _
 
 
 class res_company(osv.Model):
-    _inherit = 'res.company'
+    _name = 'res.company'
+    _inherit = ['res.company', 'mail.thread']
     _columns = {
-        'avoid_duplicated_vat':fields.boolean('Avoid duplicated vat numbers', required=False, help='Evita la creación de contactos con el número de Cédula/RUC/Pasaporte duplicado'),
+        'avoid_duplicated_vat':fields.boolean('Avoid duplicated vat numbers', required=False,
+                                              help='Evita la creación de contactos con el número de Cédula/RUC/Pasaporte duplicado',
+                                              track_visibility='onchange'),
     }
     _defaults = {
     'avoid_duplicated_vat': True, 

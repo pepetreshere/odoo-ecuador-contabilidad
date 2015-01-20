@@ -22,8 +22,10 @@
 ########################################################################
 
 from osv import fields, osv
+import time
 from tools import config
 from tools.translate import _
+
 
 class sale_order(osv.osv):
     _inherit = 'sale.order'

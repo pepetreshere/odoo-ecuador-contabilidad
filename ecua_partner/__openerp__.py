@@ -36,6 +36,7 @@
                  'account',
                  'base_vat',
                  'crm',
+                 'mail',
                  ],
     "description": """
     This module improves partner view to include
