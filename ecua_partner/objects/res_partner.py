@@ -323,7 +323,7 @@ class res_partner(osv.osv):
         if 'email' in values and values['email']:
             values['email'] = values['email'].strip()
         if 'vat' in values:
-            values['vat'] = values['vat'].upper()
+            values['vat'] = (values['vat'] or '').upper()
         else:
             values['vat'] = _('None')
         res = super(res_partner, self).create(cr, uid, values, context)
