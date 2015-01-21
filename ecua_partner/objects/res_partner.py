@@ -586,7 +586,7 @@ class res_partner(osv.osv):
         :return:
         """
         super(res_partner, self).__init__(pool, cr)
-        #cr.execute('update res_partner set vat=upper(vat)')
+        cr.execute('update res_partner set vat=upper(vat)')
     
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         '''
