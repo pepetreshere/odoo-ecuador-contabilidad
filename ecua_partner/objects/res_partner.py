@@ -30,11 +30,8 @@ import re #para busqueda por cedula
 import unicodedata
 
 
-
-
 class res_partner(osv.osv):
     _inherit = "res.partner"
-    _name = "res.partner"
     
     # agregamos codigo de ecuador al modulo base_vat
     #_ref_vat['ec']='EC1234567891001'
@@ -71,7 +68,7 @@ class res_partner(osv.osv):
         company_id = self.pool.get('res.users').browse(cr,uid,uid).company_id
         is_validation=company_id.is_validation
         return is_validation or False
-     #FUNCION QUE NOS VALIDA  EL TIPO DE iDENTIFICACIÓN DE LOS CLIENTES Y PROVEEDORES
+     #FUNCION QUE NOS VALIDA  EL TIPO DE iDENTIFICACIoN DE LOS CLIENTES Y PROVEEDORES
     def _get_vat(self, cr, uid, ids, vat, arg, context):
         res = {}
         for record in self.browse(cr, uid, ids, context=context):
@@ -355,13 +352,9 @@ class res_partner(osv.osv):
         return True    
     
     _columns = {
-                'type_vat': fields.function(_get_vat, type="char", string='Name', store=True),
-                # SE CREA UN NUEVO CAMPO PARA PODER REGISTRAR EL TIPO DE CONTRIBUYENTE DE LOS CLIENTES PERSONAS NATURALES  Y JURIDICAS 
-                'type_vat_type': fields.function(_get_type_vat, type="char", string='Name', store=True),
-            #    'is_validation':fields.boolean('is Validation', required=False,change_default=True, select=True), 
-              #  'type_vat': fields.function(_get_vat, method=True, type='char', string='Type Vat', store=True), 
-                
-
+                #'type_vat': fields.function(_get_vat, type="char", method=True, string='Name', store=True),
+                'type_vat_type': fields.function(_get_type_vat, type="char", method=True, string='Name', store=True),
+                'type_vat': fields.char('Comercial Name', size=256),
                }
     
     _defaults = {
@@ -461,13 +454,13 @@ class res_partner(osv.osv):
         database.
         
         Examples:
-            << self._strip_accents("José Miguel Rivero")
+            << self._strip_accents("Jose Miguel Rivero")
             >> "Jose Miguel Rivero"
             << self._strip_accents("Nestor Carlos Kirchner")
             >> "Nestor Carlos Kirchner"
-            << self._strip_accents("Carlos Argüello")
+            << self._strip_accents("Carlos Arguello")
             >> "Carlos Arguello"
-            << self._strip_accents("María Fernanda Bonanni")
+            << self._strip_accents("Maria Fernanda Bonanni")
             >> "Maria Fernanda Bonanni"
         """
         return ''.join(c for c in unicodedata.normalize('NFD', s)
@@ -484,10 +477,10 @@ class res_partner(osv.osv):
         etc. count as special characters.
         
         Example for natural person names:
-            José Miguel Rivero
+            Jose Miguel Rivero
             Nestor Carlos Kirchner
             Carlos Argüello
-            María Fernanda Bonanni
+            Maria Fernanda Bonanni
         
         Examples for company names:
             1, 2, 3 Shop
@@ -534,7 +527,7 @@ class res_partner(osv.osv):
                      ),
                     (
                      _valid_email,
-                     _(u'Error: La dirección de correo electrónico es inválida'),
+                     _(u'Error: La direccion de correo electronico es invalida'),
                      ['email']
                     )
                    ]
@@ -572,14 +565,14 @@ class res_partner(osv.osv):
             return res2
         return res
 
-    def __init__(self, pool, cr):
-        """
-        TODO eliminar este script luego de una vez de uso!!
-        :param pool:
-        :param cr:
-        :return:
-        """
-        cr.execute('update res_partner set vat=upper(vat)')
+     def __init__(self, pool, cr):
+         """
+         TODO eliminar este script luego de una vez de uso!!
+         :param pool:
+         :param cr:
+         :return:
+         """
+         cr.execute('update res_partner set vat=upper(vat)')
     
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         '''
@@ -856,7 +849,7 @@ class res_partner(osv.osv):
         return valid
     
     def get_number_identification(self, vat):
-        '''Función que toma como argumento el campo vat, se hace un slicing para tomar la parte númerica.'''  
+        '''Funcion que toma como argumento el campo vat, se hace un slicing para tomar la parte númerica.'''  
        
         identification=''        
         if vat:
@@ -865,7 +858,7 @@ class res_partner(osv.osv):
         return identification
     
     def get_code_country(self, vat):
-        '''Función que toma como argumento el campo vat, se hace un slicing para tomar la parte del código de país.'''
+        '''Funcion que toma como argumento el campo vat, se hace un slicing para tomar la parte del codigo de pais.'''
         
         code_country=''
         if vat:
@@ -874,3 +867,4 @@ class res_partner(osv.osv):
         return code_country
         
 res_partner()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
