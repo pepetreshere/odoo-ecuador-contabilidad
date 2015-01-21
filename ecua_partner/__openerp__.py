@@ -37,6 +37,7 @@
                  'account',
                  'crm',
                  'mail',
+                 'l10n_ec_niif_minimal'
                  ],
     "description": """
     This module improves partner view to include

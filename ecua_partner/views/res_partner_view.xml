@@ -13,6 +13,9 @@
 			<field name="type">form</field>
 			<field name="inherit_id" ref="base_vat.view_partner_form"/>
 			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="comercial_name" placeholder="Nombre Comercial..." attrs="{'invisible':[('is_company','=',False)]}"/>
+				</xpath>
             	<xpath expr="//field[@name='property_account_position']" position="replace"/>
             	<xpath expr="//label[@for='vat']" position="replace"/>
             	<xpath expr="//div[@name='vat_info']" position="replace"/>
