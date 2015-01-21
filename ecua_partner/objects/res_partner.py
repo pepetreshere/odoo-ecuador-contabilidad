@@ -157,6 +157,10 @@ class res_partner(osv.osv):
                 vals['name'] = self._with_single_spaces(vals['name'])
                 newvalue = self._with_single_spaces(vals['name'])  or _('None')
                 changes.append(_("Name: from '%s' to '%s'") %(oldmodel,newvalue ))
+            if 'comercial_name' in vals and partner.comercial_name != vals['comercial_name']: # en el caso que sea un campo
+                oldmodel = partner.comercial_name or _('None')
+                newvalue = vals['comercial_name'] or _('None')
+                changes.append(_("Comercial Name: from '%s' to '%s'") %(oldmodel,newvalue ))
             if 'is_company' in vals and partner.is_company != vals['is_company']: # en el caso que sea un campo booleano
                
                 if partner.is_company:
@@ -325,6 +329,13 @@ class res_partner(osv.osv):
         res = super(res_partner, self).create(cr, uid, values, context)
         return res
 
+    def onchange_type(self, cr, uid, ids, is_company, context=None):
+        res=super(res_partner,self).onchange_type(cr, uid, ids,is_company, context)
+
+        if is_company==False:
+            res['value']['comercial_name'] = ""
+        return res
+
     def _avoid_duplicated_vat(self, cr, uid, ids, context=None):
         '''
         Valida que solo exista un RUC o cedula
@@ -352,6 +363,7 @@ class res_partner(osv.osv):
         return True    
     
     _columns = {
+                'comercial_name': fields.char('Comercial Name', size=256),
                 #'type_vat': fields.function(_get_vat, type="char", method=True, string='Name', store=True),
                 'type_vat_type': fields.function(_get_type_vat, type="char", method=True, string='Name', store=True),
                 'type_vat': fields.char('Comercial Name', size=256),
@@ -360,6 +372,7 @@ class res_partner(osv.osv):
     _defaults = {
                  'customer':True,
                  'supplier':True,
+                 'comercial_name': "",
                  'user_id': lambda self, cr, uid, context: uid,
                  'section_id': _get_user_default_sales_team,
                  'country_id': _get_user_country_id,
@@ -565,14 +578,15 @@ class res_partner(osv.osv):
             return res2
         return res
 
-     def __init__(self, pool, cr):
-         """
-         TODO eliminar este script luego de una vez de uso!!
-         :param pool:
-         :param cr:
-         :return:
-         """
-         cr.execute('update res_partner set vat=upper(vat)')
+    def __init__(self, pool, cr):
+        """
+        TODO eliminar este script luego de una vez de uso!!
+        :param pool:
+        :param cr:
+        :return:
+        """
+        super(res_partner, self).__init__(pool, cr)
+        #cr.execute('update res_partner set vat=upper(vat)')
     
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         '''
@@ -595,7 +609,7 @@ class res_partner(osv.osv):
                 # OR operator (and given the fact that the 'name' lookup results come from the ir.translation table
                 # Performing a quick memory merge of ids in Python will give much better performance
                 ids = set()
-                ids.update(self.search(cr, user, args + ['|','|',('vat',operator,name),('ref',operator,name)], limit=limit, context=context))
+                ids.update(self.search(cr, user, args + ['|','|',('vat',operator,name),('ref',operator,name),('comercial_name',operator,name)], limit=limit, context=context))
                 if not limit or len(ids) < limit:
                     # we may underrun the limit because of dupes in the results, that's fine
                     ids.update(self.search(cr, user, args + [('name',operator,name)], limit=(limit and (limit-len(ids)) or False) , context=context))
@@ -604,7 +618,7 @@ class res_partner(osv.osv):
                 ptrn = re.compile('(\[(.*?)\])')
                 res = ptrn.search(name)
                 if res:
-                    ids = self.search(cr, user, ['|','|',('vat','=', res.group(2)),('ref','=', res.group(2))] + args, limit=limit, context=context)
+                    ids = self.search(cr, user, ['|','|',('vat','=', res.group(2)),('ref','=', res.group(2)),('comercial_name','=', res.group(2))] + args, limit=limit, context=context)
  
         else: #cuando el usuario no ha escrito nada aun
             ids = self.search(cr, user, args, limit=limit, context=context)
