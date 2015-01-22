@@ -364,9 +364,8 @@ class res_partner(osv.osv):
     
     _columns = {
                 'comercial_name': fields.char('Comercial Name', size=256),
-                #'type_vat': fields.function(_get_vat, type="char", method=True, string='Name', store=True),
+                'type_vat': fields.function(_get_vat, type="char", method=True, string='Name', store=True),
                 'type_vat_type': fields.function(_get_type_vat, type="char", method=True, string='Name', store=True),
-                'type_vat': fields.char('Comercial Name', size=256),
                }
     
     _defaults = {
