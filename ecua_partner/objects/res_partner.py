@@ -261,7 +261,7 @@ class res_partner(osv.osv):
             
             if 'vat' in vals and partner.vat != vals['vat']: # en el caso que sea un campo
                 oldmodel = partner.vat or _('None')
-                newvalue = vals['vat'].upper() or _('None')
+                newvalue = (vals['vat'] or '').upper() or _('None')
                 changes.append(_("NIF: from '%s' to '%s'") %(oldmodel, newvalue ))
                 
             if 'property_account_receivable' in vals and partner.property_account_receivable != vals['property_account_receivable']: # en el caso que sea un objeto
