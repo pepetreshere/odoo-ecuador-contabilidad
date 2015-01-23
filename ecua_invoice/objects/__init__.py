@@ -21,6 +21,7 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 
+import trait_context_for_fields
 import shop
 import res_users
 import account_invoice
