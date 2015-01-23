@@ -5,6 +5,7 @@ from lxml import etree
 
 class trait_context_for_fields(osv.osv):
     _name = 'trait.context.for.fields'
+    _auto = False
 
     def _freeze_field(self, name, fields, arch, freeze):
         """
