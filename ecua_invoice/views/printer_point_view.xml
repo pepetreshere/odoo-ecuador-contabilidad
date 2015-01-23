@@ -27,13 +27,23 @@
 			<field name="priority">16</field>
 			<field name="arch" type="xml">
 	            <form string="Printer Point" version="7.0">
-					<group col="4">
-						<group string="Printer Point" col="2" colspan="2">
+					<group col="2">
+						<group string="Printer Point">
 							<field name="name" label="Printer Point" />
-							<field name="shop_id" attrs="{'readonly': 1}" />
+							<field name="shop_id" attrs="{'readonly': ['|','|','|','|',('invoice_sequence_id', '!=', False),('refund_sequence_id', '!=', False),('debit_note_sequence_id', '!=', False),('withhold_sequence_id', '!=', False),('waybill_sequence_id', '!=', False)]}" />
+							<!-- se usa company_id porque al ser un campo derivado/funcional, este se analiza
+							     unicamente tras haberse guardado. esto porque como prefix es tambien un campo
+							     funcional, se refrescara al valor correcto tambien tras haberse guardado. este
+							     campo es bueno para reflejar tardiamente el campo shop_id. -->
+							<field name="prefix" attrs="{'readonly': 1, 'invisible': [('company_id', '=', False)]}" />
 							<field name="company_id" attrs="{'readonly': 1, 'invisible': 1}" />
-							<field name="prefix" attrs="{'readonly': 1}" />
+							<!-- en todos estos, los hacemos invisibles si el prefijo es falso. es decir, solamente
+							     tras tener una tienda es que estos campos pueden ser visibles. por otro lado, si
+							     el prefijo preexistente es verdadero pero la tienda actualmente es falsa, entonces
+							     deberiamos tambien ocultar el campo. -->
 							<field name="invoice_sequence_id"
+								   attrs="{'invisible': ['|', ('prefix', '=', False), ('shop_id', '=', False)]}"
+								   domain="[('code', '=', 'sri.printer.point'), ('prefix', '=', prefix)]"
 								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
                                              'fix_name': True, 'default_name': prefix + 'factura',
 										     'fix_company_id': True, 'default_company_id': company_id,
@@ -44,6 +54,8 @@
 										     'fix_number_increment': True, 'default_number_increment': 1,
                                              'fix_implementation': True, 'default_implementation': 'no_gap'}" />
 							<field name="refund_sequence_id"
+								   attrs="{'invisible': ['|', ('prefix', '=', False), ('shop_id', '=', False)]}"
+								   domain="[('code', '=', 'sri.printer.point'), ('prefix', '=', prefix)]"
 								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
                                              'fix_name': True, 'default_name': prefix + 'notacredito',
 										     'fix_company_id': True, 'default_company_id': company_id,
@@ -54,6 +66,8 @@
 										     'fix_number_increment': True, 'default_number_increment': 1,
                                              'fix_implementation': True, 'default_implementation': 'no_gap'}" />
 							<field name="debit_note_sequence_id"
+								   attrs="{'invisible': ['|', ('prefix', '=', False), ('shop_id', '=', False)]}"
+								   domain="[('code', '=', 'sri.printer.point'), ('prefix', '=', prefix)]"
 								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
                                              'fix_name': True, 'default_name': prefix + 'notadebito',
 										     'fix_company_id': True, 'default_company_id': company_id,
@@ -64,6 +78,8 @@
 										     'fix_number_increment': True, 'default_number_increment': 1,
                                              'fix_implementation': True, 'default_implementation': 'no_gap'}" />
 							<field name="withhold_sequence_id"
+								   attrs="{'invisible': ['|', ('prefix', '=', False), ('shop_id', '=', False)]}"
+								   domain="[('code', '=', 'sri.printer.point'), ('prefix', '=', prefix)]"
 								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
                                              'fix_name': True, 'default_name': prefix + 'retencion',
 										     'fix_company_id': True, 'default_company_id': company_id,
@@ -74,6 +90,8 @@
 										     'fix_number_increment': True, 'default_number_increment': 1,
                                              'fix_implementation': True, 'default_implementation': 'no_gap'}" />
 							<field name="waybill_sequence_id"
+								   attrs="{'invisible': ['|', ('prefix', '=', False), ('shop_id', '=', False)]}"
+								   domain="[('code', '=', 'sri.printer.point'), ('prefix', '=', prefix)]"
 								   context="{'fix_code': True, 'default_code': 'sri.printer.point',
                                              'fix_name': True, 'default_name': prefix + 'guiaremision',
 										     'fix_company_id': True, 'default_company_id': company_id,
@@ -83,6 +101,9 @@
                                              'fix_padding': True, 'default_padding': 9,
 										     'fix_number_increment': True, 'default_number_increment': 1,
                                              'fix_implementation': True, 'default_implementation': 'no_gap'}" />
+						</group>
+						<group>
+							<!-- vacio -->
 						</group>
 					</group>
 				</form>
