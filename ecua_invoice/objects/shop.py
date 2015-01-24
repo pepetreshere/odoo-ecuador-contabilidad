@@ -72,9 +72,9 @@ sale_shop()
 
 
 class sri_printer_point(osv.osv):
-    
     _name = 'sri.printer.point'
     _inherit = 'trait.context.for.fields'
+    _auto = True
 
     def _get_prefix(self, cr, uid, ids, name, arg, context=None):
         """
