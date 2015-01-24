@@ -1084,7 +1084,7 @@ class account_withhold(osv.osv):
             #for withhold in ret_obj.search(cr, uid, [('invoice_id.partner_id.id', '=', ret.invoice_id.partner_id.id), ('transaction_type','=','sale'), ('id','not in',tuple(ids))]):
                 #if ret_obj.browse(cr, uid, [withhold,], context)[0].number_sale == ret.number_sale:
                     #raise osv.except_osv(_('Error!'), _("There is an withhold with number %s of client %s") % (ret.number_sale, ret.invoice_id.partner_id.name))                        
-            move_line_ids = acc_move_line_obj.search(cr, uid, [('invoice', '=', ret.invoice_id.id),('state','=','valid'), ('account_id.type', '=', 'receivable'), ('reconcile_id', '=', False)], context=context)
+            move_line_ids = acc_move_line_obj.search(cr, uid, [('invoice', '=', ret.invoice_id.id),('state','=','valid'), ('account_id.type', '=', 'receivable'), ('reconcile_id', '=', False)], order='date_maturity ASC', context=context)
             #se asume que solo existira un movimiento sin conciliar por factura 
             #TODO ->>> Esto debe ser verificado mediante pruebas
             move_line = acc_move_line_obj.browse(cr, uid, move_line_ids, context)[0]
