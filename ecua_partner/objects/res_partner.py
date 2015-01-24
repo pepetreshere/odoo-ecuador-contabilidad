@@ -322,7 +322,7 @@ class res_partner(osv.osv):
             values['name'] = self._with_single_spaces(values['name'])
         if 'email' in values and values['email']:
             values['email'] = values['email'].strip()
-        if 'vat' in values:
+        if 'vat' in values and values['vat']:
             values['vat'] = (values['vat'] or '').upper()
         else:
             values['vat'] = _('None')
