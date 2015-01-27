@@ -325,7 +325,8 @@ class res_partner(osv.osv):
         if 'vat' in values and values['vat']:
             values['vat'] = (values['vat'] or '').upper()
         else:
-            values['vat'] = _('None')
+            pass
+            #values['vat'] = _('None')
         res = super(res_partner, self).create(cr, uid, values, context)
         return res
 
