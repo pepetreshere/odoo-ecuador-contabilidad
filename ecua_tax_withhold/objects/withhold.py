@@ -554,7 +554,8 @@ class account_withhold(osv.osv):
                                     help="Period related with this transaction", track_visibility='onchange'), 
         'shop_id': fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]},
                                    help="Shop related with this transaction, only need in Purchase", track_visibility='onchange'),
-        'printer_id': fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]},
+        'printer_id': fields.many2one('sri.printer.point', 'Printer Point', readonly=True,
+                                      states={'draft':[('readonly',False)]}, ondelete='restrict',
                                       help="Printer Point related with this transaction, only need in Purchase", track_visibility='onchange'),
         #P.R: Required the authorization asociated depending if is purchase or sale
         'authorization_sri': fields.char('Authorization', readonly=True, states={'draft':[('readonly',False)]}, size=32,
