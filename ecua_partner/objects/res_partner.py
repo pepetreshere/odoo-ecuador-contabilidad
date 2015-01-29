@@ -80,6 +80,8 @@ class res_partner(osv.osv):
                 elif aux[0:2] == "EC":
                     if len(aux[2:])== 10:
                         name ="CEDULA"
+                    elif aux[2:]== '9999999999999':
+                        name ="CONSUMIDOR FINAL"
                     elif len(aux[2:])== 13:
                         name ="RUC"
                     else:
