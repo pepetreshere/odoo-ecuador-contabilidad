@@ -357,7 +357,7 @@ class account_invoice(osv.osv):
        'date_invoice': lambda *a: time.strftime('%Y-%m-%d'),
     } 
     
-    def _prepare_invoice_header(self, cr, uid, partner_id, type, inv_date=None, context=None):
+    def _prepare_invoice_header(self, cr, uid, partner_id, type, inv_date=None, printer_id=None, context=None):
         """Retorna los valores ecuatorianos para el header de una factura
            Puede ser usado en ordenes de compra, venta, proyectos, facturacion desde bodegas, etc
            @partner_id es un objeto partner
@@ -374,7 +374,7 @@ class account_invoice(osv.osv):
         invoice_phone = partner_obj.get_company_phone(cr,uid,partner_id)
         
         inv_obj=self.pool.get('account.invoice')
-        printer_id=inv_obj._default_printer_point(cr,uid,uid)
+        printer_id=printer_id or inv_obj._default_printer_point(cr,uid,uid)
         internal_number = ''
         if printer_id:
             internal_number = inv_obj._suggested_internal_number(cr, uid, printer_id, type, context)

@@ -30,6 +30,20 @@ from tools.translate import _
 class sale_order(osv.osv):
     _inherit = 'sale.order'
     _name = 'sale.order'
+
+    _columns = {
+        'printer_id': fields.many2one('sri.printer.point', 'Printer Point', help="Printer Point for this sale")
+    }
+
+    def onchange_printer_id(self, cr, uid, ids, printer_id, context=None):
+        """
+        assigns the shop_id from the printer_id
+        """
+        return {
+            'value': {
+                'shop_id': printer_id and printer_id.shop_id
+            }
+        }
         
     def _get_default_shop(self, cr, uid, context=None):
         '''
