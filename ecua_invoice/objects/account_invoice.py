@@ -315,7 +315,8 @@ class account_invoice(osv.osv):
         """
         super(account_invoice, self).action_number(cr, uid, ids, context)
         for obj_inv in self.browse(cr, uid, ids, context=context):
-            self.write(cr, uid, ids, {'internal_number': self._get_internal_number_by_sequence(cr, uid, obj_inv, context)})
+            number = self._get_internal_number_by_sequence(cr, uid, obj_inv, context)
+            self.write(cr, uid, ids, {'internal_number': number, 'name': number, 'number': number})
         return True
 
     def _default_internal_number(self, cr, uid, context=None):
