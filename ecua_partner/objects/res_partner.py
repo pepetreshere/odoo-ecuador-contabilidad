@@ -80,6 +80,8 @@ class res_partner(osv.osv):
                 elif aux[0:2] == "EC":
                     if len(aux[2:])== 10:
                         name ="CEDULA"
+                    elif aux[2:]== '9999999999999':
+                        name ="CONSUMIDOR FINAL"
                     elif len(aux[2:])== 13:
                         name ="RUC"
                     else:
@@ -325,7 +327,8 @@ class res_partner(osv.osv):
         if 'vat' in values and values['vat']:
             values['vat'] = (values['vat'] or '').upper()
         else:
-            values['vat'] = _('None')
+            pass
+            #values['vat'] = _('None')
         res = super(res_partner, self).create(cr, uid, values, context)
         return res
 

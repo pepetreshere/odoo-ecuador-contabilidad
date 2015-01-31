@@ -48,9 +48,25 @@ class sale_shop(osv.osv):
                     }
     
     _defaults = {
-        'invoice_lines': 15,  
-        }
-    
+        'invoice_lines': 15,
+        'number': '001'
+    }
+
+    def _number_unique(self, cr, uid, ids, context=None):
+        """
+        Verifica que el número de tienda no pueda repetirse.
+        """
+        def f(obj):
+            #verificamos que no exista OTRO elemento con un numero
+            #de sri igual al que tenemos
+            return not self.search(cr, uid, [('id', '!=', obj.id), ('number', '=', obj.number)], context=context)
+        #devolvemos False si alguno de los elementos tiene su numero repetido
+        #en base a otro elemento.
+        return all(f(obj) for obj in self.browse(cr, uid, ids, context=context))
+
+    _constraints = [(_number_unique, 'El número de SRI de tienda debe ser único', ['number'])]
+
+
 #    def _check_number(self,cr,uid,ids,context=None):
 #        for n in self.browse(cr, uid, ids):
 #            if not n.number:

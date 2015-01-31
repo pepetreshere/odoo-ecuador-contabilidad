@@ -81,6 +81,7 @@ class account_invoice(osv.osv):
                 'printer_id':fields.many2one('sri.printer.point', 'Printer Point', required=False),
                 'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
                 'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
+                'invoice_rectification_id':fields.many2one('account.invoice', 'Modified Invoice', readonly=True, states={'draft':[('readonly', False)]}),
                 'base_doce_iva': fields.function(_amount_all_3, digits_compute=dp.get_precision('Account'), string='IVA 12 Base',
                             store=True,
                             multi='all1'),
@@ -314,7 +315,8 @@ class account_invoice(osv.osv):
         """
         super(account_invoice, self).action_number(cr, uid, ids, context)
         for obj_inv in self.browse(cr, uid, ids, context=context):
-            self.write(cr, uid, ids, {'internal_number': self._get_internal_number_by_sequence(cr, uid, obj_inv, context)})
+            number = self._get_internal_number_by_sequence(cr, uid, obj_inv, context)
+            self.write(cr, uid, ids, {'internal_number': number, 'name': number, 'number': number})
         return True
 
     def _default_internal_number(self, cr, uid, context=None):
