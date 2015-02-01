@@ -36,7 +36,7 @@
         """,
     "author" : "TRESCloud Cia. Ltda.",
     "website" : "http://www.trescloud.com",
-    "depends" : ['base','sale'],
+    "depends" : ['base', 'sale', 'ecua_invoice'],
     "category" : "Custom Modules",
     "init_xml" : [],
     "demo_xml" : [],
