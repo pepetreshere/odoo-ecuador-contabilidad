@@ -10,7 +10,9 @@
 							<attribute name="context">{'partner_id': partner_id}</attribute>
 					</xpath>
 					<xpath expr="//field[@name='shop_id']" position="after">
-						<field name="printer_id" required="1" on_change="onchange_printer_id(printer_id)" />
+						<field name="printer_id" 
+							required="1" 
+							on_change="onchange_printer_id(printer_id)" />
 					</xpath>
 					<xpath expr="//field[@name='shop_id']" position="attributes">
 						<attribute name="invisible">1</attribute>

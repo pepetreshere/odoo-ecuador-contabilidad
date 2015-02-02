@@ -32,17 +32,32 @@ class sale_order(osv.osv):
     _name = 'sale.order'
 
     _columns = {
-        'printer_id': fields.many2one('sri.printer.point', 'Printer Point', help="Printer Point for this sale")
+        'printer_id': fields.many2one('sri.printer.point', 
+                                      'Printer Point',
+                                      required=False, #False por compatibilidad hacia atras 
+                                      readonly=True, 
+                                      help="SRI Printer Point",
+                                      states={'draft': [('readonly', False)], 
+                                              'sent': [('readonly', False)],
+                                              }, 
+                                      track_visibility='onchange')
     }
 
     def onchange_printer_id(self, cr, uid, ids, printer_id, context=None):
         """
         assigns the shop_id from the printer_id
         """
+        shop_id = False
+        if printer_id:
+            printer_obj = self.pool.get('sri.printer.point')
+            printer = printer_obj.browse(cr, uid, uid, context)
+            shop_id = printer.shop_id.id
+        else:
+            shop_id = False
         return {
             'value': {
-                'shop_id': printer_id and printer_id.shop_id
-            }
+                'shop_id': shop_id
+            }            
         }
         
     def _get_default_shop(self, cr, uid, context=None):
@@ -59,8 +74,16 @@ class sale_order(osv.osv):
                 return user.printer_id.shop_id.id
         return super(sale_order, self)._get_default_shop(cr, uid, context)
 
+    def _default_printer_point(self, cr, uid, context=None):
+        '''
+        Nos apegamos a lo ya programado en facturas, debe seguir la misma logica
+        '''
+        invoice_obj = self.pool.get('account.invoice')
+        return invoice_obj._default_printer_point(cr, uid, context=context)
+
     _defaults = {
         'shop_id': _get_default_shop,
+        'printer_id': _default_printer_point,
     }
 sale_order()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
