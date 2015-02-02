@@ -37,7 +37,7 @@ class sale_order(osv.osv):
             context = {}
         invoice_vals = super(sale_order, self)._prepare_invoice(cr, uid, order, lines, context)
 
-        printer_id = order.printer_id
+        printer_id = order.printer_id.id
 
         inv_obj=self.pool.get('account.invoice')
         invoice_header_for_ecuador = inv_obj._prepare_invoice_header(cr, uid, invoice_vals['partner_id'], 

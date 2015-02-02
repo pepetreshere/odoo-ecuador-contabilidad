@@ -50,7 +50,7 @@ class sale_order(osv.osv):
         shop_id = False
         if printer_id:
             printer_obj = self.pool.get('sri.printer.point')
-            printer = printer_obj.browse(cr, uid, uid, context)
+            printer = printer_obj.browse(cr, uid, printer_id, context)
             shop_id = printer.shop_id.id
         else:
             shop_id = False
