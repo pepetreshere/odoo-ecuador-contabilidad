@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ########################################################################
 #
 # @authors: Andres Calle, TRESCloud Cia Ltda.
@@ -235,10 +235,54 @@ class sri_printer_point(osv.osv):
         return res
     
     def unlink(self, cr, uid, ids, context=None):
+        """
+        Ademas de eliminar las secuencias de factura asociadas, elimina el
+          propio objeto PERO verificando los constraints de restrict (esos
+          constraints son de base de datos).
+        """
         for obj in self.browse(cr, uid, ids, context=context):
             if obj.invoice_sequence_id:
                 obj.invoice_sequence_id.unlink()
-        return super(sri_printer_point, self).unlink(cr, uid, ids, context=context)
+        try:
+            return super(sri_printer_point, self).unlink(cr, uid, ids, context=context)
+        except:
+            raise osv.except_osv('Error!', u'No se puede eliminar un punto de impresión en uso. Verifique facturas,'
+                                           u' usuarios, retenciones, y guías de remisión que hagan uso de dicho punto'
+                                           u' de impresión')
+
+    def copy(self, cr, uid, id, default=None, context=None):
+        """
+        Infiere el próximo número para usar para el printer point.
+        """
+        browsed_this = self.browse(cr, uid, id, context=context)
+        if browsed_this.shop_id:
+            #inspecciono todas las impresoras en el mismo shop_id que esta
+            searched_ids = self.search(cr, uid, [('shop_id', '=', browsed_this.shop_id.id)], context=context)
+            #obtengo todos los numeros de impresora utilizados, los convierto a enteros y los ordeno sin repetir
+            numbers = sorted({int(browsed_each.name or '0') for browsed_each in self.browse(cr, uid, searched_ids, context=context)})
+            #creo el proximo numero de impresora buscando el "hueco" en el que lo pueda meter, o bien
+            #al final, si es que no se usaron los 999 puntos para la tienda
+            next_print_number = 1
+            for number in numbers:
+                #si el numero coincide con el actual
+                #    vamos al proximo numero. si llegamos a 1000 tiramos error.
+                #sino, rompemos el ciclo y nos quedamos con next_print_number como el que tenemos que usar
+                if next_print_number == number:
+                    next_print_number += 1
+                    if next_print_number == 1000:
+                        raise osv.except_osv('Error!', 'No se puede copiar el punto de impresión: no se pueden crear'
+                                                       ' más puntos de impresión para la misma tienda.')
+                else:
+                    break
+            #el numero con el que nos quedamos lo convertimos a un formato "000"
+            default = default or {}
+            default['name'] = str(next_print_number).zfill(3)
+            default['invoice_sequence_id'] = False
+            default['refund_sequence_id'] = False
+            default['debit_note_sequence_id'] = False
+            default['withhold_sequence_id'] = False
+            default['waybill_sequence_id'] = False
+        return super(sri_printer_point, self).copy(cr, uid, id, default, context=context)
 
     _constraints = (
         (_verify_repeated_sequences,

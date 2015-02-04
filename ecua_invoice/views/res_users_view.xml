@@ -8,7 +8,7 @@
 			<field name="arch" type="xml">
 				<data>
 					<xpath expr="//field[@name='tz']" position="after">
-						<field name="printer_id"/>
+						<field name="printer_id" options='{"no_open": True, "create":False, "create_edit": False}'/>
 					</xpath>
 				</data>
 			</field>

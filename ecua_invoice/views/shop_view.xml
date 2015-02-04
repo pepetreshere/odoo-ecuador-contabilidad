@@ -52,21 +52,6 @@
 			</field>
 		</record>
 		-->
-		<record model="ir.ui.view" id="sri_printer_point_tree_view">
-			<field name="name">sri.printer.point.tree</field>
-			<field name="model">sri.printer.point</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Printer Points">
-					<field name="name"/>
-					<field name="shop_id" />
-					<field name="invoice_sequence_id" />
-					<field name="refund_sequence_id" />
-					<field name="debit_note_sequence_id" />
-					<field name="withhold_sequence_id" />
-					<field name="waybill_sequence_id" />
-				</tree>
-			</field>
-		</record>
+		<delete model="ir.ui.view" id="sri_printer_point_tree_view" />
     </data>
 </openerp>

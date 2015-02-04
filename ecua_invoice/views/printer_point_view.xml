@@ -10,6 +10,7 @@
 			<field name="arch" type="xml">
 				<tree string="Printer Point">
 				    <field name="name"/>
+					<field name="shop_id" />
 					<field name="invoice_sequence_id" />
 					<field name="refund_sequence_id" />
 					<field name="debit_note_sequence_id" />
