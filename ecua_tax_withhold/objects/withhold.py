@@ -1006,8 +1006,9 @@ class account_withhold(osv.osv):
 
         # verify if exist a withhold approve for the invoice related
         if withhold_obj.search(cr, uid, [('invoice_id', '=', withhold.invoice_id.id),
-                                         ('state', '=', 'approved')], context=context):
-            raise osv.except_osv('Warning!', _("Withhold for this invoice already exist!!"))
+                                         ('state', '=', 'approved'),
+                                         ('id', '!=', withhold.id)], context=context):
+            raise osv.except_osv('Error!', _("Ya existe una retención para esta factura!!"))
 
         self._validate_period_date(cr, uid, withhold.creation_date, withhold.invoice_id.id, raise_error=True, context=context)
 
