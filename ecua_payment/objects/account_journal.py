@@ -20,7 +20,10 @@ from osv import fields,osv
 class account_journal(osv.osv):
     _inherit = 'account.journal'
     _columns = {
-                'default_imbalance_account_id':fields.many2one('account.journal', 'Imbalance Journal Default',
-                                                help="Default Journal for Imbalance Movements"), 
+                'default_writeoff_acc_id': fields.many2one('account.account', 
+                                                           'Default Open Balance Reconcile Account',
+                                                           domain="['|',('force_reconcile','=',True),('type','!=','other')]", 
+                                                           help="Default account for reconciling the open balance in vouchers, for withhold journals a payable accounts in favor of the partner should be used (ie 2011001 - ANTICIPOS DE CLIENTES)"
+                                                           )
                 }
 account_journal()

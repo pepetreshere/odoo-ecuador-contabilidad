@@ -27,21 +27,22 @@
    # 'sequence': 4,
     'complexity': "hard",
     "author" : "TRESCLOUD CÍA LTDA",
-    "website" : "http://www.ecuadorenlinea.net/",
+    "website" : "http://www.trescloud.com/",
     "category" : "Ecuadorian Regulations",
     "depends" : [
                  'base',
-                 'account',
-                 'account_voucher',
-                 'account_accountant',
-                 'purchase',
-                 'sale',
-                 'stock',
-                 'sale_stock',
+                 #'account', #ya es dependencia de ecua_invoice a travez del modulo l10n
+                 #'account_voucher', #ya es dependencia de ecua_invoice a travez del account
+                 #'account_accountant', #ya es dependencia de ecua_invoice a travez del account
+                 #'purchase', #no es requerido para efectos estrictamente contables
+                 #'sale', #no es requerido para efectos estrictamente contables, cuando se requiere se usa el modulo ecua_salte_to_invoice
+                 #'stock', #no es requerido para efectos estrictamente contables vinculados a las retenciones
+                 #'sale_stock', #no es requerido para efectos estrictamente contables vinculados a las retenciones
                  'report_aeroo',
                  'report_aeroo_ooo',
-                 'l10n_ec_niif_minimal',
+                 #'l10n_ec_niif_minimal', #ya es dependencia de ecua_invoice a travez del account
                  'ecua_invoice',
+                 'ecua_payment', #requerido porq ecua_paymente agrega el concepto de cuenta de desajuste por defecto
                  'mail',
                  #'ecua_documentos_sri',
                  ],
@@ -51,14 +52,17 @@
     tax collection for tax authority.
     
     This module adds the base features for issuing tributary document
-    called "withhold" in sales and purchases.
+    called "withhold" in sales and purchases, allowing for several features like:
+    - Withhold for payed customer invoices
+    - Withhold for open customer and supplier invoices
+    - Other related features
     
-    This module is part of a bigger framework of "ecua" modules, 
-    and reuses mainly code based on work by Christopher Ormaza and 
-    improvements from TRESCLOUD and 4RSOFT.
+    This module is part of a bigger framework of "ecua" modules 
+    by TRESCLOUD.
     
     Config:
-    In the company configuration the taxes 
+    In the company configuration the taxes
+    In the journal the accounts linked to withhold journals 
     
     Authors,
     
