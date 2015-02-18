@@ -52,14 +52,17 @@
     tax collection for tax authority.
     
     This module adds the base features for issuing tributary document
-    called "withhold" in sales and purchases.
+    called "withhold" in sales and purchases, allowing for several features like:
+    - Withhold for payed customer invoices
+    - Withhold for open customer and supplier invoices
+    - Other related features
     
-    This module is part of a bigger framework of "ecua" modules, 
-    and reuses mainly code based on work by Christopher Ormaza and 
-    improvements from TRESCLOUD and 4RSOFT.
+    This module is part of a bigger framework of "ecua" modules 
+    by TRESCLOUD.
     
     Config:
-    In the company configuration the taxes 
+    In the company configuration the taxes
+    In the journal the accounts linked to withhold journals 
     
     Authors,
     
