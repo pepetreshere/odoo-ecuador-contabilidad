@@ -31,19 +31,19 @@
     "category" : "Ecuadorian Regulations",
     "depends" : [
                  'base',
-                 #'account',
-                 #'account_voucher',
-                 #'account_accountant',
-                 #'purchase',
-                 #'sale',
-                 #'stock',
-                 #'sale_stock',
+                 #'account', #ya es dependencia de ecua_invoice a travez del modulo l10n
+                 #'account_voucher', #ya es dependencia de ecua_invoice a travez del account
+                 #'account_accountant', #ya es dependencia de ecua_invoice a travez del account
+                 #'purchase', #no es requerido para efectos estrictamente contables
+                 #'sale', #no es requerido para efectos estrictamente contables, cuando se requiere se usa el modulo ecua_salte_to_invoice
+                 #'stock', #no es requerido para efectos estrictamente contables vinculados a las retenciones
+                 #'sale_stock', #no es requerido para efectos estrictamente contables vinculados a las retenciones
                  'report_aeroo',
                  'report_aeroo_ooo',
-                 #'l10n_ec_niif_minimal',
+                 #'l10n_ec_niif_minimal', #ya es dependencia de ecua_invoice a travez del account
                  'ecua_invoice',
-                 'ecua_payment',
-                 #'mail',
+                 'ecua_payment', #requerido porq ecua_paymente agrega el concepto de cuenta de desajuste por defecto
+                 'mail',
                  #'ecua_documentos_sri',
                  ],
     "description": """
