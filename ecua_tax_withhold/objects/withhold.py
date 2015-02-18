@@ -1035,79 +1035,114 @@ class account_withhold(osv.osv):
     # All actions exist because this work througth wizars and to prevent freezeing the screen 
     # the buttons call object function that execute the transition in workflow   
     def action_approve_sale(self, cr, uid, ids, context=None):
-
+        '''
+        Aprueba la retencion emitida por nuestros clientes
+        Cuando el valor a retener es mayor al saldo de la factura (ejemplo una factura pagada) 
+        el account.voucher creado usa la cuenta de desajuste por defecto
+        '''
         acc_vou_obj = self.pool.get('account.voucher')
         acc_vou_line_obj = self.pool.get('account.voucher.line')
         acc_move_line_obj = self.pool.get('account.move.line')
         ret_line_obj = self.pool.get('account.withhold.line')
-        period_obj = self.pool.get('account.period')
-        company = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
+        #period_obj = self.pool.get('account.period')
+        company = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id #TODO: Cambiar por la compañia asociada al documento
         journal_iva = company.journal_iva_id
         journal_ir = company.journal_ir_id
-        
-        if not journal_iva.default_debit_account_id:
-            raise osv.except_osv('Error!', _("Iva Retention Journal doesn't have debit account assigned!, can't complete operation"))
-        
-        if not journal_ir.default_debit_account_id:
-            raise osv.except_osv('Error!', _("IR Retention Journal doesn't have debit account assigned!, can't complete operation"))
-        
+                
         currency_pool = self.pool.get('res.currency')
-        ret_obj = self.pool.get('account.withhold')
+        #ret_obj = self.pool.get('account.withhold') #TODO: eliminar esta variable, no hacia falta pues se tenia a self.
         
         for ret in self.browse(cr, uid, ids, context=None):
-            #lineas contables no conciliadas que pertenecen a la factura
-            # Se requiere la suma de los haberes a cancelar
+            #Calculamos los subtotales de la retencion
+            #TODO: no recalcular el total sino tomarlo del campo de total que ya existe en la retencion
+            
             total = 0
             sub_iva = 0
             sub_renta = 0
             
             for withhold in ret.withhold_line_ids:
+                #Calculamos los valores totales a retener
+                #TODO: no recalcular el total sino tomarlo del campo de total que ya existe en la retencion
                 total = total + withhold.tax_amount
             
                 if withhold.description == 'iva':
+                    #TODO: no recalcular el total sino tomarlo del campo de total que ya existe en la retencion
                     sub_iva = sub_iva + withhold.tax_amount
                 
                 if withhold.description == 'renta':
+                    #TODO: no recalcular el total sino tomarlo del campo de total que ya existe en la retencion
                     sub_renta = sub_renta + withhold.tax_amount
                 
-            # TRESCLOUD - TODO - days deberia seleccionarse en una seccion de configuracion contable
-            day = timedelta(days=5)
-            add_date = datetime(*time.strptime(ret.invoice_id.date_invoice,'%Y-%m-%d')[:5])+ day
-            if ret.invoice_id.amount_total < total:
-                raise osv.except_osv('Error!', _("Amount of withhold is bigger than residual value of invoice, please verify"))
+            #Realizamos validaciones para ventas
+            #TODO: Mover estas validaciones a una seccion comun de validaciones para compras y ventas
+            error = ''
+            if not journal_iva.default_debit_account_id:
+                error += 'El Diario de Retencion IVA debe tener una cuenta contable de debito asignada!'
+                error += '\n'
+
+            if not journal_iva.default_writeoff_acc_id:
+                error += 'El Diario de Retencion IVA debe tener una cuenta contable de conciliacion de balance abierto por defecto!'
+                error += '\n'
+                
+            if not journal_ir.default_debit_account_id:
+                error += 'El Diario de Retencion I.R. (Impuesto a la Renta) debe tener una cuenta contable de debito asignada!'
+                error += '\n'
+
+            if not journal_ir.default_writeoff_acc_id:
+                error += 'El Diario de Retencion I.R. (Impuesto a la Renta) debe tener una cuenta contable de conciliacion de balance abierto por defecto!'
+                error += '\n'
+                
+            if sub_iva + sub_renta != total:
+                error += 'El total a retener no coincide con el subtotal de retencion de IVA + el subtotal de retencion IR. Contacte a soporte tecnico.'
+                error += '\n'
             if ret.creation_date < ret.invoice_id.date_invoice:
-                raise osv.except_osv('Error!', _("The date of withhold can not be least than the date of invoice"))
-            # P.R: Esta parte se controla con los onchage ya que es solo una advertencia
-            #if ret.creation_date > add_date.strftime('%Y-%m-%d'):
-                #raise osv.except_osv('Error!', _("The date of withhold can not be more than 5 days from the date of the invoice"))
+                error += 'La fecha de la retencion no puede ser menor que la fecha de la factura'
+                error += '\n'
             if total == 0.0:
-                raise osv.except_osv('Error!', _("Amount of withhold can't be zero, please verify"))
-            #P.R. puede emitirse mas de 1 retencion, una por el iva y otra por la renta
+                error += 'La cantidad de la retencion no puede ser cero'
+                error += '\n'
+            #TODO: En la version 2015 se puede emitir retenciones en cantidad cero para empresas publicas, parece ser, se debe verificar
+            if ret.invoice_id.amount_total < total:
+                #TODO: Desarrollar 
+                error += 'La cantidad a retener es mayor que el valor residual de la factura'
+                error += '\n'
+
+            if not ret.invoice_id.state in ['open','paid']:
+                error += 'La factura no ha sido aprobada por lo que no se puede generar una retencion'
+                error += '\n'
+            #P.R. Una retencion puede afectar mas de una factura, hasta una mejor solucion se remueve el constraint
+            #TODO: Permitir hacer retenciones de varias facturas a la vez
             #for withhold in ret_obj.search(cr, uid, [('invoice_id.partner_id.id', '=', ret.invoice_id.partner_id.id), ('transaction_type','=','sale'), ('id','not in',tuple(ids))]):
                 #if ret_obj.browse(cr, uid, [withhold,], context)[0].number_sale == ret.number_sale:
                     #raise osv.except_osv(_('Error!'), _("There is an withhold with number %s of client %s") % (ret.number_sale, ret.invoice_id.partner_id.name))                        
-            move_line_ids = acc_move_line_obj.search(cr, uid, [('invoice', '=', ret.invoice_id.id),('state','=','valid'), ('account_id.type', '=', 'receivable'), ('reconcile_id', '=', False)], order='date_maturity ASC', context=context)
-            #se asume que solo existira un movimiento sin conciliar por factura 
-            #TODO ->>> Esto debe ser verificado mediante pruebas
-            move_line = acc_move_line_obj.browse(cr, uid, move_line_ids, context)[0]
-            #se comprueba que la factura se encuentre abierta
-            if not ret.invoice_id.state == 'open':
-                raise osv.except_osv('Error!', "The invoice is not open, you cannot add a withhold")
             #Se verifica que el residuo de la factura no sea superior a lo que se va a retener
             #TRESCLOUD - TODO discutir si se elimina esta condicion, los saldos a favor del cliente podrian conciliarse con otras facturas.
             #if ret.invoice_id.residual < ret.total:
                 #raise osv.except_osv('Error!', "The residual value of invoice is lower than total value of withholding")
             #Obtengo el periodo de la factura
-            period=ret.invoice_id.period_id.id
-            #creacion de vauchers de pago con retencion
+            #TODO: El periodo debe ser el de la retencion, en ausencia del mismo puede usarse el de la factura
+            if not ret.invoice_id.period_id.id == ret.period_id.id:
+                error += 'La retencion y la factura deben pertenecer al mismo periodo contable'
+                error += '\n'
+                
+            if not ret.period_id.state in ['draft']:
+                error += 'El periodo contable ya se encuentra cerrado, no se puede crear nuevos documentos'
+                error += '\n'
+            
+            if not ret_line_obj.search(cr, uid, [('withhold_id', '=', ret['id']),]): #verifico que existan lineas de retencion
+                error += 'Debe existir al menos una linea de retencion'
+                error += '\n'
+            
+            if error:
+                #lanzamos todos los errores encontrados en un solo resultado
+                raise osv.except_osv('Error!', error)
+            
+            #creacion de vouchers de pago con retencion
             line_ids = ret_line_obj.search(cr, uid, [('withhold_id', '=', ret['id']),])
             lines = ret_line_obj.browse(cr, uid, line_ids, context)
             
-            #variable que guarda los ids de los voucher que se crean para su posterior uso desde retencion
-            vouchers = []
-            #verifico que existan lineas de retencion
-            if lines:
-                #creo la cabecera del voucher para las retenciones de iva
+            #creo la cabecera del voucher para las retenciones de iva
+            if sub_iva > 0:
                 vals_vou_iva = {
                             'type':'receipt',
                             #periodo de la factura
@@ -1126,11 +1161,18 @@ class account_withhold(osv.osv):
                             #'withhold_id': ret.id,
                             'partner_id': ret.invoice_id.partner_id.id,
                             'withhold_id': ret.id,
-                }
-                #creo la cabecera del voucher para las lineas de iva
+                            #TODO: Se podria obtener con el onchange del diario o algo asi, 
+                            #asi el modulo base del sistema podria encargarse del calculo de cuanto va a las lineas y
+                            #cuanto al writeoff_amount
+                            'writeoff_amount': 0.0, 
+                            'payment_option': 'without_writeoff',
+                            'writeoff_acc_id': False,
+                            'comment': '',
+                }            
                 voucher_iva = acc_vou_obj.create(cr, uid, vals_vou_iva, context)
-                vouchers.append(voucher_iva)
-                #creo la cabecera del voucher para las retenciones de renta
+            
+            #creo la cabecera del voucher para las retenciones de renta
+            if sub_renta > 0:
                 vals_vou_ir = {'type':'receipt',
                             #periodo de la factura
                             'period_id': ret.invoice_id.period_id.id,
@@ -1148,68 +1190,102 @@ class account_withhold(osv.osv):
                             #'withhold_id': ret.id,
                             'partner_id': ret.invoice_id.partner_id.id,
                             'withhold_id': ret.id,
+                            #TODO: Se podria obtener con el onchange del diario o algo asi, 
+                            #asi el modulo base del sistema podria encargarse del calculo de cuanto va a las lineas y
+                            #cuanto al writeoff_amount
+                            'writeoff_amount': 0.0, 
+                            'payment_option': 'without_writeoff',
+                            'writeoff_acc_id': False,
+                            'comment': '',
                 }
-                #creo la cabecera del voucher para las lineas de renta
                 voucher_ir = acc_vou_obj.create(cr, uid, vals_vou_ir, context)
-                vouchers.append(voucher_ir)
-                #recorro cada linea de retencion
-                #variables de control para verificar que existen lineas de cada tipo
-                renta = False
-                iva = False
-                for line in lines:
+            
+            
+            #recorro cada linea de retencion y creo lineas de account.voucher hasta cruzarlas
+            vals_vou_iva_line = {}
+            vals_vou_ir_line = {}
+            if total <= ret.invoice_id.residual: #si hay saldo abierto mayor al valor retenido cruzamos el saldo abierto con la retencion 
+                #TODO:
+                # En este sprint se asume que el primer movimiento contable cubrira con éxito el valor a retener 
+                # Se deberia reprogramar esta parte para q soporte por ejemplo plazos de pago o varios movimientos de cruce
+                # Esta seccion se puede reprogramar basandose en el modulo sale_order_for_retail donde ya se hizo funcionalidad similar
+
+                #Obtenemos las lineas contables con las que cruzaremos la retencion, si acaso alguna (si la factura esta pagada no hay ninguna)
+                move_line_ids = acc_move_line_obj.search(cr, uid, [('invoice', 'in', [ret.invoice_id.id]), #TODO: Permitir varios ids para una retencion que afecta a varias facturas 
+                                                                   ('state','=','valid'), 
+                                                                   ('account_id.type', '=', 'receivable'), 
+                                                                   ('reconcile_id', '=', False)], 
+                                                         order='date_maturity ASC', 
+                                                         context=context)
+
+                move_line = acc_move_line_obj.browse(cr, uid, move_line_ids, context)[0]
+                for line in lines: #creamos las lineas de account voucher
                     #verifico las lineas por tipo para seleccionar el diario correspondiente
                     if line.description == 'iva':
-                        vals_vou__iva_line = {
-                                    'voucher_id': voucher_iva,
+                        vals_vou_iva_line = {
+                                    'voucher_id': voucher_iva, #fue definida dentro de un if (si esta out of scope es un error intencional)
                                     'move_line_id':move_line.id,
                                     'account_id':move_line.account_id.id,
                                     'amount':line.tax_amount,
                                          }
-                        acc_vou_line_obj.create(cr, uid, vals_vou__iva_line, context)
-                        #se cambia el valor de la variable ya que se encontro al menos una linea de retencion
-                        iva = True
-                        
+                        acc_vou_line_obj.create(cr, uid, vals_vou_iva_line, context)
+
                     if line.description == 'renta':
                         vals_vou_ir_line = {
-                                    'voucher_id': voucher_ir,
+                                    'voucher_id': voucher_ir, #fue definida dentro de un if (si esta out of scope es un error intencional)
                                     'move_line_id':move_line.id,
                                     'account_id':move_line.account_id.id,
                                     'amount':line.tax_amount,
                                          }
                         acc_vou_line_obj.create(cr, uid, vals_vou_ir_line, context)
-                        #se cambia el valor de la variable ya que se encontro al menos una linea de retencion
-                        renta = True
-                #se aprueba los voucher de rentencion, y se verifica que existan lineas
-                #acc_vou_obj.proforma_voucher(cr, uid, [voucher_iva, voucher_ir,], context)
-                if iva:
-                    #por medio de la variable contexto se especifica que tipo de impuesto es del voucher
-                    self.action_move_line_create(cr, uid, [voucher_iva,], context={'tax':'iva', 'withhold_id':ret.id})
-                #en caso de no existir lineas en el voucher se elimina el que se creo anteriormente
-                else:
-                    acc_vou_obj.unlink(cr, uid,[voucher_iva,])
-                    vouchers.remove(voucher_iva)
-                
-                if renta:
-                    #por medio de la variable contexto se especifica que tipo de impuesto es del voucher
-                    self.action_move_line_create(cr, uid, [voucher_ir,], context={'tax':'renta', 'withhold_id':ret.id})
-                #en caso de no existir lineas en el voucher se elimina el que se creo anteriormente
-                else:
-                    acc_vou_obj.unlink(cr, uid,[voucher_ir,])
-                    vouchers.remove(voucher_ir)
-                #print vouchers
-                #se cambia el estado de la retencion
-                if vouchers:
-                    acc_vou_obj.write(cr, uid, vouchers, {'withhold_id':ret.id},context)
-                date_ret = None
-                if not ret.creation_date:
-                    date_ret = time.strftime('%Y-%m-%d')
-                else:
-                    date_ret = ret.creation_date
-                self.write(cr, uid, [ret.id,], { 'state': 'approved','creation_date': date_ret,'number':ret.number, 'period_id': period}, context)
-            else:
-                raise osv.except_osv('Error!', _("You can't aprove a withhold without withhold lines"))
+            else: 
+                #No generamos lineas de account.voucher pues no hay con que cruzar, en su lugar usamos la cuenta de desajuste
+                #'writeoff_amount': 0.0, no se requiere porque al guardar el voucher este campo se calcula solo
+                #TODO: El codigo actual no permite cruzar parte de la retencion con el saldo abierto y otra parte con la cuenta de desajuste
+                payment_option = 'with_writeoff'
+                if sub_iva:
+                    res_onchange = acc_vou_obj.onchange_payment_option(cr, uid, voucher_ir, payment_option, journal_ir.id)
+                    res_onchange['value'].update({'payment_option': payment_option,
+                                                  'comment': 'SALDO RET. IVA: %s' % ret.number 
+                                                  })
+                    acc_vou_obj.write(cr, uid, voucher_iva, res_onchange['value'], context=context)
+                if sub_renta:
+                    res_onchange = acc_vou_obj.onchange_payment_option(cr, uid, voucher_ir, payment_option, journal_ir.id)
+                    res_onchange['value'].update({'payment_option': payment_option,
+                                                  'comment': 'SALDO RET. IR: %s' % ret.number 
+                                                  })
+                    acc_vou_obj.write(cr, uid, voucher_ir, res_onchange['value'], context=context)
+
             
+            vouchers = [] #variable que guarda los ids de los voucher que se crean para su posterior uso desde retencion
+            #agregamos las lineas a los account.voucher
+            if sub_iva:
+                self.action_move_line_create(cr, uid, [voucher_iva,], context={'tax':'iva', 'withhold_id':ret.id})
+                vouchers.append(voucher_iva)
+            if sub_renta:
+                self.action_move_line_create(cr, uid, [voucher_ir,], context={'tax':'renta', 'withhold_id':ret.id})
+                vouchers.append(voucher_ir)                    
+            
+            #se cambia el estado de la retencion
+            #if vouchers: #comentado porque no hay razon por la que vouchers no existiria
+            #acc_vou_obj.write(cr, uid, vouchers, {'withhold_id':ret.id},context)
+            self.write(cr, uid, [ret.id,], {
+                                            'state': 'approved',
+                                            #'creation_date': ret.creation_date, #TODO: quiza ya no hace falta 
+                                            #'number':ret.number, #TODO: quiza ya no hace falta 
+                                            #'period_id': ret.invoice_id.period_id.id, #TODO: quiza ya no hace falta
+                                            },
+                       context=context)
+        
+        #codigo viejo a remover
+        #else:
+            #raise osv.except_osv('Error!', _("You can't aprove a withhold without withhold lines"))
+        
         return True
+
+
+
+
 
     def _action_approve_purchase_validate(self, cr, uid, withhold, number, context):
         """
