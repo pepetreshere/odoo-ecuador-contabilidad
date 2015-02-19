@@ -32,7 +32,7 @@
             	</xpath>
                 <xpath expr="//field[@name='comment']" position="attributes">
 					<attribute name="placeholder">Reason for reconciliation</attribute>
-					<attribute name="attrs">{'required':[('payment_option','!=','without_writeoff')]}</attribute>
+					<attribute name="attrs">{'invisible':[('payment_option','!=','with_writeoff')],'required':[('payment_option','!=','without_writeoff')]}</attribute>
             	</xpath>
             </field>
         </record>
@@ -65,7 +65,7 @@
             	</xpath>
             	<xpath expr="//field[@name='comment']" position="attributes">
 					<attribute name="placeholder">Reason for reconciliation</attribute>
-					<attribute name="attrs">{'required':[('payment_option','!=','without_writeoff')]}</attribute>
+					<attribute name="attrs">{'invisible':[('payment_option','!=','with_writeoff')],'required':[('payment_option','!=','without_writeoff')]}</attribute>
             	</xpath>
             </field>
         </record>
