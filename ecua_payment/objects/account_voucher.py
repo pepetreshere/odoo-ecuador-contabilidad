@@ -11,7 +11,8 @@ class account_voucher(osv.osv):
     _columns = {
         'reference': fields.char('Ref #', size=64, readonly=True, states={'draft':[('readonly',False)]}, help="Is the number of document payment is file (eg footnote exit # 043)"),
         'name':fields.char('Memo', size=256, readonly=True, states={'draft':[('readonly',False)]}, help="Provides an explanation of the payment."),
-        'responsible_id':fields.many2one('res.users', 'Responsible', change_default=1, help="Responsible for payment (the user who approves the payment)"),        
+        'responsible_id':fields.many2one('res.users', 'Responsible', change_default=1, help="Responsible for payment (the user who approves the payment)"),
+        'comment': fields.char('Counterpart Comment', size=64, readonly=True, states={'draft': [('readonly', False)]}, ontracking=True)        
                 }
     _defaults = {
         'responsible_id':lambda self, cr, uid, context: uid,
