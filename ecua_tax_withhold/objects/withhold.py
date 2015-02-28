@@ -1204,7 +1204,10 @@ class account_withhold(osv.osv):
             #recorro cada linea de retencion y creo lineas de account.voucher hasta cruzarlas
             vals_vou_iva_line = {}
             vals_vou_ir_line = {}
-            if total <= ret.invoice_id.residual: #si hay saldo abierto mayor al valor retenido cruzamos el saldo abierto con la retencion 
+            total_to_compare = ret.invoice_id.residual
+            #comparacion de floats de dimension conocida, comparamos si es menor o igual
+            #TODO: Investigar otras opciones como assert_almost_equal
+            if total < total_to_compare or abs(total < total_to_compare) < 0.0000000001 : #si hay saldo abierto mayor al valor retenido cruzamos el saldo abierto con la retencion 
                 #TODO:
                 # En este sprint se asume que el primer movimiento contable cubrira con éxito el valor a retener 
                 # Se deberia reprogramar esta parte para q soporte por ejemplo plazos de pago o varios movimientos de cruce
