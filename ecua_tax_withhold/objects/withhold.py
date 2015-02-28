@@ -974,13 +974,19 @@ class account_withhold(osv.osv):
         delta_withhold = date_withhold - date_invoice
         
         #Check if the date is in the same period
-        if date_invoice.year != date_withhold.year or date_invoice.month != date_withhold.month:
-            message = _('The withhold must be in the same period that the invoice.!')
+        #la retencion puede emitirse en el mes actual o en el mes siguiente (hasta 5 dias)
+        invoice_month = date_invoice.month
+        invoice_next_month = invoice_month + 1
+        if invoice_next_month == 13:
+            invoice_next_month = 1
+            
+        if date_invoice.year != date_withhold.year or date_withhold.month not in [invoice_month, invoice_next_month]:
+            message = _('La retencion debe estar en el mismo periodo que la factura, o en el periodo inmediato siguiente (hasta 5 desde la recepcion de la factura')
             if raise_error:
                 raise osv.except_osv(_('Error !'), message)
             else:
                 warning = {
-                       'title': _('Warning!!!'),
+                       'title': _('Advertencia!!!'),
                        'message': message,
                            }
                 return {
@@ -990,9 +996,9 @@ class account_withhold(osv.osv):
         #Check if the date is more than 5 days from invoice date
         if delta_withhold.days > 5:
             if not raise_error:
-                message = _('The withhold should be issued up to 5 days of invoice. Currently the system allows you to record this withhold at your own risk')
+                message = _('La retencion debe emitirse hasta 5 dias de recibida la factura, puede continuar bajo su propia responsabilidad')
                 warning = {
-                       'title': _('Warning!!!'),
+                       'title': _('Advertencia!!!'),
                        'message': message,
                            }
                 return {
