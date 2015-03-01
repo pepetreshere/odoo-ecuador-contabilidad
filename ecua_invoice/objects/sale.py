@@ -47,6 +47,7 @@ class sale_order(osv.osv):
         """
         assigns the shop_id from the printer_id
         """
+        res1 = {'value': {},'warning':{},'domain':{}}
         shop_id = False
         if printer_id:
             printer_obj = self.pool.get('sri.printer.point')
@@ -54,11 +55,27 @@ class sale_order(osv.osv):
             shop_id = printer.shop_id.id
         else:
             shop_id = False
-        return {
-            'value': {
-                'shop_id': shop_id
-            }            
-        }
+
+        #usamos super porque en este modulo eliminamos la funcionalidad antigua para moverla a onchange_printer_id
+        res2 = super(sale_order, self).onchange_shop_id(cr, uid, ids, shop_id, context=context)
+        
+        if res2.get('value',False):
+            res1['value'].update(res2['value'])
+        if res2.get('warning',False):
+            res1['warning'].update(res2['warning'])
+        if res2.get('domain',False):
+            res1['domain'].update(res2['domain'])
+            
+        res1['value'].update({'shop_id': shop_id})
+
+        return res1
+        
+    def onchange_shop_id(self, cr, uid, ids, shop_id, context=None):
+        '''
+        Este metodo ya no hace nada porque puede interferir con el metodo onchange_printer_id
+        '''
+        res1 = {'value': {},'warning':{},'domain':{}}
+        return res1
         
     def _get_default_shop(self, cr, uid, context=None):
         '''
