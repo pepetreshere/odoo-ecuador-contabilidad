@@ -644,7 +644,7 @@ class account_withhold(osv.osv):
         
         if not number:
             return {'value': value}
-        
+        number = str(number)
         number_split = str.split(number,"-")
 
         if len(number_split) == 3 and number_split[2] !="":
