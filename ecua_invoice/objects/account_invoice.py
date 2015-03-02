@@ -186,7 +186,7 @@ class account_invoice(osv.osv):
         
         if not internal_number:
             return {'value': value}
-        
+        internal_number = str(internal_number)
         number_split = str.split(internal_number,"-")
 
         if len(number_split) == 3 and number_split[2] !="":
