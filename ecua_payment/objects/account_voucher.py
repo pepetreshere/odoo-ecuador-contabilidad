@@ -58,6 +58,8 @@ class account_voucher(osv.osv):
         Por facilidad se ha programado que al cambiar el diario el payment_option se cambie a without_writeoff
         '''
         res = super(account_voucher, self).onchange_journal(cr, uid, ids, journal_id, line_ids, tax_id, partner_id, date, amount, ttype, company_id, context=context)
+        if not res:
+            res = {}
         if not res.get('value',False):
             res['value'] = {}
 
