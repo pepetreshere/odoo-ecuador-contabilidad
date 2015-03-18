@@ -18,11 +18,20 @@
 from osv import fields,osv
 
 class res_company(osv.osv):
-    _inherit = 'res.company'
+    _name = 'res.company'
+    _inherit = ['res.company', 'mail.thread']
     _columns = {
+                'tax_wi_id': fields.many2one('account.tax', 'Default withhold tax',
+                                             help="This withhold tax will be assigned by default on new products.",
+                                             track_visibility='onchange'),
                 'journal_iva_id':fields.many2one('account.journal', 'IVA Journal',
-                                                 help="Journal for IVA Movements"), 
+                                                 help="Journal for IVA Movements",
+                                                 track_visibility='onchange'),
                 'journal_ir_id':fields.many2one('account.journal', 'IR Journal',
-                                                help="Journal for IR Movements"), 
+                                                help="Journal for IR Movements",
+                                                track_visibility='onchange'),
                 }
+    _defaults = {  
+       # 'tax_wi_id': lambda *a: time.strftime('%Y-%m-%d'),  
+        }
 res_company()

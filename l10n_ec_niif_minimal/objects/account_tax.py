@@ -28,7 +28,25 @@ from osv import fields, osv
 from tools import config
 from tools.translate import _
 
+
 class account_tax(osv.osv):
+    
+    def _is_account_editor(self, cr, uid, ids, field_name, arg, context):
+        """
+        Implementation for `is_account_editor` functional field.
+
+        This function determines whether the current user belongs to group 'l10n_ec_niif_minimal.ecua_group_account_editor'.
+        Users in such group are the only allowed to edit certain special items about -in this case- the taxes.
+        """
+        #Impl. details:
+        #    We get the groups ids from the current user. a list of integer values (i.e. database ids) is returned.
+        #    We get the group named 'l10n_ec_niif_minimal.ecua_group_account_editor' and keep only its database id.
+        #    We check whether such database id is among the user groups id list.
+        #    We return whether such check is True or not (for each asked id).
+        groups = self.pool.get('res.users').read(cr, uid, uid)['groups_id']
+        group = self.pool.get('ir.model.data').get_object(cr, uid, 'l10n_ec_niif_minimal', 'ecua_group_account_editor', context=context).id
+        return {id: (group in groups) for id in ids if id}
+            
     _inherit = "account.tax"
     _columns = {
                 'type_ec':fields.selection([
@@ -40,9 +58,12 @@ class account_tax(osv.osv):
                 'assets':fields.boolean('Assets', required=False),
                 'imports':fields.boolean('Imports', required=False),
                 'exports':fields.boolean('Exports', required=False),
-                'tax_system':fields.boolean('Tax system', required=False, help="Tax system facturadeuna.com, you can not change"),
-                
-                                    }
+                'tax_system':fields.boolean('System Tax', required=False, help="Systems tax, this tax is used by the internal system setup, you should not change. Ask your accountant for support.", write=['l10n_ec_niif_minimal.ecua_group_account_editor']),
+                'is_account_editor':fields.function(_is_account_editor, type='boolean', method=True, string='Is Account Editor')
+                }
+    
+    _order = "description"
+
 
     def _unit_compute_inv(self, cr, uid, taxes, price_unit, product=None, partner=None):
         res = super(account_tax, self)._unit_compute_inv(cr, uid, taxes, price_unit, product, partner)

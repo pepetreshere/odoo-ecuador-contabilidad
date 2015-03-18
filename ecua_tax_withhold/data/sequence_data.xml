@@ -35,6 +35,9 @@
 			<field name="sequence_id" ref="withhold_ir_sequence" />
 			<field name="user_id" ref="base.user_root" />
 		</record>
-
+    <!-- Company tax tTODO: HAY UN ERROR EN LA CREACION DEL LOS XML_ID LAS CUENTAS EN EL MINIMAL-->
+		<!-- <record id="312" model="res.company">
+            <field name="tax_wi_id" ref="l10n_ec_niif_minimal.312"/>        
+        </record> -->
 	</data>
 </openerp>

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-		<!-- Eliminamos ids de las vistas viejas -->
-		<!-- Se puede remover este codigo luego de actualizar los servers -->
-		<delete id="account_invoice_supplier_view_ecua" model="ir.ui.view"/>
-		
 		<!-- SUPPLIER INVOICE -->			
 		<record model="ir.ui.view" id="invoice_supplier_form_ecua">
 			<field name="name">invoice.supplier.form.ecua</field>
@@ -26,6 +22,17 @@
 						widget="selection"
 						required="0" 
 						/>
+				</xpath>
+
+				<!-- colocamos los subtotales -->
+				<xpath expr="/form/sheet/notebook/page/group/field[@name='amount_untaxed']" position="after">
+				    <field name="base_cero_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+					<field name="base_doce_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>				
+					<field name="vat_doce_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>				
+					<field name="vat_cero_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>				
+					<field name="total_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>				
+					<field name="total_with_vat" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>				
+					<field name="total_to_withhold" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
 				</xpath>
 
 				<!-- reubicamos campos a la pestana other info -->
@@ -70,8 +77,9 @@
 						attrs="{'readonly':[('state','!=','draft')]}" 
 						required="0"
 						placeholder="Your printer were you receive the document, not your suppliers one"
-						options="{'no_open': True}"
+						options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 						/>
+														
 					<field name="internal_number" required="1" 
 						attrs="{'readonly': [('state','!=','draft')]}"
 						on_change="onchange_internal_number(internal_number)"
@@ -125,6 +133,18 @@
                    		name="account_id" groups="account.group_account_user"/>
 				</xpath>
 
+				<!-- colocamos los subtotales -->
+				<xpath expr="/form/sheet/notebook/page/group/field[@name='amount_untaxed']" position="after">
+					<field name="base_cero_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" />
+					<field name="base_doce_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" />				
+					<field name="vat_doce_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+					<field name="vat_cero_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>					
+					<field name="total_iva" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>				
+					<field name="total_with_vat" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>				
+					<field name="total_to_withhold" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+									
+				</xpath>
+
 				<!-- colocamos campos nuevos -->
 				<xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
 					<field name="printer_id" 
@@ -133,7 +153,7 @@
 						attrs="{'readonly':[('state','!=','draft')]}" 
 						required="0"
 						placeholder="Your printer were you receive the document, not your suppliers one"
-						options="{'no_open': True}"
+						options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 						/>
 					<field name="internal_number" required="1" 
 						attrs="{'readonly': [('state','!=','draft')]}"
@@ -167,10 +187,15 @@
 				<filter name="invoices" position="after">
 					<filter name="Anulados" string="Facturas Anuladas" domain="[('state','=','cancel')]" help="Cancel Invoices"/>
 				</filter>
-				
+								
 				<field name="number" position="replace">
                     <field name="internal_number" string="Invoice" filter_domain="['|','|','|',('internal_number','ilike',self), ('origin','ilike',self), ('supplier_invoice_number', 'ilike', self), ('partner_id', 'child_of', self)]"/>
 				</field>
+
+				<xpath expr="/search/group//filter[@string='Period']" position="after">
+					<filter string="Punto de Impresion" icon="terp-go-month" context="{'group_by':'printer_id'}"/>
+				</xpath>
+				
 			</field>
 		</record>
 	

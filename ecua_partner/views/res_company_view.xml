@@ -10,6 +10,9 @@
 					<field name="currency_id" position="before">
 						<field name="avoid_duplicated_vat"/>
 					</field>
+					<field name="partner_id" position="after">
+						<field name="comercial_name"/>
+					</field>
 				</field>
 		</record>
 	</data>

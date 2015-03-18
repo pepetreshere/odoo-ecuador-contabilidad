@@ -27,16 +27,28 @@ from openerp.tools.translate import _
 from openerp.tools.misc import ustr
 import time
 import re #para busqueda por cedula
+import unicodedata
+
 
 class res_partner(osv.osv):
     _inherit = "res.partner"
-    _name = "res.partner"
     
     # agregamos codigo de ecuador al modulo base_vat
     #_ref_vat['ec']='EC1234567891001'
     _ref_vat = {
                 'ec': 'EC1234567891001',
                 }
+    
+    RE_EMAIL = re.compile("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
+    
+    def is_valid_email_address(self, email):
+        """
+        Returns whether a specific email address is valid or
+            not. It is intended to be used by other objects,
+            so this should work:
+                pool.get('res.partner').is_valid_email_address("foo@bar.com")
+        """
+        return bool(self.RE_EMAIL.match(email.strip()))
         
     def _get_user_default_sales_team(self, cr, uid, ids, context={}):
         user= self.pool.get('res.users').browse(cr,uid,uid)
@@ -56,7 +68,7 @@ class res_partner(osv.osv):
         company_id = self.pool.get('res.users').browse(cr,uid,uid).company_id
         is_validation=company_id.is_validation
         return is_validation or False
-    
+     #FUNCION QUE NOS VALIDA  EL TIPO DE iDENTIFICACIoN DE LOS CLIENTES Y PROVEEDORES
     def _get_vat(self, cr, uid, ids, vat, arg, context):
         res = {}
         for record in self.browse(cr, uid, ids, context=context):
@@ -68,15 +80,36 @@ class res_partner(osv.osv):
                 elif aux[0:2] == "EC":
                     if len(aux[2:])== 10:
                         name ="CEDULA"
+                    elif aux[2:]== '9999999999999':
+                        name ="CONSUMIDOR FINAL"
                     elif len(aux[2:])== 13:
                         name ="RUC"
                     else:
                         name = 'OTROS'
                 else:
                     name = 'PASAPORTE'
-            res[record.id] = name
+                res[record.id] = name           
         return res
-    
+    #FUNCION QUE NOS MUESTRA  LOS TIPOS DE RUC DE ACUERDO  AL TIPO DE CONTRIBUYENTE
+    def _get_type_vat(self, cr, uid, ids, vat, arg, context):
+        res, contar, aux = {}, '', ''
+        for record in self.browse(cr, uid, ids, context=context):
+            if record.vat:
+                aux = record.vat
+            contar =str(aux)
+            if contar:
+                 type=int(contar[4])
+                 if  type==9:
+                    name= 'JURIDICO Y EXTRANJEROS SIN CEDULA'
+                 elif type==6:
+                    name= 'PUBLICOS'
+                 elif type<6 and type>=0 :
+                     name= 'PERSONA NATURAL'
+                 elif type==7 or type==8 :
+                     name= 'Error en el Ingreso de los datos'
+                 res[record.id] = name           
+        return res
+
     def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
         """
         Se alerta sobre la sobreescritura de datos contables 
@@ -123,7 +156,8 @@ class res_partner(osv.osv):
             #Agregamos log de cambios
             if 'name' in vals and partner.name != vals['name']: # en el caso que sea un campo
                 oldmodel = partner.name or _('None')
-                newvalue = vals['name'] or _('None')
+                vals['name'] = self._with_single_spaces(vals['name'])
+                newvalue = self._with_single_spaces(vals['name'])  or _('None')
                 changes.append(_("Name: from '%s' to '%s'") %(oldmodel,newvalue ))
             if 'comercial_name' in vals and partner.comercial_name != vals['comercial_name']: # en el caso que sea un campo
                 oldmodel = partner.comercial_name or _('None')
@@ -215,6 +249,7 @@ class res_partner(osv.osv):
                 changes.append(_("Fax: from '%s' to '%s'") %(oldmodel,newvalue ))
             if 'email' in vals and partner.email != vals['email']: # en el caso que sea un campo
                 oldmodel = partner.email or _('None')
+                vals['email'] = vals['email'].strip()
                 newvalue = vals['email'] or _('None')
                 changes.append(_("Email: from '%s' to '%s'") %(oldmodel,newvalue ))
             
@@ -228,8 +263,8 @@ class res_partner(osv.osv):
             
             if 'vat' in vals and partner.vat != vals['vat']: # en el caso que sea un campo
                 oldmodel = partner.vat or _('None')
-                newvalue = vals['vat'] or _('None')
-                changes.append(_("NIF: from '%s' to '%s'") %(oldmodel,newvalue ))
+                newvalue = (vals['vat'] or '').upper() or _('None')
+                changes.append(_("NIF: from '%s' to '%s'") %(oldmodel, newvalue ))
                 
             if 'property_account_receivable' in vals and partner.property_account_receivable != vals['property_account_receivable']: # en el caso que sea un objeto
                 oldmodel = partner.property_account_receivable.name or _('None')
@@ -285,17 +320,21 @@ class res_partner(osv.osv):
 
     def create(self, cr, uid, values, context=None):
         if not context: context = {}
+        if 'name' in values:
+            values['name'] = self._with_single_spaces(values['name'])
+        if 'email' in values and values['email']:
+            values['email'] = values['email'].strip()
+        if 'vat' in values and values['vat']:
+            values['vat'] = (values['vat'] or '').upper()
+        else:
+            pass
+            #values['vat'] = _('None')
         res = super(res_partner, self).create(cr, uid, values, context)
         return res
- 
-    
-    def onchange_type(self, cr, uid, ids, is_company, context=None):
-
-        return self.pool.get('res.partner').onchange_type(cr, uid, partner_ids, is_company, context=context)
 
     def onchange_type(self, cr, uid, ids, is_company, context=None):
         res=super(res_partner,self).onchange_type(cr, uid, ids,is_company, context)
-       
+
         if is_company==False:
             res['value']['comercial_name'] = ""
         return res
@@ -314,24 +353,29 @@ class res_partner(osv.osv):
             if partner.vat: #si tiene cedula la valida, caso contrario no hace nada
                 if not partner.parent_id :
                     #vals = self.search(cr, uid, [('vat','=',partner.vat),('is_company','=',True)], context=context)
-                    vals = self.search(cr, uid, [('vat','=',partner.vat),('parent_id','=',None)], context=context)
+                    vat = partner.vat
+                    if (len(vat) == 12 or len(vat) == 15) and vat[0:2].lower() == 'ec':
+                        vat = vat[0:12]
+                        #es un RUC o una cedula, validamos que no exista uno que haga ilike positivo con EC0987654321
+                        #(siendo ese valor solamente de referencia).
+                        criterion = ('vat', '=ilike', vat + '%')
+                    else:
+                        criterion = ('vat', '=', partner.vat)
+                    vals = self.search(cr, uid, [criterion,('parent_id','=',None)], context=context)
                     return not len(vals)>1
         return True    
     
     _columns = {
                 'comercial_name': fields.char('Comercial Name', size=256),
-                'type_vat': fields.function(_get_vat, type="char", string='Name', store=True),
-            #    'is_validation':fields.boolean('is Validation', required=False,change_default=True, select=True), 
-              #  'type_vat': fields.function(_get_vat, method=True, type='char', string='Type Vat', store=True), 
-                
-
+                'type_vat': fields.function(_get_vat, type="char", method=True, string='Name', store=True),
+                'type_vat_type': fields.function(_get_type_vat, type="char", method=True, string='Name', store=True),
                }
     
     _defaults = {
                  'customer':True,
                  'supplier':True,
-                 'user_id': lambda self, cr, uid, context: uid,
                  'comercial_name': "",
+                 'user_id': lambda self, cr, uid, context: uid,
                  'section_id': _get_user_default_sales_team,
                  'country_id': _get_user_country_id,
                  'date': fields.date.context_today,
@@ -404,8 +448,84 @@ class res_partner(osv.osv):
                 res=True
         return res
     
+    def _with_single_spaces(self, s):
+        """
+        Ensure a text value does not hold multiple
+        spaces, by converting it to a single-spaced value.
+        
+        It also strips the leading and trailing spaces
+        from the given value.
+        
+        Example:
+           << self._with_single_spaces("  lorem  ipsum  dolor  ")
+           >> "lorem ipsum dolor"
+        """
+        return re.sub('\s+', ' ', s.strip())
+    
+    def _strip_accents(self, s):
+        """
+        Strips accents from a string. This is used only to validate
+        the string as a name, and NOT to alter the name string in the
+        database.
+        
+        Examples:
+            << self._strip_accents("Jose Miguel Rivero")
+            >> "Jose Miguel Rivero"
+            << self._strip_accents("Nestor Carlos Kirchner")
+            >> "Nestor Carlos Kirchner"
+            << self._strip_accents("Carlos Arguello")
+            >> "Carlos Arguello"
+            << self._strip_accents("Maria Fernanda Bonanni")
+            >> "Maria Fernanda Bonanni"
+        """
+        return ''.join(c for c in unicodedata.normalize('NFD', s)
+                       if unicodedata.category(c) != 'Mn')
+
+    def _check_valid_name(self, cr, uid, ids, context=None):
+        """
+        Checks whether the company name is valid, by
+        sub-checking whether it is a company or a natural person
+        and disallowing, for the latter, the chance to have a
+        name with stuff other than letters. Note that accented
+        letters ARE allowed and they do not count as special
+        characters, but numbers, dots, commas, dashes, slashes,
+        etc. count as special characters.
+        
+        Example for natural person names:
+            Jose Miguel Rivero
+            Nestor Carlos Kirchner
+            Carlos Argüello
+            Maria Fernanda Bonanni
+        
+        Examples for company names:
+            1, 2, 3 Shop
+            99¢ Shop
+            C&A
+            Dunkin' & Donuts
+        """
+        res = True
+        natural_check = re.compile("^[a-zA-Z\' ]+$")
+        company_check = re.compile("^[a-zA-Z0-9\' .,&/-]+$")
+        for partner in self.browse(cr, uid, ids, context=context):
+            unaccented_name = self._strip_accents(partner.name)
+            match = natural_check.match(unaccented_name) if not partner.is_company else company_check.match(unaccented_name)
+            if not match:
+                res = False
+        return res
+    
     def _construct_constraint_msg(self, cr, uid, ids, context=None):
         res = super(res_partner, self)._construct_constraint_msg(cr, uid, ids, context=context)
+        return res
+    
+    def _valid_email(self, cr, uid, ids, context=None):
+        """
+        Validates an email address by calling
+            is_valid_email_address.
+        """
+        res = True
+        for partner in self.browse(cr, uid, ids, context=context):
+            if partner.email and not self.is_valid_email_address(partner.email):
+                res = False
         return res
     
     _constraints = [
@@ -414,8 +534,18 @@ class res_partner(osv.osv):
                      _avoid_duplicated_vat, 
                      _('Error: The VAT Number must be unique, there is already another person/company with this vat number. You should search the conflicting partner by VAT before proceeding'),
                      ['vat']
+                    ),
+                    (
+                     _check_valid_name,
+                     _('Error: El nombre de un contacto que sea persona natural debe contener solamente letras. Los nombres de las empresas pueden tener adicionalmente números y otros caracteres.'),
+                     ['name']
                      ),
-                    ]
+                    (
+                     _valid_email,
+                     _(u'Error: La direccion de correo electronico es invalida'),
+                     ['email']
+                    )
+                   ]
 
     def _display_name_compute(self, cr, uid, ids, name, args, context=None):
         '''
@@ -449,6 +579,16 @@ class res_partner(osv.osv):
                 res2.append((partner_id, new_name))
             return res2
         return res
+
+    def __init__(self, pool, cr):
+        """
+        TODO eliminar este script luego de una vez de uso!!
+        :param pool:
+        :param cr:
+        :return:
+        """
+        super(res_partner, self).__init__(pool, cr)
+        cr.execute('update res_partner set vat=upper(vat)')
     
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         '''
@@ -725,7 +865,7 @@ class res_partner(osv.osv):
         return valid
     
     def get_number_identification(self, vat):
-        '''Función que toma como argumento el campo vat, se hace un slicing para tomar la parte númerica.'''  
+        '''Funcion que toma como argumento el campo vat, se hace un slicing para tomar la parte númerica.'''  
        
         identification=''        
         if vat:
@@ -734,7 +874,7 @@ class res_partner(osv.osv):
         return identification
     
     def get_code_country(self, vat):
-        '''Función que toma como argumento el campo vat, se hace un slicing para tomar la parte del código de país.'''
+        '''Funcion que toma como argumento el campo vat, se hace un slicing para tomar la parte del codigo de pais.'''
         
         code_country=''
         if vat:
@@ -743,3 +883,4 @@ class res_partner(osv.osv):
         return code_country
         
 res_partner()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

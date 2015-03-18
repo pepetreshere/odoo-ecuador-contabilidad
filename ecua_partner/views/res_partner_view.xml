@@ -1,37 +1,33 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+		<delete id="res_partner_inherit" model="ir.ui.view"/>
 		<delete id="res_partner_inherit_comercial_name" model="ir.ui.view"/>
         <delete id="view_partner_property_form_move_property" model="ir.ui.view"/>
         <delete id="view_partner_form_move_vat" model="ir.ui.view"/>
 		<delete id="view_partner_button_edit_form" model="ir.ui.view"/>
-<!-- Combinamos FDU-494 con lo que estaba antes, se mueve fiscal position y TIN bajo website en la vista de 
-cliente -->
-		<record id="res_partner_inherit_comercial_name" model="ir.ui.view">
-			<field name="name">res.partner.inherit.comercial.name</field>
+
+		<record id="view_partner_form_ecua" model="ir.ui.view">
+			<field name="name">view.partner.form.ecua</field>
 			<field name="model">res.partner</field>
 			<field name="type">form</field>
 			<field name="inherit_id" ref="base_vat.view_partner_form"/>
-			
 			<field name="arch" type="xml">
- 				<xpath expr="//field[@name='name']" position="after">
+				<xpath expr="//field[@name='name']" position="after">
 					<field name="comercial_name" placeholder="Nombre Comercial..." attrs="{'invisible':[('is_company','=',False)]}"/>
 				</xpath>
-            	<!-- Se aniade el atributo invisible para cuando un customer tenga una empresa asociada
-            	los campos se oculte  -->
             	<xpath expr="//field[@name='property_account_position']" position="replace"/>
-            	<xpath expr="//field[@name='website']" position="after">
-            		<field name="property_account_position" widget="selection"
-            		attrs="{'invisible': [('parent_id', '!=', False)]}"/>
-            	</xpath>
             	<xpath expr="//label[@for='vat']" position="replace"/>
             	<xpath expr="//div[@name='vat_info']" position="replace"/>
             	
-            	<xpath expr="//field[@name='property_account_position']" position="after">
-                    <label for="vat" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+            	<xpath expr="//field[@name='website']" position="after">
+            		<field name="property_account_position" 
+            			widget="selection"
+            			attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+            		<label for="vat" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
                     <div name="vat_info" attrs="{'invisible': [('parent_id', '!=', False)]}">
                     
-                        <field name="vat" on_change="vat_change(vat)" placeholder="e.g. BE0477472701" class="oe_inline"/>
+                        <field name="vat" on_change="vat_change(vat)" placeholder="e.g. EC0477472701" class="oe_inline" attrs="{'invisible': [('parent_id', '!=', False)], 'required': [('parent_id', '=', False)]}"/>
                      	<field name="type_vat"/>
    		                <button colspan="2" 
                         	name="button_check_vat" 
@@ -44,7 +40,7 @@ cliente -->
                         <field name="vat_subjected" class="oe_inline"/>
                     </div>
             	</xpath>
-            	
+
             </field>
 		</record>
    </data>

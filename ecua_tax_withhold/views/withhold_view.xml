@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
+		<delete model="ir.ui.view" id="view_account_withhold_form"/>
 
-		<record model="ir.ui.view" id="view_account_withhold_form">
-			<field name="name">account.withhold.form</field>
+		<!-- FORMULARIO RETENCIONES RECIBIDAS EN VENTAS -->
+		<record model="ir.ui.view" id="view_account_withhold_form_sale">
+			<field name="name">account.withhold.form.sale</field>
 			<field name="model">account.withhold</field>
 			<field name="type">form</field>
 			<field name="priority" eval="16" />
@@ -29,6 +31,7 @@
 	                        attrs="{'readonly':[('state','!=','draft')]}" />
 	                    </h1>
 	                	<div>
+							<field name="transaction_type" invisible="1" />
                 			<!-- 
 	                			Cabecera de retencion:
 	                			En la columna uno se ha colocado los campos editables
@@ -40,16 +43,18 @@
 										attrs="{'required':True}" 
 										on_change="onchange_creation_date(transaction_type, printer_id, partner_id, creation_date, invoice_id)"/>
 									<field name="printer_id"
+										string="My Printer Point"
+										help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos"
 										attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
+										placeholder="Your printer were you receive the document, not your suppliers one"
 										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"
-										options="{'no_open': True}"
+										options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 										/>
+
 								</group>
 								<group>
 									<field name="partner_id" readonly="1"/>
 									<field name="invoice_id" readonly="1"/>
-									<field name="state" invisible="1" />
-									<field name="transaction_type" invisible="1" />
 									<field name="shop_id" invisible="1" /> 
 									<field name="company_id" invisible="1" />
 									<field name="invoice_amount_untaxed" invisible="1"/>
@@ -66,17 +71,156 @@
 	                	</div>
 						<notebook>
 							<page string="Withhold Lines">
-								<field name="withhold_line_ids" nolabel="1" colspan="4" height="150"
-								attrs="{'readonly':['|',('transaction_type','!=','sale'),('state','!=','draft')], 'required':[('transaction_type','=','sale')]}">
+								<field name="withhold_line_ids" nolabel="1" height="150"
+									context="{'transaction_type': transaction_type}">
 									<tree string="Withhold Lines" editable="bottom">
 										<!--field name="fiscalyear_id" widget="selection" /-->
-										<field name="description" required="1"
-										on_change="onchange_description(description, parent.invoice_amount_untaxed, parent.invoice_vat_doce_subtotal)"/>
-										<field name="tax_id" required="1"
-										on_change="onchange_tax_id(description, tax_id, tax_base)"/>
-										<field name="tax_base" required="1"/>
+										<field name="transaction_type_line" 
+											invisible="1"/>
+										<field name="description" 
+											required="1" 
+											invisible="0"
+											on_change="onchange_description(description, parent.invoice_amount_untaxed, parent.invoice_vat_doce_subtotal)"/>
+										<field name="tax_id" 
+											invisible="1"/>
+										<field name="tax_wi_id"
+											required="1"
+											domain="[('type_ec','=',description)]"
+											on_change="onchange_tax_id(description, tax_wi_id, tax_base)"/>
+										<field name="tax_base" required="1"
+											on_change="onchange_tax_id(description, tax_wi_id, tax_base)"/>
 										<field name="tax_amount" required="1"/>
-										<field name="withhold_percentage" required="1"/>
+										<field name="withhold_percentage"
+											invisible="1"/>
+									</tree>
+								</field>
+	                            <group class="oe_subtotal_footer oe_right">
+									<field name="total_base_iva" />
+									<field name="total_iva" />
+									<field name="total_base_renta" />
+									<field name="total_renta" />
+									<field name="total" class="oe_subtotal_footer_separator" />
+								</group>
+								<div class="oe_clear">
+		                            <label for="comment"/>
+		                        </div>
+		                        <field name="comment"/>
+							</page>
+							<page string="Account voucher lines">
+			 					<field name="account_voucher_ids" colspan="4" 
+			 					nolabel="1" readonly="1">
+					 				<tree string="Account voucher lines">
+				                        <field name="name"/>
+				                        <field name="partner_id"/>
+				                        <field name="account_id" />
+				                        <field name="date_maturity"/>
+				                        <field name="debit" />
+				                        <field name="credit" />
+				                        <field name="amount_currency"/>
+				                        <field name="tax_amount"/>
+				                        <field name="state"/>
+									</tree>
+								</field> 
+							</page>
+						</notebook>
+	                </sheet>
+					<div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+                </form>
+            </field>
+        </record>
+        
+        <!-- FORMULARIO DE RETENCIONES EMITIDAS EN COMPRAS -->
+        <record model="ir.ui.view" id="view_account_withhold_form_purchase">
+			<field name="name">account.withhold.form.purchase</field>
+			<field name="model">account.withhold</field>
+			<field name="type">form</field>
+			<field name="priority" eval="16" />
+			<field name="arch" type="xml">
+	            <form string="Withhold" version="7.0">
+	                <header>
+							<button name="button_aprove" states="draft" string="Approved"
+								icon="gtk-go-forward" type="object" />
+							<button name="button_cancel" states="approved" string="Cancel"
+								groups="account.group_account_manager" icon="gtk-cancel" type="object" />
+							<button name="button_set_draft" states="canceled" string="Set to draft"
+								icon="terp-stock_effects-object-colorize" type="object" />
+							<button name="only_print_withhold" string="Print Withhold"
+								type="object" icon="gtk-print" states="approved"/>
+						<field name="state" widget="statusbar" 
+						statusbar_visible="draft,approved,canceled" 
+						statusbar_colors='{"approved":"blue","canceled":"red"}' />
+	                </header>
+	                <sheet string="Withhold">
+	                    <h1>
+	                        <label string="Number of Withhold "/>
+	                        <field name="number" class="oe_inline" required="1"
+	                        attrs="{'readonly':[('state','!=','draft')]}" />
+	                    </h1>
+	                	<div>
+							<field name="transaction_type" invisible="1" />
+                			<!-- 
+	                			Cabecera de retencion:
+	                			En la columna uno se ha colocado los campos editables
+	                			En la columna dos se ha colocado los campos no editables
+                			-->
+	                		<group col="2">
+								<group>
+									<field name="creation_date" 
+										attrs="{'required':True}" 
+										on_change="onchange_creation_date(transaction_type, printer_id, partner_id, creation_date, invoice_id)"/>
+									<field name="printer_id"
+										string="My Printer Point"
+										help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos"
+										attrs="{'invisible':[('transaction_type','=','sale')], 'required':[('transaction_type','!=','sale')]}"
+										placeholder="Your printer were you receive the document, not your suppliers one"
+										on_change="onchange_printer_id(transaction_type, printer_id, partner_id, creation_date)"
+										options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
+										/>
+								</group>
+								<group>
+									<field name="partner_id" readonly="1"/>
+									<field name="invoice_id" readonly="1"/>
+									<field name="shop_id" invisible="1" /> 
+									<field name="company_id" invisible="1" />
+									<field name="invoice_amount_untaxed" invisible="1"/>
+									<field name="invoice_vat_doce_subtotal" invisible="1"/>
+								</group>
+							</group>
+
+							<!-- <group col="4">
+								<field name="number" 
+								attrs="{'readonly':[('state','!=','draft')], 'required':True }"/>
+								<field name="creation_date" 
+								attrs="{'required':True}" />
+							</group> -->
+	                	</div>
+						<notebook>
+							<page string="Withhold Lines">
+								<field name="withhold_line_ids" nolabel="1" height="150" readonly="1"
+									context="{'transaction_type': transaction_type}">
+									<tree string="Withhold Lines" editable="bottom">
+										<!--field name="fiscalyear_id" widget="selection" /-->
+										<field name="transaction_type_line" 
+											invisible="1"/>
+										<field name="description" 
+											required="1" 
+											invisible="0"
+											on_change="onchange_description(description, parent.invoice_amount_untaxed, parent.invoice_vat_doce_subtotal)"/>
+										<field name="tax_id"
+											required="1"/>
+										<field name="tax_wi_id"
+											invisible="1"
+											required="1"
+											domain="[('type_ec','=',description)]"
+											on_change="onchange_tax_id(description, tax_wi_id, tax_base)"/>
+										<field name="tax_base" required="1"
+											on_change="onchange_tax_id(description, tax_wi_id, tax_base)"/>
+										<field name="tax_amount" required="1"/>
+										<field name="withhold_percentage"
+											invisible="1"/>
 									</tree>
 								</field>
 	                            <group class="oe_subtotal_footer oe_right">
@@ -122,6 +266,7 @@
 			<field name="model">account.withhold</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
+				<!-- los colores son redefinidos en modulos subsiguientes -->
 				<tree string="Withhold" colors="blue:state in ('draft');black:state in ('approved');gray:state in ('canceled')">
 					<field name="number"/>
 					<field name="invoice_id" string="Document" />
@@ -167,7 +312,7 @@
 			<field name="context">{'transaction_type':'sale'}</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="view_account_withhold_tree" />
+			<field name="view_id" ref="view_account_withhold_form_sale" />
             <field name="search_view_id" ref="view_account_withhold_filter"/>			
 		</record>
 
@@ -178,7 +323,7 @@
 			<field name="context">{'transaction_type':'purchase'}</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
-			<field name="view_id" ref="view_account_withhold_tree" />
+			<field name="view_id" ref="view_account_withhold_form_purchase" />
             <field name="search_view_id" ref="view_account_withhold_filter"/>
         </record>
 

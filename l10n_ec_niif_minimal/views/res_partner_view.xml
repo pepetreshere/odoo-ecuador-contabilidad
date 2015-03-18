@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+		<delete id="res_partner_inherit" model="ir.ui.view" />
+   </data>
+</openerp>

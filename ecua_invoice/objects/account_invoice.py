@@ -38,17 +38,109 @@ class account_invoice(osv.osv):
     _inherit = "account.invoice"
     _name = "account.invoice"
 
-  
+    def _amount_all_3(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        amount_untaxed = 0
+        
+        for invoice in self.browse(cr, uid, ids, context=context):
+            res[invoice.id] = {
+                'base_doce_iva': 0.00,
+                'base_cero_iva': 0.00,
+                'vat_doce_subtotal': 0.00,
+                'vat_cero_subtotal': 0.00,
+                'total_iva': 0.00,
+                'total_with_vat': 0.00,
+                'total_to_withhold':0.00,
+            }
+            
+        for line in invoice.invoice_line:
+            amount_untaxed += line.price_subtotal
+
+        for line in invoice.tax_line:               
+            if line.amount > 0:
+                if line.type_ec == 'iva' and line.amount > 0:
+                    res[invoice.id]['base_doce_iva'] += line.base
+                    res[invoice.id]['vat_doce_subtotal'] += line.amount
+                if line.type_ec == 'iva':
+                    res[invoice.id]['total_iva'] += line.amount          
+            else:
+                if line.type_ec == 'iva' and line.amount == 0:
+                    res[invoice.id]['base_cero_iva'] += line.base
+                    res[invoice.id]['vat_cero_subtotal'] += line.amount
+                res[invoice.id]['total_to_withhold'] += line.amount
+
+        res[invoice.id]['total_with_vat'] = amount_untaxed + res[invoice.id]['vat_cero_subtotal'] + res[invoice.id]['vat_doce_subtotal']
+        
+        return res
+    
     _columns = {
                 #TODO hacer obligatorio el campo name que almacenara el numero de la factura
                 'internal_number': fields.char('Invoice Number', size=17, readonly=False, help="Unique number of the invoice, computed automatically when the invoice is created."),
                 #'supplier_invoice_number': fields.char('Supplier Invoice Number', size=18, help="The reference of this invoice as provided by the supplier.", readonly=True, states={'draft':[('readonly',False)]}),
                # 'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
-                'printer_id':fields.many2one('sri.printer.point', 'Printer Point', required=False),
+                'printer_id':fields.many2one('sri.printer.point', 'Printer Point', required=False, ondelete='restrict'),
                 'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
                 'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
+                'invoice_rectification_id':fields.many2one('account.invoice', 'Modified Invoice', readonly=True, states={'draft':[('readonly', False)]}),
+                'base_doce_iva': fields.function(_amount_all_3, digits_compute=dp.get_precision('Account'), string='IVA 12 Base',
+                            store=True,
+                            multi='all1'),
+                'base_cero_iva': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='IVA 0 Base',
+                            store=True,
+                            multi='all1'),        
+                'vat_doce_subtotal': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='IVA 12 %',
+                            store=True, 
+                            multi='all1'),
+                'vat_cero_subtotal': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='IVA 0 %',
+                            store=True,
+                            multi='all1'),
+                'total_iva': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total IVA',
+                            store=True,
+                            multi='all1'),
+                'total_with_vat': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total with taxes',
+                            store=True,
+                            multi='all1'),
+                'total_to_withhold': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total to withhold',
+                            store=True,
+                            multi='all1'),
                }
+    
+    RE_PREFIXED_INVOICE = re.compile('^\d+-\d+-\d+$')
 
+    def __init__(self, pool, cr):
+        """
+        Durante la inicialización del modelo correremos un SQL para borrar una
+        constraint de SQL que de alguna manera nunca fue borrada, y no tenemos
+        en este OpenERP un mecanismo que gestione migraciones, por lo que este
+        proceso deberíamos hacerlo manualmente.
+
+        Cuando el módulo se inicializa (se construye) toma dos valores: el pool
+        para poder obtener otros objetos, y el cr para ejecutar consultas de
+        postgresql. Tomando ese cursor ejecutamos -LUEGO de llamar al super-
+        una sentencia SQL de borrado de constraint:
+
+        ALTER TABLE account_invoice DROP CONSTRAINT IF EXISTS account_invoice_number_uniq
+
+        (http://www.postgresql.org/docs/9.1/static/sql-altertable.html).
+
+        El nombre de la tabla está dado a falta de un nombre preconfigurado para
+        la tabla en este modelo, por el nombre de la propia clase (account_invoice).
+
+        El nombre de la constraint viene dado por lo reportado en FDU-636.
+
+        Se envuelve todo en un try ... finally ya que, si no existen las tablas al momento
+        de crear este modulo, entonces no deberia importarnos el hecho de que esta consulta
+        sql falle por una tabla que no exista.
+        :param pool:
+        :param cr:
+        :return:
+        """
+        super(account_invoice, self).__init__(pool, cr)
+        try:
+            cr.execute('ALTER TABLE account_invoice DROP CONSTRAINT IF EXISTS account_invoice_number_uniq')
+            pass
+        finally:
+            pass #ignoramos cualquier error.
 
     def _check_number_invoice(self,cr,uid,ids, context=None):
             res = True
@@ -70,6 +162,23 @@ class account_invoice(osv.osv):
             
         return super(account_invoice, self).unlink(cr, uid, unlink_ids, context)
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        """
+        Copia una factura pero le pone el prefijo en lugar
+        de copiar tambien el numero interno. si el numero
+        interno no tiene forma de xxx-xxx-xxxxxx entonces
+        no copia prefijo, pone una cadena vacia
+        """
+        obj = self.browse(cr, uid, id)
+        default = default or {}
+        
+        internal_number = obj.internal_number
+        if (self.RE_PREFIXED_INVOICE.match(internal_number)):
+            default['internal_number'] = '-'.join(internal_number.split('-')[0:2] + [''])
+        else:
+            default['internal_number'] = ''
+        
+        return super(account_invoice, self).copy(cr, uid, id, default, context)
 
     def onchange_internal_number(self, cr, uid, ids, internal_number, context=None):
         
@@ -77,7 +186,7 @@ class account_invoice(osv.osv):
         
         if not internal_number:
             return {'value': value}
-        
+        internal_number = str(internal_number)
         number_split = str.split(internal_number,"-")
 
         if len(number_split) == 3 and number_split[2] !="":
@@ -158,17 +267,61 @@ class account_invoice(osv.osv):
             
         if not printer_id:
             printer_id = _default_printer_point(cr, uid, context)
-        
-        number = False #por ejemplo para facturas de tipo hr_advance
 
-        if type in ['out_invoice','in_refund']:
+        number = False #por ejemplo para facturas de tipo hr_advance
+        
+        # Se corrige las devoluciones y las facturas con sus prefijos correspondientes
+        if type in ['out_invoice','out_refund']:
             number = '001-001-'
             printer = self.pool.get('sri.printer.point').browse(cr, uid, printer_id, context=context)
-            number = printer.shop_id.number + "-" + printer.name + "-"
-        if type in ['in_invoice','out_refund']:
+            if printer.prefix:
+                number = printer.prefix
+            else:
+                number = printer.shop_id.number + "-" + printer.name + "-"
+        if type in ['in_invoice','in_refund']:
             number = '001-001-'
         return number
 
+    def _get_internal_number_by_sequence(self, cr, uid, obj_inv, context=None):
+        """
+        Generates, for the given object and number, a valid autogenerated number
+          (if it can do  and neither the current user has,
+        """
+
+        #we must ensure there's an available printer point by invoice, by user, or the first one
+        printer_id = obj_inv.printer_id or self.pool.get('res.users').browse(cr, uid, uid).printer_id
+        if not printer_id:
+            ppobj = self.pool.get('sri.printer.point')
+            pprecs_limit1 = ppobj.search(cr, uid, [], limit=1)
+            pprec_first = pprecs_limit1[0] if pprecs_limit1 else False
+            printer_id = ppobj.browse(cr, uid, pprec_first) if pprec_first else False
+
+        #if no invoice is found, we return the number as-is
+        if not printer_id:
+            return obj_inv.number
+
+        #we get the document type to fetch from the printer.
+        #if the invoice has a wrong type, the passed type is
+        #  None, which will cause the number to be returned.
+        document_type = {
+            'out_invoice': 'invoice',
+            'out_refund': 'refund'
+        }.get(obj_inv.type)
+
+        return self.pool.get('sri.printer.point').get_next_sequence_number(cr, uid, printer_id, document_type,
+                                                                           obj_inv.number, context)
+
+    def action_number(self, cr, uid, ids, context=None):
+        """
+        This method allows the usage of custom sequentials for the printer point.
+        It stores the internal_number from the number field, passed to an internal
+          check from the current printer point
+        """
+        super(account_invoice, self).action_number(cr, uid, ids, context)
+        for obj_inv in self.browse(cr, uid, ids, context=context):
+            number = self._get_internal_number_by_sequence(cr, uid, obj_inv, context)
+            self.write(cr, uid, ids, {'internal_number': number, 'name': number, 'number': number})
+        return True
 
     def _default_internal_number(self, cr, uid, context=None):
         '''Numero de factura sugerida para facturas de venta y compra, depende del punto de impresion
@@ -208,7 +361,7 @@ class account_invoice(osv.osv):
        'date_invoice': lambda *a: time.strftime('%Y-%m-%d'),
     } 
     
-    def _prepare_invoice_header(self, cr, uid, partner_id, type, inv_date=None, context=None):
+    def _prepare_invoice_header(self, cr, uid, partner_id, type, inv_date=None, printer_id=None, context=None):
         """Retorna los valores ecuatorianos para el header de una factura
            Puede ser usado en ordenes de compra, venta, proyectos, facturacion desde bodegas, etc
            @partner_id es un objeto partner
@@ -225,7 +378,8 @@ class account_invoice(osv.osv):
         invoice_phone = partner_obj.get_company_phone(cr,uid,partner_id)
         
         inv_obj=self.pool.get('account.invoice')
-        printer_id=inv_obj._default_printer_point(cr,uid,uid)
+        printer_id=printer_id or inv_obj._default_printer_point(cr,uid,uid)
+        internal_number = ''
         if printer_id:
             internal_number = inv_obj._suggested_internal_number(cr, uid, printer_id, type, context)
         
@@ -233,7 +387,8 @@ class account_invoice(osv.osv):
                         'invoice_address': invoice_address or '',
                         'invoice_phone': invoice_phone or '',
                         'internal_number': internal_number or '',
-                        'printer_id': printer_id
+                        'printer_id': printer_id,
+                        'date_invoice': time.strftime('%Y-%m-%d')
                         })
         return invoice_vals
 account_invoice()

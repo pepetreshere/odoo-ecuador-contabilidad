@@ -22,12 +22,60 @@
 ########################################################################
 
 from osv import fields, osv
+import time
 from tools import config
 from tools.translate import _
+
 
 class sale_order(osv.osv):
     _inherit = 'sale.order'
     _name = 'sale.order'
+
+    _columns = {
+        'printer_id': fields.many2one('sri.printer.point', 
+                                      'Printer Point',
+                                      required=False, #False por compatibilidad hacia atras 
+                                      readonly=True, 
+                                      help="SRI Printer Point",
+                                      states={'draft': [('readonly', False)], 
+                                              'sent': [('readonly', False)],
+                                              }, 
+                                      track_visibility='onchange')
+    }
+
+    def onchange_printer_id(self, cr, uid, ids, printer_id, context=None):
+        """
+        assigns the shop_id from the printer_id
+        """
+        res1 = {'value': {},'warning':{},'domain':{}}
+        shop_id = False
+        if printer_id:
+            printer_obj = self.pool.get('sri.printer.point')
+            printer = printer_obj.browse(cr, uid, printer_id, context)
+            shop_id = printer.shop_id.id
+        else:
+            shop_id = False
+
+        #usamos super porque en este modulo eliminamos la funcionalidad antigua para moverla a onchange_printer_id
+        res2 = super(sale_order, self).onchange_shop_id(cr, uid, ids, shop_id, context=context)
+        
+        if res2.get('value',False):
+            res1['value'].update(res2['value'])
+        if res2.get('warning',False):
+            res1['warning'].update(res2['warning'])
+        if res2.get('domain',False):
+            res1['domain'].update(res2['domain'])
+            
+        res1['value'].update({'shop_id': shop_id})
+
+        return res1
+        
+    def onchange_shop_id(self, cr, uid, ids, shop_id, context=None):
+        '''
+        Este metodo ya no hace nada porque puede interferir con el metodo onchange_printer_id
+        '''
+        res1 = {'value': {},'warning':{},'domain':{}}
+        return res1
         
     def _get_default_shop(self, cr, uid, context=None):
         '''
@@ -43,8 +91,16 @@ class sale_order(osv.osv):
                 return user.printer_id.shop_id.id
         return super(sale_order, self)._get_default_shop(cr, uid, context)
 
+    def _default_printer_point(self, cr, uid, context=None):
+        '''
+        Nos apegamos a lo ya programado en facturas, debe seguir la misma logica
+        '''
+        invoice_obj = self.pool.get('account.invoice')
+        return invoice_obj._default_printer_point(cr, uid, context=context)
+
     _defaults = {
         'shop_id': _get_default_shop,
+        'printer_id': _default_printer_point,
     }
 sale_order()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

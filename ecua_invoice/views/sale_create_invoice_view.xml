@@ -9,7 +9,20 @@
 		            <xpath expr="//button[@string='Create Invoice']" position="attributes">
 							<attribute name="context">{'partner_id': partner_id}</attribute>
 					</xpath>
+					<xpath expr="//field[@name='shop_id']" position="after">
+						<field name="printer_id" 
+							help="El punto de impresion o caja de mi Empresa donde recibo o emito documentos"  
+							required="1"
+							placeholder="Your printer were you receive the document, not your suppliers one"
+							options="{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
+							on_change="onchange_printer_id(printer_id)"
+							/>
+
+					</xpath>
+					<xpath expr="//field[@name='shop_id']" position="attributes">
+						<attribute name="invisible">1</attribute>
+					</xpath>
 				</field>
-	            </record>
+			</record>
     </data>
 </openerp>

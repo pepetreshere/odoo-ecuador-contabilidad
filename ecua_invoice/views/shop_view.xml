@@ -7,30 +7,30 @@
 				<field name="type">form</field>
 				<field name="inherit_id" ref="sale.view_shop_form" />
 				<field name="arch" type="xml">
+				<field name="payment_default_id" position="before">
+					<field name="establishment_address"/>
+				</field>
 					<xpath expr="/form/group[@name='shop']" position="after">
 						<notebook colspan="4">
 							<page string="SRI Configuration">
 								<group>
-							  <separator colspan="4" string="SRI Number" />
-								<field name="number" required="1" nolabel="0"/>
-								<separator colspan="4" string="Defaults Journals"/>
-								<field name="sales_journal_id" colspan="2" required="1"/>
-								<field name="invoice_lines"/>
-								<field name="purchases_journal_id" colspan="2" required="1"/>							
+							    	<separator colspan="4" string="SRI Number" />
+									<field name="number" required="1" nolabel="0" />
+									<separator colspan="4" string="Defaults Journals" />
+									<field name="sales_journal_id" colspan="2" required="1" />
+									<field name="invoice_lines" />
+									<field name="purchases_journal_id" colspan="2" required="1" />
 								</group>
 							</page>
 							<page string="Users Asigned">
-							<field name="user_ids" nolabel="1" colspan="4"></field>
+								<field name="user_ids" nolabel="1" colspan="4" />
 							</page>
 							<page string="Printer Points">
-								<field name="printer_point_ids" nolabel="1" required="1" colspan="4">
+								<field name="printer_point_ids" nolabel="1" required="1" colspan="4" context="{'default_shop_id': id}">
 									<tree string="Print Points">
-										<field name="name"></field>
-										<field name="shop_id"></field>
+										<field name="name" />
+										<field name="prefix" />
 									</tree>
-									<form string="Print Point">
-										<field name="name"></field>
-									</form>
 								</field>
 							</page>
 						</notebook>
@@ -52,16 +52,6 @@
 			</field>
 		</record>
 		-->
-		<record model="ir.ui.view" id="sri_printer_point_tree_view">
-                <field name="name">sri.printer.point.tree</field>
-                <field name="model">sri.printer.point</field>
-                <field name="type">tree</field>
-                <field name="arch" type="xml">
-                    <tree string="Printer Points">
-                        <field name="name"/>
-						<field name="shop_id"/>
-                     </tree>
-                </field>
-            </record>
+		<delete model="ir.ui.view" id="sri_printer_point_tree_view" />
     </data>
 </openerp>

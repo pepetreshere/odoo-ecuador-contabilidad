@@ -23,9 +23,17 @@
                 <xpath expr="//field[@name='number']" position="after">
 					<field name="responsible_id"/>
             	</xpath>
+                <xpath expr="//field[@name='payment_option']" position="attributes">
+					<attribute name="on_change">onchange_payment_option(payment_option, journal_id)</attribute>
+            	</xpath>
                 <xpath expr="//field[@name='writeoff_acc_id']" position="attributes">
 					<attribute name="domain">['|',('force_reconcile','=', True),('type','=','other')]</attribute>
-            	</xpath>            	
+					<attribute name="options">{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}</attribute>
+            	</xpath>
+                <xpath expr="//field[@name='comment']" position="attributes">
+					<attribute name="placeholder">Reason for reconciliation</attribute>
+					<attribute name="attrs">{'invisible':[('payment_option','!=','with_writeoff')],'required':[('payment_option','!=','without_writeoff')]}</attribute>
+            	</xpath>
             </field>
         </record>
 
@@ -48,9 +56,17 @@
                 <xpath expr="//form/sheet/notebook/page/group/field[@name='number']" position="after">
 					<field name="responsible_id"/>
             	</xpath>
+                <xpath expr="//field[@name='payment_option']" position="attributes">
+					<attribute name="on_change">onchange_payment_option(payment_option, journal_id)</attribute>
+            	</xpath>
                 <xpath expr="//form/sheet/notebook/page/group/group/group/field[@name='writeoff_acc_id']" position="attributes">
 					<attribute name="domain">['|',('force_reconcile','=', True),('type','=','other')]</attribute>
-            	</xpath>            	
+					<attribute name="options">{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}</attribute>
+            	</xpath>
+            	<xpath expr="//field[@name='comment']" position="attributes">
+					<attribute name="placeholder">Reason for reconciliation</attribute>
+					<attribute name="attrs">{'invisible':[('payment_option','!=','with_writeoff')],'required':[('payment_option','!=','without_writeoff')]}</attribute>
+            	</xpath>
             </field>
         </record>
 

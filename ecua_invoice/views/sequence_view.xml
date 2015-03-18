@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="printer_point_seq" model="ir.sequence.type">
+			<field name="name">SRI Printer Point sequence</field>
+			<field name="code">sri.printer.point</field>
+		</record>
+	</data>
+</openerp>
