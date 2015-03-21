@@ -68,47 +68,101 @@ class res_partner(osv.osv):
         company_id = self.pool.get('res.users').browse(cr,uid,uid).company_id
         is_validation=company_id.is_validation
         return is_validation or False
-     #FUNCION QUE NOS VALIDA  EL TIPO DE iDENTIFICACIoN DE LOS CLIENTES Y PROVEEDORES
-    def _get_vat(self, cr, uid, ids, vat, arg, context):
-        res = {}
-        for record in self.browse(cr, uid, ids, context=context):
-            aux = record.vat
-            name = "OTROS"
-            if aux:
-                if len(aux) <= 2:
-                    name = "OTROS"
-                elif aux[0:2] == "EC":
-                    if len(aux[2:])== 10:
-                        name ="CEDULA"
-                    elif aux[2:]== '9999999999999':
-                        name ="CONSUMIDOR FINAL"
-                    elif len(aux[2:])== 13:
-                        name ="RUC"
-                    else:
-                        name = 'OTROS'
+
+    def _calculate_vat(self, identification, is_company):
+        """
+        This function calculates, in a separate fashion, whether the partner's identification
+          is a passport number, a citizen id, or a contributor unique record's number. Considerations
+          for end-customers, distinction between foreign persons/companies, and other types of
+          elements are being taken into account as well.
+        :param identification:
+        :param is_company:
+        :return:
+        """
+        if identification and len(identification) > 2:
+            pais, identificador = identification[0:2], identification[2:]
+            if pais == 'EC':
+                if len(identificador) == 10:
+                    return "CEDULA"
+                elif identificador == '9999999999999':
+                    return "CONSUMIDOR FINAL"
+                elif len(identificador) == 13:
+                    return "RUC"
                 else:
-                    name = 'PASAPORTE'
-                res[record.id] = name           
-        return res
+                    return "OTROS"
+            else:
+                if is_company:
+                    return 'PERS. JURÍDICA EXTRANJERA'
+                else:
+                    return 'PERS. NATURAL EXTRANJERA'
+        else:
+            return "OTROS"
+
+    #FUNCION QUE NOS VALIDA  EL TIPO DE iDENTIFICACIoN DE LOS CLIENTES Y PROVEEDORES
+    def _get_vat(self, cr, uid, ids, vat, arg, context):
+        return {obj.id: self._calculate_vat(obj.vat, obj.is_company)
+                for obj in self.browse(cr, uid, ids, context=context)}
+
+    def _calculate_type_vat(self, identification):
+        """
+        This is the same logic as implemented before, but in a separate function.
+        This one considers whether the vat is citizen id or contributor unique record's number.
+        The returned value is the type of ecuadorean person.
+
+        This implementation has many bugs fixed wrt the previous implementation.
+        :param identification:
+        :param is_company:
+        :return:
+        """
+        if not identification:
+            return "NINGUNO"
+        else:
+            vat_ = self._calculate_vat(identification, False)
+            if vat_ == 'CEDULA' or vat_ == 'RUC':
+                digit = int(identification[4])
+                if digit == 6:
+                    return 'PUBLICOS'
+                if digit in (7, 8):
+                    return 'Error en el Ingreso de los datos'
+                if digit == 9:
+                    return 'JURIDICO Y EXTRANJEROS SIN CEDULA'
+                if digit in (0, 1, 2, 3, 4, 5):
+                    return 'PERSONA NATURAL'
+            else:
+                return "OTROS"
+
     #FUNCION QUE NOS MUESTRA  LOS TIPOS DE RUC DE ACUERDO  AL TIPO DE CONTRIBUYENTE
     def _get_type_vat(self, cr, uid, ids, vat, arg, context):
-        res, contar, aux = {}, '', ''
-        for record in self.browse(cr, uid, ids, context=context):
-            if record.vat:
-                aux = record.vat
-            contar =str(aux)
-            if contar:
-                 type=int(contar[4])
-                 if  type==9:
-                    name= 'JURIDICO Y EXTRANJEROS SIN CEDULA'
-                 elif type==6:
-                    name= 'PUBLICOS'
-                 elif type<6 and type>=0 :
-                     name= 'PERSONA NATURAL'
-                 elif type==7 or type==8 :
-                     name= 'Error en el Ingreso de los datos'
-                 res[record.id] = name           
-        return res
+        return {obj.id: self._calculate_type_vat(obj.vat) for obj in self.browse(cr, uid, ids, context=context)}
+
+    def onchange_vat(self, cr, uid, ids, identification, is_company, context=None):
+        """
+        When VAT changes, we perform the functional algorithm to determine types and other stuff.
+          Once there, we determine if the gotten VAT type is valid for the current state of the field
+          is_company
+        :param cr:
+        :param uid:
+        :param ids:
+        :param identification:
+        :param is_company:
+        :param context:
+        :return:
+        """
+        result = self.vat_change(cr, uid, ids, identification, context=context)
+        type_ = self._calculate_vat(identification, is_company)
+        if type_ == "RUC" and not is_company:
+            result['warning'] = {
+                'title': 'Advertencia',
+                'message': u'Está asignando un RUC a un contacto que no es una empresa. '
+                           u'Debería marcar la casilla titulada "¿Es una empresa?".'
+            }
+        elif type_ == "CEDULA" and is_company:
+            result['warning'] = {
+                'title': 'Advertencia',
+                'message': u'Está asignando una cédula a un contacto que es una empresa. '
+                           u'Debería desmarcar la casilla titulada "¿Es una empresa?".'
+            }
+        return result
 
     def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
         """
