@@ -82,6 +82,7 @@ class account_invoice(osv.osv):
                 'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
                 'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
                 'invoice_rectification_id':fields.many2one('account.invoice', 'Modified Invoice', readonly=True, states={'draft':[('readonly', False)]}),
+                'invoice_rectification_ids':fields.one2many('account.invoice','invoice_rectification_id', 'Modified Invoices', readonly=True ),
                 'base_doce_iva': fields.function(_amount_all_3, digits_compute=dp.get_precision('Account'), string='IVA 12 Base',
                             store=True,
                             multi='all1'),
