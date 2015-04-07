@@ -43,13 +43,13 @@ class sale_shop(osv.osv):
                 'credit_note_purchase_journal_id':fields.many2one('account.journal', 'Credit Note Purchases Journal', domain=[('type','=','purchase_refund')]),           
                 'credit_note_sale_journal_id':fields.many2one('account.journal', 'Credit Note Sales Journal', domain=[('type','=','sale_refund')]),
                 #'address_id':fields.many2one('res.partner.address', 'Address', ),
-                'invoice_lines': fields.integer('Número de Líneas x Factura'),
-                'establishment_address':fields.related('warehouse_id','partner_id',type='many2one',relation='res.partner',string='Establishment Address',help='The address of the property, used for tax purposes as generating electronic documents')  
-                    }
+                'establishment_address':fields.related('warehouse_id','partner_id',type='many2one',relation='res.partner',string='Establishment Address',help='The address of the property, used for tax purposes as generating electronic documents'),
+                'rows_sale_order': fields.integer('Rows sale order', required = True, help='This value limits the number of editable rows in a tree view.')  
+    }
     
     _defaults = {
-        'invoice_lines': 15,
-        'number': '001'
+        'number': '001',
+        'rows_sale_order': 20
     }
 
     def _number_unique(self, cr, uid, ids, context=None):
