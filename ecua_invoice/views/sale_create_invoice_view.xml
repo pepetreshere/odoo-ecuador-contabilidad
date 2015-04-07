@@ -7,7 +7,7 @@
 	            <field name="inherit_id" ref="sale.view_order_form"/>
 	            <field name="arch" type="xml">
 		            <xpath expr="//button[@string='Create Invoice']" position="attributes">
-							<attribute name="context">{'partner_id': partner_id}</attribute>
+						<attribute name="context">{'partner_id': partner_id}</attribute>
 					</xpath>
 					<xpath expr="//field[@name='shop_id']" position="after">
 						<field name="printer_id" 
@@ -21,6 +21,9 @@
 					</xpath>
 					<xpath expr="//field[@name='shop_id']" position="attributes">
 						<attribute name="invisible">1</attribute>
+					</xpath>
+					<xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="attributes">           	
+    					<attribute name="on_change">onchange_order_line_sale_order(parent.order_line)</attribute>
 					</xpath>
 				</field>
 			</record>

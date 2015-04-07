@@ -7,9 +7,12 @@
 				<field name="type">form</field>
 				<field name="inherit_id" ref="sale.view_shop_form" />
 				<field name="arch" type="xml">
-				<field name="payment_default_id" position="before">
-					<field name="establishment_address"/>
-				</field>
+					<field name="payment_default_id" position="before">
+						<field name="establishment_address"/>
+					</field>
+					<field name="payment_default_id" position="after">
+						<field name="rows_sale_order"/>
+					</field>
 					<xpath expr="/form/group[@name='shop']" position="after">
 						<notebook colspan="4">
 							<page string="SRI Configuration">
@@ -18,7 +21,6 @@
 									<field name="number" required="1" nolabel="0" />
 									<separator colspan="4" string="Defaults Journals" />
 									<field name="sales_journal_id" colspan="2" required="1" />
-									<field name="invoice_lines" />
 									<field name="purchases_journal_id" colspan="2" required="1" />
 								</group>
 							</page>
