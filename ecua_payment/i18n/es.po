@@ -4,41 +4,144 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0-20140630-231039\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-26 04:15+0000\n"
-"PO-Revision-Date: 2014-08-26 04:15+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2015-04-10 17:28+0000\n"
+"PO-Revision-Date: 2015-04-10 12:46-0500\n"
+"Last-Translator: Carlos Fernando\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
 #. module: ecua_payment
-#: view:account.voucher:0
-msgid "Razon pago"
-msgstr "Razon pago"
+#: model:ir.actions.act_window,help:ecua_payment.action_replenishment_controlled
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to create a new replenishment controlled.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click para crear un nuevo fondo controlado.\n"
+"              </p>\n"
+"            "
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Draft Replenishment Controlled"
+msgstr "Reposición de fondos controlados en borrador"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+#: selection:replenishment.controlled,state:0
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: ecua_payment
+#: field:replenishment.controlled,journal_from_id:0
+msgid "From"
+msgstr "Desde"
+
+#. module: ecua_payment
+#: field:replenishment.controlled,amount_paid:0
+#: field:replenishment.controlled,amount_paid_usr:0
+msgid "Amount paid"
+msgstr "Importe pagado"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Confirm"
+msgstr "Confirmar"
 
 #. module: ecua_payment
 #: field:account.voucher,responsible_id:0
 msgid "Responsible"
-msgstr "Responsible"
+msgstr "Responsable"
 
 #. module: ecua_payment
-#: model:ir.model,name:ecua_payment.model_account_voucher
-msgid "Accounting Voucher"
-msgstr "Comprobantes contables"
+#: field:replenishment.controlled,name:0
+msgid "Replacement fund controlled"
+msgstr "Reposición de fondo controlado"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Group By..."
+msgstr "Agrupado Por..."
+
+#. module: ecua_payment
+#: field:replenishment.controlled,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+#: selection:replenishment.controlled,state:0
+msgid "Draft"
+msgstr "Borrador"
 
 #. module: ecua_payment
 #: view:account.voucher:0
-msgid "Ejemplo: Pago de la factura #43"
-msgstr "Ejemplo: Pago de la factura #43"
+msgid "{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
+msgstr "{'no_open': True,'limit': 10, 'create': False, 'create_edit': False}"
 
 #. module: ecua_payment
-#: model:ir.model,name:ecua_payment.model_account_voucher_line
-msgid "Voucher Lines"
-msgstr "Líneas de comprobante"
+#: view:replenishment.controlled:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Confirmed Replenishment Controlled"
+msgstr "Reposición de fondos controlados confirmados"
+
+#. module: ecua_payment
+#: help:account.journal,controlled_funds:0
+#: help:replenishment.controlled,amount_paid:0
+msgid "Indicates that this journal will be of controlled fund."
+msgstr "Indica que este diario va a ser de fondo controlado."
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Status"
+msgstr "Estado"
+
+#. module: ecua_payment
+#: field:replenishment.controlled,account_voucher_id:0
+msgid "Reference to Pay"
+msgstr "Referencia a Pago"
+
+#. module: ecua_payment
+#: field:account.journal,warning_msgs:0
+msgid "Warnings"
+msgstr "Advertencias"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Create Payment"
+msgstr "Crear Pago"
+
+#. module: ecua_payment
+#: model:ir.model,name:ecua_payment.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: ecua_payment
+#: model:ir.actions.act_window,name:ecua_payment.action_replenishment_controlled
+#: model:ir.ui.menu,name:ecua_payment.menu_action_vendor_payment
+msgid "Replenishment controlled"
+msgstr "Reposición de fondos controlados"
+
+#. module: ecua_payment
+#: field:account.journal,default_writeoff_acc_id:0
+msgid "Default Open Balance Reconcile Account"
+msgstr "Default Open Balance Reconcile Account"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Search Replenishment Controlled"
+msgstr "Buscar Reposición de fondos controlados"
 
 #. module: ecua_payment
 #: view:account.voucher:0
@@ -51,6 +154,67 @@ msgid "['|',('force_reconcile','=', True),('type','=','other')]"
 msgstr "['|',('force_reconcile','=', True),('type','=','other')]"
 
 #. module: ecua_payment
+#: field:replenishment.controlled,user_id:0
+msgid "User"
+msgstr "Usuario"
+
+#. module: ecua_payment
+#: help:account.journal,replacement:0
+msgid "Indicates that the journal should have replenishment"
+msgstr "Indica que el diario debe tener reposición de fondos."
+
+#. module: ecua_payment
+#: view:account.voucher:0
+msgid "{'invisible':[('payment_option','!=','with_writeoff')],'required':[('payment_option','!=','without_writeoff')]}"
+msgstr "{'invisible':[('payment_option','!=','with_writeoff')],'required':[('payment_option','!=','without_writeoff')]}"
+
+#. module: ecua_payment
+#: view:account.voucher:0
+msgid "Razon pago"
+msgstr "Razón pago"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+#: selection:replenishment.controlled,state:0
+msgid "Processed"
+msgstr "Tramitado"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Replenishment Controlled"
+msgstr "Reposición de fondos controlados"
+
+#. module: ecua_payment
+#: field:account.journal,maximun:0
+msgid "Maximum"
+msgstr "Máximo"
+
+#. module: ecua_payment
+#: field:replenishment.controlled,date:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: ecua_payment
+#: help:replenishment.controlled,date:0
+msgid "Indicates the date on which it was created replenishing controlled background."
+msgstr "Indica la fecha en que fue creada la reposición de fondo controlado."
+
+#. module: ecua_payment
+#: help:replenishment.controlled,amount_paid_usr:0
+msgid "Used parallel used for internal control function type field."
+msgstr "Utilizado paralelo utilizado para el control interno del campo tipo función."
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Change to Draft"
+msgstr "Cambiar a Borrador"
+
+#. module: ecua_payment
+#: model:ir.model,name:ecua_payment.model_replenishment_controlled
+msgid "replenishment.controlled"
+msgstr "replenishment.controlled"
+
+#. module: ecua_payment
 #: help:account.voucher,responsible_id:0
 msgid "Responsible for payment (the user who approves the payment)"
 msgstr "Responsable del pago (El usuario que aprueba el pago)"
@@ -60,3 +224,82 @@ msgstr "Responsable del pago (El usuario que aprueba el pago)"
 msgid "Identificador de Pago"
 msgstr "Identificador de Pago"
 
+#. module: ecua_payment
+#: view:account.journal:0
+msgid "red:warning_msgs != '';"
+msgstr "red:warning_msgs != '';"
+
+#. module: ecua_payment
+#: view:account.voucher:0
+msgid "onchange_payment_option(payment_option, journal_id)"
+msgstr "onchange_payment_option(payment_option, journal_id)"
+
+#. module: ecua_payment
+#: field:account.journal,replacement:0
+msgid "Replacement"
+msgstr " Reposición"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Empresa"
+msgstr "Empresa"
+
+#. module: ecua_payment
+#: view:account.journal:0
+msgid "onchange_type(type)"
+msgstr "onchange_type(type)"
+
+#. module: ecua_payment
+#: field:replenishment.controlled,reference:0
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: ecua_payment
+#: field:replenishment.controlled,journal_to_id:0
+msgid "To"
+msgstr "A"
+
+#. module: ecua_payment
+#: view:replenishment.controlled:0
+msgid "Processed Replenishment Controlled"
+msgstr "Reposición de fondos controlados tramitados"
+
+#. module: ecua_payment
+#: model:ir.model,name:ecua_payment.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Comprobantes contables"
+
+#. module: ecua_payment
+#: field:account.journal,controlled_funds:0
+msgid "Controlled funds"
+msgstr "Fondos Controlados"
+
+#. module: ecua_payment
+#: view:account.voucher:0
+msgid "Ejemplo: Pago de la factura #43"
+msgstr "Ejemplo: Pago de la factura #43"
+
+#. module: ecua_payment
+#: field:account.journal,minimun:0
+msgid "Minimum"
+msgstr "Mínimo"
+
+#. module: ecua_payment
+#: help:account.journal,warning_msgs:0
+msgid "There are pending action in this transaction."
+msgstr "Hay una acción pendiente en esta transacción."
+
+#. module: ecua_payment
+#: field:replenishment.controlled,partner_id:0
+msgid "Partner"
+msgstr "Socio"
+
+#. module: ecua_payment
+#: view:account.voucher:0
+msgid "Reason for reconciliation"
+msgstr "Razón para la conciliación"
+
+#. module: ecua_payment
+#: help:account.journal,default_writeoff_acc_id:0
+msgid "Default account for reconciling the open balance in vouchers, for withhold journals a payable accounts in favor of the partner should be used (ie 2011001 - ANTICIPOS DE CLIENTES)"
+msgstr "Default account for reconciling the open balance in vouchers, for withhold journals a payable accounts in favor of the partner should be used (ie 2011001 - ANTICIPOS DE CLIENTES)"
