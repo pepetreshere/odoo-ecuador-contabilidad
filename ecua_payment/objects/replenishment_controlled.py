@@ -148,8 +148,10 @@ class replenishment_controlled(osv.osv):
          
         voucher_res = {
                         'type': 'payment',
+                        #Secuencia de la reposición
                         'name': replenishment_info.name,
                         'partner_id': replenishment_info.partner_id.id,
+                        #Método de pago con el cual se va a rebastecer
                         'journal_id': replenishment_info.journal_from_id.id,
                         'account_id': replenishment_info.journal_from_id.default_debit_account_id.id,
                         'date': replenishment_info.date or time.strftime('%Y-%m-%d'),
@@ -158,6 +160,7 @@ class replenishment_controlled(osv.osv):
                         'payment_option': 'with_writeoff',
                         # Es la cuenta del método de pago que se desea rebastecer
                         'writeoff_acc_id': replenishment_info.journal_to_id.default_debit_account_id.id,
+                        'narration': 'Reposición de Fondo Controlado',
                         'comment': replenishment_info.reference,
                       }
         voucher_id = voucher_obj.create(cr, uid, voucher_res, context=context)
