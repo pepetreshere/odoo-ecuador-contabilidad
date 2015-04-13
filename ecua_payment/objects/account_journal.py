@@ -97,26 +97,35 @@ class account_journal(osv.osv):
         """
         res = {'warning':{}}
         
-        if field_max<=0:
-            raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
+        if field_max!=0 and field_max!=0 and type=='bank':
         
-        if field_min<=0:
-            raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
-        
-        if type=='bank' and field_min >= field_max:
-            res = {'warning': {'title': _('Warning!'),
-                               'message': _('El campo Máximo debe ser mayor al campo Mínimo.')}                   
-                  }
+            if field_max<=0:
+                raise osv.except_osv(_('Error!'), _('El campo máximo debe ser mayor a cero.'))
+            
+            if field_min<=0:
+                raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
+            
+            if type=='bank' and field_min >= field_max:
+                res = {'warning': {'title': _('Warning!'),
+                                   'message': _('El campo Máximo debe ser mayor al campo Mínimo.')}                   
+                      }
             
         return res
     
-    def onchange_type(self, cr, uid, ids, type):
+    def onchange_type(self, cr, uid, ids, type, controlled_funds):
         """ 
         Limpia que el campo controlled_funds y los respectivos campos máximo y mínimo.
         """        
         res = {'value':{}}
         
-        if type!='bank':            
+        if type!='bank':
+            controlled_funds=False
+        else:
+            controlled_funds=True
+        
+        if controlled_funds==True:
+            res = {'value':{'maximun':False, 'minimun':False, 'replacement':False}}
+        else:
             res = {'value':{'controlled_funds':False, 'maximun':False, 'minimun':False, 'replacement':False}}          
 
         return res
@@ -127,45 +136,53 @@ class account_journal(osv.osv):
         maximun = 0
         minimun = 0
         
-        if values.get('type')=='bank':
-            if 'maximun' in values:
-                maximun = values.get('maximun')
-                if maximun<=0:
-                    raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
-            if 'minimun' in values:
-                minimun = values.get('minimun')
-                if minimun<=0:
-                    raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
-    
-            if minimun >= maximun:
-                raise osv.except_osv(_('Error!'), _('El campo Máximo debe ser mayor al campo Mínimo.'))
+        if values.get('controlled_funds')==True:
+            if values.get('type')=='bank' and (values.has_key('maximun') or values.has_key('minimun')):
+                if 'maximun' in values:
+                    maximun = values.get('maximun')
+                    if maximun<=0:
+                        raise osv.except_osv(_('Error!'), _('El campo máximo debe ser mayor a cero.'))
+                if 'minimun' in values:
+                    minimun = values.get('minimun')
+                    if minimun<=0:
+                        raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
+        
+                if minimun >= maximun:
+                    raise osv.except_osv(_('Error!'), _('El campo Máximo debe ser mayor al campo Mínimo.'))
             
         res = super(account_journal, self).create(cr, uid, values, context)
         
         return res
     
     def write(self, cr, uid, ids, vals, context=None):
-
-        if vals.has_key('maximun') or vals.has_key('minimun'):
-
-            if 'maximun' in vals:
-                maximun = vals.get('maximun')
-                if maximun<=0:
-                    raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
+        
+        if vals.has_key('controlled_funds'):
+            controlled_funds = vals.get('controlled_funds')
+        else:
+            controlled_funds = self.read(cr, uid, ids, ['controlled_funds'])[0]['controlled_funds']
+           
+        if controlled_funds==True:
+            if not vals.has_key('maximun') and not vals.has_key('minimun'):
+                raise osv.except_osv(_('Error!'), _('Los valores de máximo y mínimo deben ser mayores a cero.'))
             else:
-                journal_data = self.read(cr, uid, ids, ['maximun']) 
-                maximun = journal_data[0]['maximun']
-              
-            if 'minimun' in vals:
-                minimun = vals.get('minimun')
-                if minimun<=0:
-                    raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
-            else:
-                journal_data = self.read(cr, uid, ids, ['minimun'])
-                minimun = journal_data[0]['minimun']
-            
-            if minimun >= maximun:
-                raise osv.except_osv(_('Error!'), _('El campo Máximo debe ser mayor al campo Mínimo.'))
+                if 'maximun' in vals:
+                    maximun = vals.get('maximun')
+                    if maximun<=0:
+                        raise osv.except_osv(_('Error!'), _('El campo máximo debe ser mayor a cero.'))
+                else:
+                    journal_data = self.read(cr, uid, ids, ['maximun']) 
+                    maximun = journal_data[0]['maximun']
+                  
+                if 'minimun' in vals:
+                    minimun = vals.get('minimun')
+                    if minimun<=0:
+                        raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
+                else:
+                    journal_data = self.read(cr, uid, ids, ['minimun'])
+                    minimun = journal_data[0]['minimun']
+                
+                if minimun >= maximun:
+                    raise osv.except_osv(_('Error!'), _('El campo Máximo debe ser mayor al campo Mínimo.'))
 
         journal_id = super(account_journal,self).write(cr, uid, ids, vals, context)
         

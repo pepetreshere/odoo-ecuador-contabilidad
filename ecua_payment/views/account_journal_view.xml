@@ -13,11 +13,12 @@
 				</field>
 				
 				<field name="group_invoice_lines" position="after">
-                	<field name="controlled_funds" attrs="{'invisible':[('type','not in',('bank',))]}"/>
+                	<field name="controlled_funds" attrs="{'invisible':[('type','not in',('bank',))]}"
+                	       on_change="onchange_type(type,controlled_funds)"/>
 				</field>
 				
 				<field name="type" position="attributes">
-                   <attribute name="on_change">onchange_type(type)</attribute>
+                   <attribute name="on_change">onchange_type(type,controlled_funds)</attribute>
                 </field>
 				
 				<field name="sequence_id" position="after">

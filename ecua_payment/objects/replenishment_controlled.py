@@ -28,6 +28,8 @@ import time
 
 class replenishment_controlled(osv.osv):
     _name = 'replenishment.controlled'
+    _inherit = ['mail.thread']
+    _description = 'Replenishment Controlled'
         
     def _get_amount_due(self, cr, uid, ids, field, arg, context=None):
         '''
@@ -75,7 +77,7 @@ class replenishment_controlled(osv.osv):
                 'reference': fields.char('Reference', size=50, required=True),
                 'state': fields.selection([('draft', 'Draft'),
                                            ('confirmed','Confirmed'),
-                                           ('processed','Processed'),], 'State'),
+                                           ('processed','Processed'),], 'State', track_visibility='onchange',),
                 'journal_from_id': fields.many2one('account.journal', 'From', required=True),
                 'journal_to_id': fields.many2one('account.journal', 'To', required=True),
                 'amount_paid': fields.function(_get_amount_due, string='Amount paid',store=False, type='float',method=True, 
@@ -148,8 +150,10 @@ class replenishment_controlled(osv.osv):
          
         voucher_res = {
                         'type': 'payment',
+                        #Secuencia de la reposición
                         'name': replenishment_info.name,
                         'partner_id': replenishment_info.partner_id.id,
+                        #Método de pago con el cual se va a rebastecer
                         'journal_id': replenishment_info.journal_from_id.id,
                         'account_id': replenishment_info.journal_from_id.default_debit_account_id.id,
                         'date': replenishment_info.date or time.strftime('%Y-%m-%d'),
@@ -158,6 +162,7 @@ class replenishment_controlled(osv.osv):
                         'payment_option': 'with_writeoff',
                         # Es la cuenta del método de pago que se desea rebastecer
                         'writeoff_acc_id': replenishment_info.journal_to_id.default_debit_account_id.id,
+                        'narration': 'Reposición de Fondo Controlado',
                         'comment': replenishment_info.reference,
                       }
         voucher_id = voucher_obj.create(cr, uid, voucher_res, context=context)
