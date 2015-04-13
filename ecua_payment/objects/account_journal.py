@@ -136,18 +136,19 @@ class account_journal(osv.osv):
         maximun = 0
         minimun = 0
         
-        if values.get('type')=='bank' and (values.has_key('maximun') or values.has_key('minimun')):
-            if 'maximun' in values:
-                maximun = values.get('maximun')
-                if maximun<=0:
-                    raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
-            if 'minimun' in values:
-                minimun = values.get('minimun')
-                if minimun<=0:
-                    raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
-    
-            if minimun >= maximun:
-                raise osv.except_osv(_('Error!'), _('El campo Máximo debe ser mayor al campo Mínimo.'))
+        if values.get('controlled_funds')==True:
+            if values.get('type')=='bank' and (values.has_key('maximun') or values.has_key('minimun')):
+                if 'maximun' in values:
+                    maximun = values.get('maximun')
+                    if maximun<=0:
+                        raise osv.except_osv(_('Error!'), _('El campo máximo debe ser mayor a cero.'))
+                if 'minimun' in values:
+                    minimun = values.get('minimun')
+                    if minimun<=0:
+                        raise osv.except_osv(_('Error!'), _('El campo mínimo debe ser mayor a cero.'))
+        
+                if minimun >= maximun:
+                    raise osv.except_osv(_('Error!'), _('El campo Máximo debe ser mayor al campo Mínimo.'))
             
         res = super(account_journal, self).create(cr, uid, values, context)
         
