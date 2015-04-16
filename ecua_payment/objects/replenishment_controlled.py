@@ -153,6 +153,7 @@ class replenishment_controlled(osv.osv):
                         #Secuencia de la reposición
                         'name': replenishment_info.name,
                         'partner_id': replenishment_info.partner_id.id,
+                        'company_id': replenishment_info.partner_id.company_id.id,
                         #Método de pago con el cual se va a rebastecer
                         'journal_id': replenishment_info.journal_from_id.id,
                         'account_id': replenishment_info.journal_from_id.default_debit_account_id.id,
