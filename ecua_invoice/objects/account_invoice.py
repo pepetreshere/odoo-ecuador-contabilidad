@@ -263,11 +263,11 @@ class account_invoice(osv.osv):
         if context is None:
             context = {}
         
-        if context.has_key('type'):
-            type = context ['type']
+        if 'type' in context:
+            type = context['type']
             
         if not printer_id:
-            printer_id = _default_printer_point(cr, uid, context)
+            printer_id = self._default_printer_point(cr, uid, context)
 
         number = False #por ejemplo para facturas de tipo hr_advance
         
