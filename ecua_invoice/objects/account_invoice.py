@@ -81,8 +81,9 @@ class account_invoice(osv.osv):
                 'printer_id':fields.many2one('sri.printer.point', 'Printer Point', required=False, ondelete='restrict'),
                 'invoice_address':fields.char("Invoice address", help="Invoice address as in VAT document, saved in invoice only not in partner"),
                 'invoice_phone':fields.char("Invoice phone", help="Invoice phone as in VAT document, saved in invoice only not in partner"),
-                'invoice_rectification_id':fields.many2one('account.invoice', 'Modified Invoice', readonly=True, states={'draft':[('readonly', False)]}, help="This field sets the invoice that is being modified"),
-                'invoice_rectification_ids':fields.one2many('account.invoice','invoice_rectification_id', 'Modified Invoices', readonly=True, help="This field sets the invoices those are modifying the actual invoice" ),
+                # invoice_rectification_id la factura a la cual se esta rectificando, invoice_rectification_ids las facturas que rectifican a la actual
+                'invoice_rectification_id':fields.many2one('account.invoice', 'Modified Invoice', readonly=True, states={'draft':[('readonly', False)]}, help="This field sets the invoice that is being modified",track_visibility='always'),
+                'invoice_rectification_ids':fields.one2many('account.invoice','invoice_rectification_id', 'Modified Invoices', readonly=True, help="This field sets the invoices those are modifying the actual invoice",track_visibility='always'),
                 'base_doce_iva': fields.function(_amount_all_3, digits_compute=dp.get_precision('Account'), string='IVA 12 Base',
                             store=True,
                             multi='all1'),
