@@ -55,35 +55,44 @@ class replenishment_controlled(osv.osv):
                 journal_data = journal_obj.read(cr, uid, journal_id[0], ['type','maximun','minimun','default_credit_account_id'])
                 type = journal_data['type']
                 
-                if type=='bank':
+                if type in ('cash','bank'):
                     maximun = journal_data['maximun']                    
                     account_data = account_obj.read(cr, uid, [journal_data['default_credit_account_id'][0]])
                     balance = account_data[0]['balance']
                     amount_paid = maximun - balance
+                    # Actualiza el campo auxiliar con el valor del campo calculado.
+                    # Se lo realiza cuando el estado de la reposición es diferente al tramitado.
                     self.write(cr, uid, id, {'amount_paid_usr':amount_paid})
                     res[id] = amount_paid
             else:
                 replenishment_data = self.read(cr, uid, id, ['amount_paid_usr'])
+                # Muestra el último valor almacenado mas no lo vuelve a calcular ya que la reposición
+                # ya se encuentra en estado tramitado..
                 res[id] = replenishment_data['amount_paid_usr']
-        
+
         return res
     
     _columns = {
-                'name': fields.char('Replacement fund controlled', size=128,),
+                'name': fields.char('Replenishment fund controlled', size=50,),
                 'user_id': fields.many2one('res.users', 'User', required=True),
                 'partner_id': fields.many2one('res.partner', 'Partner', required=True),
                 'date': fields.date('Date', required=True,
-                                    help="Indicates the date on which it was created replenishing controlled background."),
-                'reference': fields.char('Reference', size=50, required=True),
+                                    help="Indicates the date on which it was created replenishing controlled background.",
+                                    track_visibility='onchange',),
+                'reference': fields.char('Reference', size=50, required=True, track_visibility='onchange',),
                 'state': fields.selection([('draft', 'Draft'),
                                            ('confirmed','Confirmed'),
                                            ('processed','Processed'),], 'State', track_visibility='onchange',),
-                'journal_from_id': fields.many2one('account.journal', 'From', required=True),
-                'journal_to_id': fields.many2one('account.journal', 'To', required=True),
+                'journal_from_id': fields.many2one('account.journal', 'From', required=True, track_visibility='onchange',
+                                                   help="Journal source for replenishment."),
+                'journal_to_id': fields.many2one('account.journal', 'To', required=True, track_visibility='onchange',
+                                                  help="Journal of the replacement destination."),
                 'amount_paid': fields.function(_get_amount_due, string='Amount paid',store=False, type='float',method=True, 
-                                                                help='Indicates that this journal will be of controlled fund.'),
-                'amount_paid_usr': fields.float('Amount paid', help='Used parallel used for internal control function type field.'),
+                                               help='Indicates the value of the replenishment.'),
+                'amount_paid_usr': fields.float('Amount paid', help='Used parallel used for internal control function type field.',
+                                                track_visibility='onchange'),
                 'account_voucher_id': fields.many2one('account.voucher','Reference to Pay'),
+                'narration': fields.text('narration'),
                 }    
 
     _defaults = {
@@ -91,19 +100,53 @@ class replenishment_controlled(osv.osv):
                  'date': lambda *a: time.strftime('%Y-%m-%d'),
                  'partner_id': lambda obj, cr, uid, context: obj.pool.get('res.users').browse(cr, uid, uid).company_id.partner_id.id,
                  'user_id': lambda self, cr, uid, context: uid,
-                 #'company_id': lambda obj, cr, uid, context: obj.pool.get('res.users').browse(cr, uid, uid).company_id.id,
-                }    
+                }
+    
+    _sql_constraints = [('name_unique', 'UNIQUE(name)', 'El código de la Reposición debe ser único.!')]   
     
     def create(self, cr, uid, vals, context=None):
+        
+        if vals.get('journal_from_id')==vals.get('journal_to_id'):
+            raise osv.except_osv(_('Error!'), _('Los diarios origen y destino no pueden ser iguales.'))
+                
         sequence_obj = self.pool.get('ir.sequence')
         seq_replenishmnet_id = sequence_obj.search(cr, uid,[('name','=','Replenishment-Controlled')])
-        vals['name'] = sequence_obj.next_by_id(cr, uid, seq_replenishmnet_id)
+        vals['name'] = sequence_obj.next_by_id(cr, uid, seq_replenishmnet_id)        
 
         return super(replenishment_controlled, self).create(cr, uid, vals, context)
     
+    def write(self, cr, uid, ids, vals, context=None):
+        """
+        Envía un warning si es que los diarios origen y destino son los mismos.
+        """
+        msg = 'Los diarios origen y destino no pueden ser iguales.'
+         
+        if vals.has_key('journal_from_id') and vals.has_key('journal_to_id'):
+            if vals.get('journal_from_id')==vals.get('journal_to_id'):
+                raise osv.except_osv(_('Error'),_(msg))        
+        else:
+            replenishment_data = self.read(cr, uid, ids, ['journal_from_id','journal_to_id'])
+            
+            if type(replenishment_data)==dict: #Si es diccionario
+                journal_from_id = replenishment_data['journal_from_id'][0]
+                journal_to_id = replenishment_data['journal_to_id'][0]
+                
+            elif type(replenishment_data)==list: # Si es una lista con un diccionario
+                journal_from_id = replenishment_data[0]['journal_from_id'][0]
+                journal_to_id = replenishment_data[0]['journal_to_id'][0]
+             
+            if vals.has_key('journal_from_id'):
+                if vals.get('journal_from_id')==journal_to_id:
+                    raise osv.except_osv(_('Error'), _(msg))
+            elif vals.has_key('journal_to_id'):
+                if vals.get('journal_to_id')==journal_from_id:
+                    raise osv.except_osv(_('Error'),_(msg))
+                  
+        return super(replenishment_controlled,self).write(cr, uid, ids, vals, context)
+    
     def onchange_journal_to_id(self, cr, uid, ids, journal_to_id):
         '''
-        Al escoger un diario de tipo "Banco y Cheques" se calcula el campo Importe Pagago
+        Al escoger un diario de tipo "Banco y Cheques o Efectivo" se calcula el campo Importe Pagado
         calculado por la diferencia del valor máximo del diario y el saldo pendiente.
         '''
         res = {}
@@ -114,7 +157,7 @@ class replenishment_controlled(osv.osv):
             journal_data = journal_obj.read(cr, uid, journal_to_id, ['type','maximun','minimun','default_credit_account_id'])
             type = journal_data['type']
             
-            if type=='bank':
+            if type in ('cash','bank'):
                 maximun = journal_data['maximun']                
                 account_obj = self.pool.get('account.account')
                 account_data = account_obj.read(cr, uid, [journal_data['default_credit_account_id'][0]])
@@ -143,8 +186,7 @@ class replenishment_controlled(osv.osv):
     def button_create_payment(self, cr, uid, ids, context=None):
         '''
         Función utilizada para crear un pago. Se pasa los valores del respectivo Fondo Controlado.
-        '''
-                
+        '''                
         replenishment_info = self.browse(cr, uid, ids[0], context=context)
         voucher_obj = self.pool.get("account.voucher")     
          
@@ -153,6 +195,7 @@ class replenishment_controlled(osv.osv):
                         #Secuencia de la reposición
                         'name': replenishment_info.name,
                         'partner_id': replenishment_info.partner_id.id,
+                        'company_id': replenishment_info.partner_id.company_id.id,
                         #Método de pago con el cual se va a rebastecer
                         'journal_id': replenishment_info.journal_from_id.id,
                         'account_id': replenishment_info.journal_from_id.default_debit_account_id.id,
