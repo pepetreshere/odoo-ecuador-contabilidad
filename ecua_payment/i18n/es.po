@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-18 16:05+0000\n"
-"PO-Revision-Date: 2015-04-18 11:16-0500\n"
+"POT-Creation-Date: 2015-04-20 17:06+0000\n"
+"PO-Revision-Date: 2015-04-20 12:18-0500\n"
 "Last-Translator: Carlos Fernando\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -65,11 +65,6 @@ msgid "Add an internal note..."
 msgstr "Añadir una nota interna..."
 
 #. module: ecua_payment
-#: help:account.journal,maximun:0
-msgid "Maximum journal money to be controlled."
-msgstr "Valor máximo de dinero del diario a ser controlado."
-
-#. module: ecua_payment
 #: field:account.voucher,responsible_id:0
 msgid "Responsible"
 msgstr "Responsable"
@@ -94,6 +89,11 @@ msgstr "Estado"
 #: selection:replenishment.controlled,state:0
 msgid "Draft"
 msgstr "Borrador"
+
+#. module: ecua_payment
+#: help:account.journal,maximun:0
+msgid "Quantity of reference for calculating controlled fund replenishment. It is the maximum value that must be the controlled fund."
+msgstr "Cantidad de referencia para el cálculo de la reposición del fondo controlado. Es el valor máximo que debe tener el fondo controlado."
 
 #. module: ecua_payment
 #: field:replenishment.controlled,narration:0
@@ -129,6 +129,11 @@ msgstr "Referencia a Pago"
 #: view:replenishment.controlled:0
 msgid "Replenishment Controlled"
 msgstr "Reposición de fondos controlados"
+
+#. module: ecua_payment
+#: help:account.journal,minimun:0
+msgid "Quantity of reference for calculating controlled fund replenishment. This field is to calculate the difference between the maximum fund and make replenishing it."
+msgstr "Cantidad de referencia para el cálculo de reposición del fondo controlado. Este campo sirve para calcular la diferencia con el máximo del fondo y hacer la reposición del mismo."
 
 #. module: ecua_payment
 #: field:account.journal,warning_msgs:0
@@ -204,7 +209,7 @@ msgstr "{'invisible':[('payment_option','!=','with_writeoff')],'required':[('pay
 #. module: ecua_payment
 #: view:account.voucher:0
 msgid "Razon pago"
-msgstr "Razón del pago"
+msgstr "Razon pago"
 
 #. module: ecua_payment
 #: view:replenishment.controlled:0
@@ -216,11 +221,6 @@ msgstr "Buscar Reposición de fondos controlados"
 #: selection:replenishment.controlled,state:0
 msgid "Processed"
 msgstr "Tramitado"
-
-#. module: ecua_payment
-#: help:account.journal,minimun:0
-msgid "Minimun journal money to be controlled."
-msgstr "Valor mínimo de dinero del diario a ser controlado."
 
 #. module: ecua_payment
 #: field:replenishment.controlled,message_ids:0

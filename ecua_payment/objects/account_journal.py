@@ -82,8 +82,8 @@ class account_journal(osv.osv):
                                                            help="Default account for reconciling the open balance in vouchers, for withhold journals a payable accounts in favor of the partner should be used (ie 2011001 - ANTICIPOS DE CLIENTES)"
                                                            ),
                 'controlled_funds': fields.boolean('Controlled funds', help='Indicates that this journal will be of controlled fund.'),
-                'maximun': fields.float('Maximum', help="Maximum journal money to be controlled."),
-                'minimun': fields.float('Minimum', help="Minimun journal money to be controlled."),
+                'maximun': fields.float('Maximum', help="Quantity of reference for calculating controlled fund replenishment. It is the maximum value that must be the controlled fund."),
+                'minimun': fields.float('Minimum', help="Quantity of reference for calculating controlled fund replenishment. This field is to calculate the difference between the maximum fund and make replenishing it."),
                 'replenishment': fields.function(_validate_replenishment, string="Replenishment", type='boolean', method=True,
                                                              help="Indicates that the journal should have replenishment"),
                 'warning_msgs': fields.function(_get_warning_msgs, string='Warnings',store=False, type='char',method=True, 

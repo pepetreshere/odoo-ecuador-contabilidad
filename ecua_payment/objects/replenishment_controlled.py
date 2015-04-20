@@ -51,7 +51,7 @@ class replenishment_controlled(osv.osv):
             state = replenishment['state']
             journal_id = replenishment['journal_to_id']
                         
-            if state != 'processed':                
+            if state != 'processed':
                 journal_data = journal_obj.read(cr, uid, journal_id[0], ['type','maximun','minimun','default_credit_account_id'])
                 type = journal_data['type']
                 
@@ -67,7 +67,7 @@ class replenishment_controlled(osv.osv):
             else:
                 replenishment_data = self.read(cr, uid, id, ['amount_paid_usr'])
                 # Muestra el último valor almacenado mas no lo vuelve a calcular ya que la reposición
-                # ya se encuentra en estado tramitado..
+                # ya se encuentra en estado tramitado. El campo amount_paid_usr es utilizado al momento de crear el pago.
                 res[id] = replenishment_data['amount_paid_usr']
 
         return res
@@ -111,7 +111,7 @@ class replenishment_controlled(osv.osv):
                 
         sequence_obj = self.pool.get('ir.sequence')
         seq_replenishmnet_id = sequence_obj.search(cr, uid,[('name','=','Replenishment-Controlled')])
-        vals['name'] = sequence_obj.next_by_id(cr, uid, seq_replenishmnet_id)        
+        vals['name'] = sequence_obj.next_by_id(cr, uid, seq_replenishmnet_id)
 
         return super(replenishment_controlled, self).create(cr, uid, vals, context)
     
