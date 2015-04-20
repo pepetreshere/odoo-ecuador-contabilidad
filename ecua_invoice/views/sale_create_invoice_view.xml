@@ -22,8 +22,9 @@
 					<xpath expr="//field[@name='shop_id']" position="attributes">
 						<attribute name="invisible">1</attribute>
 					</xpath>
-					<xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="attributes">           	
-    					<attribute name="on_change">onchange_order_line_sale_order(parent.order_line)</attribute>
+					<xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="attributes">
+						<attribute name="context">{'printer_id':parent.printer_id}</attribute>
+    					<attribute name="on_change">onchange_order_line_sale_order(parent.order_line,context)</attribute>
 					</xpath>
 				</field>
 			</record>

@@ -116,13 +116,15 @@ class sale_order_line(osv.osv):
         #Obtenemos la cantidad de filas definidas para la tienda, por defecto son 20.
         user_obj = self.pool.get('res.users')
         printer_point_obj = self.pool.get('sri.printer.point')
-        for user  in user_obj.browse(cr, uid, [uid], context):
-            try:
+        rows_sale_order = 0
+        if context is None:
+            context ={}
+        if 'printer_id' in context:
+            rows_sale_order = printer_point_obj.browse(cr, uid, context.get('printer_id'), context=context).shop_id.rows_sale_order
+        elif user_obj.browse(cr, uid, uid, context):
+            user = user_obj.browse(cr, uid, uid, context)
+            if user.printer_id:
                 rows_sale_order = user.printer_id.shop_id.rows_sale_order
-            except:
-                raise osv.except_osv(_('¡Error!'),
-                                     _('Debe configurar un punto de impresión por defecto para el usuario.'))
-            
         #Obtenemos la cantidad de filas utilizadas en la vista tree.
         order_line = len(order_lines)+1        
         
