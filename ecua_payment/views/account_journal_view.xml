@@ -13,7 +13,7 @@
 				</field>
 				
 				<field name="group_invoice_lines" position="after">
-                	<field name="controlled_funds" attrs="{'invisible':[('type','not in',('bank',))]}"
+                	<field name="controlled_funds" attrs="{'invisible':[('type','not in',('cash','bank',))]}"
                 	       on_change="onchange_type(type,controlled_funds)"/>
 				</field>
 				
@@ -22,11 +22,11 @@
                 </field>
 				
 				<field name="sequence_id" position="after">
-                	<field name="maximun" on_change="onchange_valida_maximo(maximun,minimun,type)"
+                	<field name="maximun" on_change="onchange_validate_maximun(maximun,minimun,type)"
                 	       attrs="{'invisible':[('controlled_funds','=',False)],'required':[('controlled_funds','=',True)]}"/>
-                	<field name="minimun" on_change="onchange_valida_maximo(maximun,minimun,type)" 
+                	<field name="minimun" on_change="onchange_validate_maximun(maximun,minimun,type)" 
                 	       attrs="{'invisible':[('controlled_funds','=',False)],'required':[('controlled_funds','=',True)]}"/>
-                	<field name="replacement" invisible="1"/> 
+                	<field name="replenishment" invisible="1"/> 
 				</field>
 				
 				<xpath expr="//div[@class='oe_title']" position="after">
