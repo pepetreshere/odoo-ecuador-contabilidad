@@ -34,10 +34,8 @@ class replenishment_controlled(osv.osv):
     def _get_amount_due(self, cr, uid, ids, field, arg, context=None):
         '''
         Campo calculado por la diferencia del valor máximo del diario y el saldo pendiente.
-        En el proceso, si el estado del fondo controlado no está en estado tramitado se actualiza
-        el campo amount_paid_usr con el nuevo valor del campo calculado amount_paid, caso contrario
-        utiliza el valor del campo amount_paid_usr para mostrarlo en la vista.
-        NOTA: Utilizar el campo amount_paid_usr para los reportes respectivos.
+        En el proceso, se realiza el cálculo si el estado del fondo controlado no está en estado tramitado,
+        caso contrario se utiliza el valor del campo amount_paid_usr para mostrarlo en la vista.
         '''
         res = {}
         amount_paid = 0
@@ -45,30 +43,26 @@ class replenishment_controlled(osv.osv):
         account_obj = self.pool.get('account.account')
         
         replenishment_data = self.read(cr, uid, ids, ['state','journal_to_id'])
-               
+        
         for replenishment in replenishment_data:
             id = replenishment['id']
             state = replenishment['state']
             journal_id = replenishment['journal_to_id']
                         
-            if state != 'processed':
-                journal_data = journal_obj.read(cr, uid, journal_id[0], ['type','maximun','minimun','default_credit_account_id'])
-                type = journal_data['type']
+            journal_data = journal_obj.read(cr, uid, journal_id[0], ['type','maximun','minimun','default_credit_account_id'])
+            type = journal_data['type']
                 
-                if type in ('cash','bank'):
-                    maximun = journal_data['maximun']                    
-                    account_data = account_obj.read(cr, uid, [journal_data['default_credit_account_id'][0]])
-                    balance = account_data[0]['balance']
-                    amount_paid = maximun - balance
-                    # Actualiza el campo auxiliar con el valor del campo calculado.
-                    # Se lo realiza cuando el estado de la reposición es diferente al tramitado.
-                    self.write(cr, uid, id, {'amount_paid_usr':amount_paid})
-                    res[id] = amount_paid
-            else:
+            if type in ('cash','bank') and state!='processed':
+                maximun = journal_data['maximun']
+                account_data = account_obj.read(cr, uid, [journal_data['default_credit_account_id'][0]])
+                balance = account_data[0]['balance']
+                amount_paid = maximun - balance
+                res[id] = amount_paid
+            elif type in ('cash','bank') and state=='processed':
                 replenishment_data = self.read(cr, uid, id, ['amount_paid_usr'])
-                # Muestra el último valor almacenado mas no lo vuelve a calcular ya que la reposición
-                # ya se encuentra en estado tramitado. El campo amount_paid_usr es utilizado al momento de crear el pago.
                 res[id] = replenishment_data['amount_paid_usr']
+            else:
+                res[id] = 0
 
         return res
     
@@ -88,9 +82,8 @@ class replenishment_controlled(osv.osv):
                 'journal_to_id': fields.many2one('account.journal', 'To', required=True, track_visibility='onchange',
                                                   help="Journal of the replacement destination."),
                 'amount_paid': fields.function(_get_amount_due, string='Amount paid',store=False, type='float',method=True, 
-                                               help='Indicates the value of the replenishment.'),
-                'amount_paid_usr': fields.float('Amount paid', help='Used parallel used for internal control function type field.',
-                                                track_visibility='onchange'),
+                                               help='Indicates the value of the replenishment.', track_visibility='onchange'),
+                'amount_paid_usr': fields.float('Amount paid', help='Used parallel used for internal control function type field.'),
                 'account_voucher_id': fields.many2one('account.voucher','Reference to Pay'),
                 'narration': fields.text('narration'),
                 }    
@@ -108,7 +101,7 @@ class replenishment_controlled(osv.osv):
         
         if vals.get('journal_from_id')==vals.get('journal_to_id'):
             raise osv.except_osv(_('Error!'), _('Los diarios origen y destino no pueden ser iguales.'))
-                
+        
         sequence_obj = self.pool.get('ir.sequence')
         seq_replenishmnet_id = sequence_obj.search(cr, uid,[('name','=','Replenishment-Controlled')])
         vals['name'] = sequence_obj.next_by_id(cr, uid, seq_replenishmnet_id)
@@ -119,11 +112,17 @@ class replenishment_controlled(osv.osv):
         """
         Envía un warning si es que los diarios origen y destino son los mismos.
         """
+        
+        if vals.has_key('state') and vals.get('state')=='processed':
+            replenishment_info = self.read(cr, uid, ids, ['amount_paid'])
+            # Se actualiza el campo auxiliar con el valor del campo tipo función.
+            vals['amount_paid_usr'] = replenishment_info[0]['amount_paid']
+        
         msg = 'Los diarios origen y destino no pueden ser iguales.'
          
         if vals.has_key('journal_from_id') and vals.has_key('journal_to_id'):
             if vals.get('journal_from_id')==vals.get('journal_to_id'):
-                raise osv.except_osv(_('Error'),_(msg))        
+                raise osv.except_osv(_('Error'),_(msg))
         else:
             replenishment_data = self.read(cr, uid, ids, ['journal_from_id','journal_to_id'])
             
@@ -174,7 +173,12 @@ class replenishment_controlled(osv.osv):
         Función utilizada para cambiar el estado del Fondo Controlado de borrador a confirmado.
         El formulario respectivo se cambia a solo lectura.
         '''     
-        return self.write(cr, uid, ids, {'state':'confirmed'}, context=None)
+        replenishment_data = self.read(cr, uid, ids, ['amount_paid'])
+        #Se actualiza el campo auxiliar con el valor del campo tipo función.
+        #Esto se hace ya que puede darse el caso que alguien en el proceso edite el máximo o mínimo del diario.
+        amount_paid = replenishment_data[0]['amount_paid']
+        
+        return self.write(cr, uid, ids, {'state':'confirmed', 'amount_paid_usr':amount_paid}, context=None)
     
     def button_confirmed_to_draft(self, cr, uid, ids, context=None):
         '''
