@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+    	<!-- Replenishment controlled -->
+        <record id="view_replenishment_controlled_form" model="ir.ui.view">
+            <field name="name">replenishment.controlled.form</field>
+            <field name="model">replenishment.controlled</field>
+            <field name="arch" type="xml">
+                <form string="Replenishment Controlled" version="7.0">
+	                <header>
+	                    <button string="Confirm" name="button_draft_to_confirmed" type="object" states="draft" class="oe_highlight"/>
+	                    <button string="Change to Draft" name="button_confirmed_to_draft" type="object" states="confirmed" class="oe_highlight"/>
+	                    <button string="Create Payment" name="button_create_payment" type="object" states="confirmed" class="oe_highlight"/>
+  	                    <field name="state" widget="statusbar" statusbar_colors='{"draft":"blue"}'/>
+	                </header>
+	                <sheet>
+		                <h1>
+	                        <field name="name" readonly="1"/>
+	                    </h1>
+	                    <group>
+		                    <group>
+		                        <field name="user_id" invisible="1"/>
+								<field name="partner_id" string="Empresa" widget="selection" readonly="1"/>
+		                       	<field name="amount_paid" readonly="1"/>
+		                       	<field name="amount_paid_usr" invisible="1"/>
+		                        <field name="journal_from_id"
+		                               widget="selection" attrs="{'readonly':[('state','!=','draft')]}"/>
+		                        <field name="journal_to_id" domain="[('type','in',('cash','bank')),('controlled_funds','=',True),]"
+		                               widget="selection" on_change="onchange_journal_to_id(journal_to_id)"
+		                               attrs="{'readonly':[('state','!=','draft')]}"/>
+		                    </group> 
+		                    <group>
+		                        <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+		                        <field name="reference" attrs="{'readonly':[('state','!=','draft')]}"/>
+		                        <field name="account_voucher_id" attrs="{'invisible':[('state','!=','processed')]}" readonly="1"
+		                               context="{'form_view_ref':'account_voucher.view_vendor_payment_form'}"/>
+		                    </group>
+ 		                    <field name="narration" colspan="4" nolabel="1" placeholder="Add an internal note..."
+ 		                           attrs="{'readonly':[('state','!=','draft')]}"/>
+		                </group>                 
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_replenishment_controlled_tree" model="ir.ui.view">
+            <field name="name">replenishment.controlled.tree</field>
+            <field name="model">replenishment.controlled</field>
+            <field name="arch" type="xml">
+                <tree string="Replenishment Controlled">
+                    <field name="name"/>
+                    <field name="amount_paid"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_replenishment_controlled_filter" model="ir.ui.view">
+            <field name="name">replenishment.controlled.select</field>
+            <field name="model">replenishment.controlled</field>
+            <field name="arch" type="xml">
+                <search string="Search Replenishment Controlled">
+                    <field name="date"/>
+                    <field name="partner_id" string="Supplier" filter_domain="[('partner_id','child_of',self)]"/>
+                    <filter icon="terp-document-new" string="Draft" domain="[('state','=','draft')]" help="Draft Replenishment Controlled"/>
+                    <filter icon="terp-camera_test" string="Confirmed" domain="[('state','=','confirmed')]" help="Confirmed Replenishment Controlled"/>
+                    <filter icon="terp-camera_test" string="Processed" domain="[('state','=','processed')]" help="Processed Replenishment Controlled"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Period" icon="terp-go-month" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Journal Destination" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'journal_to_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+		<record id="action_replenishment_controlled" model="ir.actions.act_window">
+            <field name="name">Replenishment controlled</field>
+            <field name="res_model">replenishment.controlled</field>
+            <field name="view_type">form</field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="view_replenishment_controlled_filter"/> 
+            <!-- <field name="target">current</field>-->
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a new replenishment controlled.
+              </p>
+            </field>
+        </record>
+        
+        <record id="action_replenishment_controlled_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_replenishment_controlled"/>
+        </record>
+        
+        <record id="action_replenishment_controlled_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_replenishment_controlled_form"/>
+            <field name="act_window_id" ref="action_replenishment_controlled"/>
+        </record>
+		
+		<menuitem id="menu_action_vendor_payment" icon="STOCK_JUSTIFY_FILL" sequence="20"
+		          action="action_replenishment_controlled"
+		          parent="account.menu_finance_bank_and_cash"/>
+		            
+    </data>
+</openerp>

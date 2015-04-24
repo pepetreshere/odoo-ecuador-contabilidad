@@ -19,15 +19,13 @@
             	<xpath expr="//field[@name='property_account_position']" position="replace"/>
             	<xpath expr="//label[@for='vat']" position="replace"/>
             	<xpath expr="//div[@name='vat_info']" position="replace"/>
-            	
             	<xpath expr="//field[@name='website']" position="after">
             		<field name="property_account_position" 
             			widget="selection"
             			attrs="{'invisible': [('parent_id', '!=', False)]}"/>
             		<label for="vat" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
                     <div name="vat_info" attrs="{'invisible': [('parent_id', '!=', False)]}">
-                    
-                        <field name="vat" on_change="vat_change(vat)" placeholder="e.g. EC0477472701" class="oe_inline" attrs="{'invisible': [('parent_id', '!=', False)], 'required': [('parent_id', '=', False)]}"/>
+                        <field name="vat" on_change="onchange_vat(vat, is_company)" placeholder="e.g. EC0477472701" class="oe_inline" attrs="{'invisible': [('parent_id', '!=', False)], 'required': [('parent_id', '=', False)]}"/>
                      	<field name="type_vat"/>
    		                <button colspan="2" 
                         	name="button_check_vat" 
@@ -40,7 +38,9 @@
                         <field name="vat_subjected" class="oe_inline"/>
                     </div>
             	</xpath>
-
+				<xpath expr="//field[@name='is_company']" position="attributes">
+					<attribute name="on_change">onchange_vat(vat, is_company)</attribute>
+				</xpath>
             </field>
 		</record>
    </data>

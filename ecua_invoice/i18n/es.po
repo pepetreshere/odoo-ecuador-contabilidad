@@ -264,3 +264,29 @@ msgstr "Secuencial para retenciones"
 #: field:sri.printer.point,waybill_sequence:0
 msgid "Waybills sequential"
 msgstr "Secuencial para guías de remisión"
+
+#. module: ecua_invoice
+#: view:sale.order:0
+msgid "onchange_order_line_sale_order(parent.order_line)"
+msgstr "onchange_order_line_sale_order(parent.order_line)"
+
+#. module: ecua_invoice
+#: field:sale.shop,rows_sale_order:0
+msgid "Rows sale order"
+msgstr "Filas en pedidos de ventas"
+
+#. module: ecua_invoice
+#: model:ir.model,name:ecua_invoice.model_sale_shop
+msgid "Sales Shop"
+msgstr "Tienda ventas"
+
+#. module: ecua_invoice
+#: model:ir.model,name:ecua_invoice.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Líneas de pedidos de ventas"
+
+#. module: ecua_invoice
+#: help:sale.shop,rows_sale_order:0
+msgid "This value limits the number of editable rows in a tree view."
+msgstr "Este valor restringe la cantidad de filas editables en la vista."
+

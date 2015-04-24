@@ -161,7 +161,11 @@
 						placeholder="The number is suggested by the other fields"
 						/>
 				</xpath>
-
+				Nota de Credito
+				<field name="payment_ids" position="after" >
+					<field name="invoice_rectification_ids" string="Nota de credito"/>
+				</field>
+		
 			</field>			
 		</record>
 

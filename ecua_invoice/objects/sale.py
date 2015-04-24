@@ -103,4 +103,35 @@ class sale_order(osv.osv):
         'printer_id': _default_printer_point,
     }
 sale_order()
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+
+class sale_order_line(osv.osv):
+    _inherit = "sale.order.line"
+    
+    def onchange_order_line_sale_order(self, cr, uid, ids, order_lines, context=None):
+        '''
+        Este metodo notifica al usuario cuando excede la cantidad de lineas definidas para sale order.
+        '''
+        res = {}
+        #Obtenemos la cantidad de filas definidas para la tienda, por defecto son 20.
+        user_obj = self.pool.get('res.users')
+        printer_point_obj = self.pool.get('sri.printer.point')
+        rows_sale_order = 0
+        if context is None:
+            context ={}
+        if 'printer_id' in context:
+            rows_sale_order = printer_point_obj.browse(cr, uid, context.get('printer_id'), context=context).shop_id.rows_sale_order
+        elif user_obj.browse(cr, uid, uid, context):
+            user = user_obj.browse(cr, uid, uid, context)
+            if user.printer_id:
+                rows_sale_order = user.printer_id.shop_id.rows_sale_order
+        #Obtenemos la cantidad de filas utilizadas en la vista tree.
+        order_line = len(order_lines)+1        
+        
+        if(order_line >= rows_sale_order):
+            raise osv.except_osv(_('¡Atención!'),
+                                 _('Esta es la última línea válida, si agrega otra, puede alterar el formato de las facturas.\n' 
+                                   'Si desea agregar más filas por favor consulte con el administrador del sistema.'))
+        return res
+    
+sale_order_line()
