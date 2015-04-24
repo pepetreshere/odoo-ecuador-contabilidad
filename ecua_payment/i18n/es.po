@@ -270,7 +270,7 @@ msgstr "Indica la fecha en que fue creada la reposición de fondo controlado."
 #. module: ecua_payment
 #: help:replenishment.controlled,amount_paid_usr:0
 msgid "Used parallel used for internal control function type field."
-msgstr "Utilizado paralelo utilizado para el control interno del campo tipo función."
+msgstr "Utilizado paralelamente para el control interno del campo tipo función."
 
 #. module: ecua_payment
 #: view:replenishment.controlled:0

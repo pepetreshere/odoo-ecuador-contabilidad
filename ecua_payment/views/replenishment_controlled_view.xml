@@ -110,7 +110,7 @@
 		
 		<menuitem id="menu_action_vendor_payment" icon="STOCK_JUSTIFY_FILL" sequence="20"
 		          action="action_replenishment_controlled"
-		          parent="account.menu_finance_payables"/>
+		          parent="account.menu_finance_bank_and_cash"/>
 		            
     </data>
 </openerp>
