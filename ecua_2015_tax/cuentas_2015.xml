@@ -1,0 +1,87 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+		<record id="account_account_retencionesdelafuente0" model="account.account">
+			<field eval="[(6,0,[])]" name="financial_report_ids"/>
+			<field eval="[(6,0,[])]" name="child_consol_ids"/>
+			<field name="code">20114010214</field>
+			<field eval="1" name="reconcile"/>
+			<field name="name">RETENCIONES DE LA FUENTE 0%</field>
+			<field eval="6" name="level"/>
+			<field name="currency_mode">current</field>
+			<field eval="396" name="parent_left"/>
+			<field name="user_type" ref="account.data_account_type_liability"/>
+			<field eval="0" name="centralized"/>
+			<field name="company_id" ref="base.main_company"/>
+			
+			<field eval="397" name="parent_right"/>
+			<field eval="0" name="force_reconcile"/>
+			<field eval="1" name="active"/>
+			<field name="type">other</field>
+			<field eval="[(6,0,[])]" name="tax_ids"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_account_retencionesdelafuente1" model="account.account">
+			<field eval="[(6,0,[])]" name="financial_report_ids"/>
+			<field eval="[(6,0,[])]" name="child_consol_ids"/>
+			<field name="code">20114010211</field>
+			<field eval="1" name="reconcile"/>
+			<field name="name">RETENCIONES DE LA FUENTE 13%</field>
+			<field eval="6" name="level"/>
+			<field name="currency_mode">current</field>
+			<field eval="398" name="parent_left"/>
+			<field name="user_type" ref="account.data_account_type_liability"/>
+			<field eval="0" name="centralized"/>
+			<field name="company_id" ref="base.main_company"/>
+			
+			<field eval="399" name="parent_right"/>
+			<field eval="0" name="force_reconcile"/>
+			<field eval="1" name="active"/>
+			<field name="type">other</field>
+			<field eval="[(6,0,[])]" name="tax_ids"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_account_retencionesdelafuente2" model="account.account">
+			<field eval="[(6,0,[])]" name="financial_report_ids"/>
+			<field eval="[(6,0,[])]" name="child_consol_ids"/>
+			<field name="code">20114010212</field>
+			<field eval="1" name="reconcile"/>
+			<field name="name">RETENCIONES DE LA FUENTE 25%</field>
+			<field eval="6" name="level"/>
+			<field name="currency_mode">current</field>
+			<field eval="400" name="parent_left"/>
+			<field name="user_type" ref="account.data_account_type_liability"/>
+			<field eval="0" name="centralized"/>
+			<field name="company_id" ref="base.main_company"/>
+			
+			<field eval="401" name="parent_right"/>
+			<field eval="0" name="force_reconcile"/>
+			<field eval="1" name="active"/>
+			<field name="type">other</field>
+			<field eval="[(6,0,[])]" name="tax_ids"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_account_retencionesdelafuente3" model="account.account">
+			<field eval="[(6,0,[])]" name="financial_report_ids"/>
+			<field eval="[(6,0,[])]" name="child_consol_ids"/>
+			<field name="code">20114010213</field>
+			<field eval="1" name="reconcile"/>
+			<field name="name">RETENCIONES DE LA FUENTE 35%</field>
+			<field eval="6" name="level"/>
+			<field name="currency_mode">current</field>
+			<field eval="402" name="parent_left"/>
+			<field name="user_type" ref="account.data_account_type_liability"/>
+			<field eval="0" name="centralized"/>
+			<field name="company_id" ref="base.main_company"/>
+			
+			<field eval="403" name="parent_right"/>
+			<field eval="0" name="force_reconcile"/>
+			<field eval="1" name="active"/>
+			<field name="type">other</field>
+			<field eval="[(6,0,[])]" name="tax_ids"/>
+		</record>
+	</data>
+</openerp>

@@ -1,0 +1,2563 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+		<record id="account_tax_comisionespredominaintelectosinttulo0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'304A')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'304')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">COMISIONES PREDOMINA INTELECTO SIN TÍTULO 8%</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'304A')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">304A</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'304')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field eval="-0.08" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_pagoanotarios0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'354')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'304')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">PAGO A NOTARIOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'354')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">304B</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'304')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field eval="-0.08" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_pagoadeportistasentrenadoresarbitroscuerpotcnico0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'304C')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'304')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">PAGO A DEPORTISTAS, ENTRENADORES, ARBITROS, CUERPO TÉCNICO</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'304C')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">304C</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'304')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field eval="-0.08" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_pagoaartistas0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'304D')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'304')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">PAGO A ARTISTAS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'304D')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">304D</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'304')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field eval="-0.08" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_honorariosydemspordocencia0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'304E')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'304')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">HONORARIOS Y DEMÁS POR DOCENCIA</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'304E')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">304E</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'304')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field eval="-0.08" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_pagoconliquidacindecompra0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'361')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'311')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">PAGO CON LIQUIDACIÓN DE COMPRA</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'361')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">311</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'311')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_comprabienesagrcolasavcolaspecuariarios0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'312A')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'312')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">COMPRA BIENES AGRÍCOLAS, AVÍCOLAS, PECUARIARIOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'312A')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">312A</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'312')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field eval="-0.01" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_regaliasporfranquiciasdepropintelectualapn0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'314A')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'314')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">REGALIAS POR FRANQUICIAS DE PROP. INTELECTUAL A PN</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'314A')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">314A</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'314')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field eval="-0.08" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_canonesderechosdeautormarcaspatentesapn0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'314B')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'314')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">CANONES, DERECHOS DE AUTOR, MARCAS, PATENTES A PN</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'314B')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">314B</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'314')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field eval="-0.08" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_regaliasporfranquiciasdepropintelectualasociedades0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'314C')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'314')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">REGALIAS POR FRANQUICIAS DE PROP. INTELECTUAL A SOCIEDADES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'314C')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">314C</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'314')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field eval="-0.08" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_canonesderechosdeautormarcaspatentesasociedades0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'314D')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'314')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">CANONES, DERECHOS DE AUTOR, MARCAS, PATENTES A SOCIEDADES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'314D')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">314D</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'314')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 8%')]"/>
+			<field eval="-0.08" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfdepositosctacorriente0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323A')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. DEPOSITOS CTA CORRIENTE</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323A')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323A</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfdepositosctaahorrossociedades0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323B1')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. DEPOSITOS CTA AHORROS SOCIEDADES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323B1')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323B1</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfdepositosaplazofijogravados0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323E')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. DEPOSITOS A PLAZO FIJO GRAVADOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323E')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323E</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfdepositosaplazofijoexcentos0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323E2')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. DEPOSITOS A PLAZO FIJO EXCENTOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323E2')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323E2</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfoperacionesdereportorepos0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323F')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. OPERACIONES DE REPORTO-REPOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323F')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323F</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfinversionesdistintosalospagadosaifis0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323G')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. INVERSIONES DISTINTOS A LOS PAGADOS A IFIS </field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323G')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323G</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfobligaciones0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323H')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. OBLIGACIONES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323H')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323H</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfbonosconvertiblesenacciones0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323I')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. BONOS CONVERTIBLES EN ACCIONES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323I')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323I</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfinvtitulosvaloresenrentafijagravados0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323M')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. INV. TITULOS VALORES EN RENTA FIJA GRAVADOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323M')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323M</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfinvtitulosvaloresenrentafijaexcentos0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323N')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. INV. TITULOS VALORES EN RENTA FIJA EXCENTOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323N')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323N</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfinteresespagadosaifis0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323O')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. INTERESES PAGADOS A IFIS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323O')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323O</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfinteresespagadossectorpblicoasujetospasivos0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323P')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. INTERESES PAGADOS SECTOR PÚBLICO A SUJETOS PASIVOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323P')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323P</field>
+			<field name="type_tax_use">all</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfotrosinteresesyrfgravados0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323Q')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. OTROS INTERESES Y RF. GRAVADOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323Q')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323Q</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 2%')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfinteresesyrfexcentos0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'323R')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'323')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. INTERESES Y RF. EXCENTOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'323R')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">323R</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'323')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfentreifis0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'374')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'324')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. ENTRE IFIS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'374')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">324</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'324')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field eval="-0.01" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfinteresesencrditoentreifis0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'324A')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'324')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. INTERESES EN CRÉDITO ENTRE IFIS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'324A')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">324A</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'324')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field eval="-0.01" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_rfinventreifis0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'324B')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'324')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">RF. INV. ENTRE IFIS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'324B')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">324B</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'324')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field eval="-0.01" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_anticipodividendos0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'375')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'325')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">ANTICIPO DIVIDENDOS 22%</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'375')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">325</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'325')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field eval="-0.22" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_dividendosanticipadosprestamosaccionistasbeneficiarios0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'325A')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'325')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">DIVIDENDOS ANTICIPADOS PRESTAMOS ACCIONISTAS, BENEFICIARIOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'325A')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">325A</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'325')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field eval="-0.22" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_dividendosexcentosdistribuidosenacciones0" model="account.tax">
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'331')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">DIVIDENDOS EXCENTOS DISTRIBUIDOS EN ACCIONES</field>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">331</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'331')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_enajenacinocacionaldeaccionesparticipacionesytitvalores0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'332A')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'332')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">ENAJENACIÓN OCACIONAL DE ACCIONES, PARTICIPACIONES Y TIT.VALORES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'332A')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">332A</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'332')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_compradebienesinmuebles0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'332B')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'332')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">COMPRA DE BIENES INMUEBLES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'332B')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">332B</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'332')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_transppublicodepasajeros0" model="account.tax">
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">TRANSP. PUBLICO DE PASAJEROS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'332C')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">332C</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'332')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_pagotranspciasnacionalesoextranjerasdeaviacionomaritim0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'332D')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'332')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">PAGO TRANSP. CIAS NACIONALES O EXTRANJERAS DE AVIACION O MARITIM</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'332D')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">332D</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'332')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_valoresentregadoporlascooptranspasocios0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'332D')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'332')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">VALORES ENTREGADO POR LAS COOP. TRANSP. A SOCIOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'332E')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">332E</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'332')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_compraventadedivisasdistintasaldolar0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'332F')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'332')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">COMPRAVENTA DE DIVISAS DISTINTAS AL DOLAR</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'332F')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">332F</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'332')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_pagoscontarjetadecedito0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'332G')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'332')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">PAGOS CON TARJETA DE CŔEDITO</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'332G')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">332G</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'332')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_pagoexteriorportarjetadeceditorecap0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'332H')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'332')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">PAGO EXTERIOR POR TARJETA DE CŔEDITO-RECAP</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'332H')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">332H</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'332')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_enajenacionderechosdecapitalnocotizadosenbolsa0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'384')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'334')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">ENAJENACION DERECHOS DE CAPITAL NO COTIZADOS EN BOLSA</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'384')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">334</field>
+			<field name="type_tax_use">all</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'334')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 1%')]"/>
+			<field eval="-0.01" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_energiaelectrica0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'343A')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'343')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">ENERGIA ELECTRICA</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'343A')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">343A</field>
+			<field name="type_tax_use">all</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'343')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'OTRAS RETENCIONES')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'OTRAS RETENCIONES')]"/>
+			<field eval="-0.01" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_construccininmuebleurbanizacionlotizacion0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'343B')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'343')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">CONSTRUCCIÓN INMUEBLE, URBANIZACION, LOTIZACION</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'343B')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">343B</field>
+			<field name="type_tax_use">all</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'343')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'OTRAS RETENCIONES')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'OTRAS RETENCIONES')]"/>
+			<field eval="-0.01" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_pagolocaltarjetadecreditorecap0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'344A')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'344')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">PAGO LOCAL TARJETA DE CREDITO-RECAP</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'344A')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">344A</field>
+			<field name="type_tax_use">all</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'344')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'OTRAS RETENCIONES')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'OTRAS RETENCIONES')]"/>
+			<field eval="-0.02" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_aplicablesaotrosporcentajes0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'396')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'346')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">APLICABLES A OTROS PORCENTAJES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'396')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">*346</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'346')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'OTRAS RETENCIONES')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'OTRAS RETENCIONES')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_sinconveniodedobletributacinanticipodedividendoscopy0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'454')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'404')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN ANTICIPO DE DIVIDENDOS (Copy)</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'454')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">404</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'404')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field eval="-0.22" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_sinconveniodedobletributacinanticipodedividendos0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'465')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'415')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN ANTICIPO DE DIVIDENDOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'465')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">415</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'415')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field eval="-0.22" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_sinconveniodedobletributaciondividendosapn0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'504')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'416')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACION DIVIDENDOS A PN</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'504')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">504</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'416')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_conconveniodedobletributacinanticipodividendos0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'504B')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'404')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">CON CONVENIO DE DOBLE TRIBUTACIÓN ANTICIPO DIVIDENDOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'504B')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">504B</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'404')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field eval="-0.22" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_conconveniodedobletributacinanticipodedividendos0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'504B')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'415')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">CON CONVENIO DE DOBLE TRIBUTACIÓN ANTICIPO DE DIVIDENDOS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'504B')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">504B</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'415')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field eval="-0.22" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_dividendospnenparaisofiscal0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'504E')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'426')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">DIVIDENDOS PN EN PARAISO FISCAL</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'504E')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">504E</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'426')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_dividendossociedadesenparaisofiscal0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'504F')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'427')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">DIVIDENDOS SOCIEDADES EN PARAISO FISCAL</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'504F')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">504F</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'427')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 13%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 13%')]"/>
+			<field eval="-0.13" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_anticipodividendosenparasofiscal0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'504G')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'425')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">ANTICIPO DIVIDENDOS EN PARAÍSO FISCAL</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'504G')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">504G</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'425')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 25%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 25%')]"/>
+			<field eval="-0.25" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_dividendosfideicomisosenparaisofiscal0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'504H')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'428')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">DIVIDENDOS FIDEICOMISOS EN PARAISO FISCAL</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'504H')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">504H</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'428')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 13%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 13%')]"/>
+			<field eval="-0.13" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_sinconveniodobletributacinenajenacionderechosdecapital0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'521')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'419')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">SIN CONVENIO DOBLE TRIBUTACIÓN ENAJENACION DERECHOS DE CAPITAL</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'521')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">521</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'419')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 5%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 5%')]"/>
+			<field eval="-0.05" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_enajenacionderechosdecapitalenparasofiscal0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'521')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'429')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">ENAJENACION DERECHOS DE CAPITAL EN PARAÍSO FISCAL</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'521')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">521</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'429')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 5%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 5%')]"/>
+			<field eval="-0.05" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_conconveniodobletributacinenajenacionderechosdecapital0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'521')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'408')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">CON CONVENIO DOBLE TRIBUTACIÓN ENAJENACION DERECHOS DE CAPITAL</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'521')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">521</field>
+			<field name="type_tax_use">all</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'408')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 5%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 5%')]"/>
+			<field eval="-0.05" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_sinconveniodedobletributacinservtcadminoconsultora0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'522B')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'421')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN SERV TÉC, ADMIN O CONSULTORÍA</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'522B')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">522B</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'421')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field eval="-0.22" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_servtcadminoconsultoraenparasosfiscales0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'522C')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'431')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">SERV TÉC, ADMIN O CONSULTORÍA EN PARAÍSOS FISCALES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'522C')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">522C</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'431')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 35%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 35%')]"/>
+			<field eval="-0.35" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_sinconveniodedobletributacinsegurosyreaseguros0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'523B')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'420')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN SEGUROS Y REASEGUROS</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'523B')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">523B</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'420')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 22%')]"/>
+			<field eval="-0.22" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_segurosyreasegurosenparasosfiscales0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'523C')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'430')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">SEGUROS Y REASEGUROS EN PARAÍSOS FISCALES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'523C')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">523C</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'430')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 35%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 35%')]"/>
+			<field eval="-0.35" name="amount"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_conconveniodedobletributacinotrospagosnosujetosaret0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'524')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'412')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">CON CONVENIO DE DOBLE TRIBUTACIÓN OTROS PAGOS NO SUJETOS A RET</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'524')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">524</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'412')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_sinconveniodedobletributacinotrospagosnosujetosaret0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'524')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'422')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN OTROS PAGOS NO SUJETOS A RET</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'524')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">524</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'422')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="account_tax_otrosconceptosnosujetosaretencinenparasosfiscales0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'524')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field eval="0" name="tax_system"/>
+			<field name="python_compute"># price_unit
+# or False
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field name="type_ec">renta</field>
+			<field model="account.tax.code" name="ref_base_code_id" search="[('code', '=', u'433')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="name">OTROS CONCEPTOS NO SUJETOS A RETENCIÓN EN PARAÍSOS FISCALES</field>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'524')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="description">524</field>
+			<field name="type_tax_use">purchase</field>
+			<field model="account.tax.code" name="base_code_id" search="[('code', '=', u'433')]"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="applicable_type">true</field>
+			<field model="account.account" name="account_paid_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field model="account.account" name="account_collected_id" search="[('name', '=', u'RETENCIONES DE LA FUENTE 0%')]"/>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+</openerp>
+
