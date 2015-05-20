@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<delete id="view_account_move_line_filter" model="ir.ui.view" />
+
+		<record id="view_account_move_line_filter" model="ir.ui.view">
+			<field name="name">Journal Items</field>
+			<field name="model">account.move.line</field>
+			<field name="inherit_id" ref="account.view_account_move_line_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//search//field[@name='move_id']" position="after">
+					<filter domain="[('move_id.invoice_id.name', 'ilike', self)]" string="Invoice name" />
+					<filter domain="[('move_id.invoice_id.internal_number', 'ilike', self)]" string="Invoice number" />
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</openerp>
