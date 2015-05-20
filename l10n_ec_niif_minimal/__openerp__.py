@@ -44,6 +44,7 @@
                 'views/account_tax_view.xml',
                 'views/account_account_view.xml',
                 'views/account_config_view.xml',
+                'views/account_move_line_view.xml',
                 'views/res_company_view.xml'
                    ],
     'demo_xml': [],

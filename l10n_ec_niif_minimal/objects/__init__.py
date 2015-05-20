@@ -21,5 +21,5 @@ import account_account
 import account_tax
 import account_invoice_tax
 import account_config
-# import account_move_line
+import account_move_line
 import res_company
