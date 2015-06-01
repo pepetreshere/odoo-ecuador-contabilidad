@@ -194,20 +194,20 @@ class res_partner(osv.osv):
         return super(res_partner, self).copy(cr, uid, id, d, context=context)
     
     def write(self, cr, uid, ids, vals, context=None):
+        
         if not context: context = {}
         
-        for partner in self.browse(cr, uid, ids, context):
-            changes = []
-            
+        def values(self,cr,uid,partner,vals):
             #El RUC de un contacto era siempre igual al RUC de la empresa padre
             #por compatibilidad se permite remover el contacto de la empresa padre
             #eliminando el valor del RUC del contacto (el sistema no permite RUCs duplicados)
             #esta funcionalidad del modulo base esta en el metodo _commercial_fields
+            changes = []
             if partner.parent_id:
-                if partner.parent_id.vat == partner.vat:
-                    vals['vat'] = ''
-            
-            #Agregamos log de cambios
+                    if partner.parent_id.vat == partner.vat:
+                        vals['vat'] = ''
+                
+                #Agregamos log de cambios
             if 'name' in vals and partner.name != vals['name']: # en el caso que sea un campo
                 oldmodel = partner.name or _('None')
                 vals['name'] = self._with_single_spaces(vals['name'])
@@ -279,7 +279,6 @@ class res_partner(osv.osv):
                 changes.append(_("State: from '%s' to '%s'") %(oldmodel, newvalue))                
             if 'country_id' in vals and partner.country_id != vals['country_id']: # en el caso que sea un objeto
                 oldmodel = partner.country_id.name or _('None')
-
                 if vals['country_id']:
                     newvalue=self.pool.get('res.country').browse(cr,uid,vals['country_id'],context=context).name
                 else:
@@ -364,11 +363,16 @@ class res_partner(osv.osv):
                 else:
                     newvalue=_('None')
                 changes.append(_("Follow-up Responsible: from '%s' to '%s'") %(oldmodel, newvalue))   
-           
-            
             if len(changes) > 0:
                 self.message_post(cr, uid, [partner.id], body=", ".join(changes), context=context)
-        
+            return vals
+
+        if isinstance(ids,(tuple,list)):
+            for partner in self.browse(cr, uid, ids, context):
+                changes = []
+                vals = values(self,cr,uid,partner,vals)
+        else:
+            vals = values(self,cr,uid,self.browse(cr, uid, ids, context),vals)
         result = super(res_partner, self).write(cr, uid, ids, vals, context=context)
         return result
 
