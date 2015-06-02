@@ -1300,7 +1300,7 @@ class account_withhold(osv.osv):
         """
         Executes validation over a withhold (for purchase).
         """
-        if self.search(cr, uid, [('id', '!=', withhold.id), ('number', '=', number)], context=context):
+        if self.search(cr, uid, [('id', '!=', withhold.id), ('transaction_type', '=', withhold.transaction_type), ('number', '=', number)], context=context):
             raise osv.except_osv(_('Error!'), _('Number %d is occupied. Please choose another number or change the'
                                                 'withhold sequence\'s number for the chosen printer point'))
         if not withhold.creation_date:
