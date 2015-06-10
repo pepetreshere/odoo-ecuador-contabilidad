@@ -300,8 +300,8 @@ class account_withhold(osv.osv):
                             vals_ret_line = {
                                              'fiscalyear_id':fiscalyear_id,  
                                              'description': tax_line['type_ec'],
-                                             'tax_id': tax_id,
-                                             'tax_ac_id': tax_ac_id,
+                                             'tax_id': tax_id or False,
+                                             'tax_ac_id': tax_ac_id or False,
                                              'tax_base': tax_line['base'],
                                              'tax_amount': abs(tax_line['amount']),
                                              'withhold_percentage':0,
