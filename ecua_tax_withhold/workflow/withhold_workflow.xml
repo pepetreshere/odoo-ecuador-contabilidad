@@ -29,6 +29,7 @@
 			<field name="wkf_id" ref="withhold_workflow" />
 			<field name="name">canceled</field>
 			<field name="kind">function</field>
+			<field name="flow_stop">True</field>
 			<field name="action">action_cancel()</field>
 		</record>
 		
