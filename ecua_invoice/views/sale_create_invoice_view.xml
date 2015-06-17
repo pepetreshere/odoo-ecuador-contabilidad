@@ -4,6 +4,7 @@
 		    <record id="view_order_form_context_button" model="ir.ui.view">
 	            <field name="name">sale.order.form.editable.list</field>
 	            <field name="model">sale.order</field>
+	            <field eval="26" name="priority"/>
 	            <field name="inherit_id" ref="sale.view_order_form"/>
 	            <field name="arch" type="xml">
 		            <xpath expr="//button[@string='Create Invoice']" position="attributes">
