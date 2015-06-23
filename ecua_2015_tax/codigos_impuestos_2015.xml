@@ -393,7 +393,7 @@
 	<data noupdate="1">
 		<record id="account_tax_code_enajenacionderechosdecapitalnocotizadosenbolsa0" model="account.tax.code">
 			<field name="code">334</field>
-			<field name="name">ENAJENACION DERECHOS DE CAPITAL NO COTIZADOS EN BOLSA</field>
+			<field name="name">ENAJENACION DERECHOS DE CAPITAL NO COTIZADOS EN BOLSA(2015)</field>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="1.0" name="sign"/>
 			<field eval="0" name="notprintable"/>
@@ -431,6 +431,14 @@
 		</record>
 	</data>
 	<data noupdate="1">
+	    <record id="code344" model="account.tax.code">
+			<field name="code">344</field>
+			<field name="name">OTRAS RETENCIONES APLICABLES 2%</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1.0" name="sign"/>
+			<field eval="0" name="notprintable"/>
+			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'394')]"/>
+		</record>
 		<record id="account_tax_code_pagolocaltarjetadecreditorecap0" model="account.tax.code">
 			<field name="code">344A</field>
 			<field name="name">PAGO LOCAL TARJETA DE CREDITO-RECAP</field>
@@ -459,38 +467,7 @@
 			<field eval="0" name="notprintable"/>
 			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'399')]"/>
 		</record>
-		<record id="account_tax_code_regaliasporfranquiciasdepropintelectualapn1" model="account.tax.code">
-			<field name="code">314A</field>
-			<field name="name">REGALIAS POR FRANQUICIAS DE PROP. INTELECTUAL A PN</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'364')]"/>
-		</record>
-		<record id="account_tax_code_canonesderechosdeautormarcaspatentesapn1" model="account.tax.code">
-			<field name="code">314B</field>
-			<field name="name">CANONES, DERECHOS DE AUTOR, MARCAS, PATENTES A PN</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'364')]"/>
-		</record>
-		<record id="account_tax_code_regaliasporfranquiciasdepropintelectualasociedades1" model="account.tax.code">
-			<field name="code">314C</field>
-			<field name="name">REGALIAS POR FRANQUICIAS DE PROP. INTELECTUAL A SOCIEDADES</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'364')]"/>
-		</record>
-		<record id="account_tax_code_canonesderechosdeautormarcaspatentesasociedades1" model="account.tax.code">
-			<field name="code">314D</field>
-			<field name="name">CANONES, DERECHOS DE AUTOR, MARCAS, PATENTES A SOCIEDADES</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'364')]"/>
-		</record>
+	
 	</data>
 	<data noupdate="1">
 		<record id="code374" model="account.tax.code">
@@ -501,30 +478,9 @@
 			<field eval="0" name="notprintable"/>
 			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'399')]"/>
 		</record>
-		<record id="account_tax_code_rfentreifis1" model="account.tax.code">
-			<field name="code">324</field>
-			<field name="name">RF. ENTRE IFIS</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'374')]"/>
-		</record>
-		<record id="account_tax_code_rfinteresesencrditoentreifis1" model="account.tax.code">
-			<field name="code">324A</field>
-			<field name="name">RF. INTERESES EN CRÉDITO ENTRE IFIS</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'374')]"/>
-		</record>
-		<record id="account_tax_code_rfinventreifis1" model="account.tax.code">
-			<field name="code">324B</field>
-			<field name="name">RF. INV. ENTRE IFIS</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'374')]"/>
-		</record>
+		
+		
+		
 	</data>
 	<data noupdate="1">
 		<record id="account_tax_code_enajenacionderechosdecapitalycotizadosenbolsa0" model="account.tax.code">
@@ -579,7 +535,7 @@
 	<data noupdate="1">
 		<record id="account_tax_code_sinconveniodedobletributacinanticipodedividendos0" model="account.tax.code">
 			<field name="code">415</field>
-			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN ANTICIPO DE DIVIDENDOS</field>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN ANTICIPO DE DIVIDENDOS (2015)</field>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="1.0" name="sign"/>
 			<field eval="0" name="notprintable"/>
@@ -589,7 +545,7 @@
 	<data noupdate="1">
 		<record id="account_tax_code_sinconveniodedobletributaciondividendosapn0" model="account.tax.code">
 			<field name="code">416</field>
-			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACION DIVIDENDOS A PN</field>
+			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACION DIVIDENDOS A PN (2015)</field>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="1.0" name="sign"/>
 			<field eval="0" name="notprintable"/>
@@ -607,7 +563,7 @@
 	<data noupdate="1">
 		<record id="account_tax_code_sinconveniodobletributacionenajenacinderechosdecapital0" model="account.tax.code">
 			<field name="code">419</field>
-			<field name="name">SIN CONVENIO DOBLE TRIBUTACION ENAJENACIÓN DERECHOS DE CAPITAL</field>
+			<field name="name">SIN CONVENIO DOBLE TRIBUTACION ENAJENACIÓN DERECHOS DE CAPITAL(2015)</field>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="1.0" name="sign"/>
 			<field eval="0" name="notprintable"/>
@@ -627,7 +583,7 @@
 	<data noupdate="1">
 		<record id="account_tax_code_serviciostcnicosadministrativosodeconsultorayregalas0" model="account.tax.code">
 			<field name="code">421</field>
-			<field name="name">SERVICIOS TÉCNICOS, ADMINISTRATIVOS O DE CONSULTORÍA Y REGALÍAS</field>
+			<field name="name">SERVICIOS TÉCNICOS, ADMINISTRATIVOS O DE CONSULTORÍA Y REGALÍAS (2015)</field>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="1.0" name="sign"/>
 			<field eval="0" name="notprintable"/>
@@ -657,7 +613,7 @@
 	<data noupdate="1">
 		<record id="account_tax_code_dividendosasociedades0" model="account.tax.code">
 			<field name="code">427</field>
-			<field name="name">DIVIDENDOS A SOCIEDADES</field>
+			<field name="name">DIVIDENDOS A SOCIEDADES (2015)</field>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="1.0" name="sign"/>
 			<field eval="0" name="notprintable"/>
@@ -677,7 +633,7 @@
 	<data noupdate="1">
 		<record id="account_tax_code_enajenacindecapitalenparasofiscal0" model="account.tax.code">
 			<field name="code">429</field>
-			<field name="name">ENAJENACIÓN DE CAPITAL EN PARAÍSO FISCAL</field>
+			<field name="name">ENAJENACIÓN DE CAPITAL EN PARAÍSO FISCAL(2015)</field>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="1.0" name="sign"/>
 			<field eval="0" name="notprintable"/>
@@ -731,7 +687,7 @@
 			<field eval="0" name="notprintable"/>
 			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'498')]"/>
 		</record>
-		<record id="account_tax_code_sinconveniodedobletributacinanticipodedividendos1" model="account.tax.code">
+		<record id="account_tax_code_sinconveniodedobletributacinanticipodedividendos" model="account.tax.code">
 			<field name="code">504B</field>
 			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN ANTICIPO DE DIVIDENDOS</field>
 			<field name="company_id" ref="base.main_company"/>
@@ -795,14 +751,7 @@
 			<field eval="0" name="notprintable"/>
 			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'498')]"/>
 		</record>
-		<record id="account_tax_code_conconveniodobletributacinenajenacionderechosdecapital1" model="account.tax.code">
-			<field name="code">521</field>
-			<field name="name">CON CONVENIO DOBLE TRIBUTACIÓN ENAJENACION DERECHOS DE CAPITAL</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'469')]"/>
-		</record>
+		
 	</data>
 	<data noupdate="1">
 		<record id="account_tax_code_sinconveniodedobletributacinsegurosyreaseguros2" model="account.tax.code">
@@ -921,14 +870,7 @@
 			<field eval="0" name="notprintable"/>
 			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'498')]"/>
 		</record>
-		<record id="account_tax_code_conconveniodobletributacinenajenacionderechosdecapital2" model="account.tax.code">
-			<field name="code">521</field>
-			<field name="name">CON CONVENIO DOBLE TRIBUTACIÓN ENAJENACION DERECHOS DE CAPITAL</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'479')]"/>
-		</record>
+		
 	</data>
 	<data noupdate="1">
 		<record id="code480" model="account.tax.code">
@@ -966,16 +908,7 @@
 			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'481')]"/>
 		</record>
 	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_sinconveniodedobletributacindividendosapn1" model="account.tax.code">
-			<field name="code">504</field>
-			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN DIVIDENDOS A PN</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_sinconveniodedobletributaciondividendosapn0"/>
-		</record>
-	</data>
+
 	<data noupdate="1">
 		<record id="account_tax_code_conconveniodedobletributacindividendosapn0" model="account.tax.code">
 			<field name="code">504</field>
@@ -984,126 +917,6 @@
 			<field eval="1.0" name="sign"/>
 			<field eval="0" name="notprintable"/>
 			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'405')]"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_sinconveniodedobletributacinanticipodedividendos3" model="account.tax.code">
-			<field name="code">504B</field>
-			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN ANTICIPO DE DIVIDENDOS</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_conconveniodedobletributacinanticipodedividendos0"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_sinconveniodedobletributacinanticipodedividendos4" model="account.tax.code">
-			<field name="code">504B</field>
-			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN ANTICIPO DE DIVIDENDOS</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_sinconveniodedobletributacinanticipodedividendos2"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_dividendospnenparaisofiscal2" model="account.tax.code">
-			<field name="code">504E</field>
-			<field name="name">DIVIDENDOS PN EN PARAISO FISCAL</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_dividendospnenparaisofiscal1"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_dividendossociedadesenparaisofiscal1" model="account.tax.code">
-			<field name="code">504F</field>
-			<field name="name">DIVIDENDOS SOCIEDADES EN PARAISO FISCAL</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_dividendosasociedades1"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_anticipodividendosenparaisofiscal1" model="account.tax.code">
-			<field name="code">504G</field>
-			<field name="name">ANTICIPO DIVIDENDOS EN PARAISO FISCAL</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_anticipodividendosenparasofiscal1"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_dividendosfideicomisosenparaisofiscal1" model="account.tax.code">
-			<field name="code">504H</field>
-			<field name="name">DIVIDENDOS FIDEICOMISOS EN PARAISO FISCAL</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_dividendosafideicomisosenparasofiscal1"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_conconveniodobletributacinenajenacionderechosdecapital3" model="account.tax.code">
-			<field name="code">521</field>
-			<field name="name">CON CONVENIO DOBLE TRIBUTACIÓN ENAJENACION DERECHOS DE CAPITAL</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_enajenacindecapitalenparasofiscal1"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_conconveniodobletributacinenajenacionderechosdecapital4" model="account.tax.code">
-			<field name="code">521</field>
-			<field name="name">CON CONVENIO DOBLE TRIBUTACIÓN ENAJENACION DERECHOS DE CAPITAL</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_conconveniodobletributacinenajenacinderechosdecapital1"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_conconveniodobletributacinenajenacionderechosdecapital5" model="account.tax.code">
-			<field name="code">521</field>
-			<field name="name">CON CONVENIO DOBLE TRIBUTACIÓN ENAJENACION DERECHOS DE CAPITAL</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_sinconveniodobletributacionenajenacinderechosdecapital1"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_pagoexteriorservtecadminconsultyregaliassindobletri1" model="account.tax.code">
-			<field name="code">522B</field>
-			<field name="name">PAGO EXTERIOR SERV. TEC, ADMIN, CONSULT Y REGALIAS SIN DOBLE TRI</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_sinconveniodedobletributacinservtcadminoconsultora0"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_servtcadminoconsultoraenparasosfiscales1" model="account.tax.code">
-			<field name="code">522C</field>
-			<field name="name">SERV TÉC, ADMIN O CONSULTORÍA EN PARAÍSOS FISCALES</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_servtcadminoconsultoraenparasosfiscales0"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="account_tax_code_sinconveniodedobletributacinsegurosyreaseguros4" model="account.tax.code">
-			<field name="code">523B</field>
-			<field name="name">SIN CONVENIO DE DOBLE TRIBUTACIÓN SEGUROS Y REASEGUROS</field>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="1.0" name="sign"/>
-			<field eval="0" name="notprintable"/>
-			<field name="parent_id" ref="account_tax_code_sinconveniodedobletributacinsegurosyreaseguros2"/>
 		</record>
 	</data>
 	<data noupdate="1">
@@ -1144,6 +957,17 @@
 			<field eval="1.0" name="sign"/>
 			<field eval="0" name="notprintable"/>
 			<field name="parent_id" ref="account_tax_code_sinconveniodedobletributacinotrosconceptos0"/>
+		</record>
+	</data>
+	<!-- agregados a mano -->
+	<data noupdate="1">
+		<record id="code_308" model="account.tax.code">
+			<field name="code">308</field>
+			<field name="name">Utilización o aprovechamiento de la imagen o renombre (10%)(2015)</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1.0" name="sign"/>
+			<field eval="0" name="notprintable"/>
+			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'349')]"/>
 		</record>
 	</data>
 </openerp>
