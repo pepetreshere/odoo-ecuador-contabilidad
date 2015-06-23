@@ -1775,7 +1775,7 @@ result = price_unit * 0.10</field>
 			<field eval="1.0" name="ref_tax_sign"/>
 			<field name="type">percent</field>
 			<field eval="1.0" name="ref_base_sign"/>
-			<field name="description">344A</field>
+			<field name="description">344</field>
 			<field name="type_tax_use">all</field>
 			<field model="account.tax.code" name="base_code_id" ref="code344"/>
 			<field eval="1" name="active"/>
@@ -2604,6 +2604,9 @@ result = price_unit * 0.10</field>
 		</record>
 	</data>
 	
+<!--Inicio 	308 -->
 
+
+<!--FIn 	308 -->
 </openerp>
 
