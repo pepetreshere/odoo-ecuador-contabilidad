@@ -970,4 +970,24 @@
 			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'349')]"/>
 		</record>
 	</data>
+	<data noupdate="1">
+		<record id="code_10IVA" model="account.tax.code">
+			<field name="code">20%</field>
+			<field name="name">RETENCIONES DEL 10% IVA(2015)</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1.0" name="sign"/>
+			<field eval="0" name="notprintable"/>
+			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'799')]"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="code_20IVA" model="account.tax.code">
+			<field name="code">20%</field>
+			<field name="name">RETENCIONES DEL 20% IVA(2015)</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1.0" name="sign"/>
+			<field eval="0" name="notprintable"/>
+			<field model="account.tax.code" name="parent_id" search="[('code', '=', u'799')]"/>
+		</record>
+	</data>
 </openerp>

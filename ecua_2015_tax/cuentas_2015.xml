@@ -84,4 +84,48 @@
 			<field eval="[(6,0,[])]" name="tax_ids"/>
 		</record>
 	</data>
+	
+	<!-- Agregado a mano -->
+	<data noupdate="1">
+		<record id="ret10iva" model="account.account">
+			<field eval="[(6,0,[])]" name="financial_report_ids"/>
+			<field eval="[(6,0,[])]" name="child_consol_ids"/>
+			<field name="code">20114010304</field>
+			<field eval="1" name="reconcile"/>
+			<field name="name">RETENCIONES DE IVA 10%</field>
+			<field eval="6" name="level"/>
+			<field name="currency_mode">current</field>
+			<field eval="446" name="parent_left"/>
+			<field name="user_type" ref="account.data_account_type_liability"/>
+			<field eval="0" name="centralized"/>
+			<field name="company_id" ref="base.main_company"/>
+<!-- 			<field model="account.account" name="parent_id" search="[('name', '=', u'RETENCIONES DE IVA')]"/> -->
+			<field eval="447" name="parent_right"/>
+			<field eval="0" name="force_reconcile"/>
+			<field eval="1" name="active"/>
+			<field name="type">other</field>
+			<field eval="[(6,0,[])]" name="tax_ids"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="ret20iva" model="account.account">
+			<field eval="[(6,0,[])]" name="financial_report_ids"/>
+			<field eval="[(6,0,[])]" name="child_consol_ids"/>
+			<field name="code">20114010305</field>
+			<field eval="1" name="reconcile"/>
+			<field name="name">RETENCIONES DE IVA 20%</field>
+			<field eval="6" name="level"/>
+			<field name="currency_mode">current</field>
+			<field eval="448" name="parent_left"/>
+			<field name="user_type" ref="account.data_account_type_liability"/>
+			<field eval="0" name="centralized"/>
+			<field name="company_id" ref="base.main_company"/>
+<!-- 			<field model="account.account" name="parent_id" search="[('name', '=', u'RETENCIONES DE IVA')]"/> -->
+			<field eval="449" name="parent_right"/>
+			<field eval="0" name="force_reconcile"/>
+			<field eval="1" name="active"/>
+			<field name="type">other</field>
+			<field eval="[(6,0,[])]" name="tax_ids"/>
+		</record>
+	</data>
 </openerp>

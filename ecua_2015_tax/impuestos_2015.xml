@@ -2607,6 +2607,162 @@ result = price_unit * 0.10</field>
 <!--Inicio 	308 -->
 
 
+	<data noupdate="1">
+		<record id="tax10iva" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'10%')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field name="account_paid_id" ref="ret10iva"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="1" name="child_depend"/>
+			<field eval="1" name="include_base_amount"/>
+			<field name="applicable_type">true</field>
+			<field eval="0" name="tax_system"/>
+			<field name="type_ec">iva</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'10%')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="type_tax_use">all</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="name">RETENCIONES 10% IVA BASE</field>
+			<field name="account_collected_id" ref="ret10iva"/>
+			<field eval="0.12" name="amount"/>
+			<field name="python_compute"># price_unit
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+		<record id="account_tax_retencionesiva0" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'10%')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field name="account_paid_id" ref="ret10iva"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field name="applicable_type">true</field>
+			<field eval="0" name="tax_system"/>
+			<field name="type_ec">iva</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'10%')]"/>
+			<field model="account.tax" name="parent_id" search="[('name', '=', u'RETENCIONES 10% IVA BASE')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="name">RETENCIONES 10% IVA</field>
+			<field name="account_collected_id" ref="ret10iva"/>
+			<field eval="-0.1" name="amount"/>
+			<field name="python_compute"># price_unit
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+	
+	
+	<!-- impuesto del 20% -->
+	<data noupdate="1">
+		<record id="tax20IVA" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'20%')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field name="account_paid_id" ref="ret20iva"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="1" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field name="applicable_type">true</field>
+			<field eval="0" name="tax_system"/>
+			<field name="type_ec">iva</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'20%')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="name">RETENCIONES 20% IVA BASE</field>
+			<field name="account_collected_id" ref="ret20iva"/>
+			<field eval="0.12" name="amount"/>
+			<field name="python_compute"># price_unit
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+		<record id="account_tax_retencionesiva1" model="account.tax">
+			<field model="account.tax.code" name="ref_tax_code_id" search="[('code', '=', u'20%')]"/>
+			<field eval="1" name="sequence"/>
+			<field eval="0" name="imports"/>
+			<field eval="0" name="exports"/>
+			<field name="account_paid_id" ref="ret20iva"/>
+			<field eval="1.0" name="base_sign"/>
+			<field eval="0" name="child_depend"/>
+			<field eval="0" name="include_base_amount"/>
+			<field name="applicable_type">true</field>
+			<field eval="0" name="tax_system"/>
+			<field name="type_ec">iva</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field model="account.tax.code" name="tax_code_id" search="[('code', '=', u'20%')]"/>
+			<field model="account.tax" name="parent_id" search="[('name', '=', u'RETENCIONES 20% IVA BASE')]"/>
+			<field name="python_compute_inv"># price_unit
+# product: product.product object or False
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="ref_tax_sign"/>
+			<field name="type">percent</field>
+			<field eval="1.0" name="ref_base_sign"/>
+			<field name="type_tax_use">purchase</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="assets"/>
+			<field name="name">RETENCIONES 20% IVA</field>
+			<field name="account_collected_id" ref="ret20iva"/>
+			<field eval="-0.2" name="amount"/>
+			<field name="python_compute"># price_unit
+# product: product.product object or None
+# partner: res.partner object or None
+
+result = price_unit * 0.10</field>
+			<field eval="1.0" name="tax_sign"/>
+			<field eval="0" name="price_include"/>
+		</record>
+	</data>
+
+
+
+
+
+
+
 <!--FIn 	308 -->
 </openerp>
 
