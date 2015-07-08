@@ -27,8 +27,10 @@ class account_voucher(osv.osv):
         - They must have consistent values (regarding reconciles).
         - They must reference an account.move.line belonging to an account.move in Posted state.
         """
+        account_voucher_line_obj = self.pool['account.voucher.line']
         for o in self.browse(cr, uid, ids, context=context):
-            for line in o.line_cr_ids:
+            searched = account_voucher_line_obj.search(cr, uid, [('voucher_id', '=', o.id)], context=context)
+            for line in account_voucher_line_obj.browse(cr, uid, searched, context=context):
                 "comparar para lanzar excepcion"
 
                 if line.move_line_id == False:
