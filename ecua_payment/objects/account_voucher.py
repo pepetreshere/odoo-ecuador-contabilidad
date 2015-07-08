@@ -22,6 +22,11 @@ class account_voucher(osv.osv):
         }
          
     def proforma_voucher(self, cr, uid, ids, context=None):
+        """
+        Before calling the base behavior, each line is compared for the vouchers.
+        - They must have consistent values (regarding reconciles).
+        - They must reference an account.move.line belonging to an account.move in Posted state.
+        """
         for o in self.browse(cr, uid, ids, context=context):
             for line in o.line_cr_ids:
                 "comparar para lanzar excepcion"
