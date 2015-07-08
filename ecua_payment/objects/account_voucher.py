@@ -1,7 +1,9 @@
+# coding=utf-8
 import time
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
+
 
 class account_voucher(osv.osv):
     _inherit = 'account.voucher'
@@ -20,13 +22,19 @@ class account_voucher(osv.osv):
         }
          
     def proforma_voucher(self, cr, uid, ids, context=None):
-        obj_voucher_self = self.browse(cr, uid, ids)
-        obj_voucher_line = self.pool.get('account.voucher.line')
-        for o in obj_voucher_self:
-            for so_ids in obj_voucher_line.search(cr,uid,[('voucher_id','=',o.id)]):
-                line = obj_voucher_line.browse(cr, uid, so_ids)
+        for o in self.browse(cr, uid, ids, context=context):
+            for line in o.line_cr_ids:
                 "comparar para lanzar excepcion"
-                
+
+                if line.move_line_id == False:
+                    raise osv.except_osv(_('Error!'), _(u'Al menos una línea no tiene una referencia válida a un '
+                                                        u'apunte contable'))
+
+                if line.move_line_id.move_id.state != 'posted':
+                    raise osv.except_osv(_('Error!'), _(u'Al menos una línea del pago referencia a un apunte contable '
+                                                        u'de un asiento no confirmado. Todas las líneas deben '
+                                                        u'referenciar apuntes en asientos confirmados.'))
+
                 if o.type in ['payment','receipt']:
                     if line.amount > line.amount_unreconciled: 
                         raise osv.except_osv(_('Error!'),
