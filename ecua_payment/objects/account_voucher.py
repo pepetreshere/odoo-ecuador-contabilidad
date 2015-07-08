@@ -33,12 +33,14 @@ class account_voucher(osv.osv):
 
                 if line.move_line_id == False:
                     raise osv.except_osv(_('Error!'), _(u'Al menos una línea no tiene una referencia válida a un '
-                                                        u'apunte contable'))
+                                                        u'apunte contable. Nombre de la línea: ' + unicode(line.name or '')))
 
-                if line.move_line_id.move_id.state != 'posted':
-                    raise osv.except_osv(_('Error!'), _(u'Al menos una línea del pago referencia a un apunte contable '
-                                                        u'de un asiento no confirmado. Todas las líneas deben '
-                                                        u'referenciar apuntes en asientos confirmados.'))
+                ######### Comentamos esta línea porque POR AHORA sí queremos contemplarle ###########
+                #
+                # if line.move_line_id.move_id.state != 'posted':
+                #     raise osv.except_osv(_('Error!'), _(u'Al menos una línea del pago referencia a un apunte contable '
+                #                                         u'de un asiento no confirmado. Todas las líneas deben '
+                #                                         u'referenciar apuntes en asientos confirmados.'))
 
                 if o.type in ['payment','receipt']:
                     if line.amount > line.amount_unreconciled: 
