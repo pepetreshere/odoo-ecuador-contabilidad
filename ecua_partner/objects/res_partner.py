@@ -638,15 +638,15 @@ class res_partner(osv.osv):
             return res2
         return res
 
-    def __init__(self, pool, cr):
-        """
-        TODO eliminar este script luego de una vez de uso!!
-        :param pool:
-        :param cr:
-        :return:
-        """
-        super(res_partner, self).__init__(pool, cr)
-        cr.execute('update res_partner set vat=upper(vat)')
+    #def __init__(self, pool, cr):
+    #    """
+    #    TODO eliminar este script luego de una vez de uso!!
+    #    :param pool:
+    #    :param cr:
+    #    :return:
+    #    """
+    #    super(res_partner, self).__init__(pool, cr)
+    #    cr.execute('update res_partner set vat=upper(vat)')
     
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         '''
