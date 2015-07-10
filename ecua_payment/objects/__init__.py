@@ -1,3 +1,4 @@
 import account_voucher
+import account_account
 import account_journal
 import replenishment_controlled

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    	<record id="view_account_journal_imbalance_form" model="ir.ui.view">
+            <field name="name">account.account.form.imbalance</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="l10n_ec_niif_minimal.view_account_form_inherit"/>
+            <field name="arch" type="xml">
+				<field name="level" position="after">
+                	<field name="controlled_funds" 
+                	on_change="onchange_type(controlled_funds)"/>
+				</field>		
+				<xpath expr="/form/group" position="after">
+					<notebook>
+						<page string="Controlled Funds" attrs="{'invisible':[('controlled_funds','=',False)]}">
+							<label for="maximun" class="oe_edit_only" string="Maximun"/>
+		                	<field name="maximun" on_change="onchange_validate_maximun(maximun,minimun,type)" 
+		                	       attrs="{'required':[('controlled_funds','=',True)]}"/>
+							<label for="minimun" class="oe_edit_only" string="Minimun"/>
+		                	<field name="minimun" on_change="onchange_validate_maximun(maximun,minimun,type)" 
+		                	       attrs="{'required':[('controlled_funds','=',True)]}"/>
+		                	<field name="replenishment" invisible="1"/> 
+	                	</page>
+	               	</notebook>
+               	</xpath>
+				
+				<xpath expr="//label[@string='Account Code and Name']" position="after">
+					<field name="warning_msgs" readonly="1" style="color:red;"/>
+			    </xpath>				
+				
+            </field>
+        </record>
+        
+<!--         <record id="view_account_journal_tree_inherit" model="ir.ui.view">
+           <field name="name">account.journal.tree.inherit</field>
+           <field name="model">account.journal</field>
+           <field name="inherit_id" ref="account.view_account_journal_tree"/>
+           <field name="arch" type="xml">
+           
+			  <xpath expr="//tree" position="attributes">
+				 <attribute name="colors">red:warning_msgs != '';</attribute>
+			  </xpath>
+           
+              <field name="company_id" position="after">             
+                 <field name="warning_msgs" readonly="1" invisible="1"/>         
+			  </field>
+			  		  
+           </field>
+        </record>   -->
+    </data>
+</openerp>

@@ -49,13 +49,13 @@ class replenishment_controlled(osv.osv):
             state = replenishment['state']
             journal_id = replenishment['journal_to_id']
                         
-            journal_data = journal_obj.read(cr, uid, journal_id[0], ['type','maximun','minimun','default_credit_account_id'])
-            type = journal_data['type']
+            journal_data = journal_obj.browse(cr, uid, journal_id[0], context=context)
+            type = journal_data.type
                 
             if type in ('cash','bank') and state!='processed':
-                maximun = journal_data['maximun']
-                account_data = account_obj.read(cr, uid, [journal_data['default_credit_account_id'][0]])
-                balance = account_data[0]['balance']
+                maximun = journal_data.maximun
+                account_data = journal_data.default_debit_account_id
+                balance = account_data.balance
                 amount_paid = maximun - balance
                 res[id] = amount_paid
             elif type in ('cash','bank') and state=='processed':
@@ -143,7 +143,7 @@ class replenishment_controlled(osv.osv):
                   
         return super(replenishment_controlled,self).write(cr, uid, ids, vals, context)
     
-    def onchange_journal_to_id(self, cr, uid, ids, journal_to_id):
+    def onchange_journal_to_id(self, cr, uid, ids, journal_to_id, context=None):
         '''
         Al escoger un diario de tipo "Banco y Cheques o Efectivo" se calcula el campo Importe Pagado
         calculado por la diferencia del valor máximo del diario y el saldo pendiente.
@@ -153,14 +153,14 @@ class replenishment_controlled(osv.osv):
         
         if journal_to_id:
             journal_obj = self.pool.get('account.journal')
-            journal_data = journal_obj.read(cr, uid, journal_to_id, ['type','maximun','minimun','default_credit_account_id'])
-            type = journal_data['type']
+            journal_data = journal_obj.browse(cr, uid, journal_to_id, context=context)
+            type = journal_data.type
             
             if type in ('cash','bank'):
-                maximun = journal_data['maximun']                
+                maximun = journal_data.default_debit_account_id.maximun
                 account_obj = self.pool.get('account.account')
-                account_data = account_obj.read(cr, uid, [journal_data['default_credit_account_id'][0]])
-                balance = account_data[0]['balance']
+                account_data = journal_data.default_debit_account_id
+                balance = account_data.balance
                 amount_paid = maximun - balance
                 amount_paid_usr = amount_paid
     
