@@ -53,7 +53,7 @@ class replenishment_controlled(osv.osv):
             type = journal_data.type
                 
             if type in ('cash','bank') and state!='processed':
-                maximun = journal_data.maximun
+                maximun = journal_data.default_debit_account_id.maximun
                 account_data = journal_data.default_debit_account_id
                 balance = account_data.balance
                 amount_paid = maximun - balance
