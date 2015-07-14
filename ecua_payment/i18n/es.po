@@ -26,6 +26,7 @@ msgstr ""
 "<p class=\"oe_view_nocontent_create\">\n"
 "                Click para crear una nueva Reposición de Fondos Controlados.\n"
 "              </p>\n"
+"            "
 
 #. module: ecua_payment
 #: view:replenishment.controlled:0
@@ -65,6 +66,15 @@ msgid "Add an internal note..."
 msgstr "Añadir una nota interna..."
 
 #. module: ecua_payment
+#: code:addons/ecua_payment/objects/account_account.py:94
+#: code:addons/ecua_payment/objects/account_account.py:126
+#: code:addons/ecua_payment/objects/account_account.py:148
+#, python-format
+msgid "El campo máximo debe ser mayor a cero."
+msgstr "El campo máximo debe ser mayor a cero."
+
+#. module: ecua_payment
+#: field:account.account,responsible_id:0
 #: field:account.voucher,responsible_id:0
 msgid "Responsible"
 msgstr "Responsable"
@@ -73,6 +83,16 @@ msgstr "Responsable"
 #: help:replenishment.controlled,journal_from_id:0
 msgid "Journal source for replenishment."
 msgstr "Diario origen para la reposición."
+
+#. module: ecua_payment
+#: view:account.account:0
+msgid "Controlled Funds"
+msgstr "Fondos Controlados"
+
+#. module: ecua_payment
+#: view:account.account:0
+msgid "Replenishment Funds Accounts"
+msgstr "Cuentas con Fondos Controlados"
 
 #. module: ecua_payment
 #: view:replenishment.controlled:0
@@ -126,6 +146,7 @@ msgid "Reference to Pay"
 msgstr "Referencia a Pago"
 
 #. module: ecua_payment
+#: model:ir.model,name:ecua_payment.model_replenishment_controlled
 #: view:replenishment.controlled:0
 msgid "Replenishment Controlled"
 msgstr "Reposición de fondos controlados"
@@ -165,6 +186,11 @@ msgstr "Reposición de fondos controlados"
 #: field:account.journal,default_writeoff_acc_id:0
 msgid "Default Open Balance Reconcile Account"
 msgstr "Saldo de la cuenta abierta a reconciliar por defecto"
+
+#. module: ecua_payment
+#: help:account.account,responsible_id:0
+msgid "Person who is in charge of the account."
+msgstr "Persona que está a cargo del mantenimiento de la cuenta."
 
 #. module: ecua_payment
 #: help:replenishment.controlled,amount_paid:0
@@ -207,9 +233,25 @@ msgid "{'invisible':[('payment_option','!=','with_writeoff')],'required':[('paym
 msgstr "{'invisible':[('payment_option','!=','with_writeoff')],'required':[('payment_option','!=','without_writeoff')]}"
 
 #. module: ecua_payment
+#: code:addons/ecua_payment/objects/account_account.py:97
+#, python-format
+msgid "Warning!"
+msgstr "Advertencia!"
+
+#. module: ecua_payment
+#: field:replenishment.controlled,journal_to_id:0
+msgid "To"
+msgstr "A"
+
+#. module: ecua_payment
 #: view:account.voucher:0
 msgid "Razon pago"
 msgstr "Razon pago"
+
+#. module: ecua_payment
+#: model:ir.model,name:ecua_payment.model_account_account
+msgid "Account"
+msgstr "Cuenta"
 
 #. module: ecua_payment
 #: view:replenishment.controlled:0
@@ -238,6 +280,7 @@ msgid "El código de la Reposición debe ser único.!"
 msgstr "El código de la Reposición debe ser único.!"
 
 #. module: ecua_payment
+#: view:account.account:0
 #: field:account.account,maximun:0
 msgid "Maximum"
 msgstr "Máximo"
@@ -283,9 +326,22 @@ msgid "Partner"
 msgstr "Socio"
 
 #. module: ecua_payment
+#: code:addons/ecua_payment/objects/replenishment_controlled.py:125
+#: code:addons/ecua_payment/objects/replenishment_controlled.py:139
+#: code:addons/ecua_payment/objects/replenishment_controlled.py:142
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: ecua_payment
 #: help:account.voucher,responsible_id:0
 msgid "Responsible for payment (the user who approves the payment)"
 msgstr "Responsable del pago (El usuario que aprueba el pago)"
+
+#. module: ecua_payment
+#: view:account.account:0
+msgid "blue:type == 'view';black:type in ('other','receivable','payable','consolidation');gray:type == 'closed' red:warning_msgs &lt;&gt; '';"
+msgstr "blue:type == 'view';black:type in ('other','receivable','payable','consolidation');gray:type == 'closed' red:warning_msgs &lt;&gt; '';"
 
 #. module: ecua_payment
 #: view:account.voucher:0
@@ -293,14 +349,17 @@ msgid "Identificador de Pago"
 msgstr "Identificador de Pago"
 
 #. module: ecua_payment
-#: view:account.journal:0
-msgid "red:warning_msgs != '';"
-msgstr "red:warning_msgs != '';"
-
-#. module: ecua_payment
 #: help:replenishment.controlled,message_unread:0
 msgid "If checked new messages require your attention."
 msgstr "Se marcan nuevos mensajes que requieren su atención."
+
+#. module: ecua_payment
+#: code:addons/ecua_payment/objects/account_voucher.py:33
+#, python-format
+msgid "$ %s > $ %s \n"
+" En las lineas de pago no es posible asignar un valor mayor al balance abierto, por favor corrija los valores"
+msgstr "$ %s > $ %s \n"
+" En las lineas de pago no es posible asignar un valor mayor al balance abierto, por favor corrija los valores"
 
 #. module: ecua_payment
 #: field:replenishment.controlled,name:0
@@ -323,9 +382,18 @@ msgid "Reference"
 msgstr "Referencia"
 
 #. module: ecua_payment
-#: field:replenishment.controlled,journal_to_id:0
-msgid "To"
-msgstr "A"
+#: code:addons/ecua_payment/objects/replenishment_controlled.py:103
+#, python-format
+msgid "Los diarios origen y destino no pueden ser iguales."
+msgstr "Los diarios origen y destino no pueden ser iguales."
+
+#. module: ecua_payment
+#: code:addons/ecua_payment/objects/account_account.py:98
+#: code:addons/ecua_payment/objects/account_account.py:131
+#: code:addons/ecua_payment/objects/account_account.py:158
+#, python-format
+msgid "El campo Máximo debe ser mayor al campo Mínimo."
+msgstr "El campo Máximo debe ser mayor al campo Mínimo."
 
 #. module: ecua_payment
 #: view:replenishment.controlled:0
@@ -358,6 +426,7 @@ msgid "Ejemplo: Pago de la factura #43"
 msgstr "Ejemplo: Pago de la factura #43"
 
 #. module: ecua_payment
+#: view:account.account:0
 #: field:account.account,minimun:0
 msgid "Minimum"
 msgstr "Mínimo"
