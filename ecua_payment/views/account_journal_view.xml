@@ -10,48 +10,8 @@
                 <field name="default_credit_account_id" position="after">
                 	<field name="default_writeoff_acc_id" 
                 		domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
-				</field>
-				
-				<field name="group_invoice_lines" position="after">
-                	<field name="controlled_funds" attrs="{'invisible':[('type','not in',('cash','bank',))]}"
-                	       on_change="onchange_type(type,controlled_funds)"/>
-				</field>
-				
-				<field name="type" position="attributes">
-                   <attribute name="on_change">onchange_type(type,controlled_funds)</attribute>
-                </field>
-				
-				<field name="sequence_id" position="after">
-                	<field name="maximun" on_change="onchange_validate_maximun(maximun,minimun,type)"
-                	       attrs="{'invisible':[('controlled_funds','=',False)],'required':[('controlled_funds','=',True)]}"/>
-                	<field name="minimun" on_change="onchange_validate_maximun(maximun,minimun,type)" 
-                	       attrs="{'invisible':[('controlled_funds','=',False)],'required':[('controlled_funds','=',True)]}"/>
-                	<field name="replenishment" invisible="1"/> 
-				</field>
-				
-				<xpath expr="//div[@class='oe_title']" position="after">
-					<field name="warning_msgs" readonly="1" style="color:red;"/>
-			    </xpath>				
-				
+				</field>	
             </field>
         </record>
-        
-        <record id="view_account_journal_tree_inherit" model="ir.ui.view">
-           <field name="name">account.journal.tree.inherit</field>
-           <field name="model">account.journal</field>
-           <field name="inherit_id" ref="account.view_account_journal_tree"/>
-           <field name="arch" type="xml">
-           
-			  <xpath expr="//tree" position="attributes">
-				 <attribute name="colors">red:warning_msgs != '';</attribute>
-			  </xpath>
-           
-              <field name="company_id" position="after">             
-                 <field name="warning_msgs" readonly="1" invisible="1"/>         
-			  </field>
-			  		  
-           </field>
-        </record>  
-        
-    </data>
+        </data>
 </openerp>

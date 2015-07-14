@@ -91,7 +91,7 @@ msgid "Draft"
 msgstr "Borrador"
 
 #. module: ecua_payment
-#: help:account.journal,maximun:0
+#: help:account.account,maximun:0
 msgid "Quantity of reference for calculating controlled fund replenishment. It is the maximum value that must be the controlled fund."
 msgstr "Cantidad de referencia para el cálculo de la reposición del fondo controlado. Es el valor máximo que debe tener el fondo controlado."
 
@@ -111,7 +111,7 @@ msgid "Confirmed Replenishment Controlled"
 msgstr "Reposición de fondos controlados confirmados"
 
 #. module: ecua_payment
-#: help:account.journal,controlled_funds:0
+#: help:account.account,controlled_funds:0
 msgid "Indicates that this journal will be of controlled fund."
 msgstr "Indica que este diario va a ser de fondo controlado."
 
@@ -131,12 +131,12 @@ msgid "Replenishment Controlled"
 msgstr "Reposición de fondos controlados"
 
 #. module: ecua_payment
-#: help:account.journal,minimun:0
+#: help:account.account,minimun:0
 msgid "Quantity of reference for calculating controlled fund replenishment. This field is to calculate the difference between the maximum fund and make replenishing it."
 msgstr "Cantidad de referencia para el cálculo de reposición del fondo controlado. Este campo sirve para calcular la diferencia con el máximo del fondo y hacer la reposición del mismo."
 
 #. module: ecua_payment
-#: field:account.journal,warning_msgs:0
+#: field:account.account,warning_msgs:0
 msgid "Warnings"
 msgstr "Advertencias"
 
@@ -151,7 +151,7 @@ msgid "Journal"
 msgstr "Diario"
 
 #. module: ecua_payment
-#: field:account.journal,replenishment:0
+#: field:account.account,replenishment:0
 msgid "Replenishment"
 msgstr "Reposición"
 
@@ -238,7 +238,7 @@ msgid "El código de la Reposición debe ser único.!"
 msgstr "El código de la Reposición debe ser único.!"
 
 #. module: ecua_payment
-#: field:account.journal,maximun:0
+#: field:account.account,maximun:0
 msgid "Maximum"
 msgstr "Máximo"
 
@@ -248,12 +248,12 @@ msgid "Summary"
 msgstr "Resumen"
 
 #. module: ecua_payment
-#: view:account.journal:0
-msgid "onchange_type(type,controlled_funds)"
-msgstr "onchange_type(type,controlled_funds)"
+#: view:account.account:0
+msgid "onchange_type(controlled_funds)"
+msgstr "onchange_type(controlled_funds)"
 
 #. module: ecua_payment
-#: help:account.journal,replenishment:0
+#: help:account.account,replenishment:0
 msgid "Indicates that the journal should have replenishment"
 msgstr "Indica que este diario tinne los fondos controlados."
 
@@ -343,7 +343,7 @@ msgid "Period"
 msgstr "Periodo"
 
 #. module: ecua_payment
-#: field:account.journal,controlled_funds:0
+#: field:account.account,controlled_funds:0
 msgid "Controlled funds"
 msgstr "Fondos Controlados"
 
@@ -358,7 +358,7 @@ msgid "Ejemplo: Pago de la factura #43"
 msgstr "Ejemplo: Pago de la factura #43"
 
 #. module: ecua_payment
-#: field:account.journal,minimun:0
+#: field:account.account,minimun:0
 msgid "Minimum"
 msgstr "Mínimo"
 
@@ -368,7 +368,7 @@ msgid "replenishment.controlled"
 msgstr "Reposición de fondos controlados"
 
 #. module: ecua_payment
-#: help:account.journal,warning_msgs:0
+#: help:account.account,warning_msgs:0
 msgid "There are pending action in this transaction."
 msgstr "Hay una acción pendiente en esta transacción."
 
