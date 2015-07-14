@@ -10,7 +10,10 @@
 				<field name="level" position="after">
                 	<field name="controlled_funds" 
                 	on_change="onchange_type(controlled_funds)"/>
-				</field>		
+				</field>
+				<field name="force_reconcile" position="after">
+					<field name="responsible_id"/>
+				</field>
 				<xpath expr="/form/group" position="after">
 					<notebook>
 						<page string="Controlled Funds" attrs="{'invisible':[('controlled_funds','=',False)]}">

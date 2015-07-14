@@ -73,6 +73,7 @@ class account_account(osv.osv):
                                                              help="Indicates that the journal should have replenishment"),
                 'warning_msgs': fields.function(_get_warning_msgs, string='Warnings',store=False, type='char',method=True, 
                                                                    help='There are pending action in this transaction.'),
+                'responsible_id': fields.many2one('hr.employee','Responsible',help="Person who is in charge of the account.")
                 }
     
     _defaults = {
