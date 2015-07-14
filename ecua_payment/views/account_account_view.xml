@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-    	<record id="view_account_journal_imbalance_form" model="ir.ui.view">
+    	<record id="view_account_account_imbalance_form" model="ir.ui.view">
             <field name="name">account.account.form.imbalance</field>
             <field name="model">account.account</field>
             <field name="inherit_id" ref="l10n_ec_niif_minimal.view_account_form_inherit"/>
@@ -17,10 +17,10 @@
 				<xpath expr="/form/group" position="after">
 					<notebook>
 						<page string="Controlled Funds" attrs="{'invisible':[('controlled_funds','=',False)]}">
-							<label for="maximun" class="oe_edit_only" string="Maximun"/>
+							<label for="maximun" class="oe_edit_only" string="Maximum"/>
 		                	<field name="maximun" on_change="onchange_validate_maximun(maximun,minimun,type)" 
 		                	       attrs="{'required':[('controlled_funds','=',True)]}"/>
-							<label for="minimun" class="oe_edit_only" string="Minimun"/>
+							<label for="minimun" class="oe_edit_only" string="Minimum"/>
 		                	<field name="minimun" on_change="onchange_validate_maximun(maximun,minimun,type)" 
 		                	       attrs="{'required':[('controlled_funds','=',True)]}"/>
 		                	<field name="replenishment" invisible="1"/> 
@@ -35,21 +35,28 @@
             </field>
         </record>
         
-<!--         <record id="view_account_journal_tree_inherit" model="ir.ui.view">
-           <field name="name">account.journal.tree.inherit</field>
-           <field name="model">account.journal</field>
-           <field name="inherit_id" ref="account.view_account_journal_tree"/>
+        <record id="view_account_account_tree_controlled_funds" model="ir.ui.view">
+           <field name="name">account.account.tree.controlled.funds</field>
+           <field name="model">account.account</field>
+           <field name="inherit_id" ref="account.view_account_tree"/>
            <field name="arch" type="xml">
-           
-			  <xpath expr="//tree" position="attributes">
-				 <attribute name="colors">red:warning_msgs != '';</attribute>
+			  <xpath expr="//tree[@string='Chart of accounts']" position="attributes">
+				 <attribute name="colors">"blue:type == 'view';black:type in ('other','receivable','payable','consolidation');gray:type == 'closed';red:warning_msgs &lt;&gt; ''"</attribute>
 			  </xpath>
-           
               <field name="company_id" position="after">             
                  <field name="warning_msgs" readonly="1" invisible="1"/>         
 			  </field>
-			  		  
            </field>
-        </record>   -->
+        </record>
+        <record id="view_account_account_tree_controlled_funds" model="ir.ui.view">
+	        <field name="name">account.account.tree.controlled.funds</field>
+	        <field name="model">account.account</field>
+	        <field name="inherit_id" ref="account.view_account_search"/>
+	        <field name="arch" type="xml"> 
+		        <xpath expr="//filter[@string='Receivable Accounts']" position="replace">
+			        <filter icon="terp-sale" string="Replenishment Funds Accounts" domain="[('controlled_funds','=',True)]"/>
+		        </xpath>
+	        </field>
+        </record>
     </data>
 </openerp>
