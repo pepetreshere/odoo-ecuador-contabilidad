@@ -130,7 +130,7 @@ class account_account(osv.osv):
                 if minimun >= maximun:
                     raise osv.except_osv(_('Error!'), _('El campo Máximo debe ser mayor al campo Mínimo.'))
             
-        res = super(account_journal, self).create(cr, uid, values, context)
+        res = super(account_account, self).create(cr, uid, values, context)
         
         return res
     
