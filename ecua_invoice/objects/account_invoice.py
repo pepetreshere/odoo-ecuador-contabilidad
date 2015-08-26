@@ -64,7 +64,7 @@ class account_invoice(osv.osv):
                 if line.type_ec == 'iva':
                     res[invoice.id]['total_iva'] += line.amount          
             else:
-                if line.type_ec == 'iva' and line.amount == 0:
+                if line.type_ec == 'iva' and line.amount == 0 and not ('RETENCION' in line.name):
                     res[invoice.id]['base_cero_iva'] += line.base
                     res[invoice.id]['vat_cero_subtotal'] += line.amount
                 res[invoice.id]['total_to_withhold'] += line.amount
