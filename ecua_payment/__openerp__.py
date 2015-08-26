@@ -24,6 +24,7 @@
         "update_xml" : [
                         'views/account_voucher_view.xml',
                         'views/account_journal_view.xml',
+                        'views/account_account_view.xml',
                         'views/replenishment_controlled_view.xml',
                         'security/ir.model.access.csv',
                         'data/sequence.xml',

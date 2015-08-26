@@ -26,7 +26,7 @@
 		                       	<field name="amount_paid_usr" invisible="1"/>
 		                        <field name="journal_from_id"
 		                               widget="selection" attrs="{'readonly':[('state','!=','draft')]}"/>
-		                        <field name="journal_to_id" domain="[('type','in',('cash','bank')),('controlled_funds','=',True),]"
+		                        <field name="journal_to_id" domain="[('type','in',('cash','bank')),('default_debit_account_id.controlled_funds','=',True),]"
 		                               widget="selection" on_change="onchange_journal_to_id(journal_to_id)"
 		                               attrs="{'readonly':[('state','!=','draft')]}"/>
 		                    </group> 
