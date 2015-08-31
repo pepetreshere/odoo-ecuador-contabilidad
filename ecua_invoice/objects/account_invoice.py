@@ -179,6 +179,7 @@ class account_invoice(osv.osv):
             default['internal_number'] = '-'.join(internal_number.split('-')[0:2] + [''])
         else:
             default['internal_number'] = ''
+        default.update({'name':''})
         
         return super(account_invoice, self).copy(cr, uid, id, default, context)
 
