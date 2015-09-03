@@ -562,8 +562,8 @@ class res_partner(osv.osv):
             Dunkin' & Donuts
         """
         res = True
-        natural_check = re.compile("^[a-zA-Z\' ]+$")
-        company_check = re.compile("^[a-zA-Z0-9\' .,&/-]+$")
+        natural_check = re.compile("^[()a-zA-Z\' ]+$")
+        company_check = re.compile("^[()a-zA-Z0-9\' .,&/-]+$")
         for partner in self.browse(cr, uid, ids, context=context):
             unaccented_name = self._strip_accents(partner.name)
             match = natural_check.match(unaccented_name) if not partner.is_company else company_check.match(unaccented_name)
